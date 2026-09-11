@@ -1,0 +1,48 @@
+{% load static %}
+{# كيف تسير الدراسة — sticky split: the numeral pins while the four steps scroll
+   beside it. position: sticky only; landing.js marks the active step for the
+   pinned numeral and the page reads correctly with JS off (numeral shows ٠١). #}
+<section class="section section--how" id="how" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="section__grid">
+      <header class="section__head" data-reveal>
+        <span class="section__index" aria-hidden="true">٠٤</span>
+        <h2 class="section__title" id="how-title">كيف تسير الدراسة</h2>
+      </header>
+    </div>
+
+    <div class="split" data-split>
+      <div class="split__figure" aria-hidden="true">
+        <div class="split__numerals">
+          <span class="split__numeral">٠١</span>
+          <span class="split__numeral">٠٢</span>
+          <span class="split__numeral">٠٣</span>
+          <span class="split__numeral">٠٤</span>
+        </div>
+      </div>
+
+      <ol class="split__steps">
+        <li class="step" data-step data-reveal>
+          <span class="step__num" aria-hidden="true">٠١</span>
+          <h3 class="step__title">التسجيل</h3>
+          <p class="step__body">أنشئ حسابك واختر المسار الذي تبدأ به.</p>
+        </li>
+        <li class="step" data-step data-reveal>
+          <span class="step__num" aria-hidden="true">٠٢</span>
+          <h3 class="step__title">الدراسة</h3>
+          <p class="step__body">تابع الدروس في أوقاتك، وارجع إليها متى شئت.</p>
+        </li>
+        <li class="step" data-step data-reveal>
+          <span class="step__num" aria-hidden="true">٠٣</span>
+          <h3 class="step__title">الاختبار</h3>
+          <p class="step__body">اجتز اختبار المقرر بعد إتمام دروسه.</p>
+        </li>
+        <li class="step" data-step data-reveal>
+          <span class="step__num" aria-hidden="true">٠٤</span>
+          <h3 class="step__title">الشهادة</h3>
+          <p class="step__body">تُصدر شهادتُك عند اجتياز المقرر، وشهادةُ المسار عند إتمامه.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>

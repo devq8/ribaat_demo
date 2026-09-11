@@ -1,0 +1,19 @@
+{% comment %}Plain-text alternative — generated from academic/course_unlocked.html. Keep in sync with the HTML body.{% endcomment %}أصبح المقرر متاحًا لك
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+بعد إتمامك مقرر {{ prerequisite_title }}، استُوفي متطلب الالتحاق، وأصبح المقرر التالي متاحًا لك في {{ path_title }}.
+المقرر المتاح: {{ course_title }}
+المدرّس: {{ teacher_name }}
+عدد الدروس: {{ lessons_count }}
+المسار: {{ path_title }}
+
+التسجيل في المقرر:
+{{ course_url }}
+
+تبقى إتاحة المقرر قائمة في حسابك، ولا يلزم التسجيل فيه الآن.
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

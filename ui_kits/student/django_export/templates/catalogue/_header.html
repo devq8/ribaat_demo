@@ -1,0 +1,20 @@
+{# templates/catalogue/_header.html — same persistent top nav as the dashboard,
+   with "الدورات" as the active item. #}
+<header class="rb-header">
+  <div class="rb-header-start">
+    <img class="rb-logo" src="{% static 'catalogue/img/ribaat-wordmark.png' %}" alt="رباط الحنابلة">
+    <nav class="rb-nav">
+      <a href="{% url 'home' %}">الرئيسية</a>
+      <a href="{% url 'courses' %}" class="is-active">الدورات</a>
+      <a href="{% url 'dashboard' %}">لوحة التحكم</a>
+      <a href="{% url 'certificate_lookup' %}">الاستعلام عن شهادة</a>
+    </nav>
+  </div>
+  <div class="rb-header-end">
+    <span class="rb-avatar rb-avatar--sm">{{ student_name|slice:":2" }}</span>
+    <form action="{% url 'logout' %}" method="post" style="margin:0;">
+      {% csrf_token %}
+      <button type="submit" class="rb-logout-btn">تسجيل الخروج</button>
+    </form>
+  </div>
+</header>

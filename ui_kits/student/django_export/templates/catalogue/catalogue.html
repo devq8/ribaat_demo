@@ -1,0 +1,135 @@
+{# templates/catalogue/catalogue.html
+   Course catalogue page. Search/filters are plain GET query params so the
+   whole screen works with JS disabled (selects re-submit on change as a
+   progressive enhancement only). Expects a view context shaped like:
+
+   {
+     "student_name": "ماجد",
+     "color_scheme": "light" | "dark",
+     "query": {"q": "", "teacher": "", "level": "", "sort": "latest"},
+     "category_choices": [{"value": "فقه", "label": "فقه", "active": False,
+                            "toggle_url": "?category=فقه&..."}, ...],
+     "teacher_choices": [{"value": "...", "label": "د. ...", "active": False}, ...],
+     "level_choices": [{"value": "level1", "label": "المستوى الأول", "active": False}, ...],
+     "has_active_filters": False,
+     "active_filter_chips": [{"label": "فقه", "remove_url": "?..."}, ...],
+     "clear_all_url": "?",
+     "result_count": 12,
+     "courses": [{"title", "instructor", "category", "lectures", "duration",
+                  "enrolled", "locked", "track_note", "slug"}, ...],
+     "page_obj": <Paginator Page>,   # for page_obj.has_next
+     "next_page_url": "?...&page=2",
+     "filters_open": False,          # drives the tablet/mobile drawer
+     "filters_open_url": "?...&filters=open",
+     "filters_close_url": "?...",
+   }
+#}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>الدورات — رباط الحنابلة</title>
+
+  <link rel="stylesheet" href="{% static 'catalogue/tokens/fonts.css' %}">
+  <link rel="stylesheet" href="{% static 'catalogue/tokens/colors.css' %}">
+  <link rel="stylesheet" href="{% static 'catalogue/tokens/colors-dark.css' %}">
+  <link rel="stylesheet" href="{% static 'catalogue/tokens/typography.css' %}">
+  <link rel="stylesheet" href="{% static 'catalogue/tokens/spacing.css' %}">
+  <link rel="stylesheet" href="{% static 'catalogue/tokens/effects.css' %}">
+  <link rel="stylesheet" href="{% static 'catalogue/catalogue.css' %}">
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+  <div class="rb-page" data-theme="{{ color_scheme|default:'light' }}">
+
+    {% include "catalogue/_header.html" %}
+
+    {# Single GET form: search + teacher + level + sort all post here.
+       Category chips are separate <a> links (view precomputes their URLs)
+       but still need their current values preserved as hidden inputs. #}
+    <form id="rb-filter-form" method="get" action="{% url 'courses' %}">
+      {% for cat in query.categories %}
+        <input type="hidden" name="category" value="{{ cat }}">
+      {% endfor %}
+
+      <main class="rb-main">
+
+        <aside class="rb-sidebar">
+          <div class="rb-filters-field" style="margin-bottom: 22px;">
+            <label class="rb-filters-label" for="id_q_desktop">البحث</label>
+            <input type="text" name="q" id="id_q_desktop" value="{{ query.q }}" placeholder="ابحث عن اسم المتن أو الدورة" class="rb-filters-input">
+          </div>
+          {% include "catalogue/_filters.html" with panel_id="desktop" %}
+        </aside>
+
+        <div class="rb-results-col">
+
+          <div class="rb-page-head">
+            <h1 class="rb-h1">الدورات</h1>
+            <p class="rb-catalogue-lede">تصفح الدورات المتاحة عبر المسارات والمواد الشرعية.</p>
+          </div>
+
+          <div class="rb-top-controls">
+            <input type="text" name="q" value="{{ query.q }}" placeholder="ابحث عن اسم المتن أو الدورة" class="rb-filters-input">
+            <a href="{{ filters_open_url }}" class="rb-filter-toggle-btn">
+              <i data-lucide="sliders-horizontal"></i>
+              {% if has_active_filters %}تصفية ({{ active_filter_chips|length }}){% else %}تصفية{% endif %}
+            </a>
+          </div>
+
+          {% if has_active_filters %}
+            <div class="rb-active-filters">
+              {% for chip in active_filter_chips %}
+                <a href="{{ chip.remove_url }}" class="rb-active-chip">
+                  {{ chip.label }}
+                  <i data-lucide="x"></i>
+                </a>
+              {% endfor %}
+              <a href="{{ clear_all_url }}" class="rb-clear-all-link">إزالة الكل</a>
+            </div>
+          {% endif %}
+
+          <div class="rb-toolbar">
+            <span class="rb-result-count">{{ result_count }} دورة</span>
+            <div class="rb-sort">
+              <span>ترتيب حسب</span>
+              <select name="sort" form="rb-filter-form" onchange="document.getElementById('rb-filter-form').submit();">
+                <option value="latest"{% if query.sort == "latest" %} selected{% endif %}>الأحدث</option>
+                <option value="popular"{% if query.sort == "popular" %} selected{% endif %}>الأكثر تسجيلاً</option>
+                <option value="level"{% if query.sort == "level" %} selected{% endif %}>حسب المستوى</option>
+              </select>
+            </div>
+          </div>
+
+          {% include "catalogue/_results_grid.html" %}
+
+        </div>
+
+      </main>
+    </form>
+
+    {# Filter drawer (tablet) / bottom sheet (mobile) — pure GET, no JS.
+       Opened via ?filters=open, closed by re-rendering without that param. #}
+    <a href="{{ filters_close_url }}" class="rb-drawer-scrim{% if filters_open %} is-open{% endif %}" aria-label="إغلاق التصفية"></a>
+    <div class="rb-drawer{% if filters_open %} is-open{% endif %}">
+      <div class="rb-drawer-head">
+        <span>التصفية</span>
+        <a href="{{ filters_close_url }}" class="rb-drawer-close">
+          <i data-lucide="x"></i>
+        </a>
+      </div>
+      <div class="rb-filters-field">
+        <label class="rb-filters-label" for="id_q_drawer">البحث</label>
+        <input type="text" name="q" form="rb-filter-form" id="id_q_drawer" value="{{ query.q }}" placeholder="ابحث عن اسم المتن أو الدورة" class="rb-filters-input">
+      </div>
+      {% include "catalogue/_filters.html" with panel_id="drawer" %}
+      <a href="{{ filters_close_url }}" class="rb-btn rb-btn--primary rb-btn--full">عرض النتائج</a>
+    </div>
+
+  </div>
+
+  <script>window.lucide && window.lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{# templates/catalogue/_results_grid.html
+   Results grid (or empty state) + "عرض المزيد" pagination link. `page_obj`
+   follows Django's Paginator conventions; `next_page_url` is precomputed by
+   the view (current query string with page=N) so this stays link-only. #}
+{% if courses %}
+  <div class="rb-card-grid">
+    {% for course in courses %}
+      <div class="rb-card">
+        <div class="rb-card-thumb">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          <span class="rb-badge rb-badge--accent rb-badge--category">{{ course.category }}</span>
+          {% if course.enrolled %}
+            <span class="rb-badge rb-badge--success rb-badge--enrolled">مسجّل</span>
+          {% endif %}
+        </div>
+        <div class="rb-card-body">
+          <span class="rb-card-title">{{ course.title }}</span>
+          <p class="rb-card-instructor">د. {{ course.instructor }}</p>
+          <p class="rb-card-meta">{{ course.lectures }} الدروس — {{ course.duration }}</p>
+          {% if course.track_note %}
+            <div class="rb-card-track-note">
+              <i data-lucide="{{ course.locked|yesno:'lock,route' }}"></i>
+              <span>{{ course.track_note }}</span>
+            </div>
+          {% endif %}
+          <div class="rb-card-cta">
+            {% if course.locked %}
+              <button class="rb-btn rb-btn--outline rb-btn--full" disabled>مقفلة</button>
+            {% elif course.enrolled %}
+              <a href="{% url 'course_lesson' course.slug %}" class="rb-btn rb-btn--outline rb-btn--full">متابعة</a>
+            {% else %}
+              <a href="{% url 'course_detail' course.slug %}" class="rb-btn rb-btn--primary rb-btn--full">سجل الآن</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if page_obj.has_next %}
+    <div class="rb-load-more">
+      <a href="{{ next_page_url }}" class="rb-btn rb-btn--outline">عرض المزيد</a>
+    </div>
+  {% endif %}
+{% else %}
+  <div class="rb-empty">
+    <i data-lucide="search-x" style="width:30px;height:30px;color:var(--text-muted);"></i>
+    <p class="rb-empty-title">لا توجد دورات مطابقة لهذا التصفية</p>
+    <p class="rb-empty-body">جرّب تعديل كلمة البحث أو إزالة بعض عوامل التصفية المطبّقة.</p>
+    <a href="{{ clear_all_url }}" class="rb-btn rb-btn--outline">إزالة عوامل التصفية</a>
+  </div>
+{% endif %}

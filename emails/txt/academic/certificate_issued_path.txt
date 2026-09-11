@@ -1,0 +1,27 @@
+{% comment %}Plain-text alternative — generated from academic/certificate_issued_path.html. Keep in sync with the HTML body.{% endcomment %}إصدار شهادة إتمام مسار
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+نُعلمك بإتمام جميع مقررات {{ path_title }}، وبإصدار شهادة إتمام المسار باسمك.
+
+شهادة إتمام مسار دراسي
+{{ path_title }}
+{{ student_name }}
+تاريخ الإصدار: {{ issue_date }}
+معرّف التحقق: {{ certificate_id }}
+
+عدد المقررات المُتمّة: {{ courses_count }}
+نوع الإجازة: {{ sanad_note }}
+
+عرض الشهادة:
+{{ certificate_url }}
+
+يمكن التحقق من صحة الشهادة عبر خدمة الاستعلام في المنصة باستخدام معرّف التحقق أعلاه.
+
+إن لم يعمل الزر أعلاه، فانسخ الرابط التالي وألصقه في متصفحك:
+{{ verify_url }}
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

@@ -1,0 +1,47 @@
+{% load static %}
+{# Native <details>/<summary>: fully operable and accessible with JS disabled.
+   landing.js layers on exclusive-open behaviour only.
+   Questions are the brief's; every ANSWER below was written here and needs
+   scholarly review — see README §9. #}
+<section class="section section--faq" id="faq" aria-labelledby="faq-title">
+  <div class="wrap">
+    <div class="section__grid">
+      <header class="section__head" data-reveal>
+        <span class="section__index" aria-hidden="true">٠٨</span>
+        <h2 class="section__title" id="faq-title">الأسئلة الشائعة</h2>
+      </header>
+    </div>
+
+    <div class="faq" data-accordion>
+      <details class="faq__item" data-reveal>
+        <summary class="faq__q"><span>هل الدراسة مجانيةٌ حقًّا؟</span><span class="faq__sign" aria-hidden="true"></span></summary>
+        <div class="faq__a"><p>نعم، الدراسة مجانيةٌ بالكامل. لا رسومَ تسجيل، ولا اشتراكات، ولا مقرراتٍ مدفوعة، ولا رسومَ لإصدار الشهادات.</p></div>
+      </details>
+
+      <details class="faq__item" data-reveal>
+        <summary class="faq__q"><span>هل أحتاج إلى معرفةٍ سابقةٍ لأبدأ؟</span><span class="faq__sign" aria-hidden="true"></span></summary>
+        <div class="faq__a"><p>لا. المسارات مرتبةٌ على التدرّج، يبدأ الطالب من المتون الصغار ثم يرتقي، وكلُّ مقررٍ يبيّن ما يشترطه قبله.</p></div>
+      </details>
+
+      <details class="faq__item" data-reveal>
+        <summary class="faq__q"><span>كيف تُعقد الاختبارات؟</span><span class="faq__sign" aria-hidden="true"></span></summary>
+        <div class="faq__a"><p>يُعقد اختبار المقرر في المدرسة بعد إتمام دروسه، ويؤدّيه الطالب في الوقت الذي يناسبه داخل المدة المقرَّرة.</p></div>
+      </details>
+
+      <details class="faq__item" data-reveal>
+        <summary class="faq__q"><span>هل يمكنني الدراسة في أوقاتي الخاصة؟</span><span class="faq__sign" aria-hidden="true"></span></summary>
+        <div class="faq__a"><p>نعم. الدروس مسجَّلة، يتابعها الطالب في وقته ويرجع إليها متى شاء.</p></div>
+      </details>
+
+      <details class="faq__item" data-reveal>
+        <summary class="faq__q"><span>ماذا لو التحقتُ بعد بداية الفصل؟</span><span class="faq__sign" aria-hidden="true"></span></summary>
+        <div class="faq__a"><p>يمكنك الالتحاق بعد بداية الفصل، وتتابع الدروس من أولها. وما فاتَك من مواعيد الاختبارات يُنظر فيه بحسب المدة الباقية من الفصل.</p></div>
+      </details>
+
+      <details class="faq__item" data-reveal>
+        <summary class="faq__q"><span>ما الفرق بين المقرر والمسار؟</span><span class="faq__sign" aria-hidden="true"></span></summary>
+        <div class="faq__a"><p>المقرر دراسةُ متنٍ واحدٍ بدروسه واختباره. والمسار جملةُ مقرراتٍ مرتبةٍ في علمٍ واحد، تُصدر له شهادةٌ عند إتمامه كلِّه.</p></div>
+      </details>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+{% comment %}Plain-text alternative — generated from auth/otp_code.html. Keep in sync with the HTML body.{% endcomment %}رمز التحقق
+السلام عليكم ورحمة الله وبركاته، {{ user_name }}
+استخدم الرمز التالي لإكمال العملية التي بدأتها في {{ site_name }}:
+{{ otp_code }}
+الرمز صالح لمدة {{ expiry_minutes }} دقيقة، ويصلح لاستخدام واحد فقط.
+لا تُشارك هذا الرمز مع أي شخص. إدارة {{ site_name }} لا تطلب منك رمز التحقق في أي حال.
+إن لم تكن أنت من طلب هذا الرمز، فيُرجى تغيير كلمة المرور ومراسلتنا على {{ support_email }}.
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

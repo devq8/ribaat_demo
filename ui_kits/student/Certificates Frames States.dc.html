@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EAE6DA; }
+    a { color: #4F6140; text-decoration: none; }
+    a:hover { color: #3E4E32; }
+  </style>
+</helmet>
+
+<section style="padding: 48px; font-family: var(--font-sans, sans-serif);">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; flex-wrap: wrap;">
+    <span style="font-family: var(--font-display, serif); font-size: 26px; font-weight: 700; color: #211F19;">Certificates — loading and error</span>
+    <span style="font-size: 13px; color: #635C48;">Light and dark.</span>
+    <a href="Certificates%20Frames.dc.html" style="font-size: 13px;">all boards</a>
+  </div>
+  <span style="display: block; font-size: 12px; color: #82795F; margin-bottom: 34px; max-width: 1100px;">Both states keep the header, so the student always knows where they are; only the record is affected.</span>
+
+  <div style="display: flex; flex-direction: column; gap: 56px;">
+
+    <div id="3a" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #3E6B7A; color: #FFFEFA; font-size: 13px; font-weight: 700;">3a</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Loading · Light and Dark</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1000px;">A polite live region announces <span dir="rtl">جارٍ تحميل سجلّ الوثائق</span>, so the state is never carried by the skeleton alone. The breathe animation is removed under <code>prefers-reduced-motion</code>.</span>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+        <div style="width: 640px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+          <dc-import name="StudentCertificates" state="loading" viewport="tablet" color-scheme="light" hint-size="640px,900px"></dc-import>
+        </div>
+        <div style="width: 640px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.18);">
+          <dc-import name="StudentCertificates" state="loading" viewport="tablet" color-scheme="dark" hint-size="640px,900px"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <div id="3b" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #3E6B7A; color: #FFFEFA; font-size: 13px; font-weight: 700;">3b</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Error · Light and Dark</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1000px;">Not a failure state for the student: it says the documents are safe and the fault is in the display, gives the status code with both dates, and offers a retry. No danger colour — the record is not in danger.</span>
+      <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+        <div style="width: 640px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+          <dc-import name="StudentCertificates" state="error" viewport="tablet" color-scheme="light" hint-size="640px,520px"></dc-import>
+        </div>
+        <div style="width: 640px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.18);">
+          <dc-import name="StudentCertificates" state="error" viewport="tablet" color-scheme="dark" hint-size="640px,520px"></dc-import>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+</body>
+</html>

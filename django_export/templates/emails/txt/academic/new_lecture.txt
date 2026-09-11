@@ -1,0 +1,18 @@
+{% comment %}Plain-text alternative — generated from academic/new_lecture.html. Keep in sync with the HTML body.{% endcomment %}نشر محاضرة جديدة
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+نُشرت محاضرة جديدة في مقرر {{ course_title }}.
+المحاضرة: {{ lecture_title }}
+المقرر: {{ course_title }}
+المدرّس: {{ teacher_name }}
+المدة: {{ lecture_duration }}
+تاريخ النشر: {{ published_at }}
+
+مشاهدة المحاضرة:
+{{ lecture_url }}
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

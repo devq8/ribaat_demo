@@ -1,0 +1,50 @@
+{% extends "landing/base.html" %}{% load static %}
+{# ---------------------------------------------------------------------------
+   Shell for every plain inner page: policies, terms, about-style documents,
+   anything that is a title and prose. Same header and footer as the landing
+   page; no hero, no ink field.
+
+   A page extending this fills:
+     {% block doc_eyebrow %}  small label above the title (optional)
+     {% block doc_title %}    the <h1>
+     {% block doc_lede %}     one paragraph under the title (optional)
+     {% block doc_meta %}     last-updated line etc. (optional)
+     {% block doc_index %}    the sticky side index — <ol> of links (optional)
+     {% block doc_content %}  the prose
+
+   The header/footer includes are overridden here with nav_root="/" so their
+   in-page anchors (#tracks, #faq …) resolve back to the landing page instead
+   of pointing at a section this page does not have.
+   --------------------------------------------------------------------------- #}
+
+{% block body_class %}page-doc{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{% static 'ribaat/css/page.css' %}">
+{% endblock %}
+
+{% block header %}{% include "landing/partials/header.html" with nav_root="/" %}{% endblock %}
+{% block footer %}{% include "landing/partials/footer.html" with nav_root="/" %}{% endblock %}
+
+{% block content %}
+<article class="doc">
+
+  <div class="doc__band">
+    <header class="wrap doc__head">
+      {% block doc_eyebrow %}{% endblock %}
+      <h1 class="doc__title">{% block doc_title %}{% endblock %}</h1>
+      {% block doc_lede %}{% endblock %}
+      {% block doc_meta %}{% endblock %}
+    </header>
+  </div>
+
+  <div class="wrap doc__body">
+    <div class="prose">
+      {% block doc_content %}{% endblock %}
+    </div>
+
+    {% block doc_index %}{% endblock %}
+  </div>
+
+</article>
+{% endblock %}

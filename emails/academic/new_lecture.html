@@ -1,0 +1,26 @@
+{% extends "emails/base.html" %}
+{% comment %}9. نشر محاضرة جديدة — new lecture published{% endcomment %}
+{% block title %}نشر محاضرة جديدة{% endblock %}
+{% block preheader %}نُشرت محاضرة جديدة في أحد مقرراتك المسجّلة.{% endblock %}
+{% block content %}
+<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+  <tr><td class="e-txt e-h1" style="direction:rtl;text-align:right;font-family:Amiri,'Traditional Arabic','Times New Roman',serif;font-size:28px;line-height:42px;mso-line-height-rule:exactly;font-weight:700;color:#211F19;padding:0 0 14px;">نشر محاضرة جديدة</td></tr>
+  <tr><td style="padding:0 0 20px;">{% include "emails/partials/rule.html" %}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">السلام عليكم ورحمة الله وبركاته، {{ student_name }}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">نُشرت محاضرة جديدة في مقرر {{ course_title }}.</td></tr>
+  <tr><td style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" class="e-sunk" bgcolor="#F7F3E8" style="width:100%;background-color:#F7F3E8;border:1px solid #E2DAC5;border-radius:10px;">
+      <tr><td style="padding:6px 20px;">
+        <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+          {% include "emails/partials/datarow.html" with label="المحاضرة" value=lecture_title %}
+          {% include "emails/partials/datarow.html" with label="المقرر" value=course_title %}
+          {% include "emails/partials/datarow.html" with label="المدرّس" value=teacher_name %}
+          {% include "emails/partials/datarow.html" with label="المدة" value=lecture_duration %}
+          {% include "emails/partials/datarow.html" with label="تاريخ النشر" value=published_at %}
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td align="center" style="padding:6px 0 22px;">{% include "emails/partials/button.html" with url=lecture_url label="مشاهدة المحاضرة" %}</td></tr>
+</table>
+{% endblock %}

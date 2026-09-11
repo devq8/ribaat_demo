@@ -1,0 +1,18 @@
+{% comment %}Plain-text alternative — generated from academic/admin_announcement.html. Keep in sync with the HTML body.{% endcomment %}{{ announcement_title }}
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+{{ announcement_body }}
+الجهة المُصدِرة: {{ issued_by }}
+تاريخ الإعلان: {{ announced_at }}
+يخصّ: {{ announcement_scope }}
+
+قراءة الإعلان في المنصة:
+{{ announcement_url }}
+
+وصلك هذا الإعلان لارتباطه بمقرر أو مسار مسجّل في حسابك.
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ribaat Landing — responsive audit</title>
+<style>
+  body { margin: 0; background: #17150f; color: #e8e2d4; font: 13px/1.5 ui-monospace, monospace; padding: 20px; }
+  h2 { font: 600 15px/1 ui-sans-serif, sans-serif; margin: 24px 0 8px; color: #b9c79a; }
+  .ok { color: #8fbf6f; }
+  .bad { color: #e08a6a; }
+  ul { margin: 4px 0 0; padding-inline-start: 18px; }
+  iframe { position: fixed; inset-block-start: -9999px; }
+</style>
+</head>
+<body>
+<div id="out">running…</div>
+<script>
+const WIDTHS = [360, 390, 430, 600, 768, 834, 1024, 1280];
+const out = document.getElementById('out');
+const results = [];
+
+function audit(doc, win, w) {
+  const de = doc.documentElement;
+  const issues = [];
+  const overflow = de.scrollWidth - de.clientWidth;
+  if (overflow > 1) issues.push(`horizontal overflow: ${overflow}px (scrollWidth ${de.scrollWidth} vs ${de.clientWidth})`);
+
+  // widest offenders
+  const wide = [];
+  doc.querySelectorAll('body *').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.width === 0) return;
+    const right = r.right, left = r.left;
+    if (right > w + 1 || left < -1) {
+      const cs = win.getComputedStyle(el);
+      if (cs.overflowX === 'auto' || cs.overflowX === 'scroll') return;
+      let p = el.parentElement, skip = false;
+      while (p) { const pc = win.getComputedStyle(p); if (pc.overflowX === 'auto' || pc.overflowX === 'scroll' || pc.overflow === 'hidden') { skip = true; break; } p = p.parentElement; }
+      if (skip) return;
+      wide.push(`${el.tagName.toLowerCase()}.${(el.className||'').toString().split(' ')[0]} [${Math.round(left)}→${Math.round(right)}]`);
+    }
+  });
+  if (wide.length) issues.push('past viewport: ' + wide.slice(0, 8).join(', '));
+
+  // hit targets
+  const small = [];
+  doc.querySelectorAll('a, button, summary').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) return;
+    if (el.closest('[hidden]')) return;
+    if (r.height < 40) small.push(`${el.tagName.toLowerCase()}"${(el.textContent||'').trim().slice(0,14)}" ${Math.round(r.width)}×${Math.round(r.height)}`);
+  });
+  if (small.length && w < 900) issues.push(`under 40px tall (${small.length}): ` + small.slice(0, 8).join(', '));
+
+  // font sizes
+  const tiny = new Set();
+  doc.querySelectorAll('p, span, li, a, h1, h2, h3, dt, dd, cite').forEach(el => {
+    if (!el.textContent.trim()) return;
+    const fs = parseFloat(win.getComputedStyle(el).fontSize);
+    if (fs < 12) tiny.add(`${el.tagName.toLowerCase()}.${(el.className||'').toString().split(' ')[0]} ${fs}px`);
+  });
+  if (tiny.size) issues.push('below 12px: ' + [...tiny].slice(0, 6).join(', '));
+
+  // hero geometry
+  const hero = doc.querySelector('.hero');
+  const heroInfo = hero ? `hero ${Math.round(hero.getBoundingClientRect().height)}px tall` : 'no hero';
+  const actions = doc.querySelectorAll('.hero__slide.is-current .hero__actions .btn');
+  const actInfo = [...actions].map(b => { const r = b.getBoundingClientRect(); return `${Math.round(r.width)}×${Math.round(r.height)}`; }).join(' / ');
+
+  return { issues, notes: [heroInfo, actInfo && 'hero buttons ' + actInfo].filter(Boolean) };
+}
+
+function run(i) {
+  if (i >= WIDTHS.length) { render(); return; }
+  const w = WIDTHS[i];
+  const f = document.createElement('iframe');
+  f.width = w; f.height = 900; f.src = '../Ribaat Landing.preview.html';
+  f.onload = () => {
+    setTimeout(() => {
+      let r;
+      try { r = audit(f.contentDocument, f.contentWindow, w); }
+      catch (e) { r = { issues: ['audit failed: ' + e.message], notes: [] }; }
+      results.push({ w, ...r });
+      f.remove();
+      run(i + 1);
+    }, 700);
+  };
+  document.body.appendChild(f);
+}
+
+function render() {
+  out.innerHTML = results.map(r =>
+    `<h2>${r.w}px ${r.issues.length ? '<span class="bad">✕ ' + r.issues.length + '</span>' : '<span class="ok">✓ clean</span>'}</h2>` +
+    (r.issues.length ? '<ul class="bad">' + r.issues.map(x => `<li>${x}</li>`).join('') + '</ul>' : '') +
+    (r.notes.length ? '<ul>' + r.notes.map(x => `<li>${x}</li>`).join('') + '</ul>' : '')
+  ).join('');
+}
+run(0);
+</script>
+</body>
+</html>

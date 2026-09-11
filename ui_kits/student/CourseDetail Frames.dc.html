@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EAE6DA; }
+    a { color: #4F6140; text-decoration: none; }
+    a:hover { color: #3E4E32; }
+  </style>
+</helmet>
+
+<section style="padding: 48px; font-family: var(--font-sans, sans-serif);">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px;">
+    <span style="font-family: var(--font-display, serif); font-size: 26px; font-weight: 700; color: #211F19;">Option A — responsive set</span>
+    <span style="font-size: 13px; color: #635C48;">Two-column, enrollment-first. Hero band tinted in the brand's own soft olive; sticky enrol rail with the teacher card beneath it.</span>
+  </div>
+  <span style="display: block; font-size: 12px; color: #82795F; margin-bottom: 32px;">Tweaks: hero colour (soft olive / warm sand / deep ink / olive brand), sticky rail on-off, teacher placement, enrollment state, free-preview badges.</span>
+
+  <div style="display: flex; gap: 56px; align-items: flex-start;">
+
+    <div id="4a" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">A1</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — prerequisites met</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F;">1360px. Hero reserves the rail gutter on the inline-end side; enrol card overlaps the band.</span>
+      <div style="width: 1360px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="CourseDetail A" viewport="desktop" color-scheme="light" demo-state="prerequisites met" hero-style="{{ heroStyle }}" sticky-rail="{{ stickyRail }}" teacher-placement="{{ teacherPlacement }}" hint-size="1360px,2600px"></dc-import>
+      </div>
+    </div>
+
+    <div id="4b" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">A2</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Dark — prerequisite missing</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F;">Enrol replaced by the gating note + link to the required course.</span>
+      <div style="width: 1360px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="CourseDetail A" viewport="desktop" color-scheme="dark" demo-state="prerequisite missing" hero-style="{{ heroStyle }}" sticky-rail="{{ stickyRail }}" teacher-placement="{{ teacherPlacement }}" hint-size="1360px,2600px"></dc-import>
+      </div>
+    </div>
+
+    <div id="4c" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">A3</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — no prerequisites</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F;">Prerequisites section states «لا توجد متطلبات مسبقة» plainly instead of being omitted.</span>
+      <div style="width: 1360px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="CourseDetail A" viewport="desktop" color-scheme="light" demo-state="no prerequisites" hero-style="{{ heroStyle }}" sticky-rail="{{ stickyRail }}" teacher-placement="{{ teacherPlacement }}" hint-size="1360px,2600px"></dc-import>
+      </div>
+    </div>
+
+    <div id="4d" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">A4</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — already enrolled</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F;">Progress bar + متابعة الدراسة in place of the enrol action.</span>
+      <div style="width: 1360px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="CourseDetail A" viewport="desktop" color-scheme="light" demo-state="already enrolled" hero-style="{{ heroStyle }}" sticky-rail="{{ stickyRail }}" teacher-placement="{{ teacherPlacement }}" hint-size="1360px,2600px"></dc-import>
+      </div>
+    </div>
+
+    <div id="4e" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">A5</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Tablet · Light — 834px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F;">Rail collapses: enrol box becomes a non-sticky horizontal card above the content; hamburger nav.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="CourseDetail A" viewport="tablet" color-scheme="light" demo-state="prerequisites met" hero-style="{{ heroStyle }}" teacher-placement="in main column" hint-size="834px,2600px"></dc-import>
+      </div>
+    </div>
+
+    <div id="4f" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">A6</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Tablet · Dark</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F;">Same tablet layout on warm dark surfaces.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="CourseDetail A" viewport="tablet" color-scheme="dark" demo-state="prerequisites met" hero-style="{{ heroStyle }}" teacher-placement="in main column" hint-size="834px,2600px"></dc-import>
+      </div>
+    </div>
+
+    <div id="4g" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #4F6140; color: #FFFEFA; font-size: 13px; font-weight: 700;">A7</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile · Light — 390px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F;">Single column, cover inside the hero, persistent bottom enrol bar (tap the title for the full sheet). Scrolls inside the frame.</span>
+      <div style="width: 390px; height: 844px; position: relative; overflow: hidden; transform: translateZ(0); border: 1px solid #C9BFA6; border-radius: 24px; box-shadow: 0 2px 12px rgba(33,31,25,0.10); background: #FBF9F3;">
+        <div style="height: 100%; overflow-y: auto;">
+          <dc-import name="CourseDetail A" viewport="mobile" color-scheme="light" demo-state="prerequisites met" hero-style="{{ heroStyle }}" hint-size="390px,844px"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <div id="4h" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #4F6140; color: #FFFEFA; font-size: 13px; font-weight: 700;">A8</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile · Dark — no prerequisites</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F;">Dark mobile with the no-requirement state.</span>
+      <div style="width: 390px; height: 844px; position: relative; overflow: hidden; transform: translateZ(0); border: 1px solid #C9BFA6; border-radius: 24px; box-shadow: 0 2px 12px rgba(33,31,25,0.10); background: #201E18;">
+        <div style="height: 100%; overflow-y: auto;">
+          <dc-import name="CourseDetail A" viewport="mobile" color-scheme="dark" demo-state="no prerequisites" hero-style="{{ heroStyle }}" hint-size="390px,844px"></dc-import>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: 1600, &quot;height&quot;: 1000},
+  &quot;heroStyle&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;soft olive&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;soft olive&quot;, &quot;warm sand&quot;, &quot;deep ink&quot;, &quot;olive brand&quot;], &quot;section&quot;: &quot;Option A&quot;},
+  &quot;stickyRail&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Option A&quot;},
+  &quot;teacherPlacement&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;under enrollment box&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;under enrollment box&quot;, &quot;in main column&quot;], &quot;section&quot;: &quot;Option A&quot;}
+}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      heroStyle: this.props.heroStyle || "soft olive",
+      stickyRail: this.props.stickyRail !== false,
+      teacherPlacement: this.props.teacherPlacement || "under enrollment box",
+    };
+  }
+}
+</script>
+</body>
+</html>

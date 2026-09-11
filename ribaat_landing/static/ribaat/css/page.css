@@ -1,0 +1,193 @@
+/* ==========================================================================
+   Ribaat — inner pages (documents, policies, anything that is prose)
+   Loaded *in addition to* landing.css, which carries the shared shell: header,
+   footer, buttons, .wrap, tokens, resets. Nothing landing-specific is here and
+   nothing here is needed by the landing page.
+   Same rules as landing.css: tokens only, logical properties only, no colour
+   transitions (README §12), no spacing value outside the DS scale (there is no
+   --space-7, README §13).
+   ========================================================================== */
+
+.page-doc {
+  /* The bar is sticky on every page that inherits the shell, so in-page anchors
+     must clear it — same value the landing page uses. */
+  scroll-padding-block-start: 6rem;
+}
+
+/* The bar sits over the head band at rest, so it takes the band's surface and
+   there is no seam; past it, the shell's own scrolled state (paper + hairline)
+   applies. Written with the .page-doc ancestor so it outranks the shell rule. */
+.page-doc .site-header { background: var(--surface-sunken); }
+.page-doc .site-header.is-scrolled,
+html:not(.js) .page-doc .site-header {
+  background: var(--surface-page);
+  border-block-end-color: var(--border-subtle);
+}
+
+/* --- Document head --------------------------------------------------------
+   A sunken band under the header. It gives the page the tonal step the landing
+   page gets from its ink field, without pretending a policy page has a hero. */
+.doc__band {
+  background: var(--surface-sunken);
+  border-block-end: var(--hairline);
+}
+.doc__head {
+  padding-block: clamp(56px, 8vw, 104px) clamp(32px, 4vw, 56px);
+}
+.doc__eyebrow {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-accent);
+  margin-block-end: var(--space-4);
+}
+.doc__title {
+  font-size: var(--display-2);
+  color: var(--text-primary);
+}
+.doc__lede {
+  max-inline-size: 54ch;
+  margin-block-start: var(--space-5);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+.doc__meta {
+  margin-block-start: var(--space-8);
+  padding-block-start: var(--space-5);
+  border-block-start: var(--hairline);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* --- Body: prose, with an index beside it on wide viewports --------------- */
+.doc__body {
+  display: grid;
+  gap: clamp(40px, 5vw, 72px);
+  padding-block: clamp(48px, 7vw, 88px) clamp(72px, 10vw, 128px);
+}
+@media (min-width: 900px) {
+  .doc__body {
+    /* Prose first in the source and on the inline-start (right, in RTL); the
+       index sits on the inline-end and pins. */
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    align-items: start;
+  }
+}
+
+.doc__index {
+  position: sticky;
+  inset-block-start: 6rem;
+  align-self: start;
+}
+@media (max-width: 899px) {
+  .doc__index {
+    position: static;
+    order: -1;
+    padding-block-end: var(--space-6);
+    border-block-end: var(--hairline);
+  }
+}
+.doc__index-heading {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  margin-block-end: var(--space-4);
+}
+.doc__index ol {
+  display: grid;
+  gap: var(--space-1);
+  counter-reset: none;
+}
+.doc__index a {
+  display: flex;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  font-size: 0.9375rem;
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.doc__index a:hover { color: var(--text-primary); }
+.doc__index .num { color: var(--text-muted); font-size: var(--text-xs); padding-block-start: 0.25em; }
+
+/* --- Prose ---------------------------------------------------------------- */
+.prose {
+  max-inline-size: 68ch;
+  color: var(--text-secondary);
+}
+.prose > * + * { margin-block-start: var(--space-5); }
+
+.prose h2 {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  align-items: baseline;
+  font-size: var(--display-3);
+  color: var(--text-primary);
+  margin-block-start: var(--space-12);
+  padding-block-start: var(--space-6);
+  border-block-start: var(--hairline);
+  scroll-margin-block-start: 6rem;
+}
+.prose > h2:first-child { margin-block-start: 0; padding-block-start: 0; border-block-start: 0; }
+.prose h2 .num {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  color: var(--text-secondary);
+}
+
+.prose h3 {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-block-start: var(--space-8);
+}
+
+.prose p, .prose li, .prose dd { line-height: var(--leading-relaxed); }
+.prose strong { color: var(--text-primary); font-weight: var(--weight-semibold); }
+
+.prose ul { display: grid; gap: var(--space-3); padding-inline-start: var(--space-6); }
+.prose li { position: relative; }
+.prose li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(var(--space-6) * -1);
+  inset-block-start: 0.85em;
+  inline-size: var(--space-4);
+  block-size: 1px;
+  background: var(--border-default);
+}
+
+/* Contact / key-value pairs at the foot of a policy. */
+.prose dl {
+  display: grid;
+  gap: var(--space-3) var(--space-5);
+  padding: var(--space-6);
+  background: var(--surface-card);
+  border: var(--hairline);
+  border-radius: var(--radius-lg);
+}
+@media (min-width: 560px) {
+  .prose dl { grid-template-columns: 9rem 1fr; }
+}
+.prose dt { font-size: var(--text-sm); color: var(--text-secondary); }
+.prose dd { color: var(--text-primary); }
+
+/* --- Coarse pointers: same rule as the shell (README §40) ----------------- */
+@media (max-width: 899px), (hover: none), (pointer: coarse) {
+  .doc__index a { min-block-size: 44px; align-items: center; }
+}
+
+/* --- Print ----------------------------------------------------------------
+   Policies get printed and attached to things. Drop the furniture, keep the
+   text. */
+@media print {
+  .site-header, .site-footer, .doc__index, .skip-link { display: none !important; }
+  .doc__band { background: none; border: 0; }
+  .doc__head { padding-block: 0 var(--space-6); }
+  .doc__body { display: block; padding-block: 0; }
+  .prose { max-inline-size: none; }
+  .prose h2 { break-after: avoid; }
+}

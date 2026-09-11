@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors-dark.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); }
+    .ribaat-navscroll::-webkit-scrollbar { display: none; }
+  </style>
+</helmet>
+
+<div dir="rtl" data-theme="{{ themeAttr }}" data-screen-label="Student detail — {{ frameLabel }}" style="background: var(--surface-page); min-height: 100vh; font-family: var(--font-sans); color: var(--text-primary); display: flex; align-items: stretch;">
+
+  <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px clamp(12px, 2.4vw, 28px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle);">
+      <div style="display: flex; align-items: center; gap: 18px; min-width: 0; flex: 1 1 auto;">
+        <div style="display: flex; align-items: center; gap: 10px; flex: none;">
+          <img src="{{ logoSrc }}" alt="رباط الحنابلة" style="height: 26px; width: auto; filter: {{ logoFilter }};">
+          <sc-if value="{{ showRoleBadge }}" hint-placeholder-val="{{ true }}">
+            <span style="display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: var(--radius-pill); background: var(--ribaat-brown-100); color: var(--text-accent); font-size: var(--text-xs); font-weight: var(--weight-semibold); white-space: nowrap;">لوحة المعلم</span>
+          </sc-if>
+        </div>
+        <nav class="ribaat-navscroll" style="display: flex; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0; overflow-x: auto; scrollbar-width: none;">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="8">
+            <a href="{{ item.href }}" style-hover="background: {{ item.hoverBg }};" style="padding: 7px 11px; border-radius: var(--radius-sm); background: {{ item.bg }}; color: {{ item.fg }}; font-size: var(--text-sm); font-weight: {{ item.weight }}; white-space: nowrap;">{{ item.label }}</a>
+          </sc-for>
+        </nav>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; flex: none;">
+        <button aria-label="التنبيهات" style="position: relative; width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); cursor: pointer;">
+          <i data-lucide="bell" style="width: 17px; height: 17px;"></i>
+          <span style="position: absolute; top: -5px; inset-inline-start: -5px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: var(--radius-pill); background: var(--surface-accent); color: var(--text-on-accent); font-size: 10px; font-weight: var(--weight-bold); display: inline-flex; align-items: center; justify-content: center;">12</span>
+        </button>
+        <button aria-label="الحساب" style="display: flex; align-items: center; gap: 9px; background: none; border: none; padding: 0; cursor: pointer;">
+          <sc-if value="{{ showHeaderName }}" hint-placeholder-val="{{ true }}">
+            <span style="text-align: end;">
+              <span style="display: block; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary); white-space: nowrap;">د. {{ teacherName }}</span>
+              <span style="display: block; font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap;">معلّم · مشرف مسار</span>
+            </span>
+          </sc-if>
+          <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="{{ teacherName }}" size="sm" hint-size="32px,32px"></x-import>
+        </button>
+      </div>
+    </header>
+
+    <main style="flex: 1; padding: {{ mainPadding }}; display: flex; flex-direction: column; gap: 16px; max-width: 1320px; width: 100%; margin-inline: auto;">
+
+      <a href="TeacherStudents.dc.html" style="display: inline-flex; align-items: center; gap: 7px; font-size: var(--text-sm); font-weight: var(--weight-semibold); align-self: flex-start;">
+        <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
+        <span>رجوع إلى قائمة الطلاب</span>
+      </a>
+
+      <section style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden;">
+        <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 18px 20px;">
+          <div style="display: flex; align-items: center; gap: 14px; min-width: 0;">
+            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="{{ studentName }}" size="lg" hint-size="56px,56px"></x-import>
+            <div style="min-width: 0;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+                <h1 style="margin: 0; font-family: var(--font-display); font-size: {{ h1Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">{{ studentName }}</h1>
+                <x-import component-from-global-scope="RibaatDesignSystem_790e93.Badge" tone="brand" hint-size="auto,24px">{{ trackLabel }}</x-import>
+                <span style="display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: var(--radius-pill); background: var(--ribaat-green-100); color: var(--text-brand); font-size: var(--text-xs); font-weight: var(--weight-semibold);">
+                  <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--ribaat-green-500);"></span>
+                  نشط
+                </span>
+              </div>
+              <p style="margin: 7px 0 0; font-size: var(--text-sm); color: var(--text-secondary);">{{ studentEmail }} · رقم الطالب {{ studentId }}</p>
+              <p style="margin: 4px 0 0; font-size: var(--text-xs); color: var(--text-muted); text-wrap: pretty;">{{ tenureLine }}</p>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; flex: none;">
+            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,36px"><i data-lucide="message-square" style="width: 14px; height: 14px;"></i>مراسلة الطالب</x-import>
+            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="ghost" size="sm" hint-size="auto,36px"><i data-lucide="user-cog" style="width: 14px; height: 14px;"></i>الحساب في المستخدمون</x-import>
+          </div>
+        </div>
+        <div style="border-top: 1px solid var(--border-subtle); background: var(--surface-sunken);">
+          <sc-for list="{{ detailGroups }}" as="grp" hint-placeholder-count="3">
+            <div style="padding: 12px 20px 14px; border-top: 1px solid var(--border-subtle);">
+              <p style="margin: 0 0 10px; font-size: var(--text-xs); font-weight: var(--weight-semibold); letter-spacing: 0; color: var(--text-muted);">{{ grp.title }}</p>
+              <div style="display: grid; grid-template-columns: {{ detailCols }}; gap: 14px 18px;">
+                <sc-for list="{{ grp.items }}" as="d" hint-placeholder-count="4">
+                  <div style="display: flex; align-items: flex-start; gap: 9px; min-width: 0;">
+                    <span style="width: 26px; height: 26px; flex: none; border-radius: var(--radius-sm); background: var(--surface-card); border: 1px solid var(--border-subtle); color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center;">
+                      <i data-lucide="{{ d.icon }}" style="width: 14px; height: 14px;"></i>
+                    </span>
+                    <div style="min-width: 0;">
+                      <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted);">{{ d.label }}</p>
+                      <p style="margin: 2px 0 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: {{ d.color }}; text-wrap: pretty;"><span dir="{{ d.dir }}" style="unicode-bidi: isolate;">{{ d.value }}</span></p>
+                      <p style="margin: 1px 0 0; font-size: var(--text-xs); color: var(--text-muted); text-wrap: pretty;">{{ d.hint }}</p>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 14px 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px;">
+        <div style="min-width: 0;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+            <span style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-sm); background: var(--ribaat-brown-100); color: var(--text-accent); display: inline-flex; align-items: center; justify-content: center;">
+              <i data-lucide="calendar-range" style="width: 17px; height: 17px;"></i>
+            </span>
+            <h2 style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">{{ termName }}</h2>
+            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Badge" tone="{{ termTone }}" hint-size="auto,24px">{{ termStatus }}</x-import>
+          </div>
+          <p style="margin: 6px 0 0; font-size: var(--text-xs); color: var(--text-muted); text-wrap: pretty;">{{ termRange }} · {{ termWeeks }}</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 22px;">
+          <sc-for list="{{ termStats }}" as="st" hint-placeholder-count="4">
+            <div style="min-width: 0;">
+              <p style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); line-height: 1.15; color: {{ st.color }}; white-space: nowrap;">{{ st.value }}</p>
+              <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap;">{{ st.label }}</p>
+            </div>
+          </sc-for>
+        </div>
+        <div style="flex: 0 1 240px; min-width: 200px;">
+          <x-import component-from-global-scope="RibaatDesignSystem_790e93.Select" label="الفصل الدراسي" options="{{ termOptions }}" value="{{ termValue }}" on-change="{{ setTerm }}" hint-size="100%,68px"></x-import>
+        </div>
+      </section>
+
+      <div style="display: grid; grid-template-columns: {{ gridCols }}; align-items: start; gap: 16px;">
+
+        <section style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px 6px; min-width: 0;">
+          <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px;">
+            <h2 style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">دورات هذا الفصل</h2>
+            <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ coursesSummary }}</span>
+          </div>
+          <sc-for list="{{ courses }}" as="c" hint-placeholder-count="4">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 14px 0; border-top: 1px solid var(--border-subtle);">
+              <div style="flex: 1 1 230px; min-width: 0;">
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 9px;">
+                  <span style="font-family: var(--font-display); font-size: var(--text-md); font-weight: var(--weight-bold); color: var(--text-primary);">{{ c.title }}</span>
+                  <x-import component-from-global-scope="RibaatDesignSystem_790e93.Badge" tone="{{ c.tone }}" hint-size="auto,24px">{{ c.status }}</x-import>
+                </div>
+                <p style="margin: 5px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ c.meta }}</p>
+              </div>
+              <div style="flex: 1 1 260px; min-width: 200px;">
+                <x-import component-from-global-scope="RibaatDesignSystem_790e93.ProgressBar" value="{{ c.progress }}" label="{{ c.progressLabel }}" hint-size="100%,26px"></x-import>
+                <p style="margin: 6px 0 0; font-size: var(--text-xs); color: var(--text-secondary);">{{ c.activity }}</p>
+              </div>
+            </div>
+          </sc-for>
+          <p style="margin: 0; padding: 13px 0 14px; border-top: 1px solid var(--border-subtle); font-size: var(--text-xs); color: var(--text-muted); text-wrap: pretty;">{{ coursesFootnote }}</p>
+        </section>
+
+        <div style="display: flex; flex-direction: column; gap: 16px; min-width: 0;">
+
+          <section style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px 8px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px;">
+              <h2 style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">درجات هذا الفصل</h2>
+              <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ gradesSummary }}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; margin-top: 12px; padding: 12px 14px; border-radius: var(--radius-md); background: var(--surface-sunken); border: 1px solid var(--border-subtle);">
+              <div style="min-width: 0; flex: 1;">
+                <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted);">معدّل درجات الفصل</p>
+                <p style="margin: 3px 0 0; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-bold); line-height: 1; color: var(--text-primary);">{{ termAverage }}</p>
+              </div>
+              <div style="flex: none; text-align: end;">
+                <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted);">اجتاز</p>
+                <p style="margin: 3px 0 0; font-size: var(--text-md); font-weight: var(--weight-semibold); color: var(--state-success-fg); white-space: nowrap;">{{ passedLine }}</p>
+              </div>
+            </div>
+            <sc-for list="{{ grades }}" as="g" hint-placeholder-count="5">
+              <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border-subtle); margin-top: 12px;">
+                <span style="flex: none; width: 56px; height: 42px; border-radius: var(--radius-sm); background: {{ g.scoreBg }}; color: {{ g.scoreFg }}; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: var(--text-md); font-weight: var(--weight-bold);">{{ g.score }}</span>
+                <div style="min-width: 0; flex: 1;">
+                  <span style="display: block; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary); text-wrap: pretty;">{{ g.course }}</span>
+                  <span style="display: block; margin-top: 2px; font-size: var(--text-xs); color: var(--text-muted);">{{ g.title }} · {{ g.date }}</span>
+                  <span style="display: block; margin-top: 4px; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: {{ g.resultColor }};">{{ g.resultLine }}</span>
+                </div>
+              </div>
+            </sc-for>
+            <p style="margin: 0; padding: 10px 0 12px; border-top: 1px solid var(--border-subtle); font-size: var(--text-xs); color: var(--text-muted); text-wrap: pretty;">{{ gradesFootnote }}</p>
+          </section>
+
+          <section style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px 18px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 12px;">
+              <h2 style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">الشهادات</h2>
+              <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ certsSummary }}</span>
+            </div>
+            <sc-if value="{{ hasCerts }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <sc-for list="{{ certificates }}" as="cert" hint-placeholder-count="2">
+                  <div style="border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-sunken); padding: 12px 14px; display: flex; flex-direction: column; gap: 9px;">
+                    <div style="display: flex; align-items: flex-start; gap: 11px;">
+                      <span style="width: 30px; height: 30px; flex: none; border-radius: var(--radius-sm); background: var(--ribaat-brown-100); color: var(--text-accent); display: inline-flex; align-items: center; justify-content: center;">
+                        <i data-lucide="award" style="width: 16px; height: 16px;"></i>
+                      </span>
+                      <div style="min-width: 0;">
+                        <p style="margin: 0; font-family: var(--font-display); font-size: var(--text-md); font-weight: var(--weight-bold); color: var(--text-primary); text-wrap: pretty;">{{ cert.title }}</p>
+                        <p style="margin: 3px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ cert.kind }} · {{ cert.term }} · صدرت {{ cert.issued }}</p>
+                      </div>
+                    </div>
+                    <p style="margin: 0; font-size: var(--text-xs); color: var(--text-secondary); text-wrap: pretty;">{{ cert.note }}</p>
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;">
+                      <span style="font-size: var(--text-xs); color: var(--text-muted);">رقم الشهادة {{ cert.serial }}</span>
+                      <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="ghost" size="sm" hint-size="auto,32px"><i data-lucide="external-link" style="width: 14px; height: 14px;"></i>استعلام</x-import>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <p style="margin: 12px 0 0; font-size: var(--text-xs); color: var(--text-muted); text-wrap: pretty;">{{ certsFootnote }}</p>
+            </sc-if>
+            <sc-if value="{{ noCerts }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 24px 12px 20px;">
+                <span style="width: 40px; height: 40px; border-radius: 50%; background: var(--surface-sunken); color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center;">
+                  <i data-lucide="award" style="width: 19px; height: 19px;"></i>
+                </span>
+                <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">لم تصدر شهادات بعد</p>
+                <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted); text-wrap: pretty; max-width: 300px;">تصدر الشهادة تلقائياً بعد إكمال دروس الدورة واجتياز اختبارها النهائي.</p>
+              </div>
+            </sc-if>
+          </section>
+
+        </div>
+      </div>
+
+      <section style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px 8px;">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px;">
+          <h2 style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">الفصول السابقة</h2>
+          <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ historySummary }}</span>
+        </div>
+        <sc-for list="{{ history }}" as="h" hint-placeholder-count="2">
+          <div onClick="{{ h.open }}" style-hover="background: var(--surface-sunken);" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 13px 8px; margin: 0 -8px; border-top: 1px solid var(--border-subtle); background: {{ h.bg }}; border-radius: var(--radius-sm); cursor: pointer;">
+            <div style="flex: 1 1 220px; min-width: 0;">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 9px;">
+                <span style="font-size: var(--text-md); font-weight: var(--weight-semibold); color: {{ h.nameColor }};">{{ h.name }}</span>
+                <x-import component-from-global-scope="RibaatDesignSystem_790e93.Badge" tone="success" hint-size="auto,24px">{{ h.status }}</x-import>
+              </div>
+              <p style="margin: 4px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ h.range }}</p>
+            </div>
+            <span style="flex: 0 1 160px; font-size: var(--text-sm); color: var(--text-secondary);">{{ h.coursesLine }}</span>
+            <span style="flex: 0 1 150px; font-size: var(--text-sm); color: var(--text-secondary);">معدّل الدرجات {{ h.average }}</span>
+            <span style="flex: 0 1 190px; font-size: var(--text-sm); color: var(--text-secondary);">{{ h.certLine }}</span>
+            <i data-lucide="chevron-left" style="width: 16px; height: 16px; color: var(--text-muted); flex: none;"></i>
+          </div>
+        </sc-for>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1250},&quot;studentName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;سالم العتيبي&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;teacherName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;عبد العزيز العيدان&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;viewport&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;\&quot;desktop\&quot; | \&quot;tablet\&quot; | \&quot;mobile\&quot;&quot;},&quot;colorScheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;\&quot;light\&quot; | \&quot;dark\&quot;&quot;},&quot;initialTerm&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1447-3&quot;,&quot;1447-2&quot;,&quot;1447-1&quot;],&quot;default&quot;:&quot;1447-3&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;الحالات&quot;},&quot;certificatesEmpty&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;الحالات&quot;}}">
+const AR_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+
+function hijriParts(d) {
+  try {
+    const fmt = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", { day: "numeric", month: "numeric", year: "numeric" });
+    const p = {};
+    fmt.formatToParts(d).forEach((x) => { p[x.type] = x.value; });
+    const names = ["محرم", "صفر", "ربيع الأول", "ربيع الآخر", "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
+    return { day: p.day, monthName: names[parseInt(p.month, 10) - 1] || "", year: p.year };
+  } catch (e) {
+    return { day: "", monthName: "", year: "" };
+  }
+}
+
+function fullDate(iso) {
+  const p = iso.split("-").map((x) => parseInt(x, 10));
+  const d = new Date(p[0], p[1] - 1, p[2]);
+  const h = hijriParts(d);
+  return p[2] + " " + AR_MONTHS[p[1] - 1] + " " + p[0] + " · " + h.day + " " + h.monthName + " " + h.year + "هـ";
+}
+
+const NAV = [
+  { label: "نظرة عامة", icon: "layout-dashboard", href: "TeacherOverview.dc.html" },
+  { label: "الطلاب", icon: "users", href: "TeacherStudents.dc.html", key: "students" },
+  { label: "المعلمون", icon: "graduation-cap", href: "#" },
+  { label: "المسارات", icon: "route", href: "#" },
+  { label: "الدورات", icon: "book-open", href: "#" },
+  { label: "الاختبارات", icon: "clipboard-pen", href: "#" },
+  { label: "الشهادات", icon: "award", href: "#", parked: true },
+  { label: "المستخدمون", icon: "user-cog", href: "#" },
+];
+
+const VIEWPORTS = {
+  desktop: { mainPadding: "20px clamp(16px, 2.4vw, 28px) 52px", h1Size: "var(--text-xl)", gridCols: "minmax(0, 1fr) 380px", detailCols: "repeat(4, minmax(0, 1fr))" },
+  tablet: { mainPadding: "18px 20px 44px", h1Size: "var(--text-lg)", gridCols: "minmax(0, 1fr)", detailCols: "repeat(3, minmax(0, 1fr))" },
+  mobile: { mainPadding: "14px 12px 40px", h1Size: "var(--text-lg)", gridCols: "minmax(0, 1fr)", detailCols: "minmax(0, 1fr)" },
+};
+
+const STUDENT = {
+  id: "RB-STD-01427",
+  email: "salem.otaibi@example.com",
+  phone: "+965 9942 1187",
+  gender: "ذكر",
+  genderHint: "يُخاطب بـ «طالب»",
+  age: "27 سنة",
+  birth: "مواليد 12 مارس 1999",
+  country: "الكويت",
+  city: "محافظة حولي",
+  nationality: "كويتي",
+  timezone: "توقيت الكويت (GMT+3)",
+  enrolledIso: "2025-09-14",
+  lastActive: "أمس 21:40",
+  lastLesson: "الدرس السادس — متن الورقات",
+  supervisors: "د. عبد العزيز العيدان · د. أنس اليتامى",
+  supervisorHint: "مشرفا المستوى الثاني",
+  channel: "البريد الإلكتروني",
+  channelHint: "التنبيهات مفعّلة",
+  attendance: "92%",
+  attendanceHint: "حضور البث المباشر هذا الفصل",
+};
+
+// Term-scoped enrolment: a teacher reviews the student inside one term at a time.
+const TERMS = [
+  {
+    value: "1447-3",
+    label: "الفصل الثالث ١٤٤٧هـ (الحالي)",
+    name: "الفصل الثالث ١٤٤٧هـ",
+    range: "14 يونيو – 24 سبتمبر 2026",
+    weeks: "الأسبوع السابع من أربعة عشر",
+    status: "جارٍ الآن",
+    tone: "brand",
+    current: true,
+    courses: [
+      { title: "متن الورقات في أصول الفقه", status: "قيد الدراسة", tone: "brand", meta: "أصول الفقه · المستوى الثاني · د. أنس اليتامى", progress: 75, progressLabel: "الدروس المكتملة — 6 من 8", activity: "آخر درس مشاهد: الدرس السادس — أمس" },
+      { title: "الأربعين النووية", status: "قيد الدراسة", tone: "brand", meta: "حديث · المستوى الثاني · د. عبد العزيز العيدان", progress: 55, progressLabel: "الدروس المكتملة — 6 من 11", activity: "آخر درس مشاهد: الدرس السادس — قبل 4 أيام" },
+      { title: "نواقض الإسلام", status: "متأخر عن الجدول", tone: "warning", meta: "عقيدة · المستوى الثاني · د. عبد العزيز العيدان", progress: 12, progressLabel: "الدروس المكتملة — 1 من 8", activity: "لا نشاط منذ 22 يوماً" },
+      { title: "عمدة الأحكام", status: "لم يبدأ", tone: "neutral", meta: "فقه · المستوى الثاني · د. أنس اليتامى", progress: 0, progressLabel: "الدروس المكتملة — 0 من 10", activity: "سُجّل قبل 9 أيام" },
+    ],
+    grades: [
+      { course: "عمدة الأحكام", title: "الاختبار التمهيدي", date: "21 يونيو 2026", score: "88%", raw: "44 من 50", threshold: "60%", pass: true },
+      { course: "متن الورقات في أصول الفقه", title: "الاختبار التمهيدي", date: "28 يونيو 2026", score: "85%", raw: "17 من 20", threshold: "60%", pass: true },
+      { course: "نواقض الإسلام", title: "اختبار منتصف الفصل", date: "9 يوليو 2026", score: "72%", raw: "18 من 25", threshold: "70%", pass: true },
+      { course: "الأربعين النووية", title: "اختبار الدروس ١–٥", date: "14 يوليو 2026", score: "64%", raw: "16 من 25", threshold: "70%", pass: false },
+      { course: "متن الورقات في أصول الفقه", title: "الاختبار النهائي", date: "تُفتح 12 سبتمبر 2026", score: "—", raw: "لم يُسلّم بعد", threshold: "70%", pending: true },
+    ],
+    footnote: "دورات هذا الفصل ضمن مسار المستوى الثاني؛ تصدر شهادة المستوى بعد إكمالها جميعاً.",
+    gradesFootnote: "المعدّل يحتسب من الاختبارات المصحّحة فقط؛ الإعادة متاحة مرة واحدة لكل اختبار.",
+  },
+  {
+    value: "1447-2",
+    label: "الفصل الثاني ١٤٤٧هـ",
+    name: "الفصل الثاني ١٤٤٧هـ",
+    range: "8 فبراير – 4 يونيو 2026",
+    weeks: "انتهى قبل 8 أسابيع",
+    status: "مكتمل",
+    tone: "success",
+    courses: [
+      { title: "ثلاثة الأصول", status: "مكتملة", tone: "success", meta: "عقيدة · المستوى الأول · د. عبد العزيز العيدان", progress: 100, progressLabel: "الدروس المكتملة — 4 من 4", activity: "أُكملت في 26 مايو 2026" },
+    ],
+    grades: [
+      { course: "ثلاثة الأصول", title: "الاختبار النهائي", date: "31 مايو 2026", score: "92%", raw: "46 من 50", threshold: "70%", pass: true },
+    ],
+    footnote: "فصل مكتمل — لا تعديل على تسجيلاته من هذه الشاشة.",
+    gradesFootnote: "الدرجات نهائية بعد إغلاق الفصل.",
+  },
+  {
+    value: "1447-1",
+    label: "الفصل الأول ١٤٤٧هـ",
+    name: "الفصل الأول ١٤٤٧هـ",
+    range: "21 سبتمبر 2025 – 22 يناير 2026",
+    weeks: "انتهى قبل 27 أسبوعاً",
+    status: "مكتمل",
+    tone: "success",
+    courses: [
+      { title: "القواعد الأربع", status: "مكتملة", tone: "success", meta: "عقيدة · المستوى الأول · د. عبد العزيز العيدان", progress: 100, progressLabel: "الدروس المكتملة — 4 من 4", activity: "أُكملت في 6 يناير 2026" },
+      { title: "الآداب الشرعية", status: "مكتملة", tone: "success", meta: "آداب · المستوى الأول · د. أنس اليتامى", progress: 100, progressLabel: "الدروس المكتملة — 6 من 6", activity: "أُكملت في 18 يناير 2026" },
+    ],
+    grades: [
+      { course: "القواعد الأربع", title: "الاختبار النهائي", date: "8 يناير 2026", score: "78%", raw: "39 من 50", threshold: "70%", pass: true },
+      { course: "الآداب الشرعية", title: "الاختبار النهائي", date: "20 يناير 2026", score: "81%", raw: "32 من 40", threshold: "70%", pass: true },
+    ],
+    footnote: "فصل مكتمل — لا تعديل على تسجيلاته من هذه الشاشة.",
+    gradesFootnote: "الدرجات نهائية بعد إغلاق الفصل.",
+  },
+];
+
+const HISTORY = [
+  { value: "1447-2", name: "الفصل الثاني ١٤٤٧هـ", range: "8 فبراير – 4 يونيو 2026", coursesLine: "دورة واحدة · مكتملة", average: "92%", certLine: "شهادة دورة صادرة" },
+  { value: "1447-1", name: "الفصل الأول ١٤٤٧هـ", range: "21 سبتمبر 2025 – 22 يناير 2026", coursesLine: "دورتان · مكتملتان", average: "80%", certLine: "شهادة مسار صادرة" },
+];
+
+const CERTIFICATES = [
+  { title: "شهادة إتمام دورة ثلاثة الأصول", kind: "شهادة دورة", term: "الفصل الثاني ١٤٤٧هـ", issued: "9 يونيو 2026", serial: "RB-2026-0418", note: "إجازة بالسند المتصل — بدرجة 92% في الاختبار النهائي." },
+  { title: "شهادة إتمام المستوى الأول", kind: "شهادة مسار", term: "الفصل الأول ١٤٤٧هـ", issued: "2 فبراير 2026", serial: "RB-L1-2026-0142", note: "اجتاز دورات المستوى الأول واختباراتها." },
+];
+
+function coursesLabel(n) {
+  if (n === 1) return "دورة واحدة";
+  if (n === 2) return "دورتان";
+  if (n <= 10) return n + " دورات";
+  return n + " دورة";
+}
+
+function examsLabel(n) {
+  if (n === 1) return "اختبار واحد";
+  if (n === 2) return "اختباران";
+  if (n <= 10) return n + " اختبارات";
+  return n + " اختباراً";
+}
+
+class Component extends DCLogic {
+  state = { term: null };
+
+  term() {
+    const v = this.state.term || this.props.initialTerm || "1447-3";
+    return TERMS.find((t) => t.value === v) || TERMS[0];
+  }
+
+  renderVals() {
+    const viewport = this.props.viewport || "desktop";
+    const cfg = VIEWPORTS[viewport] || VIEWPORTS.desktop;
+    const colorScheme = this.props.colorScheme || "light";
+    const teacherName = this.props.teacherName || "عبد العزيز العيدان";
+    const studentName = this.props.studentName || "سالم العتيبي";
+    const noCerts = this.props.certificatesEmpty ?? false;
+
+    const term = this.term();
+    const graded = term.grades.filter((g) => !g.pending);
+    const passed = graded.filter((g) => g.pass).length;
+    const avg = graded.length ? Math.round(graded.reduce((a, g) => a + parseInt(g.score, 10), 0) / graded.length) : 0;
+    const allGraded = TERMS.reduce((a, t) => a.concat(t.grades.filter((g) => !g.pending)), []);
+    const cumulative = Math.round(allGraded.reduce((a, g) => a + parseInt(g.score, 10), 0) / allGraded.length);
+    const termProgress = term.courses.length ? Math.round(term.courses.reduce((a, c) => a + c.progress, 0) / term.courses.length) : 0;
+    const doneCourses = term.courses.filter((c) => c.progress === 100).length;
+
+    return {
+      themeAttr: colorScheme,
+      frameLabel: viewport + " / " + colorScheme,
+      teacherName,
+      studentName,
+      studentEmail: STUDENT.email,
+      studentId: STUDENT.id,
+      trackLabel: "المستوى الثاني",
+      tenureLine: "طالب منذ " + fullDate(STUDENT.enrolledIso) + " · آخر نشاط " + STUDENT.lastActive,
+      detailCols: cfg.detailCols,
+      detailGroups: [
+        {
+          title: "بيانات الطالب",
+          items: [
+            { icon: "user", label: "الجنس", value: STUDENT.gender, hint: STUDENT.genderHint, color: "var(--text-primary)" },
+            { icon: "cake", label: "العمر", value: STUDENT.age, hint: STUDENT.birth, color: "var(--text-primary)" },
+            { icon: "flag", label: "الجنسية", value: STUDENT.nationality, hint: "حسب بيانات التسجيل", color: "var(--text-primary)" },
+          ],
+        },
+        {
+          title: "التواصل والموقع",
+          items: [
+            { icon: "mail", label: "البريد الإلكتروني", value: STUDENT.email, hint: "مُوثّق", color: "var(--text-primary)" },
+            { icon: "phone", label: "رقم الجوال", value: STUDENT.phone, hint: "", dir: "ltr", color: "var(--text-primary)" },
+            { icon: "map-pin", label: "الدولة", value: STUDENT.country, hint: STUDENT.city, color: "var(--text-primary)" },
+            { icon: "clock", label: "المنطقة الزمنية", value: STUDENT.timezone, hint: "", color: "var(--text-primary)" },
+          ],
+        },
+        {
+          title: "الدراسة والإشراف",
+          items: [
+            { icon: "route", label: "المسار الحالي", value: "المستوى الثاني", hint: "أكمل المستوى الأول", color: "var(--text-brand)" },
+            { icon: "gauge", label: "المعدل التراكمي", value: cumulative + "%", hint: "من " + allGraded.length + " اختبارات في كل الفصول", color: "var(--text-primary)" },
+            { icon: "calendar-check", label: "الحضور", value: STUDENT.attendance, hint: STUDENT.attendanceHint, color: "var(--text-primary)" },
+            { icon: "log-in", label: "آخر دخول", value: STUDENT.lastActive, hint: STUDENT.lastLesson, color: "var(--text-primary)" },
+          ],
+        },
+      ],
+      logoFilter: colorScheme === "dark" ? "brightness(0) invert(1) opacity(0.9)" : "none",
+      logoSrc: "../../assets/logos/ribaat-mark-2026.png",
+      showRoleBadge: viewport !== "mobile",
+      navItems: NAV.map((it) => {
+        const active = it.key === "students";
+        return {
+          label: it.label,
+          icon: it.icon,
+          href: it.parked ? "#" : it.href,
+          bg: active ? "var(--ribaat-green-100)" : "transparent",
+          hoverBg: active ? "var(--ribaat-green-100)" : it.parked ? "transparent" : "var(--surface-sunken)",
+          fg: active ? "var(--text-brand)" : it.parked ? "var(--text-muted)" : "var(--text-secondary)",
+          weight: active ? "var(--weight-semibold)" : "var(--weight-regular)",
+        };
+      }),
+      showHeaderName: viewport !== "mobile",
+      mainPadding: cfg.mainPadding,
+      h1Size: cfg.h1Size,
+      gridCols: cfg.gridCols,
+
+      termName: term.name,
+      termRange: term.range,
+      termWeeks: term.weeks,
+      termStatus: term.status,
+      termTone: term.tone,
+      termOptions: TERMS.map((t) => ({ value: t.value, label: t.label })),
+      termValue: term.value,
+      setTerm: (e) => this.setState({ term: e.target.value }),
+      termStats: [
+        { value: String(term.courses.length), label: "دورات مسجّلة", color: "var(--text-primary)" },
+        { value: termProgress + "%", label: "تقدّم الفصل", color: "var(--text-primary)" },
+        { value: avg + "%", label: "معدّل الدرجات", color: "var(--text-primary)" },
+        { value: passed + " من " + graded.length, label: "اختبارات مجتازة", color: passed === graded.length ? "var(--state-success-fg)" : "var(--text-primary)" },
+      ],
+
+      courses: term.courses,
+      coursesSummary: coursesLabel(term.courses.length) + " · " + doneCourses + " مكتملة · تقدّم الفصل " + termProgress + "%",
+      coursesFootnote: term.footnote,
+
+      grades: term.grades.map((g) => ({
+        ...g,
+        scoreBg: g.pending ? "var(--surface-sunken)" : g.pass ? "var(--state-success-bg)" : "var(--state-danger-bg)",
+        scoreFg: g.pending ? "var(--text-muted)" : g.pass ? "var(--state-success-fg)" : "var(--state-danger-fg)",
+        resultColor: g.pending ? "var(--text-muted)" : g.pass ? "var(--state-success-fg)" : "var(--state-danger-fg)",
+        resultLine: g.pending
+          ? "لم يُسلّم بعد · حد النجاح " + g.threshold
+          : (g.pass ? "ناجح" : "لم يجتز — إعادة متاحة") + " · " + g.raw + " · حد النجاح " + g.threshold,
+      })),
+      gradesSummary: examsLabel(graded.length) + " مصحّحة",
+      termAverage: avg + "%",
+      passedLine: passed + " من " + graded.length,
+      gradesFootnote: term.gradesFootnote,
+
+      certificates: CERTIFICATES,
+      hasCerts: !noCerts,
+      noCerts,
+      certsSummary: noCerts ? "لا شهادات" : "شهادتان — كل الفصول",
+      certsFootnote: "تصدر شهادة المستوى الثاني تلقائياً بعد إكمال دوراته الأربع واجتياز اختباراتها.",
+
+      history: HISTORY.map((h) => ({
+        ...h,
+        status: "مكتمل",
+        bg: h.value === term.value ? "var(--ribaat-green-100)" : "transparent",
+        nameColor: h.value === term.value ? "var(--text-brand)" : "var(--text-primary)",
+        open: () => this.setState({ term: h.value }),
+      })),
+      historySummary: "فصلان سابقان · اضغط لعرض تسجيلاته ودرجاته",
+    };
+  }
+
+  componentDidMount() { window.lucide && window.lucide.createIcons(); }
+  componentDidUpdate() { window.lucide && window.lucide.createIcons(); }
+}
+
+</script>
+</body>
+</html>

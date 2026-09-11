@@ -1,0 +1,61 @@
+{# templates/dashboard/dashboard.html
+   Main student dashboard page. Composes the persistent header and four
+   content sections as separate includes so each can be maintained/tested
+   independently. Expects a view context shaped like:
+
+   {
+     "student_name": "ماجد",
+     "has_enrollments": True,
+     "stats_line": "...",
+     "enrolled_courses": [ {title, instructor, progress, badge_tone,
+                            badge_label, cta_variant, cta_label, meta_line}, ... ],
+     "tracks": [ {value, label, is_active, steps:[ {title, subtitle, status,
+                  badge_tone, badge_label, icon, show_action, action_label,
+                  is_last} ]} ],
+     "recommended_courses": [ {title, instructor, category, meta_line, hint}, ... ],
+     "color_scheme": "light" | "dark",   # or resolve via a template context processor
+   }
+#}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لوحة التحكم — رباط الحنابلة</title>
+
+  <link rel="stylesheet" href="{% static 'dashboard/tokens/fonts.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/tokens/colors.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/tokens/colors-dark.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/tokens/typography.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/tokens/spacing.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/tokens/effects.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/dashboard.css' %}">
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+  <div class="rb-page" data-theme="{{ color_scheme|default:'light' }}">
+
+    {% include "dashboard/_header.html" %}
+
+    <main class="rb-main">
+
+      <section class="rb-section">
+        <h1 class="rb-h1">أهلاً، {{ student_name }}</h1>
+        <p class="rb-stats-line">{{ stats_line }}</p>
+      </section>
+
+      {% include "dashboard/_enrolled_courses.html" %}
+
+      {% if has_enrollments %}
+        {% include "dashboard/_track_stepper.html" %}
+      {% endif %}
+
+      {% include "dashboard/_recommended_carousel.html" %}
+
+    </main>
+  </div>
+
+  <script>window.lucide && window.lucide.createIcons();</script>
+</body>
+</html>

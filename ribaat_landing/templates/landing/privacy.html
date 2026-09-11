@@ -1,0 +1,106 @@
+{% extends "landing/page.html" %}
+{# ---------------------------------------------------------------------------
+   سياسة الخصوصية — /privacy/
+
+   EVERY factual statement below needs legal review before launch. What is real,
+   taken from the school's own sites: the contact addresses, the minimum age of
+   15, the parent body (مركز ركائز للدراسات والبحوث). What is a reasonable draft
+   and NOT confirmed: the exact fields collected at registration, the cookie
+   statement, the retention periods, the 30-day response window. Those carry
+   .is-placeholder in the markup so they are visible as open questions.
+   --------------------------------------------------------------------------- #}
+
+{% block title %}سياسة الخصوصية — رباط الحنابلة{% endblock %}
+{% block og_title %}سياسة الخصوصية — رباط الحنابلة{% endblock %}
+{% block canonical %}https://www.ribaat.net/privacy/{% endblock %}
+{% block meta_description %}ما تجمعه مدرسة رباط الحنابلة من بيانات الطلاب وزوّار الموقع، وكيف تُستعمل وتُحفظ، وما للطالب من حقوق فيها.{% endblock %}
+
+{% block doc_eyebrow %}<p class="doc__eyebrow">مستندات المدرسة</p>{% endblock %}
+{% block doc_title %}سياسة الخصوصية{% endblock %}
+{% block doc_lede %}<p class="doc__lede">توضّح هذه السياسة ما تجمعه مدرسة رباط الحنابلة من بيانات الطلاب وزوّار الموقع، وكيف تُستعمل هذه البيانات وتُحفظ، وما للطالب من حقوقٍ فيها.</p>{% endblock %}
+{% block doc_meta %}<p class="doc__meta">آخر تحديث: <span class="is-placeholder">٩ أغسطس ٢٠٢٦</span></p>{% endblock %}
+
+{% block doc_index %}
+<nav class="doc__index" aria-label="فهرس الصفحة">
+  <h2 class="doc__index-heading">في هذه الصفحة</h2>
+  <ol>
+    <li><a href="#scope"><span class="num">٠١</span><span>نطاق هذه السياسة</span></a></li>
+    <li><a href="#collect"><span class="num">٠٢</span><span>البيانات التي نجمعها</span></a></li>
+    <li><a href="#use"><span class="num">٠٣</span><span>لماذا نجمعها</span></a></li>
+    <li><a href="#cookies"><span class="num">٠٤</span><span>ملفات الارتباط</span></a></li>
+    <li><a href="#share"><span class="num">٠٥</span><span>مشاركة البيانات</span></a></li>
+    <li><a href="#keep"><span class="num">٠٦</span><span>مدة الحفظ</span></a></li>
+    <li><a href="#secure"><span class="num">٠٧</span><span>حماية البيانات</span></a></li>
+    <li><a href="#rights"><span class="num">٠٨</span><span>حقوق الطالب</span></a></li>
+    <li><a href="#minors"><span class="num">٠٩</span><span>الطلاب دون سنّ القبول</span></a></li>
+    <li><a href="#changes"><span class="num">١٠</span><span>تعديل هذه السياسة</span></a></li>
+    <li><a href="#contact"><span class="num">١١</span><span>التواصل</span></a></li>
+  </ol>
+</nav>
+{% endblock %}
+
+{% block doc_content %}
+<h2 id="scope"><span class="num">٠١</span><span>نطاق هذه السياسة</span></h2>
+<p>تسري هذه السياسة على موقع رباط الحنابلة وعلى ما يتصل به من خدمات التسجيل والدراسة وإصدار الشهادات. ولا تسري على المواقع الخارجية التي تُنشر عليها الدروس — يوتيوب وتلغرام — فلكلٍّ منها سياسته الخاصة.</p>
+
+<h2 id="collect"><span class="num">٠٢</span><span>البيانات التي نجمعها</span></h2>
+<p class="is-placeholder">تُجمع البيانات التالية، ولا يُجمع سواها:</p>
+<ul class="is-placeholder">
+  <li><strong>بيانات التسجيل</strong> — الاسم، والبريد الإلكتروني، ورقم الهاتف، وبلد الإقامة.</li>
+  <li><strong>بيانات الدراسة</strong> — المقررات المسجَّل فيها، وسجل الحضور، ونتائج الاختبارات، والشهادات الصادرة.</li>
+  <li><strong>بيانات تقنية</strong> — عنوان الإنترنت (IP)، ونوع المتصفح، وأوقات الدخول إلى الحساب.</li>
+</ul>
+
+<h2 id="use"><span class="num">٠٣</span><span>لماذا نجمعها</span></h2>
+<ul>
+  <li>إتاحة الدخول إلى الحساب والمقررات المسجَّل فيها.</li>
+  <li>ضبط الحضور والاختبارات، وإصدار شهادات الإتمام والتحقق منها.</li>
+  <li>التواصل مع الطالب في شأن مواعيد الفصل الدراسي والاختبارات وما يتعلق بدراسته.</li>
+  <li>تحسين الموقع وتشخيص أعطاله.</li>
+</ul>
+<p>ولا تُستعمل بيانات الطلاب في الإعلان، ولا تُباع، ولا تُؤجَّر لأي جهة.</p>
+
+<h2 id="cookies"><span class="num">٠٤</span><span>ملفات الارتباط</span></h2>
+<p class="is-placeholder">يستعمل الموقع ملفات ارتباط تقنيةً فقط: ما يحفظ جلسة الدخول، وما يحفظ تفضيلات العرض. ولا يستعمل ملفات ارتباط إعلانية ولا أدوات تتبُّعٍ لأطرافٍ أخرى.</p>
+
+<h2 id="share"><span class="num">٠٥</span><span>مشاركة البيانات</span></h2>
+<p>لا تُشارَك بيانات الطالب مع أي جهة، إلا في الحالات الآتية:</p>
+<ul>
+  <li>مزوّدو الخدمة التقنية الذين يقوم عليهم الموقع — الاستضافة والبريد — في حدود ما تقتضيه الخدمة.</li>
+  <li>إذا طلبتها جهةٌ مختصة في دولة الكويت بموجب القانون.</li>
+</ul>
+<p class="is-placeholder">ويظهر اسم حامل الشهادة ورقمها المتسلسل لمن يستعلم عن الشهادة عبر صفحة الاستعلام، وهذا مقتضى التحقق من صحتها.</p>
+
+<h2 id="keep"><span class="num">٠٦</span><span>مدة الحفظ</span></h2>
+<p class="is-placeholder">يُحفظ السجل الدراسي وبيانات الشهادات حفظًا دائمًا، لأن الشهادة يُستعلم عنها بعد سنوات من صدورها. أما السجلات التقنية فتُحذف بعد اثني عشر شهرًا. وللطالب أن يطلب حذف حسابه على ما في البند الثامن.</p>
+
+<h2 id="secure"><span class="num">٠٧</span><span>حماية البيانات</span></h2>
+<p class="is-placeholder">يجري الاتصال بالموقع اتصالًا مشفَّرًا، والوصول إلى بيانات الطلاب مقصورٌ على من يحتاج إليه من العاملين في المدرسة لأداء عمله.</p>
+
+<h2 id="rights"><span class="num">٠٨</span><span>حقوق الطالب</span></h2>
+<p>للطالب في بياناته أن:</p>
+<ul>
+  <li>يطّلع على ما هو محفوظٌ منها.</li>
+  <li>يصحّح ما كان منها خطأً أو ناقصًا.</li>
+  <li>يطلب حذف حسابه وبياناته الشخصية، ويبقى بعد ذلك سجلُّ الشهادة الصادرة له لأنها وثيقةٌ يُستعلم عنها.</li>
+  <li>يوقف الرسائل التي تصله عن المدرسة متى شاء.</li>
+</ul>
+<p class="is-placeholder">وتُرسل هذه الطلبات إلى البريد المذكور في البند الحادي عشر، ويُردّ عليها خلال ثلاثين يومًا.</p>
+
+<h2 id="minors"><span class="num">٠٩</span><span>الطلاب دون سنّ القبول</span></h2>
+<p>الحد الأدنى للقبول في المدرسة خمس عشرة سنة. ومن كان دون ذلك فلا يُنشأ له حساب إلا بموافقة وليّ أمره ومتابعته.</p>
+
+<h2 id="changes"><span class="num">١٠</span><span>تعديل هذه السياسة</span></h2>
+<p class="is-placeholder">قد تُعدَّل هذه السياسة، ويُنشر التعديل في هذه الصفحة مع تاريخ آخر تحديث. وإذا كان التعديل جوهريًّا أُبلغ به الطلاب المسجَّلون على بريدهم.</p>
+
+<h2 id="contact"><span class="num">١١</span><span>التواصل</span></h2>
+<p>لأي سؤال أو طلبٍ يتعلق بالبيانات:</p>
+<dl>
+  <dt>البريد الإلكتروني</dt>
+  <dd><a href="mailto:ribat.hanbali@gmail.com">ribat.hanbali@gmail.com</a></dd>
+  <dt>واتساب</dt>
+  <dd><a href="https://wa.me/96566943364">+٩٦٥٦٦٩٤٣٣٦٤</a></dd>
+  <dt>الجهة</dt>
+  <dd>رباط الحنابلة — تابعة لمركز ركائز للدراسات والبحوث، الكويت.</dd>
+</dl>
+{% endblock %}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <style>
+    body { margin: 0; background: var(--ribaat-paper-050); }
+    a { color: var(--text-link); }
+    a:hover { color: var(--text-link-hover); }
+  </style>
+</helmet>
+
+<div dir="rtl" style="background: var(--ribaat-paper-050); min-height: 100vh; padding: 48px 40px 96px; font-family: var(--font-sans); color: var(--text-primary);">
+
+  <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px;">
+
+    <header style="display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--border-default); padding-bottom: 24px;">
+      <div style="font-family: var(--font-sans); font-size: 13px; color: var(--text-accent);">منصة رباط الحنابلة — قوالب البريد</div>
+      <h1 style="margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 1.25; font-weight: 700; color: var(--text-primary);">رسائل البريد الإجرائية والمصادقة</h1>
+      <p style="margin: 0; max-width: 78ch; font-size: 16px; line-height: 1.7; color: var(--text-secondary); text-wrap: pretty;">سبعة عشر قالبًا جاهزًا للنشر في Django، مبنية على هيكل واحد مشترك (‎emails/base.html‎) وخمسة أجزاء مشتركة. التصميم مُحدَّث: شعار المدرسة الكامل فوق البطاقة على أرضية ورقية، وشريط زيتوني أعلى البطاقة، وخط قصير تحت العنوان. وتحمل قالبَي الشهادة خاتم المدرسة وإطارًا بأركان مزخرفة ورمز تحقق QR، على نسق صفحة الشهادات. جميعها جداول متداخلة، بأنماط مضمّنة داخل العناصر، وبنسختين: فاتحة وداكنة. المعاينات أدناه مُصيَّرة ببيانات تجريبية.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;">
+        <span style="font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--ribaat-green-100); color: var(--ribaat-green-800);">RTL — dir على كل جدول وخلية</span>
+        <span style="font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--ribaat-green-100); color: var(--ribaat-green-800);">أزرار VML لـ Outlook</span>
+        <span style="font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--ribaat-green-100); color: var(--ribaat-green-800);">‎24KB‎ كحد أقصى للقالب</span>
+        <span style="font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--ribaat-green-100); color: var(--ribaat-green-800);">تواريخ ميلادية · أرقام غربية 12345</span>
+        <span style="font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--ribaat-green-100); color: var(--ribaat-green-800);">العملة د.ك — بلا حقول ضريبية</span>
+        <span style="font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--ribaat-brown-100); color: var(--ribaat-brown-800);">النصوص النهائية بانتظار الإدارة</span>
+      </div>
+    </header>
+
+    <section style="display: flex; flex-direction: column; gap: 20px;">
+      <h2 style="margin: 0; font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary);">أ · المصادقة</h2>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">أ‎1‎ · تفعيل البريد الإلكتروني</span>
+          <a href="emails/auth/email_verification.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/auth/email_verification.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/email_verification.html" title="تفعيل البريد — فاتح" loading="lazy" style="display: block; width: 100%; height: 896px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/email_verification.dark.html" title="تفعيل البريد — داكن" loading="lazy" style="display: block; width: 100%; height: 896px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">أ‎2‎ · إعادة تعيين كلمة المرور</span>
+          <a href="emails/auth/password_reset.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/auth/password_reset.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/password_reset.html" title="إعادة تعيين كلمة المرور — فاتح" loading="lazy" style="display: block; width: 100%; height: 956px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/password_reset.dark.html" title="إعادة تعيين كلمة المرور — داكن" loading="lazy" style="display: block; width: 100%; height: 956px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">أ‎3‎ · رمز التحقق</span>
+          <a href="emails/auth/otp_code.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/auth/otp_code.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/otp_code.html" title="رمز التحقق — فاتح" loading="lazy" style="display: block; width: 100%; height: 876px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/otp_code.dark.html" title="رمز التحقق — داكن" loading="lazy" style="display: block; width: 100%; height: 876px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">أ‎4‎ · رسالة ترحيب</span>
+          <a href="emails/auth/welcome.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/auth/welcome.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/welcome.html" title="ترحيب — فاتح" loading="lazy" style="display: block; width: 100%; height: 996px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/welcome.dark.html" title="ترحيب — داكن" loading="lazy" style="display: block; width: 100%; height: 996px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">أ‎5‎ · تأكيد تغيير كلمة المرور</span>
+          <a href="emails/auth/password_changed.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/auth/password_changed.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/password_changed.html" title="تغيير كلمة المرور — فاتح" loading="lazy" style="display: block; width: 100%; height: 976px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/password_changed.dark.html" title="تغيير كلمة المرور — داكن" loading="lazy" style="display: block; width: 100%; height: 976px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">أ‎6‎ · تنبيه تسجيل دخول جديد</span>
+          <a href="emails/auth/new_signin_alert.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/auth/new_signin_alert.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/new_signin_alert.html" title="تسجيل دخول جديد — فاتح" loading="lazy" style="display: block; width: 100%; height: 986px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/new_signin_alert.dark.html" title="تسجيل دخول جديد — داكن" loading="lazy" style="display: block; width: 100%; height: 986px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 20px;">
+      <h2 style="margin: 0; font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary);">ب · الرسائل الدراسية</h2>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ب‎7‎ · تأكيد التسجيل في مقرر</span>
+          <a href="emails/academic/course_enrollment.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/academic/course_enrollment.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/course_enrollment.html" title="تسجيل في مقرر — فاتح" loading="lazy" style="display: block; width: 100%; height: 966px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/course_enrollment.dark.html" title="تسجيل في مقرر — داكن" loading="lazy" style="display: block; width: 100%; height: 966px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ب‎8‎ · تأكيد الالتحاق بمسار</span>
+          <a href="emails/academic/path_enrollment.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/academic/path_enrollment.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/path_enrollment.html" title="الالتحاق بمسار — فاتح" loading="lazy" style="display: block; width: 100%; height: 956px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/path_enrollment.dark.html" title="الالتحاق بمسار — داكن" loading="lazy" style="display: block; width: 100%; height: 956px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ب‎9‎ · نشر محاضرة جديدة</span>
+          <a href="emails/academic/new_lecture.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/academic/new_lecture.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/new_lecture.html" title="محاضرة جديدة — فاتح" loading="lazy" style="display: block; width: 100%; height: 936px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/new_lecture.dark.html" title="محاضرة جديدة — داكن" loading="lazy" style="display: block; width: 100%; height: 936px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ب‎10‎ · إتاحة مقرر بعد استيفاء المتطلبات</span>
+          <a href="emails/academic/course_unlocked.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/academic/course_unlocked.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/course_unlocked.html" title="إتاحة مقرر — فاتح" loading="lazy" style="display: block; width: 100%; height: 956px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/course_unlocked.dark.html" title="إتاحة مقرر — داكن" loading="lazy" style="display: block; width: 100%; height: 956px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ب‎11‎ · إصدار شهادة إتمام مقرر</span>
+          <a href="emails/academic/certificate_issued_course.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/academic/certificate_issued_course.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/certificate_course.html" title="شهادة مقرر — فاتح" loading="lazy" style="display: block; width: 100%; height: 1096px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/certificate_course.dark.html" title="شهادة مقرر — داكن" loading="lazy" style="display: block; width: 100%; height: 1096px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ب‎12‎ · إصدار شهادة إتمام مسار</span>
+          <a href="emails/academic/certificate_issued_path.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/academic/certificate_issued_path.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/certificate_path.html" title="شهادة مسار — فاتح" loading="lazy" style="display: block; width: 100%; height: 1296px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/certificate_path.dark.html" title="شهادة مسار — داكن" loading="lazy" style="display: block; width: 100%; height: 1296px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ب‎13‎ · إعلان من إدارة المنصة</span>
+          <a href="emails/academic/admin_announcement.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/academic/admin_announcement.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/admin_announcement.html" title="إعلان إداري — فاتح" loading="lazy" style="display: block; width: 100%; height: 946px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/admin_announcement.dark.html" title="إعلان إداري — داكن" loading="lazy" style="display: block; width: 100%; height: 946px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-direction: column; gap: 20px;">
+      <h2 style="margin: 0; font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--text-primary);">ج · الرسائل المالية</h2>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ج‎14‎ · إيصال دفع</span>
+          <a href="emails/billing/payment_receipt.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/billing/payment_receipt.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/payment_receipt.html" title="إيصال دفع — فاتح" loading="lazy" style="display: block; width: 100%; height: 1056px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/payment_receipt.dark.html" title="إيصال دفع — داكن" loading="lazy" style="display: block; width: 100%; height: 1056px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ج‎15‎ · فاتورة</span>
+          <a href="emails/billing/invoice.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/billing/invoice.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/invoice.html" title="فاتورة — فاتح" loading="lazy" style="display: block; width: 100%; height: 1296px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/invoice.dark.html" title="فاتورة — داكن" loading="lazy" style="display: block; width: 100%; height: 1296px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ج‎16‎ · تعذّر إتمام عملية الدفع</span>
+          <a href="emails/billing/payment_failed.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/billing/payment_failed.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/payment_failed.html" title="تعذر الدفع — فاتح" loading="lazy" style="display: block; width: 100%; height: 1126px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/payment_failed.dark.html" title="تعذر الدفع — داكن" loading="lazy" style="display: block; width: 100%; height: 1126px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; background: var(--surface-card); box-shadow: var(--shadow-sm);">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle);">
+          <span style="font-size: 16px; font-weight: 600;">ج‎17‎ · إشعار استرداد</span>
+          <a href="emails/billing/refund.html" style="direction: ltr; font-family: var(--font-mono); font-size: 12px; text-decoration: none;">emails/billing/refund.html</a>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle);">
+          <iframe src="emails/_preview/refund.html" title="استرداد — فاتح" loading="lazy" style="display: block; width: 100%; height: 1156px; border: 0; background: var(--ribaat-paper-050);"></iframe>
+          <iframe src="emails/_preview/refund.dark.html" title="استرداد — داكن" loading="lazy" style="display: block; width: 100%; height: 1156px; border: 0; background: #201E18;"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;">
+
+      <div style="border: 1px solid var(--border-subtle); border-radius: 14px; background: var(--surface-card); padding: 28px 28px 22px;">
+        <h2 style="margin: 0 0 6px; font-family: var(--font-display); font-size: 24px; font-weight: 700;">مصفوفة اختبار العملاء</h2>
+        <p style="margin: 0 0 18px; font-size: 14px; line-height: 1.7; color: var(--text-secondary);">تحفّظات معروفة في التصيير، مبنية على قيود العملاء لا على اختبار فعلي — يلزم تشغيل اختبار حقيقي قبل الإطلاق.</p>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <tbody>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-weight: 600; width: 34%; vertical-align: top;">Outlook 2016–2021 (Windows)</td>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); line-height: 1.7;">لا يدعم ‎border-radius‎ ولا ‎@media‎: الأزرار تظهر بحدود قائمة عبر VML، والبطاقات بزوايا حادة. الخط يُجبر على Tahoma، فلا يظهر Amiri. التصميم يبقى صحيحًا.</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-weight: 600; vertical-align: top;">Gmail (ويب)</td>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); line-height: 1.7;">يدعم ‎كتلة الأنماط في الرأس‎ والاستجابة. الحد الأقصى ‎102KB‎ قبل الاقتطاع؛ أكبر قالب هنا ‎19KB‎. الوضع الداكن يُطبَّق بتحويل تلقائي لا بـ ‎prefers-color-scheme‎.</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-weight: 600; vertical-align: top;">Gmail (تطبيق iOS/Android)</td>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); line-height: 1.7;">لا يستجيب لـ ‎prefers-color-scheme‎ للحسابات غير Google؛ قد يقلب الألوان جزئيًا. لذلك لا يعتمد أي نص هنا على قاعدة داكنة للقراءة.</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-weight: 600; vertical-align: top;">Apple Mail / iOS Mail</td>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); line-height: 1.7;">أفضل دعم: ‎prefers-color-scheme‎ يعمل، والنسخة الداكنة تظهر كما في المعاينة. تبديل الشعار يعمل عبر ‎display‎.</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); font-weight: 600; vertical-align: top;">Outlook.com / Windows Mail</td>
+              <td style="padding: 12px 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); line-height: 1.7;">يفرض قلبًا تلقائيًا للألوان؛ عُلِّم بقواعد ‎[data-ogsc]‎ و‎[data-ogsb]‎ لضبط الأسطح والنصوص. يُستحسن التحقق من خلايا الأزرار تحديدًا.</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0; font-weight: 600; vertical-align: top;">عملاء عربية أخرى</td>
+              <td style="padding: 12px 0; color: var(--text-secondary); line-height: 1.7;">‎dir="rtl"‎ مكرّر على كل جدول وخلية مع ‎direction/text-align‎ مضمّنين، فلا يعتمد الاتجاه على الوراثة.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="border: 1px solid var(--ribaat-brown-300); border-radius: 14px; background: var(--ribaat-brown-100); padding: 28px 28px 22px;">
+        <h2 style="margin: 0 0 6px; font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--ribaat-brown-900);">أسئلة مفتوحة — تحتاج قرارًا</h2>
+        <p style="margin: 0 0 18px; font-size: 14px; line-height: 1.7; color: var(--ribaat-brown-800);">لم تُحسم هذه البنود في نظام التصميم ولا في الموجز، ولم نختر لها إجابة. القيم الظاهرة في المعاينات مؤقتة.</p>
+        <ol style="margin: 0; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 12px; font-size: 14px; line-height: 1.75; color: var(--ribaat-brown-900);">
+          <li><strong>التاريخ:</strong> هجري أم ميلادي أم كلاهما، وبأي ترتيب؟ (المعاينات ميلادية مؤقتًا.)</li>
+          <li><strong>الأرقام:</strong> عربية‑هندية (٠١٢٣) أم غربية (0123)؟ (المعاينات غربية، اتباعًا للموقع الحالي.)</li>
+          <li><strong>اسم المرسِل وعنوانه:</strong> الاسم الظاهر و‎from‎ و‎reply-to‎ غير محددة.</li>
+          <li><strong>رابط إلغاء الاشتراك:</strong> هل يُشترط رابط تفضيلات/إلغاء مع أن جميع الرسائل إجرائية؟ حاليًا رابط «إعدادات الحساب» فقط.</li>
+          <li><strong>العملة والبيانات النظامية:</strong> صيغة الدينار الكويتي، والرقم الضريبي/التجاري وبيانات الجهة المطلوبة في القالبين ‎14‎ و‎15‎.</li>
+          <li><strong>سياسة الاسترداد وتعذّر الدفع:</strong> النص النهائي ومدة حفظ المقعد (‎hold_until‎) و‎refund_expected_days‎.</li>
+          <li><strong>إشعارات الاختبارات والتقييم:</strong> غير مشمولة هنا لأن الميزة لم تُصمَّم بعد.</li>
+          <li><strong>أصول الشعار:</strong> يلزم ملف ‎ribaat-wordmark-ondark.png‎ (نسخة فاتحة على خلفية داكنة) وقاعدة ‎asset_base‎ على CloudFront؛ غير موجودين في نظام التصميم.</li>
+          <li><strong>الصياغة العربية:</strong> النصوص مسوّدة وظيفية بانتظار مراجعة مختص شرعي/لغوي.</li>
+          <li><strong>تسمية المستلم:</strong> استُخدم ‎user_name‎ في رسائل المصادقة (تصلح لكل الأدوار) و‎student_name‎ في الرسائل الدراسية والمالية؛ يلزم تثبيت الاختيار.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer style="border-top: 1px solid var(--border-default); padding-top: 20px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-size: 13px; color: var(--text-secondary);">
+      <span>الهيكل المشترك: ‎emails/base.html‎ — الأجزاء: ‎button، divider، datarow، cert_block‎</span>
+      <a href="emails/README.md" style="text-decoration: none;">جدول المتغيّرات الكامل ودليل النشر — emails/README.md</a>
+    </footer>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

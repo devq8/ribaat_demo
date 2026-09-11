@@ -1,0 +1,17 @@
+{% extends "emails/base.html" %}
+{% comment %}11. إصدار شهادة إتمام مقرر — course certificate issued{% endcomment %}
+{% block title %}إصدار شهادة إتمام مقرر{% endblock %}
+{% block preheader %}صدرت شهادة إتمامك للمقرر، ويمكن التحقق منها عبر المنصة.{% endblock %}
+{% block content %}
+<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+  <tr><td class="e-txt e-h1" style="direction:rtl;text-align:right;font-family:Amiri,'Traditional Arabic','Times New Roman',serif;font-size:28px;line-height:42px;mso-line-height-rule:exactly;font-weight:700;color:#211F19;padding:0 0 14px;">إصدار شهادة إتمام مقرر</td></tr>
+  <tr><td style="padding:0 0 20px;">{% include "emails/partials/rule.html" %}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">السلام عليكم ورحمة الله وبركاته، {{ student_name }}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">نُعلمك بإتمام متطلبات مقرر {{ course_title }}، وبإصدار شهادة الإتمام باسمك.</td></tr>
+  <tr><td style="padding:0 0 22px;">{% include "emails/partials/cert_block.html" with kicker="شهادة إتمام مقرر" credential_title=course_title holder_name=student_name issue_date=issue_date certificate_id=certificate_id qr_url=qr_url %}</td></tr>
+  <tr><td align="center" style="padding:6px 0 22px;">{% include "emails/partials/button.html" with url=certificate_url label="عرض الشهادة" %}</td></tr>
+  <tr><td class="e-sub" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:14px;line-height:25px;mso-line-height-rule:exactly;color:#635C48;padding:0 0 14px;">يمكن لأي جهة التحقق من صحة الشهادة عبر خدمة الاستعلام في المنصة باستخدام معرّف التحقق أعلاه.</td></tr>
+  <tr><td style="padding:0 0 16px;">{% include "emails/partials/divider.html" %}</td></tr>
+  <tr><td class="e-mut" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:12px;line-height:20px;mso-line-height-rule:exactly;color:#82795F;padding:0;">إن لم يعمل الزر أعلاه، فانسخ الرابط التالي وألصقه في متصفحك:<br><a class="e-link" href="{{ verify_url }}" style="color:#4F6140;text-decoration:underline;word-break:break-all;">{{ verify_url }}</a></td></tr>
+</table>
+{% endblock %}

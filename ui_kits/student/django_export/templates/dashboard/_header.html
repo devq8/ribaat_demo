@@ -1,0 +1,22 @@
+{# templates/dashboard/_header.html
+   Persistent top nav. `request.resolver_match.url_name` (or an equivalent
+   passed-in `active_nav` var) drives the "is-active" class instead of a
+   hardcoded value. #}
+<header class="rb-header">
+  <div class="rb-header-start">
+    <img class="rb-logo" src="{% static 'dashboard/img/ribaat-wordmark.png' %}" alt="رباط الحنابلة">
+    <nav class="rb-nav">
+      <a href="{% url 'home' %}">الرئيسية</a>
+      <a href="{% url 'courses' %}">الدورات</a>
+      <a href="{% url 'dashboard' %}" class="is-active">لوحة التحكم</a>
+      <a href="{% url 'certificate_lookup' %}">الاستعلام عن شهادة</a>
+    </nav>
+  </div>
+  <div class="rb-header-end">
+    <span class="rb-avatar rb-avatar--sm">{{ student_name|slice:":2" }}</span>
+    <form action="{% url 'logout' %}" method="post" style="margin:0;">
+      {% csrf_token %}
+      <button type="submit" class="rb-logout-btn">تسجيل الخروج</button>
+    </form>
+  </div>
+</header>

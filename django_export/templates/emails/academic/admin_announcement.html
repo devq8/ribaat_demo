@@ -1,0 +1,26 @@
+{% extends "emails/base.html" %}
+{% comment %}13. إعلان من إدارة المنصة — administrative announcement{% endcomment %}
+{% block title %}إعلان من إدارة المنصة{% endblock %}
+{% block preheader %}إعلان إداري يتعلق بمقرراتك المسجّلة في المنصة.{% endblock %}
+{% block content %}
+<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+  <tr><td class="e-txt e-h1" style="direction:rtl;text-align:right;font-family:Amiri,'Traditional Arabic','Times New Roman',serif;font-size:28px;line-height:42px;mso-line-height-rule:exactly;font-weight:700;color:#211F19;padding:0 0 14px;">{{ announcement_title }}</td></tr>
+  <tr><td style="padding:0 0 20px;">{% include "emails/partials/rule.html" %}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">السلام عليكم ورحمة الله وبركاته، {{ student_name }}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 18px;">{{ announcement_body|linebreaksbr }}</td></tr>
+  <tr><td style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" class="e-sunk" bgcolor="#F7F3E8" style="width:100%;background-color:#F7F3E8;border:1px solid #E2DAC5;border-radius:10px;">
+      <tr><td style="padding:6px 20px;">
+        <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+          {% include "emails/partials/datarow.html" with label="الجهة المُصدِرة" value=issued_by %}
+          {% include "emails/partials/datarow.html" with label="تاريخ الإعلان" value=announced_at %}
+          {% include "emails/partials/datarow.html" with label="يخصّ" value=announcement_scope %}
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td align="center" style="padding:6px 0 22px;">{% include "emails/partials/button.html" with url=announcement_url label="قراءة الإعلان في المنصة" %}</td></tr>
+  <tr><td style="padding:0 0 16px;">{% include "emails/partials/divider.html" %}</td></tr>
+  <tr><td class="e-mut" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:12px;line-height:20px;mso-line-height-rule:exactly;color:#82795F;padding:0;">وصلك هذا الإعلان لارتباطه بمقرر أو مسار مسجّل في حسابك.</td></tr>
+</table>
+{% endblock %}

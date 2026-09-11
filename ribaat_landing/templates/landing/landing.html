@@ -1,0 +1,73 @@
+{% extends "landing/base.html" %}
+{% load static %}
+
+{% block body_class %}page-landing{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "رباط الحنابلة",
+  "alternateName": "Ribaat",
+  "slogan": "مدرسة شرعية تأصيلية",
+  "url": "https://www.ribaat.net/",
+  "logo": "{% static 'ribaat/img/ribaat-logo-full.png' %}",
+  "description": "مدرسةٌ تعليميةٌ مقرُّها الكويت، تُعنى بتدريس علوم الشريعة على أصول المذهب الحنبلي، بمساراتٍ متدرجة. الدراسة مجانيةٌ بالكامل والتسجيل مفتوحٌ لكل راغب.",
+  "inLanguage": "ar",
+  "isAccessibleForFree": true,
+  "address": { "@type": "PostalAddress", "addressCountry": "KW" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "item": {
+      "@type": "Course", "name": "مسار العقيدة",
+      "description": "دراسة متون العقيدة على أصول المذهب الحنبلي، بترتيبٍ متدرّج.",
+      "inLanguage": "ar", "isAccessibleForFree": true,
+      "provider": { "@type": "EducationalOrganization", "name": "رباط الحنابلة", "sameAs": "https://www.ribaat.net/" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "startDate": "2026-09" } } },
+    { "@type": "ListItem", "position": 2, "item": {
+      "@type": "Course", "name": "مسار الفقه الحنبلي",
+      "description": "دراسة متون الفقه على أصول المذهب الحنبلي.",
+      "inLanguage": "ar", "isAccessibleForFree": true,
+      "provider": { "@type": "EducationalOrganization", "name": "رباط الحنابلة", "sameAs": "https://www.ribaat.net/" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "startDate": "2026-09" } } },
+    { "@type": "ListItem", "position": 3, "item": {
+      "@type": "Course", "name": "مسار الحديث وعلومه",
+      "description": "دراسة متون الحديث ومصطلحه.",
+      "inLanguage": "ar", "isAccessibleForFree": true,
+      "provider": { "@type": "EducationalOrganization", "name": "رباط الحنابلة", "sameAs": "https://www.ribaat.net/" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "startDate": "2026-09" } } },
+    { "@type": "ListItem", "position": 4, "item": {
+      "@type": "Course", "name": "مسار أصول الفقه",
+      "description": "دراسة متون أصول الفقه.",
+      "inLanguage": "ar", "isAccessibleForFree": true,
+      "provider": { "@type": "EducationalOrganization", "name": "رباط الحنابلة", "sameAs": "https://www.ribaat.net/" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "startDate": "2026-09" } } },
+    { "@type": "ListItem", "position": 5, "item": {
+      "@type": "Course", "name": "مسار اللغة العربية",
+      "description": "دراسة متون النحو والصرف لخدمة العلوم الشرعية.",
+      "inLanguage": "ar", "isAccessibleForFree": true,
+      "provider": { "@type": "EducationalOrganization", "name": "رباط الحنابلة", "sameAs": "https://www.ribaat.net/" },
+      "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "startDate": "2026-09" } } }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "landing/partials/hero.html" %}
+{% include "landing/partials/about.html" %}
+{% include "landing/partials/tracks.html" %}
+{% include "landing/partials/sciences.html" %}
+{% include "landing/partials/how.html" %}
+{% include "landing/partials/faculty.html" %}
+{% include "landing/partials/lecture.html" %}
+{% include "landing/partials/certificates.html" %}
+{% include "landing/partials/faq.html" %}
+{% include "landing/partials/cta.html" %}
+{% endblock %}

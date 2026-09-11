@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #E9E3D5; }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); }
+  </style>
+</helmet>
+
+<section dir="rtl" style="padding: 48px; display: flex; flex-direction: column; gap: 20px;">
+  <div>
+    <h1 style="margin: 0; font-family: var(--font-display); font-size: 30px; color: var(--ribaat-ink-900);">لوحة المعلم — نظرة عامة</h1>
+    <p style="margin: 6px 0 0; font-family: var(--font-sans); font-size: 14px; color: var(--ribaat-ink-600);">التصميم المعتمد (2a) · سطح المكتب، جهاز لوحي، هاتف · وضعان فاتح وداكن</p>
+  </div>
+  <div style="display: flex; align-items: flex-start; gap: 48px; flex-wrap: wrap;">
+    <div id="2a" style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: 13px; color: var(--ribaat-ink-600);">
+        <span style="background: var(--ribaat-ink-900); color: var(--ribaat-paper-000); border-radius: 6px; padding: 2px 9px; font-weight: 600;">2a</span>
+        بطاقة الدورة — رأس علوي (صورة + العنوان + سطر التفاصيل) · 1440
+      </div>
+      <div style="width: 1440px; border: 1px solid var(--ribaat-ink-300); border-radius: 14px; overflow: hidden; box-shadow: 0 12px 32px rgba(33,31,25,0.12); background: var(--ribaat-paper-050);">
+        <dc-import name="Teacher Overview v2" theme="light" viewport="desktop" course-image-ratio="{{ courseImageRatio }}" course-image-width="{{ courseImageWidth }}" course-image-width-mobile="{{ courseImageWidthMobile }}" course-title-size="{{ courseTitleSize }}" course-title-size-mobile="{{ courseTitleSizeMobile }}" show-pending-badge-mobile="{{ showPendingBadgeMobile }}" course-title-font="{{ courseTitleFont }}" course-title-weight="{{ courseTitleWeight }}" hint-size="1440px,1300px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2b" style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: 13px; color: var(--ribaat-ink-600);">
+        <span style="background: var(--ribaat-ink-900); color: var(--ribaat-paper-000); border-radius: 6px; padding: 2px 9px; font-weight: 600;">2b</span>
+        جهاز لوحي · فاتح · 834
+      </div>
+      <div style="width: 834px; border: 1px solid var(--ribaat-ink-300); border-radius: 14px; overflow: hidden; box-shadow: 0 12px 32px rgba(33,31,25,0.12); background: var(--ribaat-paper-050);">
+        <dc-import name="Teacher Overview v2" theme="light" viewport="tablet" course-image-ratio="{{ courseImageRatio }}" course-image-width="{{ courseImageWidth }}" course-image-width-mobile="{{ courseImageWidthMobile }}" course-title-size="{{ courseTitleSize }}" course-title-size-mobile="{{ courseTitleSizeMobile }}" show-pending-badge-mobile="{{ showPendingBadgeMobile }}" course-title-font="{{ courseTitleFont }}" course-title-weight="{{ courseTitleWeight }}" hint-size="834px,1700px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2c" style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: 13px; color: var(--ribaat-ink-600);">
+        <span style="background: var(--ribaat-ink-900); color: var(--ribaat-paper-000); border-radius: 6px; padding: 2px 9px; font-weight: 600;">2c</span>
+        هاتف · فاتح · 390
+      </div>
+      <div style="width: 390px; border: 1px solid var(--ribaat-ink-300); border-radius: 14px; overflow: hidden; box-shadow: 0 12px 32px rgba(33,31,25,0.12); background: var(--ribaat-paper-050);">
+        <dc-import name="Teacher Overview v2" theme="light" viewport="mobile" course-image-ratio="{{ courseImageRatio }}" course-image-width="{{ courseImageWidth }}" course-image-width-mobile="{{ courseImageWidthMobile }}" course-title-size="{{ courseTitleSize }}" course-title-size-mobile="{{ courseTitleSizeMobile }}" show-pending-badge-mobile="{{ showPendingBadgeMobile }}" course-title-font="{{ courseTitleFont }}" course-title-weight="{{ courseTitleWeight }}" hint-size="390px,2100px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2d" style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: 13px; color: var(--ribaat-ink-600);">
+        <span style="background: var(--ribaat-ink-900); color: var(--ribaat-paper-000); border-radius: 6px; padding: 2px 9px; font-weight: 600;">2d</span>
+        سطح المكتب · داكن · 1440
+      </div>
+      <div style="width: 1440px; border: 1px solid var(--ribaat-ink-300); border-radius: 14px; overflow: hidden; box-shadow: 0 12px 32px rgba(33,31,25,0.12); background: #201E18;">
+        <dc-import name="Teacher Overview v2" theme="dark" viewport="desktop" course-image-ratio="{{ courseImageRatio }}" course-image-width="{{ courseImageWidth }}" course-image-width-mobile="{{ courseImageWidthMobile }}" course-title-size="{{ courseTitleSize }}" course-title-size-mobile="{{ courseTitleSizeMobile }}" show-pending-badge-mobile="{{ showPendingBadgeMobile }}" course-title-font="{{ courseTitleFont }}" course-title-weight="{{ courseTitleWeight }}" hint-size="1440px,1300px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2e" style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: 13px; color: var(--ribaat-ink-600);">
+        <span style="background: var(--ribaat-ink-900); color: var(--ribaat-paper-000); border-radius: 6px; padding: 2px 9px; font-weight: 600;">2e</span>
+        هاتف · داكن · 390
+      </div>
+      <div style="width: 390px; border: 1px solid var(--ribaat-ink-300); border-radius: 14px; overflow: hidden; box-shadow: 0 12px 32px rgba(33,31,25,0.12); background: #201E18;">
+        <dc-import name="Teacher Overview v2" theme="dark" viewport="mobile" course-image-ratio="{{ courseImageRatio }}" course-image-width="{{ courseImageWidth }}" course-image-width-mobile="{{ courseImageWidthMobile }}" course-title-size="{{ courseTitleSize }}" course-title-size-mobile="{{ courseTitleSizeMobile }}" show-pending-badge-mobile="{{ showPendingBadgeMobile }}" course-title-font="{{ courseTitleFont }}" course-title-weight="{{ courseTitleWeight }}" hint-size="390px,2100px"></dc-import>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;courseImageRatio&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1:1&quot;,&quot;4:3&quot;,&quot;3:4&quot;,&quot;fill&quot;],&quot;default&quot;:&quot;1:1&quot;,&quot;tsType&quot;:&quot;\&quot;1:1\&quot; | \&quot;4:3\&quot; | \&quot;3:4\&quot; | \&quot;fill\&quot;&quot;,&quot;section&quot;:&quot;بطاقة الدورة&quot;},&quot;courseImageWidth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:64,&quot;max&quot;:300,&quot;step&quot;:2,&quot;unit&quot;:&quot;px&quot;,&quot;default&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;بطاقة الدورة&quot;},&quot;courseImageWidthMobile&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:44,&quot;max&quot;:160,&quot;step&quot;:2,&quot;unit&quot;:&quot;px&quot;,&quot;default&quot;:90,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;بطاقة الدورة — الهاتف&quot;},&quot;courseTitleSizeMobile&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:14,&quot;max&quot;:30,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;default&quot;:21,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;بطاقة الدورة — الهاتف&quot;},&quot;showPendingBadgeMobile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;بطاقة الدورة — الهاتف&quot;},&quot;courseTitleSize&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:16,&quot;max&quot;:40,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;default&quot;:35,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;عنوان الدورة&quot;},&quot;courseTitleFont&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;display&quot;,&quot;sans&quot;],&quot;default&quot;:&quot;sans&quot;,&quot;tsType&quot;:&quot;\&quot;display\&quot; | \&quot;sans\&quot;&quot;,&quot;section&quot;:&quot;عنوان الدورة&quot;},&quot;courseTitleWeight&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;regular&quot;,&quot;semibold&quot;,&quot;bold&quot;],&quot;default&quot;:&quot;semibold&quot;,&quot;tsType&quot;:&quot;\&quot;regular\&quot; | \&quot;semibold\&quot; | \&quot;bold\&quot;&quot;,&quot;section&quot;:&quot;عنوان الدورة&quot;}}"></script>
+</body>
+</html>

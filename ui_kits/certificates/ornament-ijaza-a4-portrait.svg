@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297" preserveAspectRatio="none">
+  <title>زخرفة الإجازة — A4 عمودي</title>
+  <defs>
+    <pattern id="band" width="12" height="16" patternUnits="userSpaceOnUse">
+      <path d="M2.5 -0.5 V3.5 H9.5 V11.5 H2.5 V16.5" fill="none" stroke="#607247" stroke-width="2.5"></path>
+    </pattern>
+    <pattern id="wm" width="84" height="112" patternUnits="userSpaceOnUse">
+      <path d="M17.5 -3.5 V24.5 H66.5 V80.5 H17.5 V115.5" fill="none" stroke="#607247" stroke-width="17.5"></path>
+    </pattern>
+  </defs>
+  <rect width="210" height="297" fill="#FFFEFA"></rect>
+  <rect x="100" y="0" width="110" height="297" fill="url(#wm)" opacity="0.04"></rect>
+  <rect x="0" y="0" width="12" height="288" fill="url(#band)"></rect>
+  <rect x="0" y="288" width="12" height="9" fill="#8C5F35"></rect>
+</svg>

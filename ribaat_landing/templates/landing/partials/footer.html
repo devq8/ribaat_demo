@@ -1,0 +1,42 @@
+{% load static %}
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+
+    <div class="site-footer__brand">
+      <img class="brand__mark" src="{% static 'ribaat/img/ribaat-mark.png' %}" alt="" width="1490" height="426" loading="lazy" decoding="async" aria-hidden="true">
+      <p class="site-footer__name">رباط الحنابلة</p>
+      <p class="site-footer__place">الكويت</p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="روابط الموقع">
+      <div>
+        <h2 class="site-footer__heading">الدراسة</h2>
+        <ul>
+          <li><a href="{{ nav_root }}#tracks">المسارات</a></li>
+          <li><a href="{{ nav_root }}#sciences">العلوم</a></li>
+          <li><a href="{{ nav_root }}#how">كيف تسير الدراسة</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__heading">المدرسة</h2>
+        <ul>
+          <li><a href="{{ nav_root }}#about">التعريف بالمدرسة</a></li>
+          <li><a href="{{ nav_root }}#faculty">هيئة التدريس</a></li>
+          <li><a href="{{ nav_root }}#faq">الأسئلة الشائعة</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__heading">الحساب</h2>
+        <ul>
+          <li><a href="/register/">التسجيل</a></li>
+          <li><a href="/login/">تسجيل الدخول</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="wrap site-footer__legal">
+    <p>جميع الحقوق محفوظة — رباط الحنابلة</p>
+    <p><a href="/privacy/">سياسة الخصوصية</a></p>
+  </div>
+</footer>

@@ -1,0 +1,30 @@
+/* Ribaat Design System — Type tokens
+   RTL-first, Arabic-only v1. "display" = Amiri (Naskh serif, academic/
+   classical feel — headings, honorifics, Qur'an/Hadith citations).
+   "sans" = IBM Plex Sans Arabic (UI, body copy, forms, navigation). */
+:root {
+  --font-display: "Amiri", "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace; /* certificate/course codes only — @font-face pending; brand should upload real font files */
+
+  /* Type scale — 1.25 ratio, base 16px */
+  --text-xs: 0.75rem;    /* 12px — meta, timestamps */
+  --text-sm: 0.875rem;   /* 14px — captions, form hints */
+  --text-base: 1rem;     /* 16px — body */
+  --text-md: 1.125rem;   /* 18px — lead paragraph */
+  --text-lg: 1.375rem;   /* 22px — card titles */
+  --text-xl: 1.75rem;    /* 28px — section headings */
+  --text-2xl: 2.25rem;   /* 36px — page titles */
+  --text-3xl: 3rem;      /* 48px — hero */
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.55;  /* Arabic needs more line-height than Latin */
+  --leading-relaxed: 1.9;  /* Qur'an/Hadith citation blocks */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --tracking-normal: 0; /* never use letter-spacing on Arabic script */
+}

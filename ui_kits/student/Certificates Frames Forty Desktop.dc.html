@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EAE6DA; }
+    a { color: #4F6140; text-decoration: none; }
+    a:hover { color: #3E4E32; }
+  </style>
+</helmet>
+
+<section style="padding: 48px; font-family: var(--font-sans, sans-serif);">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; flex-wrap: wrap;">
+    <span style="font-family: var(--font-display, serif); font-size: 26px; font-weight: 700; color: #211F19;">Forty documents — desktop</span>
+    <span style="font-size: 13px; color: #635C48;">Light and dark, 1280px.</span>
+    <a href="Certificates%20Frames.dc.html" style="font-size: 13px;">all boards</a>
+  </div>
+  <span style="display: block; font-size: 12px; color: #82795F; margin-bottom: 34px; max-width: 1180px;">٣٨ إجازة and ٢ شهادة across three levels, grouped برنامج → مستوى, newest level first. Each مستوى is a collapsible <code>&lt;h3&gt;&lt;button aria-expanded&gt;</code> controlling its panel; المستوى الثالث opens by default (١٢ إجازة, three columns) and completed levels stay closed with a summary in the header, rendering no cards until opened — that is what keeps forty documents readable. Each level opens with its شهادة as a compact institutional capstone strip (التقدير · النسبة · المتون · both calendars), its إجازات beneath as double-ruled, ring-sealed cards naming the مُجيز. Click a level header to open it.</span>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start;">
+
+    <div id="2a" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">2a</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light</span>
+      </div>
+      <div style="width: 1280px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="StudentCertificates" state="full" viewport="desktop" color-scheme="light" hint-size="1280px,2400px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2b" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">2b</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Dark</span>
+      </div>
+      <div style="width: 1280px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.18);">
+        <dc-import name="StudentCertificates" state="full" viewport="desktop" color-scheme="dark" hint-size="1280px,2400px"></dc-import>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+</body>
+</html>

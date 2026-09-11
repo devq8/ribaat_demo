@@ -1,0 +1,21 @@
+{% comment %}Plain-text alternative — generated from billing/payment_receipt.html. Keep in sync with the HTML body.{% endcomment %}إيصال دفع
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+نُثبت استلام المبلغ التالي عن تسجيلك في {{ site_name }}. هذه الرسالة إيصال رسمي، ويمكنك الاحتفاظ بها.
+رقم الإيصال: {{ receipt_number }}
+البيان: {{ item_title }}
+طريقة الدفع: {{ payment_method_label }}
+تاريخ الدفع: {{ paid_at }}
+المبلغ المدفوع
+{{ amount }} {{ currency }}
+
+عرض الإيصال:
+{{ receipt_url }}
+
+للاستفسار عن هذا الإيصال، راسلنا على {{ support_email }} مع ذكر رقم الإيصال.
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

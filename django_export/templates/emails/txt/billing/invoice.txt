@@ -1,0 +1,31 @@
+{% comment %}Plain-text alternative — generated from billing/invoice.html. Keep in sync with the HTML body.{% endcomment %}فاتورة
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+هذه فاتورة بالبنود المستحقة على حسابك في {{ site_name }}.
+رقم الفاتورة: {{ invoice_number }}
+تاريخ الإصدار: {{ issue_date }}
+تاريخ الاستحقاق: {{ due_date }}
+حالة الفاتورة: {{ invoice_status }}
+البيان
+المبلغ
+{% for line in invoice_lines %}
+{{ line.description }}
+{{ line.amount }} {{ currency }}
+{% endfor %}
+المجموع قبل الخصم
+{{ subtotal }} {{ currency }}
+الخصم
+{{ discount }} {{ currency }}
+الإجمالي المستحق
+{{ total }} {{ currency }}
+
+عرض الفاتورة وسدادها:
+{{ invoice_url }}
+
+جميع المبالغ بالدينار الكويتي (د.ك).
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

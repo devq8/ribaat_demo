@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors-dark.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); text-decoration: underline; }
+    :focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    @keyframes ribaat-breathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 0.9; } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  </style>
+</helmet>
+
+<div lang="ar" dir="rtl" data-theme="{{ themeAttr }}" data-screen-label="{{ screenLabel }}" style="background: var(--surface-page); min-height: 100%; font-family: var(--font-sans); color: var(--text-primary);">
+
+  <header dir="rtl" style="display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(24px, 6vw, 120px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans);">
+    <div style="display: flex; align-items: center; gap: 36px;">
+      <img src="../../assets/logos/ribaat-mark-2026.png" alt="رباط الحنابلة" style="height: 30px; filter: {{ logoFilter }}; width: 108px">
+      <nav style="display: flex; gap: 26px;">
+        <a href="StudentDashboard.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">لوحة التحكم</a>
+        <a href="CourseCatalogue.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الدورات</a>
+        <a href="StudentPaths.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">البرامج الدراسية</a>
+        <a href="StudentCertificates.dc.html" style="font-size: var(--text-base); color: var(--text-brand); font-weight: var(--weight-semibold);">الشهادات</a>
+      </nav>
+    </div>
+    <div style="position: relative;">
+      <button onClick="{{ toggleAccountMenu }}" aria-label="الحساب" style="background: none; border: none; padding: 0; cursor: pointer; border-radius: 50%; display: flex;">
+        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="{{ studentName }}" size="sm" hint-size="32px,32px"></x-import>
+      </button>
+      <sc-if value="{{ accountMenuOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: calc(100% + 10px); inset-inline-end: 0; min-width: 200px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 6px; z-index: 30;">
+          <div style="padding: 8px 12px;">
+            <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ studentName }}</p>
+            <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">طالب</p>
+          </div>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M2 3h20"></path><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path><path d="m7 21 5-5 5 5"></path></svg>
+            <span>لوحة المعلم</span>
+          </button>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+            <span>لوحة الإدارة</span>
+          </button>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>الإعدادات</span>
+          </button>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <span>تواصل معنا</span>
+          </button>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button onClick="{{ signOut }}" style-hover="background: var(--state-danger-bg);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--state-danger-fg); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+            <span>تسجيل الخروج</span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+  </header>
+
+  <main>
+  <div style="max-width: {{ containerMaxWidth }}; margin-inline: auto; padding: {{ pagePadding }}; display: flex; flex-direction: column; gap: {{ sectionGap }};">
+
+    <header style="display: flex; flex-direction: column; gap: var(--space-3); max-width: 68ch;">
+      <h1 style="margin: 0; font-family: var(--font-display); font-size: {{ h1Size }}; font-weight: var(--weight-bold); line-height: var(--leading-tight); color: var(--text-primary);">الإجازات والشهادات</h1>
+      <p style="margin: 0; font-size: {{ leadSize }}; line-height: var(--leading-normal); color: var(--text-secondary);">شهادة اجتياز تصدر من المدرسة عن برنامج أو مستوى، وإجازة بالسند المتصل يمنحها الشيخ عن دورة مستقلة.</p>
+      <sc-if value="{{ showHeaderNote }}" hint-placeholder-val="{{ true }}">
+        <p style="margin: 0; font-size: {{ leadSize }}; line-height: var(--leading-normal); color: var(--text-primary);">{{ headerNote }}</p>
+      </sc-if>
+    </header>
+
+    <sc-if value="{{ showCounts }}" hint-placeholder-val="{{ false }}">
+      <dl style="margin: 0; display: grid; grid-template-columns: {{ countColumns }}; gap: 1px; background: var(--border-subtle); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden;">
+        <sc-for list="{{ counts }}" as="count" hint-placeholder-count="3">
+          <div style="background: var(--surface-card); padding: {{ countPadding }}; display: flex; align-items: flex-start; gap: var(--space-4);">
+            <span aria-hidden="true" style="position: relative; flex: none; width: var(--space-10); height: var(--space-10); display: grid; place-items: center;">
+              <span style="position: absolute; inset: 15%; border: var(--border-width) solid {{ count.markColor }}; border-radius: 2px;"></span>
+              <span style="position: absolute; inset: 15%; border: var(--border-width) solid {{ count.markColor }}; border-radius: 2px; transform: rotate(45deg);"></span>
+              <span style="position: absolute; inset: 38%; border-radius: 50%; background: {{ count.markColor }};"></span>
+            </span>
+            <span style="min-width: 0; display: flex; flex-direction: column; gap: var(--space-1);">
+              <dd style="margin: 0; display: flex; align-items: baseline; gap: var(--space-2);">
+                <span style="font-family: var(--font-display); font-size: {{ countSize }}; font-weight: var(--weight-bold); line-height: 1; color: var(--text-primary);">{{ count.value }}</span>
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ count.label }}</span>
+              </dd>
+              <dt style="font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--text-secondary);">{{ count.hint }}</dt>
+            </span>
+          </div>
+        </sc-for>
+      </dl>
+    </sc-if>
+
+    <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+      <div aria-busy="true" aria-live="polite" style="display: flex; flex-direction: column; gap: {{ sectionGap }};">
+        <p style="margin: 0; font-size: var(--text-base); color: var(--text-secondary);">جارٍ تحميل سجلّ الوثائق.</p>
+        <div aria-hidden="true" style="display: grid; grid-template-columns: {{ levelColumns }}; gap: {{ gridGap }};">
+          <sc-for list="{{ skeletonTiles }}" as="tile" hint-placeholder-count="3">
+            <div style="aspect-ratio: 1.414 / 1; background: var(--surface-card); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-lg); animation: ribaat-breathe var(--duration-slow) var(--ease-standard) infinite alternate;"></div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+      <section aria-labelledby="cert-error-heading" style="background: var(--surface-card); border: var(--border-width) solid var(--border-default); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: {{ errorPadding }}; max-width: 64ch; display: flex; flex-direction: column; gap: var(--space-4);">
+        <h2 id="cert-error-heading" style="margin: 0; font-family: var(--font-display); font-size: {{ h2Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">لم يُحمَّل السجلّ</h2>
+        <p style="margin: 0; font-size: var(--text-base); line-height: var(--leading-normal); color: var(--text-secondary);">تعذّر الوصول إلى السجلّ الآن. وثائقك محفوظة، والخلل في العرض.</p>
+        <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary); background: var(--surface-page); border-radius: var(--radius-sm); padding: var(--space-3) var(--space-4);">رمز الحالة: ٥٠٣ · ٢٦ صفر ١٤٤٨هـ · ٢٦ أغسطس ٢٠٢٦م</p>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4);">
+          <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" on-click="{{ onRetry }}" hint-size="auto,44px">إعادة المحاولة</x-import>
+          <a href="StudentDashboard.dc.html" style="font-size: var(--text-sm);">العودة إلى لوحة الطالب</a>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showShahada }}" hint-placeholder-val="{{ true }}">
+      <section aria-labelledby="cert-shahada-heading" style="display: flex; flex-direction: column; gap: {{ blockGap }};">
+        <div style="display: flex; flex-direction: column; gap: var(--space-2); max-width: 74ch;">
+          <h2 id="cert-shahada-heading" style="margin: 0; font-family: var(--font-display); font-size: {{ h2Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">شهادة اجتياز</h2>
+          <p style="margin: 0; font-size: var(--text-base); line-height: var(--leading-normal); color: var(--text-secondary);">تصدر شهادة المستوى بمشاهدة دروس مقرراته كلها واجتياز اختباراتها، وتصدر شهادة البرنامج بإتمام مستوياته على هذا الوجه.</p>
+        </div>
+
+        <sc-for list="{{ programs }}" as="p" hint-placeholder-count="3">
+          <section aria-label="{{ p.name }}" style="display: flex; flex-direction: column; gap: {{ gridGap }}; background: {{ p.blockBg }}; border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-lg); padding: {{ blockPadding }};">
+            <h3 style="margin: 0;">
+              <button type="button" aria-expanded="{{ p.ariaExpanded }}" aria-controls="{{ p.panelId }}" onClick="{{ p.toggle }}" style="width: 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-5); background: transparent; border: none; border-block-end: var(--border-width) solid {{ p.headerRule }}; padding: {{ p.headerPadding }}; text-align: start; font-family: var(--font-sans); cursor: pointer;">
+                <span style="display: flex; align-items: center; gap: var(--space-3); min-width: 0;">
+                  <span aria-hidden="true" style="position: relative; flex: none; width: var(--space-8); height: var(--space-8); display: grid; place-items: center;">
+                    <span style="position: absolute; inset: 10%; border: var(--border-width) solid {{ p.markColor }}; border-radius: 2px;"></span>
+                    <span style="position: absolute; inset: 10%; border: var(--border-width) solid {{ p.markColor }}; border-radius: 2px; transform: rotate(45deg);"></span>
+                    <span style="position: absolute; inset: 38%; border-radius: 50%; background: {{ p.markColor }};"></span>
+                  </span>
+                  <span style="font-family: var(--font-display); font-size: {{ programNameSize }}; font-weight: var(--weight-bold); line-height: var(--leading-tight); color: var(--text-primary);">{{ p.name }}</span>
+                  <x-import component-from-global-scope="RibaatDesignSystem_790e93.Badge" tone="neutral" hint-size="auto,24px">{{ p.levelsChip }}</x-import>
+                </span>
+                <span style="display: flex; align-items: center; gap: var(--space-4);">
+                  <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: {{ p.statusColor }};">{{ p.status }}</span>
+                  <span style="font-size: var(--text-sm); color: var(--text-secondary);">{{ p.issuedSummary }}</span>
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="flex: none; color: var(--text-brand); transform: {{ p.chevron }}; transition: transform var(--duration-fast) var(--ease-standard);"><path d="M6 9l6 6 6-6"></path></svg>
+                </span>
+              </button>
+            </h3>
+
+            <div id="{{ p.panelId }}" style="display: {{ p.panelDisplay }}; flex-direction: column; gap: {{ gridGap }};">
+            <article aria-label="{{ p.cert.aria }}" style="width: 100%; max-width: {{ programCertMax }}; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1fr); background: {{ p.cert.bg }}; border: var(--border-width) {{ p.cert.borderStyle }} {{ p.cert.borderColor }}; border-radius: var(--radius-lg); box-shadow: {{ p.cert.shadow }}; padding: var(--space-3);" style-before="content: ''; grid-area: 1 / 1; padding-block-start: 70.72%;">
+              <div style="grid-area: 1 / 1; position: relative; height: 100%; border: var(--border-width) solid {{ p.cert.innerBorder }}; border-radius: var(--radius-md); padding: {{ programInnerPadding }}; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: var(--space-3); text-align: center; overflow: hidden;">
+                <span aria-hidden="true" style="position: absolute; inset-block-start: 8px; inset-inline-start: 8px; width: 18px; height: 18px; border-block-start: var(--border-width) solid {{ p.cert.ornament }}; border-inline-start: var(--border-width) solid {{ p.cert.ornament }};"></span>
+                <span aria-hidden="true" style="position: absolute; inset-block-start: 8px; inset-inline-end: 8px; width: 18px; height: 18px; border-block-start: var(--border-width) solid {{ p.cert.ornament }}; border-inline-end: var(--border-width) solid {{ p.cert.ornament }};"></span>
+                <span aria-hidden="true" style="position: absolute; inset-block-end: 8px; inset-inline-start: 8px; width: 18px; height: 18px; border-block-end: var(--border-width) solid {{ p.cert.ornament }}; border-inline-start: var(--border-width) solid {{ p.cert.ornament }};"></span>
+                <span aria-hidden="true" style="position: absolute; inset-block-end: 8px; inset-inline-end: 8px; width: 18px; height: 18px; border-block-end: var(--border-width) solid {{ p.cert.ornament }}; border-inline-end: var(--border-width) solid {{ p.cert.ornament }};"></span>
+
+                <p style="margin: 0; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: {{ p.cert.kickerColor }};">شهادة اجتياز البرنامج</p>
+
+                <div style="display: flex; align-items: center; gap: {{ programHeadGap }};">
+                  <span aria-hidden="true" style="position: relative; flex: none; width: {{ programSeal }}; height: {{ programSeal }}; display: grid; place-items: center;">
+                    <span style="position: absolute; inset: 15%; border: var(--border-width) solid {{ p.cert.sealOuter }}; border-radius: 3px;"></span>
+                    <span style="position: absolute; inset: 15%; border: var(--border-width) solid {{ p.cert.sealOuter }}; border-radius: 3px; transform: rotate(45deg);"></span>
+                    <span style="position: absolute; inset: 20%; border: var(--border-width) solid {{ p.cert.sealInner }}; border-radius: 50%;"></span>
+                    <span style="position: absolute; inset: 26%; border: var(--border-width) solid {{ p.cert.sealInner }}; border-radius: 50%; background: {{ p.cert.sealFill }};"></span>
+                    <span style="position: relative; font-family: var(--font-display); font-size: {{ programSealText }}; font-weight: var(--weight-bold); color: {{ p.cert.sealText }};">رباط</span>
+                  </span>
+                  <span style="min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); text-align: start;">
+                    <h4 style="margin: 0; font-family: var(--font-display); font-size: {{ programTitleSize }}; font-weight: var(--weight-bold); line-height: var(--leading-tight); color: {{ p.cert.titleColor }};">{{ p.name }}</h4>
+                    <p style="margin: 0; font-size: var(--text-sm); color: var(--text-secondary);">{{ p.cert.meta }}</p>
+                    <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: {{ p.cert.statusColor }};">{{ p.cert.status }}</p>
+                  </span>
+                  <image-slot id="{{ p.medalSlotId }}" shape="circle" fit="contain" placeholder="صورة وسام" src="{{ medalSrc }}" style="display: {{ medalDisplay }}; flex: none; width: {{ programMedal }}; height: {{ programMedal }}; opacity: {{ p.cert.medalOpacity }};"></image-slot>
+                </div>
+
+                <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: var(--space-1);">
+                  <p style="margin: 0; font-size: var(--text-xs); color: var(--text-secondary);">{{ p.cert.holderLabel }}</p>
+                  <p style="margin: 0; font-family: var(--font-display); font-size: {{ holderSize }}; font-weight: var(--weight-bold); line-height: var(--leading-tight); color: {{ p.cert.holderColor }};">{{ p.cert.holder }}</p>
+                </div>
+
+                <dl style="margin: 0; width: 100%; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2) var(--space-6); border-block: var(--border-width) solid var(--border-subtle); padding-block: var(--space-3);">
+                  <sc-for list="{{ p.cert.facts }}" as="fact" hint-placeholder-count="3">
+                    <div style="display: flex; align-items: baseline; gap: var(--space-2);">
+                      <dt style="font-size: var(--text-xs); color: var(--text-secondary);">{{ fact.label }}</dt>
+                      <dd style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: {{ p.cert.factColor }};">{{ fact.value }}</dd>
+                    </div>
+                  </sc-for>
+                </dl>
+
+                <div style="width: 100%; display: flex; flex-direction: column; gap: var(--space-3);">
+                  <div style="display: {{ p.cert.progressDisplay }}; flex-direction: column; gap: var(--space-2);">
+                    <div role="progressbar" aria-valuemin="0" aria-valuemax="{{ p.cert.total }}" aria-valuenow="{{ p.cert.done }}" aria-valuetext="{{ p.cert.progressText }}" style="height: var(--space-2); background: var(--surface-sunken); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-pill); overflow: hidden;">
+                      <div style="width: {{ p.cert.progressWidth }}; height: 100%; background: var(--surface-brand);"></div>
+                    </div>
+                    <p style="margin: 0; font-size: var(--text-xs); color: var(--text-secondary);">{{ p.cert.progressText }}</p>
+                  </div>
+
+                  <div style="display: {{ p.cert.issuedDisplay }}; align-items: center; justify-content: space-between; gap: var(--space-4); text-align: start; border-block-start: var(--border-width) solid var(--border-subtle); padding-block-start: var(--space-3);">
+                    <span style="display: flex; align-items: center; gap: var(--space-3); min-width: 0;">
+                      <img src="{{ p.cert.qr }}" alt="رمز تحقق الشهادة {{ p.cert.serial }}" width="56" height="56" style="flex: none; width: 56px; height: 56px; border-radius: var(--radius-sm); background: var(--surface-card);">
+                      <span style="min-width: 0; display: flex; flex-direction: column; gap: var(--space-1);">
+                        <span style="font-size: var(--text-xs); color: var(--text-secondary);">للتحقق من الشهادة</span>
+                        <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ p.cert.serial }}</span>
+                      </span>
+                    </span>
+                    <span style="flex: none; display: flex; align-items: center; gap: var(--space-3);">
+                      <button type="button" style="display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 44px; background: var(--surface-brand); color: var(--text-on-brand); border: var(--border-width) solid var(--surface-brand); border-radius: var(--radius-md); padding: 0 var(--space-4); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: pointer; transition: background var(--duration-fast) var(--ease-standard);" style-hover="background: var(--surface-brand-strong); border-color: var(--surface-brand-strong);">
+                        <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 20h16"></path></svg>
+                        <span>تنزيل PDF</span>
+                      </button>
+                      <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 44px; background: transparent; color: var(--text-brand); border: var(--border-width) solid var(--border-brand); border-radius: var(--radius-md); padding: 0 var(--space-4); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: pointer; transition: background var(--duration-fast) var(--ease-standard);" style-hover="background: var(--ribaat-green-100); color: var(--text-link-hover);">عرض</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: {{ levelColumns }}; gap: {{ gridGap }};">
+              <sc-for list="{{ p.levels }}" as="level" hint-placeholder-count="3">
+                <li style="display: grid; grid-template-columns: minmax(0, 1fr); background: {{ level.bg }}; border: var(--border-width) {{ level.borderStyle }} {{ level.borderColor }}; border-radius: var(--radius-lg); box-shadow: {{ level.shadow }}; padding: var(--space-2);" style-before="content: ''; grid-area: 1 / 1; padding-block-start: 70.72%;">
+                  <div style="grid-area: 1 / 1; height: 100%; border: var(--border-width) solid {{ level.innerBorder }}; border-radius: var(--radius-md); padding: {{ levelInnerPadding }}; display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-3);">
+                    <div style="display: flex; align-items: center; gap: var(--space-4);">
+                      <span aria-hidden="true" style="position: relative; flex: none; width: {{ levelSeal }}; height: {{ levelSeal }}; display: grid; place-items: center;">
+                        <span style="position: absolute; inset: 15%; border: var(--border-width) solid {{ level.sealOuter }}; border-radius: 3px;"></span>
+                        <span style="position: absolute; inset: 15%; border: var(--border-width) solid {{ level.sealOuter }}; border-radius: 3px; transform: rotate(45deg);"></span>
+                        <span style="position: absolute; inset: 30%; border: var(--border-width) solid {{ level.sealInner }}; border-radius: 50%; background: {{ level.sealFill }};"></span>
+                        <span style="position: relative; font-family: var(--font-display); font-size: {{ levelSealText }}; font-weight: var(--weight-bold); color: {{ level.sealTextColor }};">{{ level.n }}</span>
+                      </span>
+                      <span style="min-width: 0; display: flex; flex-direction: column; gap: var(--space-1);">
+                        <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: {{ level.kickerColor }};">شهادة اجتياز مستوى</span>
+                        <h5 style="margin: 0; font-family: var(--font-display); font-size: {{ levelTitleSize }}; font-weight: var(--weight-bold); line-height: var(--leading-tight); color: {{ level.titleColor }};">{{ level.title }}</h5>
+                        <span style="font-size: var(--text-sm); line-height: var(--leading-normal); color: {{ level.statusColor }};">{{ level.status }}</span>
+                      </span>
+                    </div>
+
+                    <dl style="margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4);">
+                      <sc-for list="{{ level.facts }}" as="fact" hint-placeholder-count="2">
+                        <div style="display: flex; align-items: baseline; gap: var(--space-2);">
+                          <dt style="font-size: var(--text-xs); color: var(--text-secondary);">{{ fact.label }}</dt>
+                          <dd style="margin: 0; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: {{ level.factColor }};">{{ fact.value }}</dd>
+                        </div>
+                      </sc-for>
+                    </dl>
+
+                    <div style="display: {{ level.pendingDisplay }}; flex-direction: column; gap: var(--space-2); border-block-start: var(--border-width) solid var(--border-subtle); padding-block-start: var(--space-3);">
+                      <span style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);">
+                        <span style="display: flex; align-items: center; gap: var(--space-2);">
+                          <sc-for list="{{ level.pips }}" as="pip" hint-placeholder-count="6">
+                            <span aria-hidden="true" style="flex: none; width: var(--space-3); height: var(--space-3); transform: rotate(45deg); border: var(--border-width) solid {{ pip.border }}; background: {{ pip.fill }};"></span>
+                          </sc-for>
+                        </span>
+                        <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary);">{{ level.pipsCount }} مقررات</span>
+                      </span>
+                      <span style="font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--text-secondary);">{{ level.pendingNote }}</span>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                      <div style="display: {{ level.progressDisplay }}; flex-direction: column; gap: var(--space-2);">
+                        <div role="progressbar" aria-valuemin="0" aria-valuemax="{{ level.total }}" aria-valuenow="{{ level.done }}" aria-valuetext="{{ level.progressText }}" style="height: var(--space-2); background: var(--surface-sunken); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-pill); overflow: hidden;">
+                          <div style="width: {{ level.progressWidth }}; height: 100%; background: var(--surface-brand);"></div>
+                        </div>
+                        <p style="margin: 0; font-size: var(--text-xs); color: var(--text-secondary);">{{ level.progressText }}</p>
+                      </div>
+
+                      <div style="display: {{ level.issuedDisplay }}; align-items: center; justify-content: space-between; gap: var(--space-3); border-block-start: var(--border-width) solid var(--border-subtle); padding-block-start: var(--space-3);">
+                        <span style="display: flex; align-items: center; gap: var(--space-3); min-width: 0;">
+                          <img src="{{ level.qr }}" alt="رمز تحقق الشهادة {{ level.serial }}" width="44" height="44" style="flex: none; width: 44px; height: 44px; border-radius: var(--radius-sm); background: var(--surface-card);">
+                          <span style="min-width: 0; font-size: var(--text-xs); color: var(--text-secondary);">{{ level.serial }}</span>
+                        </span>
+                        <span style="flex: none; display: flex; align-items: center; gap: var(--space-2);">
+                          <button type="button" style="display: inline-flex; align-items: center; justify-content: center; min-height: 40px; background: transparent; color: var(--text-brand); border: var(--border-width) solid var(--border-brand); border-radius: var(--radius-md); padding: 0 var(--space-3); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: pointer; transition: background var(--duration-fast) var(--ease-standard);" style-hover="background: var(--ribaat-green-100); color: var(--text-link-hover);">عرض</button>
+                          <button type="button" aria-label="تنزيل الشهادة PDF" title="تنزيل الشهادة PDF" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--surface-brand); color: var(--text-on-brand); border: var(--border-width) solid var(--surface-brand); border-radius: var(--radius-md); cursor: pointer; transition: background var(--duration-fast) var(--ease-standard);" style-hover="background: var(--surface-brand-strong); border-color: var(--surface-brand-strong);">
+                            <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 20h16"></path></svg>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </sc-for>
+            </ul>
+            </div>
+          </section>
+        </sc-for>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showIjazat }}" hint-placeholder-val="{{ false }}">
+      <section aria-labelledby="cert-ijaza-heading" style="display: flex; flex-direction: column; gap: {{ blockGap }};">
+        <div style="display: flex; flex-direction: column; gap: var(--space-2); max-width: 74ch;">
+          <h2 id="cert-ijaza-heading" style="margin: 0; font-family: var(--font-display); font-size: {{ h2Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">إجازة بالسند المتصل</h2>
+          <p style="margin: 0; font-size: var(--text-base); line-height: var(--leading-normal); color: var(--text-secondary);">تُنال بإتمام دورة مستقلة، ويمنحها الشيخ المُجيز باسمه بإسناد متصل إلى مؤلف الكتاب.</p>
+        </div>
+
+        <sc-if value="{{ noIjazat }}" hint-placeholder-val="{{ false }}">
+          <p style="margin: 0; font-size: var(--text-base); line-height: var(--leading-normal); color: var(--text-secondary); background: var(--surface-card); border: var(--border-width) dashed var(--border-default); border-radius: var(--radius-lg); padding: {{ blockPadding }};">لم تُمنح لك إجازة بعد. تصدر الإجازة بإتمام دورة مستقلة وسماعها على الشيخ المُجيز.</p>
+        </sc-if>
+
+        <ul style="display: {{ ijazaListDisplay }}; list-style: none; margin: 0; padding: 0; grid-template-columns: {{ ijazaColumns }}; gap: {{ gridGap }};">
+          <sc-for list="{{ ijazat }}" as="doc" hint-placeholder-count="6">
+            <li style="display: grid; grid-template-columns: minmax(0, 1fr); background: var(--surface-card); border: var(--border-width) solid var(--ribaat-brown-300); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: var(--space-2); transition: box-shadow var(--duration-fast) var(--ease-standard);" style-hover="box-shadow: var(--shadow-md);" style-before="content: ''; grid-area: 1 / 1; padding-block-start: 70.72%;">
+              <div style="grid-area: 1 / 1; height: 100%; border: var(--border-width) solid var(--ribaat-brown-200); border-radius: var(--radius-md); padding: {{ docPadding }}; display: flex; align-items: stretch; gap: var(--space-4);">
+                <div style="flex: none; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: var(--space-3);">
+                  <span aria-hidden="true" style="position: relative; flex: none; width: {{ docSeal }}; height: {{ docSeal }}; display: grid; place-items: center;">
+                    <span style="position: absolute; inset: 15%; border: var(--border-width) solid var(--ribaat-brown-400); border-radius: 2px;"></span>
+                    <span style="position: absolute; inset: 15%; border: var(--border-width) solid var(--ribaat-brown-400); border-radius: 2px; transform: rotate(45deg);"></span>
+                    <span style="position: absolute; inset: 28%; border: var(--border-width) solid var(--ribaat-brown-300); border-radius: 50%; background: var(--ribaat-brown-100);"></span>
+                    <span style="position: absolute; inset: 42%; border-radius: 50%; background: var(--ribaat-brown-400);"></span>
+                  </span>
+                  <img src="{{ doc.qr }}" alt="رمز تحقق الإجازة {{ doc.serial }}" width="52" height="52" style="display: {{ doc.verifyDisplay }}; width: 52px; height: 52px; border-radius: var(--radius-sm); background: var(--surface-card);">
+                </div>
+
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-2);">
+                  <p style="margin: 0; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-accent);">إجازة بالسند المتصل</p>
+                  <h4 style="margin: 0; font-family: var(--font-display); font-size: {{ docTitleSize }}; font-weight: var(--weight-bold); line-height: var(--leading-tight); color: var(--text-primary);">{{ doc.book }}</h4>
+                  <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-primary);">{{ doc.mujiz }}</p>
+                  <p style="margin: 0; font-size: var(--text-xs); color: var(--text-secondary);">{{ doc.date }}</p>
+                  <p style="display: {{ doc.verifyDisplay }}; margin: 0; font-size: var(--text-xs); color: var(--text-secondary);">{{ doc.serial }}</p>
+
+                  <div style="margin-block-start: auto; display: flex; gap: var(--space-2);">
+                    <button type="button" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 44px; background: var(--surface-brand); color: var(--text-on-brand); border: var(--border-width) solid var(--surface-brand); border-radius: var(--radius-md); padding: 0 var(--space-3); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: pointer; transition: background var(--duration-fast) var(--ease-standard);" style-hover="background: var(--surface-brand-strong); border-color: var(--surface-brand-strong);">
+                      <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 20h16"></path></svg>
+                      <span>تنزيل PDF</span>
+                    </button>
+                    <button type="button" style="flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; background: transparent; color: var(--text-brand); border: var(--border-width) solid var(--border-brand); border-radius: var(--radius-md); padding: 0 var(--space-4); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: pointer; transition: background var(--duration-fast) var(--ease-standard);" style-hover="background: var(--ribaat-green-100); color: var(--text-link-hover);">عرض</button>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showFooter }}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; flex-direction: column; gap: var(--space-2); border-block-start: var(--border-width) solid var(--border-subtle); padding-block-start: var(--space-5); max-width: 74ch;">
+        <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary);">كل وثيقة تُعرض وتُنزَّل ملف PDF، وتحمل رمز تحقق يُقرأ من الصورة أو يُدخل في صفحة الاستعلام.</p>
+        <a href="CourseCatalogue.dc.html" style="font-size: var(--text-sm);">{{ footerLink }}</a>
+      </div>
+    </sc-if>
+
+  </div>
+  </main>
+
+  <footer style="background: var(--surface-card); border-top: 1px solid var(--border-subtle);">
+    <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: 32px 24px; display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 320px;">
+        <img src="../../assets/logos/ribaat-lockup-2026.png" alt="رباط الحنابلة" style="height: 65px; align-self: flex-start; filter: {{ logoFilter }}; width: 110px">
+        <p style="margin: 0; font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed);">مدرسة شرعية تأصيلية — دورات ودروس في العقيدة والفقه والحديث والسيرة، بإجازات بالسند المتصل.</p>
+      </div>
+      <div style="display: flex; gap: 56px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">روابط</span>
+          <a href="StudentDashboard.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">لوحة التحكم</a>
+          <a href="CourseCatalogue.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">الدورات</a>
+          <a href="StudentPaths.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">البرامج الدراسية</a>
+          <a href="StudentCertificates.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">الشهادات</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">الدعم والتعريف</span>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">عن المدرسة</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">الأسئلة الشائعة</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">الدعم الفني</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">تواصل معنا</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid var(--border-subtle);">
+      <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: 14px 24px;">
+        <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted);">© 1448هـ — رباط الحنابلة. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1400},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;empty&quot;,&quot;single&quot;,&quot;full&quot;,&quot;loading&quot;,&quot;error&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;'empty'|'single'|'full'|'loading'|'error'&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;ijazaCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:9,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;completedLevels&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;تلقائي&quot;,&quot;٠&quot;,&quot;١&quot;,&quot;٢&quot;,&quot;٣&quot;,&quot;٤&quot;,&quot;٥&quot;],&quot;default&quot;:&quot;تلقائي&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;medalArt&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;وسام بشريطة&quot;,&quot;ميدالية بإكليل&quot;,&quot;خاتم نجمي&quot;,&quot;بلا صورة&quot;],&quot;default&quot;:&quot;وسام بشريطة&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;viewport&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;'desktop'|'tablet'|'phone'&quot;,&quot;section&quot;:&quot;العرض&quot;},&quot;colorScheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;,&quot;section&quot;:&quot;العرض&quot;},&quot;showProgress&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;showVerification&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;المحتوى&quot;}}">
+const AR = "٠١٢٣٤٥٦٧٨٩";
+const ar = n => String(n).replace(/[0-9]/g, d => AR[+d]);
+
+const LEVEL_NAMES = ["المستوى الأول", "المستوى الثاني", "المستوى الثالث", "المستوى الرابع", "المستوى الخامس"];
+const LEVEL_WORDS = { 1: "مستوى واحد", 2: "مستويان", 3: "ثلاثة مستويات", 4: "أربعة مستويات", 5: "خمسة مستويات" };
+const YEAR_WORDS = { 1: "عام دراسي واحد", 2: "عامان دراسيان", 3: "ثلاثة أعوام دراسية", 4: "أربعة أعوام دراسية", 5: "خمسة أعوام دراسية" };
+
+/* رمز تحقق مرسوم — نمط بديل عن رمز QR الحقيقي الذي يولّده الخادم من رقم الوثيقة */
+function qrUri(seed, fg, bg) {
+  bg = bg || "#FFFEFA";
+  const N = 21;
+  let h = 7;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) % 2147483647;
+  const rnd = () => { h = (h * 1103515245 + 12345) % 2147483648; return h / 2147483648; };
+  const finder = (x, y) => (x < 8 && y < 8) || (x >= N - 8 && y < 8) || (x < 8 && y >= N - 8);
+  let cells = "";
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) {
+      if (finder(x, y)) continue;
+      if (rnd() > 0.5) cells += '<rect x="' + x + '" y="' + y + '" width="1" height="1"/>';
+    }
+  }
+  const eye = (ox, oy) => '<rect x="' + ox + '" y="' + oy + '" width="7" height="7"/><rect x="' + (ox + 1) + '" y="' + (oy + 1) + '" width="5" height="5" fill="' + bg + '"/><rect x="' + (ox + 2) + '" y="' + (oy + 2) + '" width="3" height="3"/>';
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 23 23" shape-rendering="crispEdges">'
+    + '<rect x="-1" y="-1" width="23" height="23" fill="' + bg + '"/>'
+    + '<g fill="' + fg + '">' + cells + eye(0, 0) + eye(N - 7, 0) + eye(0, N - 7) + '</g></svg>';
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+
+/* بديل شفاف لوثيقة لم تصدر: يمنع طلب صورة فارغة */
+const QR_NONE = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+const GREEN = "#4F6140";
+const BROWN = "#4A3A22";
+const STUDENT = "محمد بن أحمد الرشيدي";
+
+const MEDALS = {
+  "وسام بشريطة": "./assets/medal-rosette.webp",
+  "ميدالية بإكليل": "./assets/medal-laurel.svg",
+  "خاتم نجمي": "./assets/medal-seal.svg",
+  "بلا صورة": ""
+};
+
+/* دورات مستقلة تصدر عنها إجازة بالسند المتصل */
+const STANDALONE = [
+  ["الأربعون النووية", "د. خالد بن مبارك المطيري", "٢ رجب ١٤٤٥هـ · ١٤ يناير ٢٠٢٤م", "RB-1445-0104"],
+  ["ثلاثة الأصول", "د. عبد العزيز بن عدنان العيدان", "١٤ صفر ١٤٤٥هـ · ٣١ أغسطس ٢٠٢٣م", "RB-1445-0031"],
+  ["القواعد الأربع", "د. عبد العزيز بن عدنان العيدان", "٦ ربيع الأول ١٤٤٥هـ · ٢١ سبتمبر ٢٠٢٣م", "RB-1445-0058"],
+  ["نواقض الإسلام", "د. أنس بن عادل اليتامى", "٢٧ ربيع الآخر ١٤٤٥هـ · ١١ نوفمبر ٢٠٢٣م", "RB-1445-0077"],
+  ["متن الورقات في أصول الفقه", "د. فهد بن عبد الله الرشيد", "٢١ شعبان ١٤٤٥هـ · ٢ مارس ٢٠٢٤م", "RB-1445-0142"],
+  ["لمعة الاعتقاد", "د. عبد العزيز بن عدنان العيدان", "٢٦ محرم ١٤٤٦هـ · ١ أغسطس ٢٠٢٤م", "RB-1446-0019"],
+  ["نخبة الفكر", "د. يوسف بن إبراهيم الدوسري", "١٦ جمادى الأولى ١٤٤٦هـ · ١٨ نوفمبر ٢٠٢٤م", "RB-1446-0088"],
+  ["تحفة الأطفال", "د. سعد بن جاسم العنزي", "٢ ذي القعدة ١٤٤٦هـ · ٣٠ أبريل ٢٠٢٥م", "RB-1446-0203"],
+  ["الموقظة في علم الحديث", "د. يوسف بن إبراهيم الدوسري", "١٥ رجب ١٤٤٧هـ · ٤ يناير ٢٠٢٦م", "RB-1447-0117"]
+];
+
+/* البرامج: عدد المستويات يختلف من برنامج لآخر (١ إلى ٥) */
+const PROGRAMS = [
+  {
+    id: "HB", name: "رباط الحنابلة", levelCount: 3,
+    full: {
+      status: "مُتمّ", cert: { taqdir: "ممتاز", nisba: "٩٦٪", serial: "HB-1448-P001", date: "٢ صفر ١٤٤٨هـ" },
+      levels: [
+        { taqdir: "ممتاز", nisba: "٩٤٪", serial: "HB-1446-L001", date: "١٨ صفر ١٤٤٦هـ" },
+        { taqdir: "جيد جداً", nisba: "٨٨٪", serial: "HB-1447-L002", date: "٢٤ صفر ١٤٤٧هـ" },
+        { taqdir: "ممتاز", nisba: "٩٦٪", serial: "HB-1448-L003", date: "٢ صفر ١٤٤٨هـ" }
+      ]
+    },
+    single: { status: "قائم · المستوى الأول", levelProgress: [1, 0, 0] },
+    empty: { status: "قائم · المستوى الأول", levelProgress: [0, 0, 0] }
+  },
+  {
+    id: "SH", name: "رباط الشافعية", levelCount: 5,
+    full: {
+      status: "قائم · المستوى الثالث",
+      levels: [{ taqdir: "جيد جداً", nisba: "٨٩٪", serial: "SH-1446-L001", date: "١١ ربيع الأول ١٤٤٦هـ" }, { taqdir: "ممتاز", nisba: "٩٢٪", serial: "SH-1447-L002", date: "٢٠ صفر ١٤٤٧هـ" }, null, null, null],
+      levelProgress: [6, 6, 3, 0, 0]
+    },
+    single: { status: "غير مسجَّل" },
+    empty: { status: "غير مسجَّل" }
+  },
+  {
+    id: "MA", name: "رباط المالكية", levelCount: 2,
+    full: { status: "غير مسجَّل" },
+    single: { status: "غير مسجَّل" },
+    empty: { status: "غير مسجَّل" }
+  }
+];
+
+const SKELETON = [{ k: "a" }, { k: "b" }, { k: "c" }];
+const PIPS = [0, 1, 2, 3, 4, 5];
+
+class Component extends DCLogic {
+  state = { retried: 0, open: {}, accountMenuOpen: false };
+
+  handleRetry = () => this.setState(s => ({ retried: s.retried + 1 }));
+
+  /* في الوضع الداكن يُعكس الرمز: وحدات فاتحة على أرضية داكنة */
+  qrFor(seed, tone) {
+    const dark = (this.props.colorScheme ?? "light") === "dark";
+    if (dark) return qrUri(seed, tone === "brown" ? "#E7D9C3" : "#DCE4D0", "#1F1D17");
+    return qrUri(seed, tone === "brown" ? BROWN : GREEN, "#FFFEFA");
+  }
+
+  toggleProgram(id, isOpen) {
+    this.setState(s => ({ open: Object.assign({}, s.open, { [id]: !isOpen }) }));
+  }
+
+  renderVals() {
+    const st = this.props.state ?? "empty";
+    const vp = this.props.viewport ?? "desktop";
+    const scheme = this.props.colorScheme ?? "light";
+    const prog = this.props.showProgress ?? true;
+    const ver = this.props.showVerification ?? true;
+    const key = [st, vp, scheme, prog, ver, this.props.ijazaCount ?? 0, this.props.completedLevels ?? "تلقائي", this.props.medalArt ?? "", this.props.slotPrefix ?? "", JSON.stringify(this.state.open)].join("|");
+    if (this._key !== key || !this._vals) {
+      this._key = key;
+      this._vals = this.compute(st, vp, scheme, prog, ver);
+    }
+    /* شريط التنقل والتذييل خارج الذاكرة المؤقتة: حالتهما تتغير بالنقر */
+    return Object.assign({}, this._vals, {
+      studentName: "ماجد",
+      logoFilter: scheme === "dark" ? "brightness(0) invert(1) opacity(0.9)" : "none",
+      signOut: () => { window.location.href = "RibaatAuth.dc.html"; },
+      accountMenuOpen: this.state.accountMenuOpen,
+      toggleAccountMenu: () => this.setState(s => ({ accountMenuOpen: !s.accountMenuOpen }))
+    });
+  }
+
+  programCert(p, rec, enrolled, prog, ver) {
+    const n = p.levelCount;
+    const meta = LEVEL_WORDS[n] + " · " + YEAR_WORDS[n];
+    if (rec && rec.cert) {
+      return {
+        aria: "شهادة اجتياز " + p.name + " — صادرة",
+        meta: meta,
+        bg: "var(--surface-card)",
+        borderStyle: "solid",
+        borderColor: "var(--ribaat-green-500)",
+        innerBorder: "var(--ribaat-brown-300)",
+        ornament: "var(--ribaat-brown-400)",
+        shadow: "var(--shadow-lg)",
+        kickerColor: "var(--text-brand)",
+        titleColor: "var(--text-primary)",
+        statusColor: "var(--text-primary)",
+        sealOuter: "var(--ribaat-green-500)",
+        sealInner: "var(--ribaat-brown-300)",
+        sealFill: "var(--ribaat-brown-100)",
+        sealText: "var(--text-accent)",
+        status: "التقدير العام " + rec.cert.taqdir + " · " + rec.cert.nisba,
+        medalOpacity: "1",
+        holderLabel: "تُمنح هذه الشهادة إلى",
+        holder: STUDENT,
+        holderColor: "var(--text-primary)",
+        factColor: "var(--text-primary)",
+        facts: [
+          { label: "تاريخ الإصدار", value: rec.cert.date },
+          { label: "المستويات", value: ar(n) },
+          { label: "التقدير", value: rec.cert.taqdir }
+        ],
+        total: n,
+        done: n,
+        progressText: "",
+        progressWidth: "100%",
+        progressDisplay: "none",
+        issuedDisplay: ver ? "flex" : "none",
+        serial: rec.cert.serial,
+        qr: this.qrFor(rec.cert.serial, "green")
+      };
+    }
+    const done = rec && rec.levels ? rec.levels.filter(Boolean).length : 0;
+    return {
+      aria: "شهادة اجتياز " + p.name + " — لم تصدر بعد",
+      meta: meta,
+      bg: "var(--surface-page)",
+      borderStyle: "dashed",
+      borderColor: "var(--border-default)",
+      innerBorder: "var(--border-subtle)",
+      ornament: "var(--border-default)",
+      shadow: "none",
+      kickerColor: "var(--text-secondary)",
+      titleColor: "var(--text-secondary)",
+      statusColor: "var(--text-secondary)",
+      sealOuter: "var(--border-default)",
+      sealInner: "var(--border-subtle)",
+      sealFill: "transparent",
+      sealText: "var(--text-muted)",
+      status: enrolled ? "تصدر بإتمام " + LEVEL_WORDS[n] + " مشاهدةً للدروس واجتيازاً للاختبارات" : "تصدر بعد التسجيل في البرنامج وإتمام مستوياته",
+      medalOpacity: "0.45",
+      holderLabel: "تُمنح باسمك عند الإتمام",
+      holder: STUDENT,
+      holderColor: "var(--text-secondary)",
+      factColor: "var(--text-secondary)",
+      facts: [
+        { label: "المستويات", value: ar(n) },
+        { label: "مقررات المستوى", value: "٦" },
+        { label: "الحال", value: enrolled ? "قائم" : "غير مسجَّل" }
+      ],
+      total: n,
+      done: done,
+      progressText: done === 0 ? "لم يُتمّ أي مستوى من " + ar(n) : "أُتمّ " + ar(done) + " من " + ar(n) + " مستويات",
+      progressWidth: Math.round((done / n) * 100) + "%",
+      progressDisplay: prog && enrolled ? "flex" : "none",
+      issuedDisplay: "none",
+      serial: "",
+      qr: QR_NONE
+    };
+  }
+
+  programLevels(p, rec, enrolled, prog, ver) {
+    const count = p.levelCount;
+    const levels = (rec && rec.levels) || new Array(count).fill(null);
+    const progress = (rec && rec.levelProgress) || new Array(count).fill(0);
+    let firstOpen = -1;
+    for (let i = 0; i < count; i++) { if (!levels[i]) { firstOpen = i; break; } }
+    const out = [];
+    for (let i = 0; i < count; i++) {
+      const rl = levels[i];
+      if (rl) {
+        out.push({
+          n: ar(i + 1),
+          title: LEVEL_NAMES[i],
+          bg: "var(--surface-card)",
+          borderStyle: "solid",
+          borderColor: "var(--border-subtle)",
+          innerBorder: "var(--ribaat-green-200)",
+          shadow: "var(--shadow-sm)",
+          kickerColor: "var(--text-brand)",
+          titleColor: "var(--text-primary)",
+          statusColor: "var(--text-primary)",
+          sealOuter: "var(--ribaat-green-400)",
+          sealInner: "var(--ribaat-green-300)",
+          sealFill: "var(--ribaat-green-100)",
+          sealTextColor: "var(--text-brand)",
+          status: rl.taqdir + " · " + rl.nisba,
+          factColor: "var(--text-primary)",
+          facts: [{ label: "تاريخ الإصدار", value: rl.date }, { label: "المقررات", value: "٦" }],
+          pendingDisplay: "none",
+          pips: [],
+          pipsCount: "",
+          pendingNote: "",
+          total: 6,
+          done: 6,
+          progressText: "",
+          progressWidth: "100%",
+          progressDisplay: "none",
+          issuedDisplay: ver ? "flex" : "none",
+          serial: rl.serial,
+          qr: this.qrFor(rl.serial, "green")
+        });
+        continue;
+      }
+      const current = enrolled && i === firstOpen;
+      const done = progress[i] || 0;
+      out.push({
+        n: ar(i + 1),
+        title: LEVEL_NAMES[i],
+        bg: "var(--surface-page)",
+        borderStyle: "dashed",
+        borderColor: "var(--border-default)",
+        innerBorder: "transparent",
+        shadow: "none",
+        kickerColor: "var(--text-secondary)",
+        titleColor: "var(--text-secondary)",
+        statusColor: "var(--text-secondary)",
+        sealOuter: "var(--border-default)",
+        sealInner: "var(--border-subtle)",
+        sealFill: "transparent",
+        sealTextColor: "var(--text-muted)",
+        status: current ? "تصدر بمشاهدة دروس المقررات واجتياز اختباراتها" : "تصدر بعد المستوى السابق",
+        factColor: "var(--text-secondary)",
+        facts: [{ label: "المقررات", value: "٦" }, { label: "المدة", value: "عام دراسي" }],
+        pendingDisplay: "flex",
+        pips: PIPS.map((x, k) => ({
+          border: k < done ? "var(--ribaat-green-400)" : "var(--border-default)",
+          fill: k < done ? "var(--ribaat-green-300)" : "transparent"
+        })),
+        pipsCount: ar(done) + " / ٦",
+        pendingNote: current
+          ? "يبقى " + ar(6 - done) + " من المقررات، تُشاهَد دروسها وتُجتاز اختباراتها لتصدر الشهادة"
+          : enrolled
+            ? "يُفتح بعد اجتياز " + LEVEL_NAMES[i - 1]
+            : "يُفتح بعد التسجيل في البرنامج",
+        total: 6,
+        done: done,
+        progressText: "أُتمّ " + ar(done) + " من ٦ مقررات",
+        progressWidth: Math.round((done / 6) * 100) + "%",
+        progressDisplay: "none",
+        issuedDisplay: "none",
+        serial: "",
+        qr: QR_NONE
+      });
+    }
+    return out;
+  }
+
+  /* سجلّ مُركَّب: أول n مستويات صادرة، وشهادة البرنامج تصدر باكتمالها كلها */
+  syntheticRec(p, n) {
+    const src = (p.full && p.full.levels) || [];
+    const levels = [];
+    for (let i = 0; i < p.levelCount; i++) {
+      if (i >= n) { levels.push(null); continue; }
+      levels.push(src[i] || {
+        taqdir: "جيد جداً",
+        nisba: "٨٨٪",
+        serial: p.id + "-144" + (6 + Math.min(i, 2)) + "-L00" + (i + 1),
+        date: "٢٠ صفر ١٤٤" + (6 + Math.min(i, 3)) + "هـ"
+      });
+    }
+    const rec = {
+      status: n >= p.levelCount ? "مُتمّ" : n === 0 ? "قائم · " + LEVEL_NAMES[0] : "قائم · " + LEVEL_NAMES[n],
+      levels: levels,
+      levelProgress: levels.map((l, i) => (l ? 6 : i === n ? 3 : 0))
+    };
+    if (n >= p.levelCount) {
+      const last = levels[levels.length - 1];
+      rec.cert = { taqdir: "ممتاز", nisba: "٩٤٪", serial: p.id + "-1448-P001", date: last ? last.date : "٢ صفر ١٤٤٨هـ" };
+    }
+    return rec;
+  }
+
+  buildPrograms(st, prog, ver) {
+    const ov = this.props.completedLevels ?? "تلقائي";
+    const ovN = ov === "تلقائي" ? -1 : AR.indexOf(ov);
+    return PROGRAMS.map(p => {
+      let rec = p[st] || p.empty;
+      /* التعديل يسري على البرامج المسجَّلة فقط */
+      if (ovN >= 0 && (rec.levels || rec.levelProgress)) rec = this.syntheticRec(p, Math.min(ovN, p.levelCount));
+      const enrolled = !!(rec && (rec.levels || rec.levelProgress));
+      const issuedLevels = rec && rec.levels ? rec.levels.filter(Boolean).length : 0;
+      const hasCert = !!(rec && rec.cert);
+      const isOpen = p.id in this.state.open ? this.state.open[p.id] : enrolled;
+      return {
+        name: p.name,
+        panelId: "cert-program-" + p.id,
+        medalSlotId: "medal-" + (this.props.slotPrefix ? this.props.slotPrefix + "-" : "") + p.id,
+        headerRule: isOpen ? "var(--border-subtle)" : "transparent",
+        headerPadding: isOpen ? "0 0 var(--space-4)" : "0",
+        panelDisplay: isOpen ? "flex" : "none",
+        ariaExpanded: isOpen ? "true" : "false",
+        chevron: isOpen ? "rotate(180deg)" : "none",
+        headerRule: isOpen ? "var(--border-subtle)" : "transparent",
+        toggle: () => this.toggleProgram(p.id, isOpen),
+        levelsChip: ar(p.levelCount) + " مستويات",
+        status: rec.status,
+        statusColor: enrolled ? "var(--text-brand)" : "var(--text-secondary)",
+        markColor: enrolled ? "var(--ribaat-green-400)" : "var(--border-default)",
+        blockBg: enrolled ? "var(--surface-card)" : "transparent",
+        issuedSummary: hasCert
+          ? "شهادة البرنامج و" + ar(issuedLevels) + " شهادات مستوى"
+          : issuedLevels > 0
+            ? ar(issuedLevels) + " من " + ar(p.levelCount) + " شهادات مستوى صادرة"
+            : "لم تصدر شهادة بعد",
+        cert: this.programCert(p, rec, enrolled, prog, ver),
+        levels: this.programLevels(p, rec, enrolled, prog, ver)
+      };
+    });
+  }
+
+  compute(st, vp, scheme, prog, ver) {
+    const phone = vp === "phone";
+    const tablet = vp === "tablet";
+    const isEmpty = st === "empty";
+    const isSingle = st === "single";
+    const isFull = st === "full";
+    const populated = isSingle || isFull;
+    const shell = isEmpty || populated;
+    const nIjaza = this.props.ijazaCount ?? 0;
+    /* عدد الإجازات المعروضة: يتبع الحالة ما لم يُضبط من لوحة التعديل */
+    const docs = nIjaza > 0 ? STANDALONE.slice(0, nIjaza) : isFull ? STANDALONE : isSingle ? STANDALONE.slice(0, 1) : [];
+
+    return {
+      themeAttr: scheme === "dark" ? "dark" : "light",
+      screenLabel: "الإجازات والشهادات — " + st + " · " + vp + " · " + scheme,
+      isLoading: st === "loading",
+      isError: st === "error",
+      showShahada: shell,
+      showIjazat: shell,
+      noIjazat: docs.length === 0,
+      ijazaListDisplay: docs.length === 0 ? "none" : "grid",
+      showFooter: shell,
+      showCounts: populated,
+      showHeaderNote: shell,
+      counts: isFull
+        ? [
+            { value: "٦", label: "شهادة اجتياز", hint: "شهادة برنامج وخمس شهادات مستوى", markColor: "var(--ribaat-green-400)" },
+            { value: ar(STANDALONE.length), label: "إجازة بالسند المتصل", hint: "آخرها: الموقظة في علم الحديث", markColor: "var(--ribaat-brown-400)" },
+            { value: "٢", label: "برنامج مسجَّل", hint: "من ثلاثة برامج · رباط الحنابلة والشافعية", markColor: "var(--ribaat-green-400)" }
+          ]
+        : [
+            { value: "٠", label: "شهادة اجتياز", hint: "آخرها شهادة المستوى الأول", markColor: "var(--border-default)" },
+            { value: ar(docs.length), label: "إجازة بالسند المتصل", hint: "الأربعون النووية", markColor: "var(--ribaat-brown-400)" },
+            { value: "١", label: "برنامج مسجَّل", hint: "من ثلاثة برامج · رباط الحنابلة", markColor: "var(--ribaat-green-400)" }
+          ],
+      headerNote: isEmpty
+        ? "لم تصدر لك وثيقة بعد، ومواضع الشهادات محفوظة حتى تُنال."
+        : isSingle
+          ? "في سجلّك إجازة واحدة، وشهادات الاجتياز تصدر بإتمام المستويات."
+          : "في سجلّك ست شهادات اجتياز وتسع إجازات بالسند المتصل.",
+      footerLink: isEmpty ? "تصفح البرامج والدورات" : "تصفح الدورات المستقلة",
+      medalSrc: MEDALS[this.props.medalArt ?? "وسام بشريطة"] ?? MEDALS["وسام بشريطة"],
+      medalDisplay: (this.props.medalArt ?? "وسام بشريطة") === "بلا صورة" ? "none" : "block",
+      onRetry: this.handleRetry,
+      programs: this.buildPrograms(st, prog, ver),
+      ijazat: docs.map(d => ({
+        book: d[0],
+        mujiz: "بإجازة من " + d[1],
+        date: d[2],
+        serial: d[3],
+        qr: this.qrFor(d[3], "brown"),
+        verifyDisplay: ver ? "block" : "none"
+      })),
+      skeletonTiles: SKELETON,
+
+      /* نفس عرض صفحة المسارات */
+      containerMaxWidth: phone ? "390px" : tablet ? "834px" : "1200px",
+      pagePadding: phone ? "20px 16px 48px" : tablet ? "28px 20px 56px" : "36px 24px 72px",
+      sectionGap: phone ? "var(--space-10)" : tablet ? "var(--space-12)" : "var(--space-16)",
+      blockGap: phone ? "var(--space-6)" : "var(--space-8)",
+      blockPadding: phone ? "var(--space-4)" : "var(--space-6)",
+      gridGap: phone ? "var(--space-4)" : "var(--space-5)",
+      h1Size: phone ? "var(--text-xl)" : "var(--text-2xl)",
+      h2Size: phone ? "var(--text-lg)" : "var(--text-xl)",
+      leadSize: phone ? "var(--text-base)" : "var(--text-md)",
+      countSize: phone ? "var(--text-xl)" : "var(--text-2xl)",
+      countColumns: phone ? "1fr" : tablet ? "1fr 1fr" : "repeat(3, minmax(0, 1fr))",
+      countPadding: phone ? "var(--space-4)" : "var(--space-5)",
+      errorPadding: phone ? "var(--space-5) var(--space-4)" : "var(--space-8)",
+      programNameSize: phone ? "var(--text-lg)" : "var(--text-xl)",
+      programCertMax: phone ? "100%" : tablet ? "100%" : "620px",
+      programInnerPadding: phone ? "var(--space-4)" : "var(--space-6)",
+      programHeadGap: phone ? "var(--space-4)" : "var(--space-6)",
+      programSeal: phone ? "var(--space-16)" : "var(--space-20)",
+      programMedal: phone ? "64px" : "88px",
+      programSealText: phone ? "var(--text-sm)" : "var(--text-base)",
+      programTitleSize: phone ? "var(--text-xl)" : "var(--text-2xl)",
+      holderSize: phone ? "var(--text-lg)" : "var(--text-xl)",
+      levelColumns: phone ? "1fr" : tablet ? "repeat(auto-fill, minmax(320px, 1fr))" : "repeat(auto-fill, minmax(340px, 1fr))",
+      levelInnerPadding: phone ? "var(--space-4)" : "var(--space-5)",
+      levelSeal: phone ? "var(--space-12)" : "var(--space-16)",
+      levelSealText: phone ? "var(--text-lg)" : "var(--text-xl)",
+      levelTitleSize: phone ? "var(--text-base)" : "var(--text-lg)",
+      ijazaColumns: phone ? "1fr" : tablet ? "repeat(auto-fill, minmax(330px, 1fr))" : "repeat(auto-fill, minmax(360px, 1fr))",
+      docPadding: phone ? "var(--space-4)" : "var(--space-5)",
+      docTitleSize: phone ? "var(--text-base)" : "var(--text-lg)",
+      docSeal: phone ? "var(--space-10)" : "var(--space-12)"
+    };
+  }
+}
+</script>
+</body>
+</html>

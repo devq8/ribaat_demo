@@ -1,0 +1,38 @@
+{# templates/dashboard/_enrolled_courses.html
+   "دوراتي" — grid of enrolled course cards, or an empty state when the
+   student has no enrollments. Card icon is the Lucide "book-open" glyph as
+   a placeholder for a real course thumbnail photo. #}
+<section class="rb-section">
+  <h2 class="rb-h2">دوراتي</h2>
+
+  {% if has_enrollments %}
+    <div class="rb-card-grid">
+      {% for course in enrolled_courses %}
+        <div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--{{ course.badge_tone }}">{{ course.badge_label }}</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">{{ course.title }}</span>
+            <p class="rb-card-instructor">د. {{ course.instructor }}</p>
+            <div>
+              <div class="rb-progress-track"><div class="rb-progress-fill" style="width: {{ course.progress }}%;"></div></div>
+            </div>
+            <p class="rb-card-meta">{{ course.meta_line }}</p>
+            <div class="rb-card-cta">
+              <a href="{% url 'course_lesson' course.slug %}" class="rb-btn rb-btn--full rb-btn--{{ course.cta_variant }}">{{ course.cta_label }}</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="rb-empty">
+      <i data-lucide="book-open" style="width:32px;height:32px;color:var(--text-muted);"></i>
+      <p class="rb-empty-title">لم تسجل في أي دورة بعد</p>
+      <p class="rb-empty-body">يمكنك تصفح الدورات المتاحة والبدء بأحد المسارات الدراسية عند رغبتك.</p>
+      <a href="{% url 'courses' %}" class="rb-btn rb-btn--primary">تصفح الدورات</a>
+    </div>
+  {% endif %}
+</section>

@@ -1,0 +1,19 @@
+{% comment %}Plain-text alternative — generated from academic/path_enrollment.html. Keep in sync with the HTML body.{% endcomment %}تأكيد الالتحاق بمسار دراسي
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+تم التحاقك بالمسار الدراسي التالي. يُدرَس المسار على مراحل مرتّبة، ويُشترط إتمام كل مقرر قبل إتاحة ما يليه.
+المسار: {{ path_title }}
+المستوى: {{ path_level }}
+عدد المقررات: {{ courses_count }}
+المقرر الأول: {{ first_course_title }}
+
+الانتقال إلى المسار:
+{{ path_url }}
+
+عند إتمام جميع مقررات المسار تُصدر شهادة إتمام المسار.
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

@@ -1,0 +1,1302 @@
+/* ==========================================================================
+   Ribaat — public landing page
+   Single stylesheet, no build step, no framework.
+   All colour / spacing / radius / motion values come from the Ribaat Design
+   System token files loaded before this one. The only literals below are
+   layout geometry (grid tracks, breakpoints, hairline widths, aspect ratios)
+   and the display type scale documented in "Page-level additions".
+   RTL-first: logical properties only.
+   ========================================================================== */
+
+/* --- Page-level additions -------------------------------------------------
+   The DS type scale tops out at --text-3xl (48px). A marketing page needs a
+   larger, fluid display range; these compose on top of the DS scale rather
+   than replacing it. Proposed for upstream merge — see README. */
+:root {
+  --display-1: clamp(2.5rem, 6.4vw, 5rem);        /* hero headline */
+  --display-2: clamp(1.875rem, 3.4vw, 3rem);      /* section headings */
+  --display-3: clamp(1.5rem, 2vw, 1.875rem);      /* card / step titles */
+  --measure: 62ch;
+  /* Read with fallbacks so this sheet is complete on its own; the preview's
+     tweaks layer overrides them to reshape the page. */
+  --hero-panel: 46%;
+  --rail-card: 21rem;
+  --hairline: 1px solid var(--border-subtle);
+  --lattice: repeating-linear-gradient(45deg, var(--border-default) 0 1px, transparent 1px 26px),
+             repeating-linear-gradient(-45deg, var(--border-default) 0 1px, transparent 1px 26px);
+  color-scheme: light;
+}
+[data-theme="dark"] { color-scheme: dark; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+}
+
+/* Colour transitions are deliberately absent from this sheet. Hover tints and
+   theme/tweak repaints are driven by var() tokens, and this engine does not
+   re-resolve a var()-driven color/background-color while a transition is
+   declared on it — the declaration freezes at its initial computed value, which
+   turned the header into an unreadable ink bar on a paper hero. Non-colour
+   transitions (transform, opacity, box-shadow, spacing) are unaffected and stay.
+   See README §12. */
+
+/* --- Reset ---------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html, .rail { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--surface-page);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--weight-bold); line-height: var(--leading-tight); text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+ul, ol, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+img { max-inline-size: 100%; block-size: auto; }
+a { color: var(--text-link); text-decoration-thickness: 1px; text-underline-offset: 4px; /* colour transitions omitted — see README §12 */ }
+a:hover { color: var(--text-link-hover); }
+
+:where(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--space-2);
+  inset-inline-start: var(--space-2);
+  z-index: 100;
+  padding: var(--space-3) var(--space-5);
+  background: var(--surface-card);
+  color: var(--text-primary);
+  border: var(--hairline);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; }
+
+.wrap {
+  inline-size: 100%;
+  max-inline-size: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/* --- Buttons -------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+  /* colour transitions omitted — see README §12 */
+}
+.btn--sm { padding: var(--space-2) var(--space-5); font-size: var(--text-sm); }
+.btn--lg { padding: var(--space-4) var(--space-8); font-size: var(--text-md); }
+
+.btn--primary { background: var(--surface-brand); color: var(--text-on-brand); }
+.btn--primary:hover { background: var(--ribaat-green-700); color: var(--text-on-brand); }
+
+.btn--ghost { background: transparent; border-color: var(--border-default); color: var(--text-primary); }
+.btn--ghost:hover { background: var(--ribaat-green-100); border-color: var(--border-brand); color: var(--text-primary); }
+
+.btn--onbrand { background: var(--ribaat-paper-000); color: var(--ribaat-green-800); }
+.btn--onbrand:hover { background: var(--ribaat-green-100); color: var(--ribaat-green-900); }
+
+/* Direction-aware chevron -------------------------------------------------
+   The glyph is a square carrying its block-end and inline-start borders, so its
+   bordered corner points block-end + inline-start: south-EAST in RTL (inline-start
+   is the right edge) and south-WEST in LTR. The rotation that swings that corner
+   onto the inline axis therefore differs per direction, and cannot be shared:
+
+     forward (with the reading direction)   RTL → 135deg    LTR → -135deg
+     backward (against it)                  RTL →  -45deg   LTR →   45deg
+
+   In Arabic, forward is LEFT. Every chevron on the page derives from this. */
+.arrow {
+  inline-size: 0.45em;
+  block-size: 0.45em;
+  border-block-end: 1.5px solid currentColor;
+  border-inline-start: 1.5px solid currentColor;
+  transform: rotate(135deg);
+  display: inline-block;
+  vertical-align: 0.15em;
+  transition: margin-inline-start var(--duration-normal) var(--ease-standard);
+}
+[dir="ltr"] .arrow { transform: rotate(-135deg); }
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+.link-arrow:hover .arrow { margin-inline-start: var(--space-1); }
+
+.badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  background: var(--ribaat-green-100);
+  color: var(--text-brand);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.is-placeholder { color: var(--text-secondary); font-weight: var(--weight-regular); }
+.mono { font-family: var(--font-mono); font-size: var(--text-sm); }
+.dot { color: var(--text-muted); padding-inline: var(--space-2); }
+
+/* --- Header --------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 60;
+  background: transparent;
+  border-block-end: 1px solid transparent;
+  /* colour transitions omitted — see README §12 */
+}
+.site-header.is-scrolled,
+html:not(.js) .site-header {
+  background: var(--surface-page);
+  border-block-end-color: var(--border-subtle);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding-block: var(--space-4);
+}
+.brand { display: inline-flex; align-items: center; gap: var(--space-3); text-decoration: none; color: var(--text-primary); }
+.brand__mark { block-size: 20px; inline-size: auto; }
+/* Set exactly as a nav item: same family, size, weight and colour — the mark
+   beside it is what carries the brand. */
+.brand__name { font-family: var(--font-sans); font-weight: var(--weight-regular); font-size: 0.9375rem; white-space: nowrap; color: var(--text-secondary); }
+.brand:hover .brand__name { color: var(--text-primary); }
+
+.site-nav { flex: 1; }
+.site-nav__list { display: flex; align-items: center; gap: var(--space-6); }
+.site-nav__list a { color: var(--text-secondary); font-size: 0.9375rem; text-decoration: none; }
+.site-nav__list a:hover { color: var(--text-primary); }
+
+.site-header__actions { display: flex; align-items: center; gap: var(--space-3); margin-inline-start: auto; }
+/* Both header actions take the wider label's width — equal auto-columns, so
+   nothing is written down and a label change moves both together. */
+.site-header__auth { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: var(--space-3); }
+
+/* --- Theme switch ---------------------------------------------------------
+   Same box as .nav-toggle so the two read as one family. Which icon shows is
+   decided in CSS, not JS: moon on light (the state it moves to), sun on dark,
+   under both the attribute scope and the OS preference — so it is right at first
+   paint. Without JS the button cannot do anything, so it is not rendered at all
+   (html:not(.js) below) and the page simply follows the OS. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 40px;
+  block-size: 40px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.theme-toggle:hover { color: var(--text-primary); border-color: var(--border-default); }
+html:not(.js) .theme-toggle { display: none; }
+.theme-toggle__icon--sun { display: none; }
+[data-theme="dark"] .theme-toggle__icon--sun { display: block; }
+[data-theme="dark"] .theme-toggle__icon--moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle__icon--sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle__icon--moon { display: none; }
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  inline-size: 40px;
+  block-size: 40px;
+  padding: 0 10px;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+.nav-toggle__bar { display: block; block-size: 1.5px; background: var(--text-primary); transition: transform var(--duration-normal) var(--ease-standard), opacity var(--duration-fast); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:first-child { transform: translateY(3.25px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
+.mobile-nav {
+  padding: var(--space-5) var(--container-padding) var(--space-8);
+  background: var(--surface-page);
+  border-block-start: var(--hairline);
+}
+.mobile-nav[hidden] { display: none; }
+.mobile-nav__list { display: grid; gap: var(--space-2); margin-block-end: var(--space-6); }
+.mobile-nav__list a { display: block; padding-block: var(--space-3); border-block-end: var(--hairline); color: var(--text-primary); text-decoration: none; font-size: var(--text-md); }
+.mobile-nav .btn { inline-size: 100%; }
+.mobile-nav__actions { display: grid; gap: var(--space-3); }
+
+/* --- Geometric construction ----------------------------------------------
+   Octagram strapwork built from four hairline gradient families (0°, 90°, ±45°).
+   Structure only — field backgrounds, empty image frames, section boundaries.
+   Never spot ornament. Tone comes from --strap-line so each field sets its own. */
+:root {
+  --strap-line: var(--border-default);
+  --strap-step: 56px;
+  --strapwork:
+    repeating-linear-gradient(45deg,  var(--strap-line) 0 1px, transparent 1px var(--strap-step)),
+    repeating-linear-gradient(-45deg, var(--strap-line) 0 1px, transparent 1px var(--strap-step)),
+    repeating-linear-gradient(90deg,  var(--strap-line) 0 1px, transparent 1px calc(var(--strap-step) * 1.4142)),
+    repeating-linear-gradient(0deg,   var(--strap-line) 0 1px, transparent 1px calc(var(--strap-step) * 1.4142));
+}
+
+/* --- The ink field --------------------------------------------------------
+   A dark warm band that carries the header + hero in both themes, so the page
+   opens on ink and resolves into paper below. Tonal shift, not one flat page. */
+.page-landing {
+  --ink-bg: var(--ribaat-ink-900);
+  --ink-bg-raised: var(--ribaat-ink-800);
+  --ink-fg: var(--ribaat-paper-050);
+  --ink-fg-dim: var(--ribaat-ink-300);
+  --ink-line: var(--ribaat-ink-700);
+  /* The field's accent, for the eyebrow and anything else that needs warmth on
+     ink. It belongs to the ink-field family so it follows the field wherever the
+     field goes — a hardcoded brown here left the eyebrow at 1.75:1 the moment the
+     field became paper. */
+  --ink-accent: var(--ribaat-brown-300);
+  --ink-accent-line: var(--ribaat-brown-400);
+}
+[data-theme="dark"] .page-landing {
+  --ink-bg: var(--surface-sunken);
+  --ink-bg-raised: var(--surface-card);
+  --ink-line: var(--border-default);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .page-landing {
+    --ink-bg: var(--surface-sunken);
+    --ink-bg-raised: var(--surface-card);
+    --ink-line: var(--border-default);
+  }
+}
+
+/* Aligns a full-bleed child's content edge with .wrap's content edge. */
+.page-landing .align-wrap-start { padding-inline-start: max(var(--container-padding), calc((100vw - var(--container-max)) / 2)); }
+
+/* Header on the landing page: sticky, and part of the ink field while it is over
+   the hero.
+
+   It was static until now for one reason only — a sticky bar may not scroll across
+   Qur'anic script, and the hero used to carry an open muṣḥaf (§14). The hero is now
+   the school's own lecture footage with no script in frame (§15), so the ban lifts.
+   **If a Qur'anic still ever returns to the hero, this must go back to static.** */
+.page-landing .site-header,
+.page-landing .site-header.is-scrolled {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 20;
+  background: var(--ink-bg);
+  border-block-end-color: transparent;
+}
+
+/* The bar now overlays the page, so in-page anchors (#tracks, #faq…) must clear
+   it — otherwise a jumped-to heading lands underneath the header. */
+.page-landing { scroll-padding-block-start: 6rem; }
+
+/* Past the hero the bar sits over paper, so it takes the page surface and ink
+   text. The flip is instant, not transitioned — see §12. */
+.page-landing .site-header.is-past-hero {
+  background: var(--surface-page);
+  border-block-end-color: var(--border-subtle);
+}
+.page-landing .site-header.is-past-hero .brand { color: var(--text-primary); }
+.page-landing .site-header.is-past-hero .site-nav__list a,
+.page-landing .site-header.is-past-hero .brand__name { color: var(--text-secondary); }
+.page-landing .site-header.is-past-hero .site-nav__list a:hover,
+.page-landing .site-header.is-past-hero .brand:hover .brand__name { color: var(--text-primary); }
+/* Written out rather than grouped in :where() — :where() contributes no
+   specificity, which tied this at (0,3,0) with the ink-field rule below it and
+   left the toggle's icon at 1.74:1 on paper. */
+.page-landing .site-header.is-past-hero .site-header__signin,
+.page-landing .site-header.is-past-hero .theme-toggle,
+.page-landing .site-header.is-past-hero .nav-toggle { border-color: var(--border-default); color: var(--text-secondary); }
+.page-landing .site-header.is-past-hero .theme-toggle:hover { color: var(--text-primary); }
+.page-landing .site-header.is-past-hero .site-header__signin { color: var(--text-primary); }
+.page-landing .site-header.is-past-hero .site-header__signin:hover { background: var(--ribaat-green-100); border-color: var(--border-brand); color: var(--text-primary); }
+.page-landing .site-header.is-past-hero .nav-toggle__bar { background: var(--text-primary); }
+
+/* Without JS the class never arrives, so the bar would travel over paper in its
+   ink colours. It simply does not stick in that case — nothing is lost. */
+html:not(.js) .page-landing .site-header,
+html:not(.js) .page-landing .site-header.is-scrolled { position: static; }
+.page-landing .site-header .brand { color: var(--ink-fg); }
+.page-landing .site-header .site-nav__list a,
+.page-landing .site-header .brand__name { color: var(--ink-fg-dim); }
+.page-landing .site-header .site-nav__list a:hover,
+.page-landing .site-header .brand:hover .brand__name { color: var(--ink-fg); }
+.page-landing .site-header .site-header__signin,
+.page-landing .site-header .theme-toggle,
+.page-landing .site-header .nav-toggle { border-color: var(--ink-line); color: var(--ink-fg-dim); }
+.page-landing .site-header .theme-toggle:hover { color: var(--ink-fg); border-color: var(--ribaat-ink-500); }
+.page-landing .site-header .site-header__signin { color: var(--ink-fg); background: transparent; }
+.page-landing .site-header .site-header__signin:hover { background: var(--ink-bg-raised); border-color: var(--ribaat-ink-500); color: var(--ink-fg); }
+.page-landing .site-header .nav-toggle__bar { background: var(--ink-fg); }
+.page-landing .mobile-nav { background: var(--ink-bg); border-block-start-color: var(--ink-line); }
+.page-landing .mobile-nav__list a { color: var(--ink-fg); border-block-end-color: var(--ink-line); }
+.page-landing .mobile-nav .btn--ghost { background: transparent; border-color: var(--ink-line); color: var(--ink-fg); }
+.page-landing .mobile-nav .btn--ghost:hover { background: var(--ink-bg-raised); border-color: var(--ribaat-ink-500); color: var(--ink-fg); }
+.page-landing :where(.site-header, .mobile-nav) :where(a, button):focus-visible { outline-color: var(--ribaat-green-300); }
+
+/* --- Hero ----------------------------------------------------------------
+   The hero is a STACK of slides sharing one grid cell. Each slide owns its own
+   media, scrim and copy, so an editor can mix a footage slide, a stills slide and
+   a type-only slide freely — see the partial's header for the schema.
+
+   Within a slide the media fills the section edge to edge and the copy sits on
+   top of it. Legibility comes from .hero__scrim — a solid ink layer (colour from
+   the token, never a hue-shifted gradient) whose MASK does the fading. The mask
+   stops well short of the muṣḥaf, so script in frame is never tinted or covered.
+
+   The stack's height is the tallest slide's, so switching never reflows the page.
+   --hero-nav-space reserves the strip the slide index sits in; it is added to the
+   copy's block-end padding rather than subtracted from anything, so a longer nav
+   pushes the copy up instead of colliding with it. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  background: var(--ink-bg);
+  color: var(--ink-fg);
+  --hero-nav-space: 0px;
+  --hero-arrow-space: 0px;
+}
+.hero:has(.hero__nav) { --hero-nav-space: 3.25rem; }
+/* The edge arrows are centred on the slide, which on desktop is exactly where the
+   copy panel is. Reserve their width rather than let them land on the enrolment
+   card — declared here so a single-slide hero keeps its original alignment. */
+.hero:has(.hero__arrows) { --hero-arrow-space: 3.75rem; }
+
+.hero__slide {
+  grid-area: 1 / 1;
+  position: relative;
+  display: grid;
+  isolation: isolate;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 560ms var(--ease-standard), visibility 0s linear 560ms;
+}
+.hero__slide.is-current { opacity: 1; visibility: visible; transition-delay: 0s, 0s; }
+@media (prefers-reduced-motion: reduce) {
+  .hero__slide { transition: none; }
+}
+
+/* data-media is the editor's switch, and it governs what is SHOWN, not what is in
+   the markup: the still stays in the document on a video slide because it is also
+   the poster frame. */
+.hero__slide[data-media="none"] .hero__media { display: none; }
+.hero__slide[data-media="image"] .hero__video { display: none; }
+/* A media-only slide has no copy to protect, so the scrim drops to a low even
+   wash — just enough to keep the header legible over the footage. */
+.hero__slide[data-text="off"] .hero__scrim {
+  opacity: 0.3;
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+.hero__slide[data-media="none"] .hero__scrim { display: none; }
+/* The Django template simply omits the copy on a media-only slide; this keeps the
+   same result for markup that carries it anyway (the preview, or a slide switched
+   after render). The provenance line always stays. */
+.hero__slide[data-text="off"] .hero__copy > :not(.hero__credit) { display: none; }
+
+.hero__media { position: absolute; inset: 0; margin: 0; z-index: 0; }
+.hero__media img,
+.hero__media .hero__video { display: block; inline-size: 100%; block-size: 100%; object-fit: cover; }
+/* The video sits over the poster still and fades in once it is actually playing,
+   so a refused autoplay or a slow start leaves the poster standing. */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 640ms var(--ease-standard);
+}
+.hero__video[data-ready] { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .hero__video { display: none; }
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--ink-bg);
+}
+
+.hero__copy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: start;
+  align-content: end;
+  gap: var(--space-6);
+  padding-inline: var(--container-padding);
+  padding-block-start: clamp(56px, 9vw, 96px);
+  padding-block-end: calc(clamp(56px, 9vw, 96px) + var(--hero-nav-space));
+}
+
+.hero .eyebrow { color: var(--ink-accent); margin-block-end: 0; }
+.hero .eyebrow__rule { background: var(--ink-accent-line); }
+
+.hero__title {
+  /* Monumental: the institution's name as graphic material, not a label. */
+  font-size: clamp(3rem, 5.6vw, 5.75rem);
+  line-height: 1.14;
+  color: var(--ink-fg);
+}
+/* A following slide is a second voice, not a second institution: same face and
+   colour, clearly lower rank. */
+.hero__title--sub { font-size: clamp(2rem, 3.4vw, 3.25rem); line-height: 1.25; }
+.hero__lede {
+  max-inline-size: 34ch;
+  color: var(--ink-fg-dim);
+  font-size: clamp(1.0625rem, 1.35vw, 1.3125rem);
+  line-height: 1.9;
+}
+.hero__credit {
+  margin-block-start: var(--space-2);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--ink-line);
+  inline-size: min(100%, 32rem);
+  color: var(--ink-fg-dim);
+  font-size: var(--text-xs);
+  line-height: 1.7;
+}
+.hero__credit .is-placeholder { color: var(--ink-fg-dim); }
+
+/* --- Enrolment state slot -------------------------------------------------
+   One footprint, three appearances, driven by [data-state]. */
+.enrol {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: center;
+  gap: var(--space-1) var(--space-3);
+  inline-size: min(100%, 25rem);
+  min-block-size: 4.25rem;
+  padding: var(--space-4) var(--space-5);
+  background: var(--ink-bg-raised);
+  border: 1px solid var(--ink-line);
+  border-radius: var(--radius-md);
+}
+.enrol__mark { inline-size: 8px; block-size: 8px; margin-block-start: 0.6em; border: 1px solid var(--ribaat-ink-400); }
+.enrol__label { grid-column: 2; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--ink-fg); }
+.enrol__detail { grid-column: 2; font-size: var(--text-xs); line-height: 1.7; color: var(--ink-fg-dim); }
+.enrol[data-state="open"] .enrol__mark { background: var(--ribaat-green-400); border-color: var(--ribaat-green-400); }
+.enrol[data-state="running"] .enrol__mark { background: var(--ribaat-brown-400); border-color: var(--ribaat-brown-400); }
+.enrol[data-state="running"] .enrol__label { color: var(--ribaat-brown-300); }
+.enrol[data-state="upcoming"] .enrol__mark { background: transparent; border-color: var(--ribaat-ink-400); }
+.enrol[data-state="upcoming"] .enrol__label { color: var(--ink-fg-dim); }
+
+.hero__act { display: grid; gap: var(--space-6); }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+/* The hero pair is set tighter than a standalone --lg button: one line only, the
+   height cut to the 44px target rather than the display size, and the inline
+   padding just enough to give the label air. Both keep the wider label's width
+   (see the min-width: 900px block), so the pair reads as one control. */
+.hero__actions .btn {
+  padding-block: var(--space-3);
+  padding-inline: var(--space-6);
+  min-block-size: 44px;
+  font-size: var(--text-base);
+  white-space: nowrap;
+}
+.btn--onink { background: transparent; border-color: var(--ribaat-ink-400); color: var(--ink-fg); }
+.btn--onink:hover { background: var(--ink-bg-raised); border-color: var(--ribaat-ink-500); color: var(--ink-fg); }
+
+/* --- Slide index ----------------------------------------------------------
+   Not dots. The slides are named sections of one argument, so the index names
+   them — a numeral and a word, underlined on the current one. It sits outside the
+   slides so it never fades with them. */
+.hero__nav {
+  position: absolute;
+  z-index: 3;
+  inset-block-end: clamp(20px, 3vw, 34px);
+  inset-inline-start: var(--container-padding);
+  inset-inline-end: var(--container-padding);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: clamp(var(--space-4), 2.4vw, var(--space-8));
+}
+.hero__step {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: 0 0 var(--space-2);
+  background: none;
+  border: 0;
+  border-block-end: 2px solid var(--ink-line);
+  color: var(--ink-fg-dim);
+  font: inherit;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  text-align: start;
+  cursor: pointer;
+  transition: color 200ms var(--ease-standard), border-color 200ms var(--ease-standard);
+}
+.hero__step-num { color: var(--ink-accent); font-size: var(--text-xs); }
+.hero__step:hover { color: var(--ink-fg); border-block-end-color: var(--ribaat-ink-500); }
+.hero__step[aria-current="true"] { color: var(--ink-fg); border-block-end-color: var(--ink-accent-line); }
+.hero__step:focus-visible { outline: 2px solid var(--ribaat-green-300); outline-offset: 4px; }
+/* Rekeyed to pointer quality, not width (§35) — handled with the rest of the hit
+   areas at the foot of this stylesheet, so one rule governs them all. */
+
+/* One arrow against each edge, centred on the slide. The row is a full-height
+   overlay so the two buttons land on the vertical middle whatever the hero's
+   height; it does not take the pointer — only the buttons do. Chevron glyphs are
+   the page's own (§17), same shape and same direction audit, in ink colours: in
+   RTL السابق sits on the right and points right, التالي on the left. */
+.hero__arrows {
+  position: absolute;
+  z-index: 3;
+  inset-block: 0;
+  inset-inline: clamp(12px, 2vw, 24px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.hero__arrow {
+  pointer-events: auto;
+  display: inline-grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  /* The arrows are the one control that sits directly on whatever a slide's media
+     happens to be — dark footage, a bright still, or the flat ink field. So they
+     carry their own ground: a translucent ink disc, a hairline, and a soft warm
+     shadow that separates them from a light background without lighting up on a
+     dark one. No blur — the design system reserves that for the modal scrim. */
+  background: color-mix(in oklab, var(--ink-bg) 66%, transparent);
+  border: 1px solid color-mix(in oklab, var(--ink-fg) 22%, transparent);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 10px color-mix(in oklab, var(--ribaat-ink-900) 42%, transparent);
+  color: var(--ink-fg);
+  cursor: pointer;
+  /* colour transitions omitted — see README §12 */
+}
+.hero__arrow:hover {
+  background: color-mix(in oklab, var(--ink-bg) 86%, transparent);
+  border-color: color-mix(in oklab, var(--ink-fg) 38%, transparent);
+  color: var(--ink-fg);
+}
+.hero__arrow:focus-visible { outline: 2px solid var(--ribaat-green-300); outline-offset: 3px; }
+/* Below 900px the copy is bottom-aligned and runs full-bleed, so there is no band
+   in the middle of the hero the arrows can be centred in: the stack's height
+   varies by slide and by viewport height, and .hero__arrows is positioned against
+   the hero rather than against the copy, so any fraction of the hero that clears
+   slide 1 at one size lands on it at another.
+
+   The one band nothing else occupies is the index strip at the block-end. The
+   arrows move onto it, at the inline-end edge — which keeps the index's
+   inline-START edge, and so its shared edge with the credit line above it,
+   exactly where it was. The nav's inline-end padding reserves the arrows' width
+   so a step can never wrap under them. */
+@media (max-width: 899px) {
+  .hero { --hero-nav-space: 4.75rem; }
+  .hero__arrows {
+    inset-block: auto clamp(20px, 3vw, 34px);
+    block-size: 44px;
+    inset-inline: auto var(--container-padding);
+  }
+  .hero__nav { padding-inline-end: calc(88px + var(--space-2) + var(--space-5)); }
+}
+
+/* Phone / tablet: the frame is cropped past the muṣḥaf, so no Qur'anic script is
+   in shot and the copy can sit over the lower half behind a block-end scrim. */
+@media (max-width: 899px) {
+  .hero { min-block-size: min(92svh, 760px); display: grid; }
+  .hero__media img, .hero__video { object-position: 56% 34%; }
+  .hero__scrim {
+    mask-image: linear-gradient(to top, #000 0 44%, rgba(0, 0, 0, 0.9) 58%, transparent 82%);
+    -webkit-mask-image: linear-gradient(to top, #000 0 44%, rgba(0, 0, 0, 0.9) 58%, transparent 82%);
+  }
+  .hero__copy { justify-items: stretch; }
+  .hero__actions .btn { flex: 1 1 12rem; }
+}
+
+/* Desktop: full-bleed image, copy over the inline-start side. The hero is wider
+   than the source's 4:3, so the crop scales to width and the muṣḥaf's horizontal
+   position is fixed at roughly 10–35% from the inline-end edge, well clear of the
+   scrim's reach. */
+@media (min-width: 900px) {
+  .hero { display: grid; grid-template-rows: minmax(min(86svh, 900px), auto); }
+  .hero__media img, .hero__video { object-position: 46% 30%; }
+  .hero__scrim {
+    mask-image: linear-gradient(to left, #000 0 30%, rgba(0, 0, 0, 0.88) 40%, transparent 58%);
+    -webkit-mask-image: linear-gradient(to left, #000 0 30%, rgba(0, 0, 0, 0.88) 40%, transparent 58%);
+  }
+  /* One min-content column: the action row refuses to wrap, so the column is
+     exactly as wide as the two buttons plus their gap, and the card — at 100% of
+     it — ends on the same edge. Nothing is hardcoded, so a longer label moves both
+     together. */
+  .hero__act {
+    /* max-content, not min-content: min-content is each button label wrapped as
+       tightly as it will go, which squeezed both buttons to two lines. */
+    grid-template-columns: max-content;
+    max-inline-size: 100%;
+  }
+  .hero__act .hero__actions { flex-wrap: nowrap; }
+  /* Both actions take the width of the wider label, so a pair never reads as a
+     primary and an afterthought. flex-basis 0 makes the row's max-content twice
+     the widest button, which is still what the enrolment card is bound to (§35). */
+  .hero__act .hero__actions .btn { flex: 1 1 0; }
+  /* The card must not widen the track — only fill it. inline-size: 0 keeps its
+     long detail line out of the intrinsic-size calculation, and the percentage
+     min-inline-size then stretches it to whatever the buttons decided. */
+  .hero__act .enrol { inline-size: 0; min-inline-size: 100%; }
+
+  .hero__copy {
+    align-content: center;
+    gap: var(--space-8);
+    inline-size: clamp(24rem, var(--hero-panel, 46%), 42rem);
+    padding-inline-start: calc(max(var(--container-padding), calc((100vw - var(--container-max)) / 2)) + var(--hero-arrow-space));
+    padding-inline-end: clamp(var(--space-8), 3.5vw, var(--space-12));
+    padding-block-start: clamp(64px, 8vw, 112px);
+    padding-block-end: calc(clamp(64px, 8vw, 112px) + var(--hero-nav-space));
+  }
+
+  /* The index starts on the same line as the copy — same formula, arrow reserve
+     included, so a change to either never separates them. */
+  .hero__nav {
+    inset-inline-start: calc(max(var(--container-padding), calc((100vw - var(--container-max)) / 2)) + var(--hero-arrow-space));
+  }
+}
+
+/* --- Section shell -------------------------------------------------------- */
+.section {
+  border-block-start: var(--hairline);
+  padding-block: clamp(56px, 8vw, 112px);
+}
+.section__grid { display: grid; gap: var(--space-6); }
+.section__index {
+  display: block;
+  margin-block-end: var(--space-4);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+.section__title { font-size: var(--display-2); }
+.lede { max-inline-size: var(--measure); color: var(--text-secondary); font-size: clamp(1rem, 1.4vw, 1.25rem); line-height: 1.9; }
+
+/* The section head and its lede stack: the subtitle reads directly under its
+   title at every width. They were side by side on desktop; one column keeps the
+   pairing together and lets the lede's own measure do the line-length work. */
+@media (min-width: 900px) {
+  .section__grid { gap: var(--space-5); max-inline-size: min(100%, 62rem); }
+}
+
+/* --- Tracks --------------------------------------------------------------- */
+.track-grid {
+  display: grid;
+  gap: var(--space-6);
+  margin-block-start: clamp(40px, 5vw, 72px);
+}
+@media (min-width: 860px) { .track-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); } }
+
+.track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-8);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration-normal) var(--ease-standard);
+}
+.track:hover { box-shadow: var(--shadow-md); border-color: var(--border-default); }
+.track:focus-within { border-color: var(--border-brand); }
+
+.track__top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.track__num { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--ribaat-green-300); }
+.track__title { font-size: var(--display-3); }
+.track__title a { color: inherit; text-decoration: none; }
+.stretched::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+
+.track__courses { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); color: var(--text-secondary); font-size: var(--text-sm); }
+.track__courses li { white-space: nowrap; }
+.track__courses li + li::before { content: "·"; color: var(--text-muted); margin-inline-end: var(--space-3); }
+
+.track__meta { display: grid; margin-block-start: auto; }
+.track__meta > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  border-block-start: var(--hairline);
+}
+.track__meta dt { color: var(--text-secondary); font-size: var(--text-xs); }
+.track__meta dd { color: var(--text-primary); font-size: var(--text-sm); font-weight: var(--weight-medium); text-align: end; }
+
+.track__cta { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-brand); font-size: var(--text-sm); font-weight: var(--weight-semibold); }
+.track:hover .track__cta .arrow { margin-inline-start: var(--space-1); }
+
+/* --- Sciences ------------------------------------------------------------- */
+.science-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  margin-block-start: clamp(40px, 5vw, 72px);
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.science {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background: var(--surface-page);
+}
+.science__num { color: var(--text-secondary); font-size: var(--text-xs); }
+.science__name { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.3; }
+
+/* --- Steps ---------------------------------------------------------------- */
+.steps { margin-block-start: clamp(32px, 4vw, 56px); container-type: inline-size; }
+.step {
+  display: grid;
+  gap: var(--space-2) var(--space-6);
+  grid-template-columns: 2rem minmax(0, 1fr);
+  padding-block: var(--space-6);
+  border-block-start: var(--hairline);
+}
+.step:last-child { border-block-end: var(--hairline); }
+.step__num { grid-row: span 2; font-family: var(--font-display); font-size: 1.5rem; color: var(--text-muted); line-height: 1.4; }
+.step__title { font-size: 1.375rem; }
+.step__body { color: var(--text-secondary); max-inline-size: var(--measure); }
+
+/* Three columns only when the STEPS COLUMN is wide enough to hold them, which is
+   not the same question as the viewport being wide. Keyed to the viewport, this
+   put a 15rem title track and a 3rem numeral inside the 428px column the sticky
+   figure leaves behind, crushing each description into 92px — about ten characters
+   a line. A container query measures the thing that actually constrains it.
+   Where container queries are unsupported the stacked form below stands, which is
+   the correct narrow layout anyway. */
+@container (min-width: 44rem) {
+  .step { grid-template-columns: 3rem minmax(0, 15rem) minmax(0, 1fr); align-items: baseline; padding-block: var(--space-8); }
+  .step__num { grid-row: auto; }
+}
+
+/* --- Faculty rail --------------------------------------------------------
+   Authored to read correctly at six portraits and at twenty: fixed card inline
+   size, the track always scrolls, progress reflects the real count. */
+/* Follows the section shell exactly — hairline divider and the standard
+   clamp(56px, 8vw, 112px) block padding — so it sits in the same rhythm as every
+   other section. It used to suppress the rule and run taller. */
+.section--faculty .section__grid { margin-block-end: clamp(40px, 5vw, 72px); }
+
+.rail-shell { display: grid; gap: var(--space-6); }
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(76vw, var(--rail-card, 21rem));
+  gap: var(--space-6);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  padding-inline: max(var(--container-padding), calc((100vw - var(--container-max)) / 2));
+  scroll-padding-inline-start: max(var(--container-padding), calc((100vw - var(--container-max)) / 2));
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar { display: none; }
+.rail:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 4px; }
+
+.person { scroll-snap-align: start; display: grid; gap: var(--space-5); }
+.person__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background-color: var(--surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+.person__frame--empty { --strap-line: var(--border-default); --octa: 52%; }
+img.person__frame {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  object-fit: cover;
+  object-position: center 22%;
+  /* One warm monochrome for every portrait, so mixed sources — different rooms,
+     different cameras, different white balance — read as one deliberate set.
+     Source files stay untreated. */
+  filter: grayscale(1) sepia(0.32) saturate(1.35) hue-rotate(-8deg) contrast(1.04) brightness(0.99);
+}
+.person__spec-note {
+  position: absolute;
+  inset-block-end: var(--space-4);
+  inset-inline-start: var(--space-4);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}
+.person__frame--empty::before, .person__frame--empty::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: var(--octa);
+  aspect-ratio: 1;
+  border: 1px solid var(--strap-line);
+  transform: translate(50%, -50%);
+  pointer-events: none;
+}
+.person__frame--empty::after { transform: translate(50%, -50%) rotate(45deg); }
+
+.person__caption { display: grid; gap: var(--space-2); }
+.person__idx { color: var(--text-accent); font-size: var(--text-xs); font-weight: var(--weight-medium); }
+.person__name { font-size: clamp(1.375rem, 1.9vw, 1.75rem); }
+.person__field { color: var(--text-primary); font-size: var(--text-sm); }
+.person__ijaza { color: var(--text-secondary); font-size: var(--text-xs); line-height: 1.7; }
+
+.rail__foot { display: flex; align-items: center; gap: var(--space-8); }
+.rail__progress { flex: 1; block-size: 1px; background: var(--border-subtle); }
+.rail__progress > span {
+  /* A fill that grows from the inline-start edge: it starts at the visible
+     fraction of the rail and reaches full width at the end of the track. One
+     inline-size driven by one JS-published fraction — no transform, margin or
+     inset offset, all of which proved unreliable here. Without JS the rule sits
+     at full width, which is a correct static appearance. */
+  display: block;
+  block-size: 1px;
+  inline-size: calc(var(--rail-fill, 1) * 100%);
+  background: var(--surface-accent);
+  /* No transition: the rule tracks scroll position 1:1, and animating a logical
+     size here is both wrong (it would lag the scroll) and unreliable. */
+}
+
+.rail__nav { display: flex; gap: var(--space-2); }
+.rail__btn {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  /* colour transitions omitted — see README §12 */
+}
+.rail__btn:hover { background: var(--ribaat-green-100); border-color: var(--border-brand); }
+.rail__btn[disabled] { opacity: 0.4; cursor: default; }
+.rail__btn[disabled]:hover { background: transparent; border-color: var(--border-default); }
+.rail__chev {
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-block-end: 1.5px solid currentColor;
+  border-inline-start: 1.5px solid currentColor;
+}
+/* السابق moves back toward the rail's start, which in RTL is the right edge. */
+.rail__chev--prev { transform: rotate(-45deg); }
+.rail__chev--next { transform: rotate(135deg); }
+[dir="ltr"] .rail__chev--prev { transform: rotate(45deg); }
+[dir="ltr"] .rail__chev--next { transform: rotate(-135deg); }
+@media (hover: none) { .rail__nav { display: none; } }
+
+/* --- Certificates --------------------------------------------------------- */
+.certificates { display: grid; gap: clamp(40px, 6vw, 80px); }
+@media (min-width: 900px) { .certificates { grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); align-items: center; } }
+.certificates__text { display: grid; gap: var(--space-6); align-content: start; }
+
+.certificate { margin: 0; display: grid; gap: var(--space-4); }
+.certificate__frame {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-10) var(--space-8);
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.certificate__frame::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  pointer-events: none;
+}
+.certificate__mark { inline-size: 88px; block-size: auto; margin-block-end: var(--space-2); }
+.certificate__kicker { color: var(--text-secondary); font-size: var(--text-xs); }
+.certificate__title { font-family: var(--font-display); font-size: 1.5rem; font-weight: var(--weight-bold); }
+.certificate__rule { inline-size: 48px; block-size: 1px; background: var(--surface-accent); margin-block: var(--space-2); }
+.certificate__field { font-size: var(--text-sm); }
+.certificate__course { font-family: var(--font-display); font-size: 1.25rem; color: var(--text-brand); }
+.certificate__meta { display: flex; gap: var(--space-8); margin-block-start: var(--space-5); padding-block-start: var(--space-4); border-block-start: var(--hairline); inline-size: 100%; justify-content: center; }
+.certificate__meta dt { color: var(--text-secondary); font-size: var(--text-xs); margin-block-end: var(--space-1); }
+.certificate__meta dd { font-size: var(--text-sm); }
+.certificate__caption { color: var(--text-secondary); font-size: var(--text-xs); text-align: center; }
+
+/* --- FAQ ------------------------------------------------------------------ */
+.faq { margin-block-start: clamp(32px, 4vw, 56px); max-inline-size: 68rem; }
+.faq__item { border-block-start: var(--hairline); }
+.faq__item:last-child { border-block-end: var(--hairline); }
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-block: var(--space-6);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+}
+.faq__q::-webkit-details-marker { display: none; }
+.faq__sign { position: relative; flex: none; inline-size: 14px; block-size: 14px; }
+.faq__sign::before, .faq__sign::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  inline-size: 14px;
+  block-size: 1.5px;
+  background: var(--text-secondary);
+  transition: transform var(--duration-normal) var(--ease-standard);
+}
+.faq__sign::after { transform: rotate(90deg); }
+.faq__item[open] .faq__sign::after { transform: rotate(0deg); }
+.faq__a { padding-block-end: var(--space-6); color: var(--text-secondary); max-inline-size: var(--measure); }
+.faq__item[open] .faq__a { animation: faq-in var(--duration-slow) var(--ease-standard); }
+@keyframes faq-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* --- Closing ------------------------------------------------------------- */
+.closing {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-brand-strong);
+  color: var(--text-on-brand);
+  padding-block: clamp(72px, 10vw, 140px);
+  text-align: center;
+}
+.closing__lattice {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(45deg, var(--text-on-brand) 0 1px, transparent 1px 26px),
+                    repeating-linear-gradient(-45deg, var(--text-on-brand) 0 1px, transparent 1px 26px);
+  opacity: 0.06;
+  pointer-events: none;
+}
+.closing__inner { position: relative; display: grid; justify-items: center; gap: var(--space-6); }
+.ayah { margin: 0 0 var(--space-10); display: grid; justify-items: center; gap: var(--space-4); }
+.ayah__text { font-family: var(--font-display); font-size: clamp(1.75rem, 3.4vw, 2.75rem); line-height: var(--leading-relaxed); color: var(--text-on-brand); }
+.ayah__ref { font-family: var(--font-sans); font-style: normal; font-size: var(--text-sm); opacity: 0.75; }
+.closing__title { font-size: var(--display-2); color: var(--text-on-brand); }
+.closing__body { max-inline-size: 44ch; opacity: 0.9; font-size: var(--text-md); }
+
+/* --- Footer --------------------------------------------------------------- */
+.site-footer { border-block-start: var(--hairline); background: var(--surface-page); }
+.site-footer__inner { display: grid; gap: var(--space-10); padding-block: clamp(48px, 6vw, 80px); }
+@media (min-width: 760px) { .site-footer__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--space-16); } }
+.site-footer__brand .brand__mark { block-size: 22px; inline-size: auto; margin-block-end: var(--space-4); }
+.site-footer__name { font-family: var(--font-display); font-size: 1.125rem; font-weight: var(--weight-bold); }
+.site-footer__place { color: var(--text-secondary); font-size: var(--text-sm); }
+.site-footer__nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: var(--space-8); }
+.site-footer__heading { font-family: var(--font-sans); font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary); margin-block-end: var(--space-4); }
+.site-footer__nav ul { display: grid; gap: var(--space-3); }
+.site-footer__nav a { color: var(--text-secondary); font-size: var(--text-sm); text-decoration: none; }
+.site-footer__nav a:hover { color: var(--text-primary); }
+.site-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: space-between;
+  padding-block: var(--space-6);
+  border-block-start: var(--hairline);
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}
+.site-footer__legal a { color: var(--text-secondary); text-decoration: none; }
+.site-footer__legal a:hover { color: var(--text-primary); }
+
+/* --- Scroll reveal (progressive enhancement) ------------------------------ */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 620ms var(--ease-standard), transform 620ms var(--ease-standard);
+  transition-delay: calc(var(--reveal-delay, 0) * 90ms);
+}
+.js [data-reveal].is-revealed { opacity: 1; transform: none; }
+[data-reveal-delay="1"] { --reveal-delay: 1; }
+[data-reveal-delay="2"] { --reveal-delay: 2; }
+[data-reveal-delay="3"] { --reveal-delay: 3; }
+[data-reveal-delay="4"] { --reveal-delay: 4; }
+
+/* --- Responsive ----------------------------------------------------------- */
+@media (max-width: 900px) {
+  .site-nav { display: none; }
+  .nav-toggle { display: flex; }
+  /* الرئيسية is a nav item, so at these widths it belongs in the menu with
+     the others, not beside the mark. The lockup keeps the mark alone; the
+     accessible name moves to the link so it is never lost. */
+  .brand__name { display: none; }
+}
+@media (max-width: 560px) {
+  :root { --container-padding: var(--space-5); }
+  .site-header__auth { display: none; }
+  .rail { grid-auto-columns: min(82vw, 20rem); }
+  .hero__actions .btn { inline-size: 100%; }
+  .certificate__frame { padding: var(--space-8) var(--space-5); }
+  .certificate__meta { flex-direction: column; gap: var(--space-4); }
+}
+
+/* --- Reduced motion ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+@media print {
+  .site-header, .mobile-nav, .nav-toggle, .theme-toggle { display: none; }
+  .js [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* --- Statement (about) ---------------------------------------------------- */
+.statement { display: grid; gap: var(--space-6); max-inline-size: var(--measure); }
+.statement p { color: var(--text-primary); font-size: clamp(1.125rem, 1.6vw, 1.5rem); line-height: 1.85; }
+.statement p + p { color: var(--text-secondary); }
+
+/* --- المسارات: editorial index, one accordion per row ---------------------
+   The row's grid lives on the <h3> inside <summary>, because the summary must
+   have the heading as its single child for both the outline and a valid content
+   model. The prospectus link sits in the panel, never in the summary. */
+.index { margin-block-start: clamp(40px, 5vw, 72px); border-block-start: var(--hairline); }
+.index__row { border-block-end: var(--hairline); }
+.index__head {
+  display: block;
+  padding-block: var(--space-8);
+  cursor: pointer;
+  list-style: none;
+}
+.index__head::-webkit-details-marker { display: none; }
+.index__head:focus-visible { outline: 2px solid var(--border-brand); outline-offset: 4px; }
+
+.index__title {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-3) var(--space-6);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin: 0;
+}
+.index__num { font-family: var(--font-display); font-size: 1.25rem; color: var(--text-accent); line-height: 1.6; }
+.index__item[open] .index__name,
+.index__head:hover .index__name { color: var(--text-brand); }
+
+/* Same ± mark as the FAQ: both are accordions, so they read the same. */
+.index__sign { position: relative; align-self: center; inline-size: 14px; block-size: 14px; }
+.index__sign::before, .index__sign::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 1.5px;
+  background: var(--text-secondary);
+  transition: transform var(--duration-normal) var(--ease-standard);
+}
+.index__sign::after { transform: rotate(90deg); }
+.index__item[open] .index__sign::after { transform: rotate(0deg); }
+
+.index__panel { display: grid; gap: var(--space-4); padding-block-end: var(--space-8); }
+.index__item[open] .index__panel { animation: faq-in var(--duration-slow) var(--ease-standard); }
+.index__label { color: var(--text-secondary); font-size: var(--text-xs); }
+.index__matn { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); font-size: var(--text-sm); }
+/* المقرر التفصيلي closes the panel on the inline-end edge, so the eye returns from
+   the متون list straight to the way out. */
+.index__panel > p:last-of-type { justify-self: end; }
+.index__matn li + li::before { content: "·"; color: var(--text-secondary); margin-inline-end: var(--space-4); }
+
+@media (min-width: 900px) {
+  .index__title { grid-template-columns: 4rem minmax(0, 1fr) auto; }
+  .index__panel { padding-inline-start: 4rem; }
+}
+
+/* --- كيف تسير الدراسة: sticky split ------------------------------------- */
+.split { display: grid; gap: clamp(32px, 4vw, 64px); margin-block-start: clamp(32px, 4vw, 56px); }
+@media (min-width: 900px) { .split { grid-template-columns: minmax(0, 24rem) minmax(0, 1fr); gap: var(--space-16); } }
+.split__figure { display: none; }
+@media (min-width: 700px) {
+  .split__figure {
+    display: block;
+    position: sticky;
+    inset-block-start: clamp(80px, 14vh, 160px);
+    align-self: start;
+    aspect-ratio: 1;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--surface-card);
+    overflow: hidden;
+  }
+}
+.split__numerals { position: relative; display: grid; place-items: center; block-size: 100%; }
+.split__numeral {
+  grid-area: 1 / 1;
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 11vw, 11rem);
+  line-height: 1;
+  color: var(--ribaat-green-600);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-standard);
+}
+/* No JS, or before the first step is reached: the first numeral shows. */
+.split__numeral:first-child { opacity: 1; }
+.split[data-active] .split__numeral { opacity: 0; }
+.split[data-active="1"] .split__numeral:nth-child(1),
+.split[data-active="2"] .split__numeral:nth-child(2),
+.split[data-active="3"] .split__numeral:nth-child(3),
+.split[data-active="4"] .split__numeral:nth-child(4) { opacity: 1; }
+.split__figure::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 56%;
+  aspect-ratio: 1;
+  border: 1px solid var(--border-subtle);
+  transform: translate(50%, -50%) rotate(45deg);
+}
+.split__steps { display: grid; container-type: inline-size; }
+
+/* --- قناتنا في يوتيوب ----------------------------------------------------
+   No panel, no still, no play control: the section is a title, a line and a link.
+   The whole .facade / .facade__* block that used to live here is gone with it —
+   including the play triangle noted in §17, which no longer exists on the page. */
+.channel__action { margin-block-start: var(--space-6); }
+
+/* --- rail foot hides itself when there is nothing to scroll -------------- */
+.rail__foot[hidden] { display: none; }
+
+
+/* ==========================================================================
+   Tablet and phone
+   --------------------------------------------------------------------------
+   Written after everything above so these rules win without raising
+   specificity. Two bands: 600–899 is tablet portrait, which until now was
+   served the phone layout at twice the width; below 600 is the phone, where
+   the only additions are hit-target sizes.
+   ========================================================================== */
+
+/* --- Tablet portrait (600–899) -------------------------------------------
+   The phone hero stretches its copy across the full frame. At 834px that put
+   the lede on a ~780px measure and stretched the two buttons to 385px each,
+   with the enrolment card at 400px agreeing with neither. The copy now keeps a
+   book measure and the card/button pair takes its natural width, as on desktop
+   (§35) — same mechanism, so a label change moves both together. */
+@media (min-width: 600px) and (max-width: 899px) {
+  .hero__copy { justify-items: start; }
+  .hero .eyebrow, .hero__title, .hero__lede, .hero__credit { max-inline-size: 32rem; }
+
+  .hero__act { grid-template-columns: max-content; max-inline-size: 100%; }
+  .hero__act .hero__actions { flex-wrap: nowrap; }
+  .hero__act .hero__actions .btn { flex: 1 1 0; }
+  .hero__act .enrol { inline-size: 0; min-inline-size: 100%; }
+
+  /* The متون panel hangs under the track name rather than under the numeral,
+     which is the alignment the desktop index already uses. */
+  .index__title { grid-template-columns: 3.5rem minmax(0, 1fr) auto; }
+  .index__panel { padding-inline-start: 3.5rem; }
+}
+
+/* The sticky split fits from 700px: a smaller figure column than desktop's
+   24rem, so the steps keep a workable measure beside it. */
+@media (min-width: 700px) and (max-width: 899px) {
+  .split { grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: var(--space-10); }
+}
+
+/* Certificate specimen beside its text rather than under it. */
+@media (min-width: 720px) and (max-width: 899px) {
+  .certificates {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+    align-items: center;
+    gap: var(--space-12);
+  }
+}
+
+/* --- Phone (≤599) --------------------------------------------------------
+   Layout is already deliberate here — hero copy over a block-end scrim, full
+   width stacked actions, the rail showing a card and a peek of the next. What
+   was wrong was touch: the two header controls were 40px, and the toggle is
+   the only way into the menu. */
+/* Hit areas are a question about the pointer, not the viewport: an iPad in
+   landscape is 1024px wide and still a finger. Coarse pointers at any width get
+   44px, and so does anything narrow enough to be a phone or tablet held in the
+   hand — the width clause is the fallback for browsers that report no pointer. */
+@media (max-width: 899px), (hover: none), (pointer: coarse) {
+  .nav-toggle, .theme-toggle { inline-size: 44px; block-size: 44px; }
+  /* Everything in the two navigation bands: the brand lockup, the nav links, the
+     two header actions and the hero's slide index. All were between 23px and
+     38px — fine for a cursor, short for a finger. */
+  .brand { min-block-size: 44px; }
+  .site-nav__list a { display: inline-flex; align-items: center; min-block-size: 44px; }
+  .site-header__auth .btn { min-block-size: 44px; }
+  .hero__step { min-block-size: 44px; align-items: center; padding-block-start: var(--space-2); }
+  /* min-block-size does nothing to an inline box, so the footer links become
+     inline-flex to carry a real hit area instead of the height of one line.
+     Prose links in the legal line are left alone — they are not navigation. */
+  .site-footer__nav a { display: inline-flex; align-items: center; min-block-size: 44px; }
+  .link-arrow { min-block-size: 44px; align-items: center; }
+}
+
+/* --- The hero action pair, sized as one -----------------------------------
+   Both buttons must be the width of the wider label. flex-basis: 0 distributes
+   the row's free space equally, but under white-space: nowrap the row's own
+   max-content is the SUM of the two labels, so there is no free space to
+   distribute and the buttons stay unequal. A grid with equal auto-columns has no
+   such ambiguity: 1fr in a max-content track resolves to the largest column's
+   max-content, and both take it. Below 600px the pair stacks full-width, where
+   they are already identical. */
+@media (min-width: 600px) {
+  .hero__act .hero__actions {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    justify-content: start;
+  }
+}

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors-dark.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--surface-page); }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); }
+  </style>
+</helmet>
+
+<div dir="rtl" data-theme="{{ themeAttr }}" data-screen-label="تسجيل الفصل — {{ frameLabel }}" style="background: var(--surface-page); min-height: 100vh; font-family: var(--font-sans); color: var(--text-primary); display: flex; flex-direction: column;">
+
+  <header dir="rtl" style="display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(24px, 6vw, 120px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans);">
+    <div style="display: flex; align-items: center; gap: 36px;">
+      <img src="../../assets/logos/ribaat-mark-2026.png" alt="رباط الحنابلة" style="height: 30px; filter: {{ logoFilter }}; width: 108px">
+      <nav style="display: flex; gap: 26px;">
+        <a href="StudentDashboard.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">لوحة التحكم</a>
+        <a href="CourseCatalogue.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الدورات</a>
+        <a href="StudentPaths.dc.html" style="font-size: var(--text-base); color: var(--text-brand); font-weight: var(--weight-semibold);">البرامج الدراسية</a>
+        <a href="StudentCertificates.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الشهادات</a>
+      </nav>
+    </div>
+    <div style="position: relative;">
+      <button onClick="{{ toggleAccountMenu }}" aria-label="الحساب" style="background: none; border: none; padding: 0; cursor: pointer; border-radius: 50%; display: flex;">
+        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="ماجد" size="sm" hint-size="32px,32px"></x-import>
+      </button>
+      <sc-if value="{{ accountMenuOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: calc(100% + 10px); inset-inline-end: 0; min-width: 200px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 6px; z-index: 30;">
+          <div style="padding: 8px 12px;">
+            <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">ماجد</p>
+            <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">طالب</p>
+          </div>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M2 3h20"></path><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path><path d="m7 21 5-5 5 5"></path></svg>
+            <span>لوحة المعلم</span>
+          </button>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+            <span>لوحة الإدارة</span>
+          </button>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>الإعدادات</span>
+          </button>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <span>تواصل معنا</span>
+          </button>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button onClick="{{ signOut }}" style-hover="background: var(--state-danger-bg);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--state-danger-fg); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+            <span>تسجيل الخروج</span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+  </header>
+
+  <main style="flex: 1;">
+    <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: {{ pagePadding }};">
+
+      <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 22px;">
+        <span style="font-size: var(--text-sm); color: var(--text-muted);">تسجيل الفصل الدراسي — ثلاث خطوات</span>
+        <h1 style="margin: 0; font-family: var(--font-display); font-size: {{ h1Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">الفصل الأول — العام الدراسي 2026/2027</h1>
+      </div>
+
+      <div style="background: var(--surface-page); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden;">
+
+        <div style="background: var(--surface-card); border-bottom: 1px solid var(--border-subtle);">
+          <div style="height: 4px; background: var(--surface-sunken);">
+            <div style="height: 100%; width: {{ progressPct }}; background: var(--surface-brand); transition: width var(--duration-normal) var(--ease-standard);"></div>
+          </div>
+          <div style="display: flex; gap: {{ stepGap }}; padding: 18px {{ framePadX }} 20px;">
+            <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+              <div style="flex: {{ s.flex }}; display: flex; align-items: center; gap: 10px; min-width: 0;">
+                <div style="width: 34px; height: 34px; flex: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: {{ s.circleBg }}; border: {{ s.circleBorder }}; color: {{ s.numColor }}; font-size: var(--text-sm); font-weight: var(--weight-semibold);">
+                  <sc-if value="{{ s.isDone }}" hint-placeholder-val="{{ false }}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                  </sc-if>
+                  <sc-if value="{{ s.showNum }}" hint-placeholder-val="{{ true }}">
+                    <span>{{ s.num }}</span>
+                  </sc-if>
+                </div>
+                <div style="min-width: 0; display: {{ s.textDisplay }};">
+                  <span style="display: block; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: {{ s.titleColor }}; white-space: nowrap;">{{ s.title }}</span>
+                  <span style="display: block; margin-top: 2px; font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ s.caption }}</span>
+                </div>
+                <sc-if value="{{ s.hasRule }}" hint-placeholder-val="{{ true }}">
+                  <div style="flex: 1; min-width: 16px; height: 1px; background: var(--border-subtle);"></div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="padding: {{ contentPad }}; min-height: {{ contentMinHeight }}; display: flex; flex-direction: column;">
+
+          <sc-if value="{{ onStep1 }}" hint-placeholder-val="{{ true }}">
+            <div>
+              <sc-if value="{{ isClosed }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 22px; padding: 16px 18px; background: var(--surface-sunken); border: 1px solid var(--border-default); border-radius: var(--radius-md);">
+                  <i data-lucide="lock" style="width: 18px; height: 18px; flex: none; margin-top: 2px; color: var(--text-secondary);"></i>
+                  <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">أُغلق باب التسجيل لهذا الفصل</span>
+                    <span style="font-size: var(--text-xs); color: var(--text-secondary); line-height: var(--leading-normal);">انتهت مدة التسجيل في الفصل الأول — العام الدراسي 2026/2027 بتاريخ 12 أغسطس 2026. يُفتح التسجيل للفصل الثاني في 10 ديسمبر 2026.</span>
+                  </div>
+                </div>
+              </sc-if>
+              <h2 style="margin: 0; font-family: var(--font-display); font-size: {{ h1Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">اختيار المستوى</h2>
+              <p style="margin: 8px 0 0; font-size: var(--text-sm); color: var(--text-secondary);">{{ step1Intro }}</p>
+
+              <div style="display: flex; flex-direction: column; gap: 28px; margin-top: 26px;">
+                <sc-for list="{{ programs }}" as="program" hint-placeholder-count="3">
+                  <div>
+                    <div style="display: flex; align-items: baseline; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border-subtle);">
+                      <h3 style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); color: var(--text-primary);">{{ program.name }}</h3>
+                      <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ program.meta }}</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat({{ termCols }}, minmax(0, 1fr)); gap: 16px; margin-top: 16px;">
+                      <sc-for list="{{ program.terms }}" as="term" hint-placeholder-count="3">
+                        <div onClick="{{ term.select }}" style="position: relative; display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 16px; background: {{ term.bg }}; border: {{ term.border }}; border-radius: var(--radius-lg); box-shadow: {{ term.shadow }}; cursor: {{ term.cursor }}; opacity: {{ term.opacity }}; transition: box-shadow var(--duration-fast) var(--ease-standard);">
+                          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Badge" tone="{{ term.badgeTone }}" hint-size="auto,22px">{{ term.badgeLabel }}</x-import>
+                            <sc-if value="{{ term.isSelected }}" hint-placeholder-val="{{ false }}">
+                              <div style="width: 22px; height: 22px; border-radius: 50%; background: var(--surface-brand); display: flex; align-items: center; justify-content: center; flex: none;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                              </div>
+                            </sc-if>
+                          </div>
+                          <span style="font-family: var(--font-display); font-size: var(--text-lg); color: var(--text-primary); line-height: var(--leading-tight);">{{ term.level }}</span>
+                          <span style="font-size: var(--text-xs); color: var(--text-secondary);">{{ term.program }}</span>
+                          <div style="display: flex; align-items: center; gap: 7px; margin-top: 2px;">
+                            <i data-lucide="calendar-days" style="width: 14px; height: 14px; color: var(--text-muted);"></i>
+                            <span style="font-size: var(--text-xs); color: var(--text-secondary);">{{ term.dates }}</span>
+                          </div>
+                          <span style="font-size: 11px; color: var(--text-muted);">{{ term.note }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ onStep2 }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <h2 style="margin: 0; font-family: var(--font-display); font-size: {{ h1Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">مراجعة المقررات</h2>
+              <p style="margin: 8px 0 0; font-size: var(--text-sm); color: var(--text-secondary);">{{ chosenLine }}</p>
+
+              <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 20px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden;">
+                  <sc-for list="{{ courses }}" as="course" hint-placeholder-count="6">
+                    <div style="display: flex; flex-direction: column; gap: 5px; padding: 14px 16px; border-top: {{ course.rule }};">
+                      <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary); text-wrap: pretty;">{{ course.title }}</span>
+                      <span style="font-size: var(--text-xs); color: var(--text-secondary);">{{ course.teacher }}</span>
+                      <span style="font-size: 11px; color: var(--text-muted);">{{ course.mobileMeta }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isWide }}" hint-placeholder-val="{{ true }}">
+                <div style="margin-top: 24px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden;">
+                  <div style="display: grid; grid-template-columns: {{ tableCols }}; gap: 16px; padding: 12px 20px; background: var(--surface-sunken); border-bottom: 1px solid var(--border-subtle);">
+                    <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary);">المقرر</span>
+                    <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary);">المعلم</span>
+                    <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary);">المحاضرات</span>
+                    <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary);">عدد الساعات</span>
+                    <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary);">الاختبار النهائي</span>
+                  </div>
+                  <sc-for list="{{ courses }}" as="course" hint-placeholder-count="6">
+                    <div style="display: grid; grid-template-columns: {{ tableCols }}; gap: 16px; align-items: center; padding: 16px 20px; border-top: {{ course.rule }};">
+                      <span style="font-size: var(--text-md); font-weight: var(--weight-semibold); color: var(--text-primary); text-wrap: pretty;">{{ course.title }}</span>
+                      <span style="font-size: var(--text-sm); color: var(--text-secondary);">{{ course.teacher }}</span>
+                      <span style="font-size: var(--text-sm); color: var(--text-secondary); font-variant-numeric: tabular-nums;">{{ course.lectures }}</span>
+                      <span style="font-size: var(--text-sm); color: var(--text-secondary); font-variant-numeric: tabular-nums;">{{ course.hours }}</span>
+                      <div style="display: flex; align-items: center; gap: 7px;">
+                        <i data-lucide="{{ course.examIcon }}" style="width: 14px; height: 14px; color: {{ course.examColor }};"></i>
+                        <span style="font-size: var(--text-sm); color: {{ course.examColor }};">{{ course.examLabel }}</span>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <div style="display: flex; align-items: flex-start; gap: 12px; margin-top: 18px; padding: 16px 18px; background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);">
+                <i data-lucide="info" style="width: 17px; height: 17px; color: var(--text-brand); flex: none; margin-top: 1px;"></i>
+                <p style="margin: 0; font-size: var(--text-sm); color: var(--text-primary); line-height: var(--leading-normal);">سيتم تسجيلك تلقائياً في جميع المقررات.</p>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ onStep3 }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <h2 style="margin: 0; font-family: var(--font-display); font-size: {{ h1Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">تأكيد التسجيل</h2>
+              <p style="margin: 8px 0 0; font-size: var(--text-sm); color: var(--text-secondary);">راجع البيانات التالية قبل إتمام التسجيل.</p>
+
+              <div style="max-width: {{ summaryMaxWidth }}; margin: 24px auto 0;">
+                <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden;">
+                  <div style="padding: 24px 26px 22px; background: var(--ribaat-green-100); border-bottom: 1px solid var(--border-brand);">
+                    <span style="display: block; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-brand);">{{ summaryProgram }}</span>
+                    <h3 style="margin: 8px 0 0; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--text-primary); line-height: var(--leading-tight);">{{ summaryLevel }}</h3>
+                    <span style="display: block; margin-top: 6px; font-size: var(--text-sm); color: var(--text-secondary);">الفصل الأول — العام الدراسي 2026/2027</span>
+                  </div>
+                  <div style="padding: 6px 26px 4px;">
+                    <sc-for list="{{ summaryRows }}" as="row" hint-placeholder-count="3">
+                      <div style="display: flex; align-items: center; gap: 12px; padding: 14px 0; border-top: {{ row.rule }};">
+                        <i data-lucide="{{ row.icon }}" style="width: 16px; height: 16px; color: var(--text-muted); flex: none;"></i>
+                        <span style="font-size: var(--text-sm); color: var(--text-secondary);">{{ row.label }}</span>
+                        <span style="margin-inline-start: auto; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary); text-align: end;">{{ row.value }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 14px; padding: 20px 26px 24px; border-top: 1px solid var(--border-subtle);">
+                    <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted); line-height: var(--leading-normal); text-align: justify;">بالتسجيل تُتاح لك جميع مقررات المستوى في هذا الفصل، ويبدأ عدّ حضورك من أول محاضرة.</p>
+                    <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="lg" on-click="{{ submitEnrollment }}" hint-size="100%,48px">سجّل الآن</x-import>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ onSuccess }}" hint-placeholder-val="{{ false }}">
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px; padding: 40px 24px;">
+              <div style="width: 76px; height: 76px; border-radius: 50%; background: var(--surface-brand); box-shadow: 0 0 0 8px var(--ribaat-green-100); display: flex; align-items: center; justify-content: center;">
+                <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              </div>
+              <h2 style="margin: 8px 0 0; font-family: var(--font-display); font-size: {{ h1Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">تم تسجيلك بنجاح</h2>
+              <p style="margin: 0; font-size: var(--text-md); color: var(--text-secondary); max-width: 460px; text-wrap: pretty;">{{ successLine }}</p>
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px; padding: 16px 22px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); text-align: start;">
+                <span style="font-size: var(--text-xs); color: var(--text-muted);">تبدأ الدراسة</span>
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">14 أغسطس 2026</span>
+              </div>
+              <div style="display: flex; gap: 12px; margin-top: 10px;">
+                <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="lg" on-click="{{ goDashboard }}" hint-size="auto,48px">الانتقال إلى لوحتي التعليمية</x-import>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: auto; padding-top: 26px;">
+              <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ navHint }}</span>
+              <div style="display: flex; gap: 12px;">
+                <sc-if value="{{ canGoBack }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" on-click="{{ goBack }}" hint-size="auto,40px">السابق</x-import>
+                </sc-if>
+                <sc-if value="{{ showNext }}" hint-placeholder-val="{{ true }}">
+                  <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" disabled="{{ nextDisabled }}" on-click="{{ goNext }}" hint-size="auto,40px">{{ nextLabel }}</x-import>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer dir="rtl" style="background: var(--surface-card); border-top: 1px solid var(--border-subtle); font-family: var(--font-sans);">
+    <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: 32px clamp(24px, 6vw, 120px); display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 320px;">
+        <img src="../../assets/logos/ribaat-lockup-2026.png" alt="رباط الحنابلة" style="height: 65px; align-self: flex-start; filter: {{ logoFilter }}; width: 110px">
+        <p style="margin: 0; font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed);">مدرسة شرعية تأصيلية — دورات ودروس في العقيدة والفقه والحديث والسيرة، بإجازات بالسند المتصل.</p>
+      </div>
+      <div style="display: flex; gap: 56px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">روابط</span>
+          <a href="StudentDashboard.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">لوحة التحكم</a>
+          <a href="CourseCatalogue.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">الدورات</a>
+          <a href="StudentPaths.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">البرامج الدراسية</a>
+          <a href="StudentCertificates.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">الشهادات</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">الدعم والتعريف</span>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">عن المدرسة</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">الأسئلة الشائعة</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">الدعم الفني</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">تواصل معنا</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid var(--border-subtle);">
+      <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: 14px clamp(24px, 6vw, 120px);">
+        <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted);">© 1448هـ — رباط الحنابلة. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;startStep&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;1 — اختيار المستوى&quot;, &quot;options&quot;: [&quot;1 — اختيار المستوى&quot;, &quot;2 — مراجعة المقررات&quot;, &quot;3 — تأكيد التسجيل&quot;, &quot;نجاح التسجيل&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Stepper state&quot;},
+  &quot;enrollmentClosed&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Stepper state&quot;},
+  &quot;showOptional&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Content&quot;},
+  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;desktop&quot;, &quot;options&quot;: [&quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Breakpoint&quot;},
+  &quot;colorScheme&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;light&quot;, &quot;options&quot;: [&quot;light&quot;, &quot;dark&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot;}
+}">
+const TERM_DATES = "14 أغسطس — 9 نوفمبر 2026";
+
+const PROGRAMS = [
+  {
+    name: "رباط الحنابلة",
+    meta: "ثلاثة مستويات · شهادة بالسند المتصل",
+    terms: [
+      { id: "t1", level: "المستوى الأول", dates: TERM_DATES, open: false, completed: true, note: "أتممت هذا المستوى في الفصل الماضي" },
+      { id: "t2", level: "المستوى الثاني", dates: TERM_DATES, open: true, note: "6 مقررات · يشترط إتمام المستوى الأول" },
+      { id: "t3", level: "المستوى الثالث", dates: TERM_DATES, open: false, note: "يُفتح التسجيل 10 ديسمبر 2026" },
+    ],
+  },
+  {
+    name: "رباط الشافعية",
+    meta: "قريباً · مستويان",
+    soon: true,
+    terms: [
+      { id: "s1", level: "المستوى الأول", dates: TERM_DATES, open: false, soon: true, note: "يُعلن عن موعد التسجيل قريباً" },
+      { id: "s2", level: "المستوى الثاني", dates: TERM_DATES, open: false, soon: true, note: "يُعلن عن موعد التسجيل قريباً" },
+    ],
+  },
+  {
+    name: "رباط المالكية",
+    meta: "قريباً · مستوى واحد",
+    soon: true,
+    terms: [
+      { id: "m1", level: "المستوى الأول", dates: TERM_DATES, open: false, soon: true, note: "يُعلن عن موعد التسجيل قريباً" },
+    ],
+  },
+];
+
+const COURSES = {
+  t2: [
+    { title: "متن الورقات في أصول الفقه", teacher: "د. عبد العزيز العيدان", lectures: "8 محاضرات", hours: "05:40:00", exam: true, required: true },
+    { title: "الأربعين النووية", teacher: "د. عبد العزيز العيدان", lectures: "11 محاضرة", hours: "06:20:00", exam: true, required: true },
+    { title: "نواقض الإسلام", teacher: "د. عبد العزيز العيدان", lectures: "5 محاضرات", hours: "03:05:00", exam: true, required: true },
+    { title: "مقدمة في السيرة", teacher: "د. أنس اليتامى", lectures: "6 محاضرات", hours: "03:15:00", exam: false, required: true },
+    { title: "فصول في الآداب", teacher: "د. عبد العزيز العيدان", lectures: "4 محاضرات", hours: "02:20:00", exam: false, required: false },
+    { title: "منظومة القواعد الفقهية", teacher: "د. أنس اليتامى", lectures: "8 محاضرات", hours: "04:10:00", exam: true, required: false },
+  ],
+};
+
+const DEFAULT_COURSES = [
+  { title: "ثلاثة الأصول", teacher: "د. عبد العزيز العيدان", lectures: "4 محاضرات", hours: "02:10:00", exam: true, required: true },
+  { title: "القواعد الأربع", teacher: "د. عبد العزيز العيدان", lectures: "3 محاضرات", hours: "01:35:00", exam: true, required: true },
+  { title: "الأربعين النووية", teacher: "د. عبد العزيز العيدان", lectures: "11 محاضرة", hours: "06:20:00", exam: true, required: true },
+  { title: "مقدمة في السيرة", teacher: "د. أنس اليتامى", lectures: "6 محاضرات", hours: "03:15:00", exam: false, required: true },
+  { title: "فصول في الآداب", teacher: "د. عبد العزيز العيدان", lectures: "4 محاضرات", hours: "02:20:00", exam: false, required: false },
+];
+
+/* "05:40:00" → "5 ساعات و40 دقيقة" */
+function fmtHours(clock) {
+  if (!clock) return "—";
+  const [h, m] = clock.split(":").map(Number);
+  const hourWord = h === 0 ? "" : h === 1 ? "ساعة" : h === 2 ? "ساعتان" : h + " ساعات";
+  const minWord = m ? m + " دقيقة" : "";
+  if (!hourWord) return minWord || "—";
+  return minWord ? hourWord + " و" + minWord : hourWord;
+}
+
+const STEP_META = [
+  { num: "1", title: "اختيار المستوى", caption: "المستويات المفتوحة" },
+  { num: "2", title: "مراجعة المقررات", caption: "مقررات الفصل" },
+  { num: "3", title: "تأكيد التسجيل", caption: "إتمام التسجيل" },
+];
+
+class Component extends DCLogic {
+  state = { step: 1, termId: null, done: false };
+
+  findTerm(id) {
+    for (const p of PROGRAMS) {
+      const t = p.terms.find((x) => x.id === id);
+      if (t) return { ...t, program: p.name };
+    }
+    return null;
+  }
+
+  renderVals() {
+    const startStep = this.props.startStep || "1 — اختيار المستوى";
+    const initial = startStep.startsWith("2") ? 2 : startStep.startsWith("3") ? 3 : startStep.startsWith("نجاح") ? 3 : 1;
+    const initialDone = startStep.startsWith("نجاح");
+    if (this.stepSeed !== startStep) {
+      this.stepSeed = startStep;
+      this.state.step = initial;
+      this.state.done = initialDone;
+      if (initial > 1 && !this.state.termId) this.state.termId = "t2";
+    }
+    const closed = this.props.enrollmentClosed ?? false;
+    const step = closed ? 1 : this.state.step;
+    const done = closed ? false : this.state.done;
+
+    const termId = this.state.termId || (step > 1 ? "t2" : null);
+    const term = this.findTerm(termId);
+    const courses = (termId && COURSES[termId]) || DEFAULT_COURSES;
+    const viewport = this.props.viewport || "desktop";
+    const colorScheme = this.props.colorScheme || "light";
+    const isMobile = viewport === "mobile";
+    const vp = {
+      desktop: { maxWidth: "1200px", padding: "48px clamp(24px, 6vw, 120px) 80px", padX: "28px", contentPad: "32px 28px 28px", minH: "560px", h1: "var(--text-2xl)", termCols: 3, tableCols: "1fr 190px 110px 160px 140px", summaryMax: "560px", stepGap: "8px" },
+      tablet: { maxWidth: "834px", padding: "28px clamp(20px, 4vw, 56px) 56px", padX: "22px", contentPad: "26px 22px 24px", minH: "520px", h1: "var(--text-xl)", termCols: 2, tableCols: "1fr 130px 92px 116px 104px", summaryMax: "520px", stepGap: "6px" },
+      mobile: { maxWidth: "390px", padding: "20px 16px 48px", padX: "16px", contentPad: "20px 16px 20px", minH: "480px", h1: "var(--text-xl)", termCols: 1, tableCols: "1fr", summaryMax: "100%", stepGap: "10px" },
+    }[viewport] || {};
+    const isClosed = closed;
+    const showOptional = this.props.showOptional ?? true;
+    const visibleCourses = showOptional ? courses : courses.filter((c) => c.required);
+
+    const programs = PROGRAMS.map((p) => ({
+      name: p.name,
+      meta: p.meta,
+      terms: p.terms.map((t) => {
+        const open = t.open && !isClosed;
+        const selected = !isClosed && t.id === termId;
+        return {
+          ...t,
+          note: isClosed && t.open ? "انتهت مدة التسجيل في 12 أغسطس 2026" : t.note,
+          dates: t.soon ? "الموعد غير محدد" : t.dates,
+          program: p.name,
+          isSelected: selected,
+          badgeTone: t.completed ? "brand" : open ? "success" : t.soon ? "accent" : "neutral",
+          badgeLabel: t.completed ? "مكتمل" : open ? "مفتوح للتسجيل" : t.soon ? "قريباً" : "مغلق",
+          bg: selected ? "var(--ribaat-green-100)" : "var(--surface-card)",
+          border: selected ? "1.5px solid var(--border-brand)" : "1px solid var(--border-subtle)",
+          shadow: open ? "var(--shadow-sm)" : "none",
+          cursor: open ? "pointer" : "not-allowed",
+          opacity: open ? "1" : "0.55",
+          select: open ? () => this.setState({ termId: t.id }) : () => {},
+        };
+      }),
+    }));
+
+    const countWord = (n) => (n === 1 ? "مقرر واحد" : n === 2 ? "مقرران" : n + " مقررات");
+    const summaryTerm = term ? term.level + " — " + term.program : "المستوى الثاني — رباط الحنابلة";
+
+    const stepsView = STEP_META.map((s, i) => {
+      const n = i + 1;
+      const isCurrent = !done && n === step;
+      const isDone = done || n < step;
+      return {
+        num: s.num,
+        title: s.title,
+        caption: s.caption,
+        isDone,
+        showNum: !isDone,
+        hasRule: !isMobile && i < STEP_META.length - 1,
+        flex: isMobile ? (isCurrent ? "1 1 auto" : "0 0 auto") : "1",
+        circleBg: isDone ? "var(--surface-brand)" : isCurrent ? "var(--ribaat-green-100)" : "var(--surface-card)",
+        circleBorder: isDone ? "none" : isCurrent ? "1.5px solid var(--border-brand)" : "1px solid var(--border-default)",
+        numColor: isCurrent ? "var(--text-brand)" : "var(--text-muted)",
+        titleColor: isDone || isCurrent ? "var(--text-primary)" : "var(--text-muted)",
+        textDisplay: isMobile && !isCurrent ? "none" : "block",
+      };
+    });
+
+    return {
+      themeAttr: colorScheme,
+      logoFilter: colorScheme === "dark" ? "brightness(0) invert(1) opacity(0.9)" : "none",
+      studentName: "ماجد",
+      accountMenuOpen: this.state.accountMenuOpen,
+      toggleAccountMenu: () => this.setState((st) => ({ accountMenuOpen: !st.accountMenuOpen })),
+      signOut: () => { window.location.href = "RibaatAuth.dc.html"; },
+      frameLabel: viewport + " / " + colorScheme,
+      containerMaxWidth: vp.maxWidth,
+      pagePadding: vp.padding,
+      isMobile,
+      isClosed,
+      isWide: !isMobile,
+      step1Intro: isClosed
+        ? "لا توجد مستويات مفتوحة للتسجيل حالياً. يمكنك تصفّح المستويات ومعرفة مواعيد فتحها."
+        : "المستويات المتاحة في الفصل الأول — العام الدراسي 2026/2027، مرتبة حسب البرنامج. اختر مستوى واحداً.",
+      framePadX: vp.padX,
+      contentPad: vp.contentPad,
+      contentMinHeight: vp.minH,
+      h1Size: vp.h1,
+      termCols: vp.termCols,
+      tableCols: vp.tableCols,
+      summaryMaxWidth: vp.summaryMax,
+      stepGap: vp.stepGap,
+      steps: stepsView,
+      progressPct: done ? "100%" : Math.round(((step - 1) / 3) * 100 + 33) + "%",
+      onStep1: !done && step === 1,
+      onStep2: !done && step === 2,
+      onStep3: !done && step === 3,
+      onSuccess: done,
+      programs,
+      chosenLine: term
+        ? term.level + " — " + term.program + " · " + countWord(visibleCourses.length) + " · " + term.dates
+        : countWord(visibleCourses.length),
+      courses: visibleCourses.map((c, i) => ({
+        title: c.title,
+        teacher: c.teacher,
+        lectures: c.lectures,
+        hours: fmtHours(c.hours),
+        examIcon: c.exam ? "clipboard-check" : "minus",
+        examLabel: c.exam ? "نعم" : "لا يوجد",
+        examColor: c.exam ? "var(--text-accent)" : "var(--text-muted)",
+        rule: i === 0 ? "none" : "1px solid var(--border-subtle)",
+        mobileMeta: c.lectures + " · " + fmtHours(c.hours) + " · " + (c.exam ? "باختبار نهائي" : "بلا اختبار نهائي"),
+      })),
+      summaryProgram: term ? term.program : "رباط الحنابلة",
+      summaryLevel: term ? term.level : "المستوى الثاني",
+      summaryRows: [
+        { label: "مدة الفصل", value: term ? term.dates : TERM_DATES, icon: "calendar-days", rule: "none" },
+        { label: "عدد المقررات", value: countWord(visibleCourses.length), icon: "library", rule: "1px solid var(--border-subtle)" },
+        { label: "مقررات فيها اختبار نهائي", value: countWord(visibleCourses.filter((c) => c.exam).length), icon: "clipboard-check", rule: "1px solid var(--border-subtle)" },
+      ],
+      successLine: "أنت الآن مسجَّل في " + countWord(visibleCourses.length) + " من " + summaryTerm + ".",
+      showNav: !done,
+      canGoBack: !done && step > 1,
+      showNext: !done && step < 3,
+      nextDisabled: isClosed || (step === 1 && !termId),
+      nextLabel: "التالي",
+      navHint: isClosed ? "التسجيل مغلق حالياً" : step === 1 ? (termId ? "المستوى المختار: " + term.level : "اختر مستوى للمتابعة") : step === 3 ? "أتمم التسجيل من البطاقة أعلاه" : "الخطوة " + step + " من 3",
+      goNext: () => {
+        if (this.state.step === 3) this.setState({ done: true });
+        else this.setState((s) => ({ step: Math.min(3, s.step + 1) }));
+      },
+      goBack: () => this.setState((s) => ({ step: Math.max(1, s.step - 1) })),
+      submitEnrollment: () => this.setState({ done: true }),
+      goDashboard: () => { window.location.href = "StudentDashboard.dc.html"; },
+    };
+  }
+
+  componentDidMount() { window.lucide && window.lucide.createIcons(); }
+  componentDidUpdate() { window.lucide && window.lucide.createIcons(); }
+}
+</script>
+</body>
+</html>

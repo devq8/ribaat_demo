@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <script src="./doc-page.js"></script>
+  <script src="./image-slot.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    doc-page:not(:defined) { visibility: hidden; }
+    p, h1, ol, li { margin: 0; }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); }
+  </style>
+</helmet>
+
+<doc-page size="a4" orientation="landscape">
+
+  <!-- ================= ١ · شهادة — مؤنث، سبعة متون (الحد المرجعي) ================= -->
+  <section class="page" lang="ar" dir="rtl" data-screen-label="شهادة · مؤنث · ٧ متون" style="--sh-pad-bs: 52mm; --sh-pad-be: 14mm; --sh-pad-is: 26mm; --sh-pad-ie: 22mm; --sh-measure: 205mm; --sh-logo: 16mm; --sh-logo-top: 11mm; --sh-logo-inline: 15mm; --sh-title: 46pt; --sh-title-top: 19mm; --sh-seal: 24mm; --sh-seal-bottom: 20mm; --sh-seal-col: 36mm; --sh-lead: 12.5pt; --sh-name: 32pt; --sh-grade: 12.5pt; --sh-year: 11pt; --sh-motun-lead: 10.5pt; --sh-motun: 11pt; --sh-motun-leading: 1.9; --sh-cols: 2; --sh-sig-label: 9.5pt; --sh-sig-name: 12.5pt; --sh-sig-line: 56mm; --sh-meta: 9pt; --sh-code: 9.5pt; position: relative; overflow: hidden; display: flex; background: var(--surface-page); font-family: var(--font-sans); color: var(--text-primary);">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0;">
+      <sc-if value="{{ ornamentAsset }}" hint-placeholder-val="{{ true }}">
+        <img src="./ornament-shahada-a4-landscape.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+      </sc-if>
+      <sc-if value="{{ ornamentSlot }}" hint-placeholder-val="{{ false }}">
+        <image-slot id="sh-ornament-1" shape="rect" fit="cover" style="position: absolute; inset: 0; width: 100%; height: 100%;" placeholder="زخرفة الشهادة — A4 أفقي، ٣٥٠٨×٢٤٨٠ بكسل، ٣٠٠ نقطة/بوصة"></image-slot>
+      </sc-if>
+      <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-logo-full.png" alt="" style="position: absolute; inset-block-start: var(--sh-logo-top); inset-inline-start: var(--sh-logo-inline); height: var(--sh-logo); width: auto;">
+      <span style="position: absolute; inset-block-start: var(--sh-title-top); inset-inline: 0; text-align: center; font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--sh-title); line-height: 1; color: var(--ribaat-brown-600);">شهادة</span>
+      <span style="position: absolute; inset-inline: 0; inset-block-end: var(--sh-seal-bottom); display: flex; justify-content: center;">
+        <span style="width: var(--sh-seal); height: var(--sh-seal); border: 1px solid var(--ribaat-green-400); border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center;">
+          <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-mark.png" alt="" style="width: 68%; height: auto;">
+        </span>
+      </span>
+    </div>
+
+    <div style="position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; padding-block-start: var(--sh-pad-bs); padding-block-end: var(--sh-pad-be); padding-inline-start: var(--sh-pad-is); padding-inline-end: var(--sh-pad-ie);">
+
+      <h1 style="position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;">شهادة إتمام المستوى الأول — مدرسة رباط الحنابلة</h1>
+
+      <div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center;">
+        <p style="font-size: var(--sh-lead); line-height: var(--leading-normal); color: var(--text-secondary);">تشهد مدرسة رباط الحنابلة بأن الطالبة</p>
+        <p style="font-family: var(--font-display); font-size: var(--sh-name); font-weight: var(--weight-bold); line-height: 1.15; color: var(--text-brand);">مجيدة عبد الحليم السويد</p>
+        <p style="font-size: var(--sh-lead); line-height: var(--leading-normal); color: var(--text-primary);">قد أتمّت المستوى الأول</p>
+        <p style="font-size: var(--sh-grade); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--text-primary);">بتقدير جيد جدًا، وبنسبة ٨٠٪</p>
+        <p style="font-size: var(--sh-year); line-height: var(--leading-normal); color: var(--text-secondary);">في العام الدراسي ٢٠٢٥–٢٠٢٦م</p>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; inline-size: var(--sh-measure); margin-inline: auto; margin-block-start: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4);">
+        <p style="flex: none; text-align: center; font-size: var(--sh-motun-lead); line-height: var(--leading-normal); color: var(--text-secondary);">وقد تضمن المستوى الأول شرح المتون التالية:</p>
+        <ol style="flex: none; columns: var(--sh-cols); column-gap: var(--space-10); padding: 0; list-style: none; font-size: var(--sh-motun); line-height: var(--sh-motun-leading);">
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١.</span><span>ثلاثة الأصول</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٢.</span><span>القواعد الأربع</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٣.</span><span>نواقض الإسلام</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٤.</span><span>أخصر المختصرات</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٥.</span><span>متن الورقات في أصول الفقه</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٦.</span><span>الأربعون النووية</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٧.</span><span>فصول في الآداب</span></li>
+        </ol>
+      </div>
+
+      <footer style="flex: none; display: grid; grid-template-columns: 1fr var(--sh-seal-col) 1fr; align-items: end; column-gap: var(--space-6);">
+        <div>
+          <p style="font-size: var(--sh-meta); line-height: var(--leading-normal); color: var(--text-primary);">حرر في ٢٦ ذو القعدة ١٤٤٧هـ، الموافق ١٣ مايو ٢٠٢٦م</p>
+          <p style="margin-block-start: var(--space-1); font-size: var(--sh-meta); line-height: var(--leading-normal); color: var(--text-muted);">رمز التحقق <span dir="ltr" style="font-size: var(--sh-code); font-weight: var(--weight-semibold); color: var(--text-primary); letter-spacing: 0.04em;">RB-4KXT-9WQM</span> · <span dir="ltr">ribaat.net/verify</span></p>
+        </div>
+        <span aria-hidden="true"></span>
+        <div style="text-align: center;">
+          <span style="display: block; font-size: var(--sh-sig-label); color: var(--text-secondary);">المشرف العام</span>
+          <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--sh-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. أنس بن عادل اليتامى</span>
+          <span aria-hidden="true" style="display: block; width: min(var(--sh-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ================= ٢ · شهادة — مذكر، أربعة متون (الحد الأدنى) ================= -->
+  <section class="page" lang="ar" dir="rtl" data-screen-label="شهادة · مذكر · ٤ متون" style="--sh-pad-bs: 52mm; --sh-pad-be: 14mm; --sh-pad-is: 26mm; --sh-pad-ie: 22mm; --sh-measure: 205mm; --sh-logo: 16mm; --sh-logo-top: 11mm; --sh-logo-inline: 15mm; --sh-title: 46pt; --sh-title-top: 19mm; --sh-seal: 24mm; --sh-seal-bottom: 20mm; --sh-seal-col: 36mm; --sh-lead: 12.5pt; --sh-name: 32pt; --sh-grade: 12.5pt; --sh-year: 11pt; --sh-motun-lead: 10.5pt; --sh-motun: 11.5pt; --sh-motun-leading: 1.9; --sh-cols: 2; --sh-sig-label: 9.5pt; --sh-sig-name: 12.5pt; --sh-sig-line: 56mm; --sh-meta: 9pt; --sh-code: 9.5pt; position: relative; overflow: hidden; display: flex; background: var(--surface-page); font-family: var(--font-sans); color: var(--text-primary);">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0;">
+      <sc-if value="{{ ornamentAsset }}" hint-placeholder-val="{{ true }}">
+        <img src="./ornament-shahada-a4-landscape.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+      </sc-if>
+      <sc-if value="{{ ornamentSlot }}" hint-placeholder-val="{{ false }}">
+        <image-slot id="sh-ornament-2" shape="rect" fit="cover" style="position: absolute; inset: 0; width: 100%; height: 100%;" placeholder="زخرفة الشهادة — A4 أفقي، ٣٥٠٨×٢٤٨٠ بكسل، ٣٠٠ نقطة/بوصة"></image-slot>
+      </sc-if>
+      <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-logo-full.png" alt="" style="position: absolute; inset-block-start: var(--sh-logo-top); inset-inline-start: var(--sh-logo-inline); height: var(--sh-logo); width: auto;">
+      <span style="position: absolute; inset-block-start: var(--sh-title-top); inset-inline: 0; text-align: center; font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--sh-title); line-height: 1; color: var(--ribaat-brown-600);">شهادة</span>
+      <span style="position: absolute; inset-inline: 0; inset-block-end: var(--sh-seal-bottom); display: flex; justify-content: center;">
+        <span style="width: var(--sh-seal); height: var(--sh-seal); border: 1px solid var(--ribaat-green-400); border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center;">
+          <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-mark.png" alt="" style="width: 68%; height: auto;">
+        </span>
+      </span>
+    </div>
+
+    <div style="position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; padding-block-start: var(--sh-pad-bs); padding-block-end: var(--sh-pad-be); padding-inline-start: var(--sh-pad-is); padding-inline-end: var(--sh-pad-ie);">
+
+      <h1 style="position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;">شهادة إتمام المستوى الثاني — مدرسة رباط الحنابلة</h1>
+
+      <div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center;">
+        <p style="font-size: var(--sh-lead); line-height: var(--leading-normal); color: var(--text-secondary);">تشهد مدرسة رباط الحنابلة بأن الطالب</p>
+        <p style="font-family: var(--font-display); font-size: var(--sh-name); font-weight: var(--weight-bold); line-height: 1.15; color: var(--text-brand);">عبد الرحمن بن محمد الفهد</p>
+        <p style="font-size: var(--sh-lead); line-height: var(--leading-normal); color: var(--text-primary);">قد أتمّ المستوى الثاني</p>
+        <p style="font-size: var(--sh-grade); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--text-primary);">بتقدير ممتاز، وبنسبة ٩٤٪</p>
+        <p style="font-size: var(--sh-year); line-height: var(--leading-normal); color: var(--text-secondary);">في العام الدراسي ٢٠٢٥–٢٠٢٦م</p>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; inline-size: var(--sh-measure); margin-inline: auto; margin-block-start: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4);">
+        <p style="flex: none; text-align: center; font-size: var(--sh-motun-lead); line-height: var(--leading-normal); color: var(--text-secondary);">وقد تضمن المستوى الثاني شرح المتون التالية:</p>
+        <ol style="flex: none; columns: var(--sh-cols); column-gap: var(--space-10); padding: 0; list-style: none; font-size: var(--sh-motun); line-height: var(--sh-motun-leading);">
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١.</span><span>كشف الشبهات</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٢.</span><span>مسائل الجاهلية</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٣.</span><span>عمدة الأحكام</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٤.</span><span>منظومة القواعد الفقهية</span></li>
+        </ol>
+      </div>
+
+      <footer style="flex: none; display: grid; grid-template-columns: 1fr var(--sh-seal-col) 1fr; align-items: end; column-gap: var(--space-6);">
+        <div>
+          <p style="font-size: var(--sh-meta); line-height: var(--leading-normal); color: var(--text-primary);">حرر في ٢٦ ذو القعدة ١٤٤٧هـ، الموافق ١٣ مايو ٢٠٢٦م</p>
+          <p style="margin-block-start: var(--space-1); font-size: var(--sh-meta); line-height: var(--leading-normal); color: var(--text-muted);">رمز التحقق <span dir="ltr" style="font-size: var(--sh-code); font-weight: var(--weight-semibold); color: var(--text-primary); letter-spacing: 0.04em;">RB-7HDN-3RVY</span> · <span dir="ltr">ribaat.net/verify</span></p>
+        </div>
+        <span aria-hidden="true"></span>
+        <div style="text-align: center;">
+          <span style="display: block; font-size: var(--sh-sig-label); color: var(--text-secondary);">المشرف العام</span>
+          <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--sh-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. أنس بن عادل اليتامى</span>
+          <span aria-hidden="true" style="display: block; width: min(var(--sh-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ================= ٣ · شهادة — خمسة عشر متنًا (الحد الأقصى: ثلاثة أعمدة، بنط أصغر) ================= -->
+  <section class="page" lang="ar" dir="rtl" data-screen-label="شهادة · مذكر · ١٥ متنًا" style="--sh-pad-bs: 50mm; --sh-pad-be: 14mm; --sh-pad-is: 26mm; --sh-pad-ie: 22mm; --sh-measure: 225mm; --sh-logo: 16mm; --sh-logo-top: 11mm; --sh-logo-inline: 15mm; --sh-title: 46pt; --sh-title-top: 19mm; --sh-seal: 24mm; --sh-seal-bottom: 20mm; --sh-seal-col: 36mm; --sh-lead: 12pt; --sh-name: 29pt; --sh-grade: 12pt; --sh-year: 10.5pt; --sh-motun-lead: 10pt; --sh-motun: 9.5pt; --sh-motun-leading: 1.7; --sh-cols: 3; --sh-sig-label: 9.5pt; --sh-sig-name: 12.5pt; --sh-sig-line: 56mm; --sh-meta: 9pt; --sh-code: 9.5pt; position: relative; overflow: hidden; display: flex; background: var(--surface-page); font-family: var(--font-sans); color: var(--text-primary);">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0;">
+      <sc-if value="{{ ornamentAsset }}" hint-placeholder-val="{{ true }}">
+        <img src="./ornament-shahada-a4-landscape.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+      </sc-if>
+      <sc-if value="{{ ornamentSlot }}" hint-placeholder-val="{{ false }}">
+        <image-slot id="sh-ornament-3" shape="rect" fit="cover" style="position: absolute; inset: 0; width: 100%; height: 100%;" placeholder="زخرفة الشهادة — A4 أفقي، ٣٥٠٨×٢٤٨٠ بكسل، ٣٠٠ نقطة/بوصة"></image-slot>
+      </sc-if>
+      <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-logo-full.png" alt="" style="position: absolute; inset-block-start: var(--sh-logo-top); inset-inline-start: var(--sh-logo-inline); height: var(--sh-logo); width: auto;">
+      <span style="position: absolute; inset-block-start: var(--sh-title-top); inset-inline: 0; text-align: center; font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--sh-title); line-height: 1; color: var(--ribaat-brown-600);">شهادة</span>
+      <span style="position: absolute; inset-inline: 0; inset-block-end: var(--sh-seal-bottom); display: flex; justify-content: center;">
+        <span style="width: var(--sh-seal); height: var(--sh-seal); border: 1px solid var(--ribaat-green-400); border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center;">
+          <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-mark.png" alt="" style="width: 68%; height: auto;">
+        </span>
+      </span>
+    </div>
+
+    <div style="position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; padding-block-start: var(--sh-pad-bs); padding-block-end: var(--sh-pad-be); padding-inline-start: var(--sh-pad-is); padding-inline-end: var(--sh-pad-ie);">
+
+      <h1 style="position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;">شهادة إتمام المستوى الثالث — مدرسة رباط الحنابلة</h1>
+
+      <div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-2); text-align: center;">
+        <p style="font-size: var(--sh-lead); line-height: var(--leading-normal); color: var(--text-secondary);">تشهد مدرسة رباط الحنابلة بأن الطالب</p>
+        <p style="font-family: var(--font-display); font-size: var(--sh-name); font-weight: var(--weight-bold); line-height: 1.15; color: var(--text-brand);">إبراهيم بن سعد المطيري</p>
+        <p style="font-size: var(--sh-lead); line-height: var(--leading-normal); color: var(--text-primary);">قد أتمّ المستوى الثالث</p>
+        <p style="font-size: var(--sh-grade); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--text-primary);">بتقدير جيد جدًا، وبنسبة ٨٧٪</p>
+        <p style="font-size: var(--sh-year); line-height: var(--leading-normal); color: var(--text-secondary);">في العام الدراسي ٢٠٢٥–٢٠٢٦م</p>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; inline-size: var(--sh-measure); margin-inline: auto; margin-block-start: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3);">
+        <p style="flex: none; text-align: center; font-size: var(--sh-motun-lead); line-height: var(--leading-normal); color: var(--text-secondary);">وقد تضمن المستوى الثالث شرح المتون التالية:</p>
+        <ol style="flex: none; columns: var(--sh-cols); column-gap: var(--space-8); padding: 0; list-style: none; font-size: var(--sh-motun); line-height: var(--sh-motun-leading);">
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١.</span><span>لمعة الاعتقاد</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٢.</span><span>الأصول الستة</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٣.</span><span>مسائل الجاهلية</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٤.</span><span>كشف الشبهات</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٥.</span><span>أخصر المختصرات</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٦.</span><span>عمدة الأحكام</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٧.</span><span>منظومة القواعد الفقهية</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٨.</span><span>نخبة الفكر</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٩.</span><span>متن الآجرومية</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١٠.</span><span>متن الرحبية في الفرائض</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١١.</span><span>مختصر السيرة النبوية</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١٢.</span><span>منظومة الآداب</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١٣.</span><span>قواعد الأصول ومعاقد الفصول</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١٤.</span><span>رفع الملام عن الأئمة الأعلام</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١٥.</span><span>ثلاثيات الإمام أحمد</span></li>
+        </ol>
+      </div>
+
+      <footer style="flex: none; display: grid; grid-template-columns: 1fr var(--sh-seal-col) 1fr; align-items: end; column-gap: var(--space-6);">
+        <div>
+          <p style="font-size: var(--sh-meta); line-height: var(--leading-normal); color: var(--text-primary);">حرر في ٢٨ ذو القعدة ١٤٤٧هـ، الموافق ١٥ مايو ٢٠٢٦م</p>
+          <p style="margin-block-start: var(--space-1); font-size: var(--sh-meta); line-height: var(--leading-normal); color: var(--text-muted);">رمز التحقق <span dir="ltr" style="font-size: var(--sh-code); font-weight: var(--weight-semibold); color: var(--text-primary); letter-spacing: 0.04em;">RB-2FGP-8JCK</span> · <span dir="ltr">ribaat.net/verify</span></p>
+        </div>
+        <span aria-hidden="true"></span>
+        <div style="text-align: center;">
+          <span style="display: block; font-size: var(--sh-sig-label); color: var(--text-secondary);">المشرف العام</span>
+          <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--sh-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. أنس بن عادل اليتامى</span>
+          <span aria-hidden="true" style="display: block; width: min(var(--sh-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-6); border-block-start: 1px solid var(--border-default);"></span>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ================= ٤ · شهادة — تقدير بلا نسبة (خيار مطروح للمراجعة) ================= -->
+  <section class="page" lang="ar" dir="rtl" data-screen-label="شهادة · تقدير بلا نسبة" style="--sh-pad-bs: 52mm; --sh-pad-be: 14mm; --sh-pad-is: 26mm; --sh-pad-ie: 22mm; --sh-measure: 205mm; --sh-logo: 16mm; --sh-logo-top: 11mm; --sh-logo-inline: 15mm; --sh-title: 46pt; --sh-title-top: 19mm; --sh-seal: 24mm; --sh-seal-bottom: 20mm; --sh-seal-col: 36mm; --sh-lead: 12.5pt; --sh-name: 32pt; --sh-grade: 12.5pt; --sh-year: 11pt; --sh-motun-lead: 10.5pt; --sh-motun: 11pt; --sh-motun-leading: 1.9; --sh-cols: 2; --sh-sig-label: 9.5pt; --sh-sig-name: 12.5pt; --sh-sig-line: 56mm; --sh-meta: 9pt; --sh-code: 9.5pt; position: relative; overflow: hidden; display: flex; background: var(--surface-page); font-family: var(--font-sans); color: var(--text-primary);">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0;">
+      <sc-if value="{{ ornamentAsset }}" hint-placeholder-val="{{ true }}">
+        <img src="./ornament-shahada-a4-landscape.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+      </sc-if>
+      <sc-if value="{{ ornamentSlot }}" hint-placeholder-val="{{ false }}">
+        <image-slot id="sh-ornament-4" shape="rect" fit="cover" style="position: absolute; inset: 0; width: 100%; height: 100%;" placeholder="زخرفة الشهادة — A4 أفقي، ٣٥٠٨×٢٤٨٠ بكسل، ٣٠٠ نقطة/بوصة"></image-slot>
+      </sc-if>
+      <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-logo-full.png" alt="" style="position: absolute; inset-block-start: var(--sh-logo-top); inset-inline-start: var(--sh-logo-inline); height: var(--sh-logo); width: auto;">
+      <span style="position: absolute; inset-block-start: var(--sh-title-top); inset-inline: 0; text-align: center; font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--sh-title); line-height: 1; color: var(--ribaat-brown-600);">شهادة</span>
+      <span style="position: absolute; inset-inline: 0; inset-block-end: var(--sh-seal-bottom); display: flex; justify-content: center;">
+        <span style="width: var(--sh-seal); height: var(--sh-seal); border: 1px solid var(--ribaat-green-400); border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center;">
+          <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-mark.png" alt="" style="width: 68%; height: auto;">
+        </span>
+      </span>
+    </div>
+
+    <div style="position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; padding-block-start: var(--sh-pad-bs); padding-block-end: var(--sh-pad-be); padding-inline-start: var(--sh-pad-is); padding-inline-end: var(--sh-pad-ie);">
+
+      <h1 style="position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;">شهادة إتمام المستوى الرابع — مدرسة رباط الحنابلة</h1>
+
+      <div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center;">
+        <p style="font-size: var(--sh-lead); line-height: var(--leading-normal); color: var(--text-secondary);">تشهد مدرسة رباط الحنابلة بأن الطالبة</p>
+        <p style="font-family: var(--font-display); font-size: var(--sh-name); font-weight: var(--weight-bold); line-height: 1.15; color: var(--text-brand);">هيا بنت عبد الله الرشيد</p>
+        <p style="font-size: var(--sh-lead); line-height: var(--leading-normal); color: var(--text-primary);">قد أتمّت المستوى الرابع</p>
+        <p style="font-size: var(--sh-grade); font-weight: var(--weight-medium); line-height: var(--leading-normal); color: var(--text-primary);">بتقدير ممتاز</p>
+        <p style="font-size: var(--sh-year); line-height: var(--leading-normal); color: var(--text-secondary);">في العام الدراسي ٢٠٢٥–٢٠٢٦م</p>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; inline-size: var(--sh-measure); margin-inline: auto; margin-block-start: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4);">
+        <p style="flex: none; text-align: center; font-size: var(--sh-motun-lead); line-height: var(--leading-normal); color: var(--text-secondary);">وقد تضمن المستوى الرابع شرح المتون التالية:</p>
+        <ol style="flex: none; columns: var(--sh-cols); column-gap: var(--space-10); padding: 0; list-style: none; font-size: var(--sh-motun); line-height: var(--sh-motun-leading);">
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">١.</span><span>لمعة الاعتقاد</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٢.</span><span>الأصول الستة</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٣.</span><span>نخبة الفكر</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٤.</span><span>متن الرحبية في الفرائض</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٥.</span><span>منظومة الآداب</span></li>
+          <li style="break-inside: avoid; display: flex; gap: var(--space-2);"><span style="flex: none; color: var(--text-muted);">٦.</span><span>مختصر السيرة النبوية</span></li>
+        </ol>
+      </div>
+
+      <footer style="flex: none; display: grid; grid-template-columns: 1fr var(--sh-seal-col) 1fr; align-items: end; column-gap: var(--space-6);">
+        <div>
+          <p style="font-size: var(--sh-meta); line-height: var(--leading-normal); color: var(--text-primary);">حرر في ٢٦ ذو القعدة ١٤٤٧هـ، الموافق ١٣ مايو ٢٠٢٦م</p>
+          <p style="margin-block-start: var(--space-1); font-size: var(--sh-meta); line-height: var(--leading-normal); color: var(--text-muted);">رمز التحقق <span dir="ltr" style="font-size: var(--sh-code); font-weight: var(--weight-semibold); color: var(--text-primary); letter-spacing: 0.04em;">RB-6TSW-5NEX</span> · <span dir="ltr">ribaat.net/verify</span></p>
+        </div>
+        <span aria-hidden="true"></span>
+        <div style="text-align: center;">
+          <span style="display: block; font-size: var(--sh-sig-label); color: var(--text-secondary);">المشرف العام</span>
+          <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--sh-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. أنس بن عادل اليتامى</span>
+          <span aria-hidden="true" style="display: block; width: min(var(--sh-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ornament&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;الزخرفة المرفقة&quot;,&quot;مساحة لصورة الزخرفة&quot;,&quot;بدون زخرفة&quot;],&quot;default&quot;:&quot;الزخرفة المرفقة&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;الزخرفة&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() { this.syncPageBox(); }
+  componentDidUpdate() { this.syncPageBox(); }
+
+  // <doc-page> only switches to fixed page boxes once it sees .page children,
+  // which React streams in after the element upgrades — re-measure a few times.
+  syncPageBox() {
+    customElements.whenDefined("doc-page").then(() => {
+      [0, 60, 250, 700, 1500].forEach((t) => setTimeout(() => {
+        document.querySelectorAll("doc-page").forEach((dp) => {
+          if (typeof dp._measure === "function") dp._measure();
+        });
+      }, t));
+    });
+  }
+
+  renderVals() {
+    const ornament = this.props.ornament ?? "الزخرفة المرفقة";
+    return {
+      ornamentAsset: ornament === "الزخرفة المرفقة",
+      ornamentSlot: ornament === "مساحة لصورة الزخرفة"
+    };
+  }
+}
+</script>
+</body>
+</html>

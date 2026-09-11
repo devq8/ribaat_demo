@@ -1,0 +1,36 @@
+/* Ribaat Design System token layer — the ONLY source of colour, type,
+   spacing, radius, shadow and motion values used by this app.
+   Copy the design-system folder into /public/ds (or install it as a package)
+   and keep these import paths pointing at it. */
+@import '/ds/tokens/fonts.css';
+@import '/ds/tokens/colors.css';
+@import '/ds/tokens/colors-dark.css';
+@import '/ds/tokens/typography.css';
+@import '/ds/tokens/spacing.css';
+@import '/ds/tokens/effects.css';
+@import '/ds/styles.css';
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--surface-page);
+}
+
+a { color: var(--text-link); text-decoration: none; }
+a:hover { color: var(--text-link-hover); }
+
+/* Horizontal carousel: hide the scrollbar, keep the scrolling. */
+.ribaat-carousel-track { scrollbar-width: none; }
+.ribaat-carousel-track::-webkit-scrollbar { display: none; }
+
+/* Loading skeletons. */
+@keyframes ribaat-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.ribaat-skeleton {
+  background: var(--surface-sunken);
+  animation: ribaat-skeleton-pulse var(--duration-slow) var(--ease-standard) infinite;
+}

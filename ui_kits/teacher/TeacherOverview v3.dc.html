@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors-dark.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); }
+    .ribaat-navscroll::-webkit-scrollbar { display: none; }
+  </style>
+</helmet>
+
+<div dir="rtl" data-theme="{{ themeAttr }}" data-screen-label="Teacher Overview — {{ frameLabel }}" style="background: var(--surface-page); min-height: 100vh; font-family: var(--font-sans); color: var(--text-primary);">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px clamp(12px, 3vw, 32px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); position: relative; z-index: 30;">
+    <div style="display: flex; align-items: center; gap: 18px; min-width: 0; flex: 1 1 auto;">
+      <div style="display: flex; align-items: center; gap: 10px; flex: none;">
+        <img src="{{ logoSrc }}" alt="رباط الحنابلة" style="height: 26px; width: auto; filter: {{ logoFilter }};">
+        <sc-if value="{{ showRoleBadge }}" hint-placeholder-val="{{ true }}">
+          <span style="display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: var(--radius-pill); background: var(--ribaat-brown-100); color: var(--text-accent); font-size: var(--text-xs); font-weight: var(--weight-semibold); white-space: nowrap;">لوحة المعلم</span>
+        </sc-if>
+      </div>
+      <nav class="ribaat-navscroll" style="display: flex; align-items: center; gap: 2px; flex: 1 1 auto; min-width: 0; overflow-x: auto; scrollbar-width: none;">
+        <a href="TeacherOverview.dc.html" style="padding: 7px 11px; border-radius: var(--radius-sm); background: var(--ribaat-green-100); color: var(--text-brand); font-size: var(--text-sm); font-weight: var(--weight-semibold); white-space: nowrap;">نظرة عامة</a>
+        <a href="#" style-hover="background: var(--surface-sunken);" style="padding: 7px 11px; border-radius: var(--radius-sm); color: var(--text-secondary); font-size: var(--text-sm); white-space: nowrap;">الطلاب</a>
+        <a href="#" style-hover="background: var(--surface-sunken);" style="padding: 7px 11px; border-radius: var(--radius-sm); color: var(--text-secondary); font-size: var(--text-sm); white-space: nowrap;">المعلمون</a>
+        <a href="#" style-hover="background: var(--surface-sunken);" style="padding: 7px 11px; border-radius: var(--radius-sm); color: var(--text-secondary); font-size: var(--text-sm); white-space: nowrap;">المسارات</a>
+        <a href="#" style-hover="background: var(--surface-sunken);" style="padding: 7px 11px; border-radius: var(--radius-sm); color: var(--text-secondary); font-size: var(--text-sm); white-space: nowrap;">الدورات</a>
+        <a href="#" style-hover="background: var(--surface-sunken);" style="padding: 7px 11px; border-radius: var(--radius-sm); color: var(--text-secondary); font-size: var(--text-sm); white-space: nowrap;">الاختبارات</a>
+        <a href="#" style-hover="background: var(--surface-sunken);" style="padding: 7px 11px; border-radius: var(--radius-sm); color: var(--text-secondary); font-size: var(--text-sm); white-space: nowrap;">المستخدمون</a>
+      </nav>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 10px; flex: none;">
+      <div style="position: relative;">
+        <button onClick="{{ toggleNotifications }}" aria-label="التنبيهات" style="position: relative; width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; background: {{ notifBtnBg }}; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); cursor: pointer;">
+          <i data-lucide="bell" style="width: 17px; height: 17px;"></i>
+          <span style="position: absolute; top: -5px; inset-inline-start: -5px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: var(--radius-pill); background: var(--surface-accent); color: var(--text-on-accent); font-size: 10px; font-weight: var(--weight-bold); display: inline-flex; align-items: center; justify-content: center;">{{ notifCount }}</span>
+        </button>
+        <sc-if value="{{ notificationsOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position: absolute; top: calc(100% + 10px); inset-inline-end: 0; width: 340px; max-width: 78vw; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 6px; z-index: 40;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 8px 10px 10px;">
+              <span style="font-family: var(--font-display); font-size: var(--text-base); font-weight: var(--weight-bold); color: var(--text-primary);">التنبيهات</span>
+              <button style="background: none; border: none; padding: 0; font-family: var(--font-sans); font-size: var(--text-xs); color: var(--text-link); cursor: pointer;">تعليم الكل كمقروء</button>
+            </div>
+            <sc-for list="{{ notifications }}" as="n" hint-placeholder-count="4">
+              <div style-hover="background: var(--surface-sunken);" style="display: flex; align-items: flex-start; gap: 10px; padding: 10px; border-top: 1px solid var(--border-subtle); border-radius: var(--radius-sm); cursor: pointer;">
+                <span style="width: 26px; height: 26px; flex: none; border-radius: var(--radius-sm); background: {{ n.iconBg }}; color: {{ n.iconFg }}; display: inline-flex; align-items: center; justify-content: center;">
+                  <i data-lucide="{{ n.icon }}" style="width: 14px; height: 14px;"></i>
+                </span>
+                <div style="flex: 1; min-width: 0;">
+                  <p style="margin: 0; font-size: var(--text-sm); color: var(--text-primary); line-height: var(--leading-normal); text-wrap: pretty;">{{ n.text }}</p>
+                  <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ n.when }}</p>
+                </div>
+                <sc-if value="{{ n.unread }}" hint-placeholder-val="{{ false }}">
+                  <span style="width: 7px; height: 7px; flex: none; margin-top: 6px; border-radius: 50%; background: var(--surface-brand);"></span>
+                </sc-if>
+              </div>
+            </sc-for>
+            <a href="#" style="display: block; text-align: center; padding: 10px; margin-top: 4px; border-top: 1px solid var(--border-subtle); font-size: var(--text-xs); font-weight: var(--weight-semibold);">عرض كل التنبيهات</a>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="position: relative;">
+        <button onClick="{{ toggleAccount }}" aria-label="الحساب" style="display: flex; align-items: center; gap: 9px; background: none; border: none; padding: 0; cursor: pointer;">
+          <sc-if value="{{ showHeaderName }}" hint-placeholder-val="{{ true }}">
+            <span style="text-align: end;">
+              <span style="display: block; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary); white-space: nowrap;">د. {{ teacherName }}</span>
+              <span style="display: block; font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap;">معلّم · مشرف مسار</span>
+            </span>
+          </sc-if>
+          <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="{{ teacherName }}" size="sm" hint-size="32px,32px"></x-import>
+        </button>
+        <sc-if value="{{ accountOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position: absolute; top: calc(100% + 10px); inset-inline-end: 0; width: 250px; max-width: 78vw; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); padding: 6px; z-index: 40;">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px;">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="{{ teacherName }}" size="md" hint-size="44px,44px"></x-import>
+              <div style="min-width: 0;">
+                <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">د. {{ teacherName }}</p>
+                <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">معلّم · مشرف المستوى الأول</p>
+              </div>
+            </div>
+            <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+            <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+              <i data-lucide="graduation-cap" style="width: 16px; height: 16px;"></i>
+              <span>لوحة الطالب</span>
+            </button>
+            <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+              <i data-lucide="settings" style="width: 16px; height: 16px;"></i>
+              <span>الإعدادات</span>
+            </button>
+            <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+            <button style-hover="background: var(--state-danger-bg);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 44px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--state-danger-fg); cursor: pointer; text-align: start;">
+              <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+              <span>تسجيل الخروج</span>
+            </button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1460px; margin: 0 auto; padding: {{ mainPadding }}; display: flex; flex-direction: column; gap: 22px;">
+
+    <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+      <div>
+        <h1 style="margin: 0; font-family: var(--font-display); font-size: {{ h1Size }}; font-weight: var(--weight-bold); color: var(--text-primary);">مرحباً د. {{ teacherName }}</h1>
+        <p style="margin: 6px 0 0; font-size: var(--text-sm); color: var(--text-muted); text-wrap: pretty;">{{ todayLine }}</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="sm" hint-size="auto,36px"><i data-lucide="plus" style="width: 15px; height: 15px;"></i>أضف درساً جديداً</x-import>
+        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,36px"><i data-lucide="clipboard-pen" style="width: 15px; height: 15px;"></i>أنشئ اختباراً</x-import>
+        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,36px"><i data-lucide="message-square" style="width: 15px; height: 15px;"></i>الرد على أسئلة الطلاب</x-import>
+      </div>
+    </section>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: {{ layoutAlign }}; flex-direction: {{ layoutDirection }};">
+
+      <div style="flex: 1.6 1 520px; min-width: 0;">
+        <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px;">
+          <h2 style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">ما يحتاج إلى متابعتك</h2>
+          <span style="font-size: var(--text-xs); color: var(--text-muted);">محدَّث الآن</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax({{ priorityMin }}, 1fr)); gap: 16px; align-items: stretch;">
+
+          <section style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: flex-start; gap: 11px;">
+              <span style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-sm); background: var(--state-info-bg); color: var(--state-info-fg); display: inline-flex; align-items: center; justify-content: center;">
+                <i data-lucide="message-circle-question" style="width: 17px; height: 17px;"></i>
+              </span>
+              <div style="flex: 1; min-width: 0;">
+                <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">أسئلة الطلاب</p>
+                <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">الأقدم أولاً</p>
+              </div>
+              <span style="font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1; color: var(--text-primary);">{{ questionsCount }}</span>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+              <sc-for list="{{ questions }}" as="item" hint-placeholder-count="3">
+                <div style="display: flex; flex-direction: column; gap: 4px; padding: 10px 0; border-top: 1px solid var(--border-subtle);">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                    <span style="font-size: var(--text-sm); color: var(--text-primary); line-height: var(--leading-normal); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ item.preview }}</span>
+                    <span style="flex: none; font-size: var(--text-xs); font-weight: var(--weight-semibold); white-space: nowrap; padding: 2px 8px; border-radius: var(--radius-pill); background: {{ item.pillBg }}; color: {{ item.pillFg }};">{{ item.pill }}</span>
+                  </div>
+                  <span style="font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ item.meta }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top: auto; padding-top: 4px;">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,34px"><i data-lucide="reply" style="width: 14px; height: 14px;"></i>الرد على الأسئلة</x-import>
+            </div>
+          </section>
+
+          <section style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: flex-start; gap: 11px;">
+              <span style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-sm); background: var(--ribaat-brown-100); color: var(--text-accent); display: inline-flex; align-items: center; justify-content: center;">
+                <i data-lucide="calendar-clock" style="width: 17px; height: 17px;"></i>
+              </span>
+              <div style="flex: 1; min-width: 0;">
+                <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">نوافذ اختبارات قادمة</p>
+                <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">تفتح قريباً — تحقق من الجاهزية</p>
+              </div>
+              <span style="font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1; color: var(--text-primary);">{{ upcomingExamsCount }}</span>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+              <sc-for list="{{ upcomingExams }}" as="item" hint-placeholder-count="3">
+                <div style="display: flex; flex-direction: column; gap: 7px; padding: 11px 0; border-top: 1px solid var(--border-subtle);">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                    <span style="font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--text-primary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ item.title }}</span>
+                    <span style="flex: none; font-size: var(--text-xs); font-weight: var(--weight-semibold); white-space: nowrap; padding: 2px 8px; border-radius: var(--radius-pill); background: {{ item.pillBg }}; color: {{ item.pillFg }};">{{ item.pill }}</span>
+                  </div>
+                  <span style="font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ item.meta }}</span>
+                  <div>
+                    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 5px;">
+                      <span style="font-size: var(--text-xs); color: var(--text-secondary);">{{ item.opensLabel }}</span>
+                      <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ item.readiness }}</span>
+                    </div>
+                    <div style="position: relative; height: 5px; border-radius: var(--radius-pill); background: var(--surface-sunken); overflow: hidden;">
+                      <div style="position: absolute; inset-block: 0; inset-inline-start: 0; width: {{ item.proximityPct }}%; background: var(--surface-accent); border-radius: var(--radius-pill);"></div>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top: auto; padding-top: 4px;">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,34px"><i data-lucide="calendar-check" style="width: 14px; height: 14px;"></i>مراجعة الجدول</x-import>
+            </div>
+          </section>
+
+          <section style="background: var(--surface-card); border: 1px solid var(--border-brand); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: flex-start; gap: 11px;">
+              <span style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-sm); background: var(--ribaat-green-100); color: var(--text-brand); display: inline-flex; align-items: center; justify-content: center;">
+                <i data-lucide="clipboard-check" style="width: 17px; height: 17px;"></i>
+              </span>
+              <div style="flex: 1; min-width: 0;">
+                <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">اختبارات مفتوحة الآن</p>
+                <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">المتبقي من النافذة ونسبة المشاركة</p>
+              </div>
+              <span style="font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1; color: var(--text-primary);">{{ openExamsCount }}</span>
+            </div>
+            <sc-if value="{{ hasOpenExams }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column;">
+                <sc-for list="{{ openExams }}" as="item" hint-placeholder-count="3">
+                  <div style="display: flex; flex-direction: column; gap: 10px; padding: 12px 0; border-top: 1px solid var(--border-subtle);">
+                    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+                      <span style="font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--text-primary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ item.title }}</span>
+                      <span style="flex: none; font-size: var(--text-xs); font-weight: var(--weight-semibold); white-space: nowrap; padding: 2px 8px; border-radius: var(--radius-pill); background: {{ item.pillBg }}; color: {{ item.pillFg }};">{{ item.pill }}</span>
+                    </div>
+                    <span style="font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ item.meta }}</span>
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+                        <span style="position: relative; width: 52px; height: 52px; display: inline-flex;">
+                          <svg width="52" height="52" viewBox="0 0 52 52" style="transform: rotate(-90deg);">
+                            <circle cx="26" cy="26" r="22" fill="none" stroke="var(--surface-sunken)" stroke-width="5"></circle>
+                            <circle cx="26" cy="26" r="22" fill="none" stroke="{{ item.barColor }}" stroke-width="5" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="{{ item.remainOffset }}"></circle>
+                          </svg>
+                          <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: var(--weight-semibold); color: var(--text-primary);">{{ item.remainShort }}</span>
+                        </span>
+                        <span style="font-size: 11px; color: var(--text-muted); white-space: nowrap;">المتبقي</span>
+                      </div>
+                      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+                        <span style="position: relative; width: 52px; height: 52px; display: inline-flex;">
+                          <svg width="52" height="52" viewBox="0 0 52 52" style="transform: rotate(-90deg);">
+                            <circle cx="26" cy="26" r="22" fill="none" stroke="var(--surface-sunken)" stroke-width="5"></circle>
+                            <circle cx="26" cy="26" r="22" fill="none" stroke="var(--surface-brand)" stroke-width="5" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="{{ item.partOffset }}"></circle>
+                          </svg>
+                          <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: var(--weight-semibold); color: var(--text-primary);">{{ item.partPctLabel }}</span>
+                        </span>
+                        <span style="font-size: 11px; color: var(--text-muted); white-space: nowrap;">{{ item.partShort }}</span>
+                      </div>
+                      <div style="margin-inline-start: auto;">
+                        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,34px"><i data-lucide="eye" style="width: 14px; height: 14px;"></i>متابعة</x-import>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ hasNoOpenExams }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 30px 10px 26px; border-top: 1px solid var(--border-subtle);">
+                <span style="width: 38px; height: 38px; border-radius: 50%; background: var(--surface-sunken); color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center;">
+                  <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+                </span>
+                <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--text-primary);">لا اختبارات مفتوحة الآن</p>
+                <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted); text-wrap: pretty;">أقرب نافذة تفتح غداً 09:00 — اختبار منتصف الدورة، القواعد الأربع.</p>
+              </div>
+            </sc-if>
+            <div style="margin-top: auto; padding-top: 4px;">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,34px"><i data-lucide="clipboard-list" style="width: 14px; height: 14px;"></i>إدارة الاختبارات</x-import>
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <section style="flex: 0 1 {{ railBasis }}; min-width: 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 16px 18px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+          <h2 style="margin: 0; font-family: var(--font-display); font-size: var(--text-base); font-weight: var(--weight-bold); color: var(--text-primary);">تقويم الأنشطة</h2>
+          <div style="display: inline-flex; padding: 2px; gap: 2px; background: var(--surface-sunken); border-radius: var(--radius-sm);">
+            <button onClick="{{ showMonthView }}" style="padding: 4px 10px; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-xs); font-weight: var(--weight-semibold); cursor: pointer; background: {{ monthTabBg }}; color: {{ monthTabFg }}; box-shadow: {{ monthTabShadow }};">الشهر</button>
+            <button onClick="{{ showListView }}" style="padding: 4px 10px; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-xs); font-weight: var(--weight-semibold); cursor: pointer; background: {{ listTabBg }}; color: {{ listTabFg }}; box-shadow: {{ listTabShadow }};">القادم</button>
+          </div>
+        </div>
+
+        <sc-if value="{{ isMonthView }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top: 12px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px;">
+              <div style="min-width: 0;">
+                <span style="display: block; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ monthTitle }}</span>
+                <span style="display: block; font-size: var(--text-xs); color: var(--text-accent);">{{ monthHijri }}</span>
+              </div>
+              <div style="display: flex; gap: 5px; flex: none;">
+                <button onClick="{{ prevMonth }}" aria-label="الشهر السابق" style-hover="background: var(--surface-sunken);" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; background: none; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); cursor: pointer;">
+                  <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+                </button>
+                <button onClick="{{ nextMonth }}" aria-label="الشهر التالي" style-hover="background: var(--surface-sunken);" style="width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; background: none; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); cursor: pointer;">
+                  <i data-lucide="chevron-left" style="width: 14px; height: 14px;"></i>
+                </button>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin-bottom: 4px;">
+              <sc-for list="{{ weekdayNames }}" as="w" hint-placeholder-count="7">
+                <span style="text-align: center; font-size: 11px; font-weight: var(--weight-semibold); color: var(--text-muted);">{{ w.label }}</span>
+              </sc-for>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px;">
+              <sc-for list="{{ monthDays }}" as="day" hint-placeholder-count="35">
+                <button onClick="{{ day.select }}" style="min-height: {{ monthCellMin }}; padding: 4px 3px; display: flex; flex-direction: column; align-items: center; gap: 2px; border-radius: var(--radius-sm); background: {{ day.bg }}; border: 1px solid {{ day.borderColor }}; cursor: pointer; font-family: var(--font-sans);">
+                  <span style="font-size: 12px; font-weight: var(--weight-semibold); line-height: 1.1; color: {{ day.numColor }};">{{ day.num }}</span>
+                  <span style="font-size: 10px; line-height: 1.1; color: {{ day.hijriColor }};">{{ day.hijriNum }}</span>
+                  <span style="display: flex; align-items: center; justify-content: center; gap: 3px; min-height: 5px; margin-top: 1px;">
+                    <sc-for list="{{ day.dots }}" as="dot" hint-placeholder-count="0">
+                      <span style="width: 5px; height: 5px; border-radius: 50%; background: {{ dot.color }};"></span>
+                    </sc-for>
+                  </span>
+                </button>
+              </sc-for>
+            </div>
+            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+              <p style="margin: 0 0 8px; font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-secondary);">{{ selectedDayLabel }}</p>
+              <sc-for list="{{ selectedDayEvents }}" as="ev" hint-placeholder-count="2">
+                <div style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;">
+                  <span style="width: 7px; height: 7px; flex: none; margin-top: 6px; border-radius: 50%; background: {{ ev.color }};"></span>
+                  <div style="min-width: 0;">
+                    <p style="margin: 0; font-size: var(--text-sm); color: var(--text-primary); line-height: var(--leading-normal); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ ev.title }}</p>
+                    <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ ev.meta }}</p>
+                  </div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ selectedDayEmpty }}" hint-placeholder-val="{{ false }}">
+                <p style="margin: 0; font-size: var(--text-sm); color: var(--text-muted);">لا أنشطة في هذا اليوم.</p>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isListView }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top: 10px;">
+            <p style="margin: 0 0 2px; font-size: var(--text-xs); color: var(--text-muted);">أقرب 10 أنشطة</p>
+            <sc-for list="{{ upcomingItems }}" as="ev" hint-placeholder-count="6">
+              <div style="display: flex; align-items: flex-start; gap: 11px; padding: 9px 0; border-top: 1px solid var(--border-subtle);">
+                <div style="flex: none; width: 46px; text-align: center;">
+                  <span style="display: block; font-family: var(--font-display); font-size: var(--text-base); font-weight: var(--weight-bold); line-height: 1.15; color: {{ ev.dayNumColor }};">{{ ev.dayNum }} {{ ev.monthShort }}</span>
+                  <span style="display: block; font-size: 10px; color: var(--text-accent);">{{ ev.hijriLabel }}</span>
+                </div>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="display: flex; align-items: flex-start; gap: 7px;">
+                    <span style="width: 6px; height: 6px; flex: none; margin-top: 6px; border-radius: 50%; background: {{ ev.color }};"></span>
+                    <span style="font-size: var(--text-sm); color: var(--text-primary); line-height: var(--leading-normal); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ ev.title }}</span>
+                  </div>
+                  <p style="margin: 3px 0 0; font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ ev.meta }}</p>
+                </div>
+                <span style="flex: none; font-size: var(--text-xs); color: var(--text-secondary); white-space: nowrap; padding-top: 2px;">{{ ev.rel }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+          <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--ribaat-green-600);"></span>
+            نوافذ الاختبارات
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--ribaat-brown-600);"></span>
+            نشر الدروس
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary);">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--ribaat-blue-600);"></span>
+            الشهادات
+          </span>
+        </div>
+        <div style="margin-top: 14px;">
+          <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,34px"><i data-lucide="calendar-days" style="width: 14px; height: 14px;"></i>التقويم الكامل</x-import>
+        </div>
+      </section>
+    </div>
+
+    <section>
+      <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px;">
+        <h2 style="margin: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">مهامي في الدورات</h2>
+        <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ tasksTotalLabel }}</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax({{ taskMin }}, 1fr)); gap: 16px; align-items: stretch;">
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; align-items: flex-start; gap: 11px;">
+            <span style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-sm); background: var(--ribaat-brown-100); color: var(--text-accent); display: inline-flex; align-items: center; justify-content: center;">
+              <i data-lucide="video" style="width: 17px; height: 17px;"></i>
+            </span>
+            <div style="flex: 1; min-width: 0;">
+              <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">رفع مقاطع الدروس</p>
+              <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ uploadCaption }}</p>
+            </div>
+            <span style="font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1; color: var(--text-primary);">{{ uploadTasksCount }}</span>
+          </div>
+          <div style="margin-top: auto;">
+            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="sm" hint-size="auto,34px"><i data-lucide="plus" style="width: 15px; height: 15px;"></i>رفع مقطع</x-import>
+          </div>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; align-items: flex-start; gap: 11px;">
+            <span style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-sm); background: var(--surface-sunken); color: var(--text-secondary); display: inline-flex; align-items: center; justify-content: center;">
+              <i data-lucide="file-text" style="width: 17px; height: 17px;"></i>
+            </span>
+            <div style="flex: 1; min-width: 0;">
+              <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">تفريغ الدروس</p>
+              <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ transcriptCaption }}</p>
+            </div>
+            <span style="font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1; color: var(--text-primary);">{{ transcriptTasksCount }}</span>
+          </div>
+          <div style="margin-top: auto;">
+            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="outline" size="sm" hint-size="auto,34px"><i data-lucide="file-pen" style="width: 15px; height: 15px;"></i>ابدأ التفريغ</x-import>
+          </div>
+        </div>
+
+        <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; align-items: flex-start; gap: 11px;">
+            <span style="width: 32px; height: 32px; flex: none; border-radius: var(--radius-sm); background: var(--ribaat-green-100); color: var(--text-brand); display: inline-flex; align-items: center; justify-content: center;">
+              <i data-lucide="list-checks" style="width: 17px; height: 17px;"></i>
+            </span>
+            <div style="flex: 1; min-width: 0;">
+              <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">بنك الأسئلة</p>
+              <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ bankCaption }}</p>
+            </div>
+            <span style="font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-bold); line-height: 1; color: var(--text-primary);">{{ bankQuestionsCount }}</span>
+          </div>
+          <div style="margin-top: auto;">
+            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="sm" hint-size="auto,34px"><i data-lucide="plus" style="width: 15px; height: 15px;"></i>أضف أسئلة</x-import>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1060},&quot;teacherName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;عبد العزيز العيدان&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;viewport&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;\&quot;desktop\&quot; | \&quot;tablet\&quot; | \&quot;mobile\&quot;&quot;},&quot;colorScheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;\&quot;light\&quot; | \&quot;dark\&quot;&quot;},&quot;calendarDefaultView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;month&quot;,&quot;list&quot;],&quot;default&quot;:&quot;month&quot;,&quot;tsType&quot;:&quot;\&quot;month\&quot; | \&quot;list\&quot;&quot;,&quot;section&quot;:&quot;التقويم&quot;},&quot;openMenu&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;none&quot;,&quot;notifications&quot;,&quot;account&quot;],&quot;default&quot;:&quot;none&quot;,&quot;tsType&quot;:&quot;\&quot;none\&quot; | \&quot;notifications\&quot; | \&quot;account\&quot;&quot;,&quot;section&quot;:&quot;الحالات&quot;},&quot;openExamsEmpty&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;الحالات&quot;},&quot;longTextDemo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;الحالات&quot;}}">
+const AR_MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+const AR_DAYS = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+const AR_DAYS_SHORT = ["أحد", "اثن", "ثلا", "أرب", "خمي", "جمع", "سبت"];
+
+// Hijri (Umm al-Qura) via Intl, Western digits to match the product's number convention.
+function hijriParts(d) {
+  try {
+    const fmt = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", { day: "numeric", month: "numeric", year: "numeric" });
+    const p = {};
+    fmt.formatToParts(d).forEach((x) => { p[x.type] = x.value; });
+    const names = ["محرم", "صفر", "ربيع الأول", "ربيع الآخر", "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
+    return { day: p.day, monthName: names[parseInt(p.month, 10) - 1] || "", year: p.year };
+  } catch (e) {
+    return { day: "", monthName: "", year: "" };
+  }
+}
+
+// Fixed reference "now" so every frame renders the same state.
+const NOW = new Date(2026, 6, 31, 9, 20);
+
+const KIND = {
+  exam: { color: "var(--ribaat-green-600)" },
+  lesson: { color: "var(--ribaat-brown-600)" },
+  cert: { color: "var(--ribaat-blue-600)" },
+};
+
+// Single source of truth for both calendar views.
+const EVENTS = [
+  { m: 6, d: 19, time: "18:00", kind: "lesson", title: "نشر الدرس السادس — الأربعين النووية", course: "الأربعين النووية" },
+  { m: 6, d: 22, time: "09:00", kind: "exam", title: "فتح نافذة الاختبار النهائي — ثلاثة الأصول", course: "ثلاثة الأصول" },
+  { m: 6, d: 26, time: "20:00", kind: "lesson", title: "نشر الدرس الرابع — نواقض الإسلام", course: "نواقض الإسلام" },
+  { m: 6, d: 28, time: "12:00", kind: "cert", title: "صدرت شهادات دورة القواعد الأربع", course: "القواعد الأربع" },
+  { m: 6, d: 31, time: "13:00", kind: "exam", title: "إغلاق نافذة الاختبار النهائي — ثلاثة الأصول", course: "ثلاثة الأصول" },
+  { m: 6, d: 31, time: "18:00", kind: "lesson", title: "نشر الدرس السابع — الأربعين النووية", course: "الأربعين النووية" },
+  { m: 7, d: 1, time: "09:00", kind: "exam", title: "فتح نافذة اختبار منتصف الدورة — القواعد الأربع", course: "القواعد الأربع" },
+  { m: 7, d: 2, time: "19:00", kind: "lesson", title: "نشر الدرس الخامس — عمدة الأحكام", course: "عمدة الأحكام" },
+  { m: 7, d: 3, time: "22:00", kind: "exam", title: "إغلاق نافذة اختبار منتصف الدورة — القواعد الأربع", course: "القواعد الأربع" },
+  { m: 7, d: 4, time: "12:00", kind: "cert", title: "شهادات المستوى الأول تصدر تلقائياً لمن اجتاز", course: "المستوى الأول" },
+  { m: 7, d: 5, time: "09:00", kind: "exam", title: "فتح نافذة الاختبار النهائي — متن الورقات في أصول الفقه", course: "متن الورقات في أصول الفقه" },
+  { m: 7, d: 6, time: "18:00", kind: "lesson", title: "نشر الدرس الثالث — نواقض الإسلام", course: "نواقض الإسلام" },
+  { m: 7, d: 8, time: "22:00", kind: "exam", title: "إغلاق نافذة الاختبار النهائي — متن الورقات في أصول الفقه", course: "متن الورقات في أصول الفقه" },
+  { m: 7, d: 9, time: "18:00", kind: "lesson", title: "نشر الدرس الثاني — الآداب الشرعية", course: "الآداب الشرعية" },
+  { m: 7, d: 11, time: "09:00", kind: "exam", title: "فتح نافذة اختبار الدروس ١–٥ — الأربعين النووية", course: "الأربعين النووية" },
+  { m: 7, d: 13, time: "12:00", kind: "cert", title: "شهادات دورة ثلاثة الأصول تصدر تلقائياً لمن اجتاز", course: "ثلاثة الأصول" },
+  { m: 7, d: 17, time: "18:00", kind: "lesson", title: "نشر الدرس الثامن — الأربعين النووية", course: "الأربعين النووية" },
+  { m: 7, d: 20, time: "09:00", kind: "exam", title: "فتح نافذة الاختبار التمهيدي — نواقض الإسلام", course: "نواقض الإسلام" },
+  { m: 7, d: 24, time: "20:00", kind: "lesson", title: "نشر الدرس السادس — عمدة الأحكام", course: "عمدة الأحكام" },
+];
+
+// Long-text stress case: real classical titles run long — used by the longTextDemo frame.
+const LONG_EVENT = { m: 7, d: 1, time: "09:00", kind: "exam", title: "فتح نافذة اختبار منتصف الدورة الشامل لمتن القواعد الأربع مع مقدمة ثلاثة الأصول وأدلتها", course: "القواعد الأربع لشيخ الإسلام محمد بن عبد الوهاب رحمه الله — المستوى الأول" };
+
+const RING_C = 138.2; // 2πr, r = 22
+
+function evDate(e) {
+  return new Date(2026, e.m, e.d, parseInt(e.time.slice(0, 2), 10), parseInt(e.time.slice(3), 10));
+}
+
+function ringOffset(pct) {
+  return (RING_C * (1 - Math.max(0, Math.min(100, pct)) / 100)).toFixed(1);
+}
+
+function relLabel(date) {
+  const ms = date - NOW;
+  if (ms <= 0) return "جارٍ الآن";
+  const mins = Math.round(ms / 60000);
+  if (mins < 60) return "بعد " + mins + " دقيقة";
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) {
+    if (hrs === 1) return "بعد ساعة";
+    if (hrs === 2) return "بعد ساعتين";
+    return hrs <= 10 ? "بعد " + hrs + " ساعات" : "بعد " + hrs + " ساعة";
+  }
+  const days = Math.round(hrs / 24);
+  if (days === 1) return "غداً";
+  if (days === 2) return "بعد يومين";
+  if (days <= 10) return "بعد " + days + " أيام";
+  return "بعد " + days + " يوماً";
+}
+
+function sameDay(a, b) {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+function dayKey(d) {
+  return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+}
+
+const NEUTRAL_PILL = { pillBg: "var(--surface-sunken)", pillFg: "var(--text-secondary)" };
+const WARN_PILL = { pillBg: "var(--state-warning-bg)", pillFg: "var(--state-warning-fg)" };
+const BRAND_PILL = { pillBg: "var(--ribaat-green-100)", pillFg: "var(--text-brand)" };
+
+const VIEWPORTS = {
+  desktop: { mainPadding: "24px clamp(16px, 3vw, 32px) 64px", h1Size: "var(--text-xl)", priorityMin: "300px", taskMin: "280px", railBasis: "356px", layoutDirection: "row", layoutAlign: "flex-start", monthCellMin: "50px", showHeaderName: true },
+  // Column mode: the cross axis is width, so it must stretch — flex-start would shrink both children to content.
+  tablet: { mainPadding: "20px 20px 52px", h1Size: "var(--text-xl)", priorityMin: "300px", taskMin: "230px", railBasis: "100%", layoutDirection: "column", layoutAlign: "stretch", monthCellMin: "56px", showHeaderName: true },
+  mobile: { mainPadding: "14px 12px 44px", h1Size: "var(--text-lg)", priorityMin: "240px", taskMin: "240px", railBasis: "100%", layoutDirection: "column", layoutAlign: "stretch", monthCellMin: "46px", showHeaderName: false },
+};
+
+class Component extends DCLogic {
+  state = { view: null, monthOffset: 0, menu: null, selectedKey: null };
+
+  currentMenu() {
+    return this.state.menu === null ? this.props.openMenu || "none" : this.state.menu;
+  }
+
+  renderVals() {
+    const teacherName = this.props.teacherName || "عبد العزيز العيدان";
+    const colorScheme = this.props.colorScheme || "light";
+    const viewport = this.props.viewport || "desktop";
+    const cfg = VIEWPORTS[viewport] || VIEWPORTS.desktop;
+    const view = this.state.view || this.props.calendarDefaultView || "month";
+    const menu = this.currentMenu();
+    const longText = this.props.longTextDemo ?? false;
+    const noOpenExams = this.props.openExamsEmpty ?? false;
+
+    const openExams = [
+      {
+        title: longText ? "الاختبار النهائي الشامل لمتن ثلاثة الأصول وأدلتها" : "الاختبار النهائي",
+        meta: (longText ? "ثلاثة الأصول وأدلتها لشيخ الإسلام محمد بن عبد الوهاب رحمه الله" : "ثلاثة الأصول") + " · 34 طالباً",
+        pill: "يُغلق بعد 03:40", ...WARN_PILL,
+        remainOffset: ringOffset(8), remainShort: "03:40", barColor: "var(--state-warning-fg)",
+        partOffset: ringOffset(62), partPctLabel: "62%", partShort: "21 من 34",
+      },
+      {
+        title: "اختبار الدروس ١–٥", meta: "الأربعين النووية · 41 طالباً",
+        pill: "يُغلق بعد يومين", ...NEUTRAL_PILL,
+        remainOffset: ringOffset(42), remainShort: "يومان", barColor: "var(--surface-brand)",
+        partOffset: ringOffset(29), partPctLabel: "29%", partShort: "12 من 41",
+      },
+      {
+        title: "الاختبار التمهيدي", meta: "الآداب الشرعية · 26 طالباً",
+        pill: "يُغلق بعد 4 أيام", ...NEUTRAL_PILL,
+        remainOffset: ringOffset(66), remainShort: "4 أيام", barColor: "var(--surface-brand)",
+        partOffset: ringOffset(73), partPctLabel: "73%", partShort: "19 من 26",
+      },
+    ];
+
+    const upcomingExams = [
+      {
+        title: longText ? "اختبار منتصف الدورة الشامل للقواعد الأربع مع مقدمة ثلاثة الأصول" : "اختبار منتصف الدورة",
+        meta: (longText ? "القواعد الأربع لشيخ الإسلام محمد بن عبد الوهاب رحمه الله" : "القواعد الأربع") + " · 38 طالباً · 12 سؤالاً",
+        pill: "غداً", ...BRAND_PILL, opensLabel: "يفتح غداً 09:00", readiness: "الأسئلة جاهزة", proximityPct: 92,
+      },
+      { title: "الاختبار النهائي", meta: "متن الورقات في أصول الفقه · 29 طالباً", pill: "بعد 5 أيام", ...NEUTRAL_PILL, opensLabel: "يفتح 5 أغسطس 09:00", readiness: "لم تُراجع الأسئلة", proximityPct: 58 },
+      { title: "اختبار الدروس ١–٥", meta: "الأربعين النووية · 41 طالباً · 10 أسئلة", pill: "بعد 11 يوماً", ...NEUTRAL_PILL, opensLabel: "يفتح 11 أغسطس 09:00", readiness: "مسودة", proximityPct: 22 },
+    ];
+
+    const questions = [
+      { preview: longText ? "ما الفرق بين الشرط والسبب والمانع في كلام المؤلف رحمه الله، وهل يصح التمثيل للمانع بحديث «لا يرث القاتل»؟" : "ما الفرق بين الشرط والسبب في كلام المؤلف رحمه الله؟", meta: "متن الورقات · الدرس الرابع · سالم العتيبي", pill: "منذ 5 أيام", ...WARN_PILL },
+      { preview: "هل يدخل في نواقض الإسلام من فعله جاهلاً؟", meta: "نواقض الإسلام · الدرس الثاني · نورة الرشيد", pill: "منذ 3 أيام", ...NEUTRAL_PILL },
+      { preview: "أرجو توضيح معنى «الحكم الوضعي» بمثال من الباب.", meta: "متن الورقات · الدرس السادس · عبد الله المطيري", pill: "منذ يومين", ...NEUTRAL_PILL },
+    ];
+
+    const notifications = [
+      { icon: "message-circle-question", iconBg: "var(--state-info-bg)", iconFg: "var(--state-info-fg)", text: "سؤال جديد من نورة الرشيد — نواقض الإسلام، الدرس الثاني", when: "قبل 12 دقيقة", unread: true },
+      { icon: "clipboard-check", iconBg: "var(--ribaat-green-100)", iconFg: "var(--text-brand)", text: "سلّم 4 طلاب الاختبار النهائي — ثلاثة الأصول", when: "قبل ساعتين", unread: true },
+      { icon: "calendar-clock", iconBg: "var(--ribaat-brown-100)", iconFg: "var(--text-accent)", text: "نافذة اختبار منتصف الدورة — القواعد الأربع تفتح غداً 09:00", when: "أمس 20:00", unread: true },
+      { icon: "award", iconBg: "var(--state-info-bg)", iconFg: "var(--state-info-fg)", text: "صدرت شهادة ثلاثة الأصول تلقائياً لسالم العتيبي", when: "قبل 3 أيام", unread: false },
+    ];
+
+    const baseEvents = longText ? EVENTS.concat([LONG_EVENT]) : EVENTS;
+    const sorted = baseEvents.map((e) => ({ ...e, date: evDate(e) })).sort((a, b) => a.date - b.date);
+    const tomorrow = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate() + 1);
+    const labelFor = (d) => (sameDay(d, NOW) ? "اليوم" : sameDay(d, tomorrow) ? "غداً" : AR_DAYS[d.getDay()]);
+
+    const upcomingItems = sorted
+      .filter((e) => e.date >= NOW)
+      .slice(0, 10)
+      .map((e) => {
+        const h = hijriParts(e.date);
+        return {
+          dayNum: e.date.getDate(),
+          monthShort: AR_MONTHS[e.date.getMonth()],
+          hijriLabel: h.day + " " + h.monthName,
+          dayNumColor: sameDay(e.date, NOW) ? "var(--text-brand)" : "var(--text-primary)",
+          color: KIND[e.kind].color,
+          title: e.title,
+          meta: labelFor(e.date) + " · " + e.time + " · " + e.course,
+          rel: relLabel(e.date),
+        };
+      });
+
+    // Compact month grid — Gregorian + Hijri day numbers, dots for events, a day can be selected.
+    const viewMonth = new Date(2026, 6 + this.state.monthOffset, 1);
+    const gridStart = new Date(viewMonth);
+    gridStart.setDate(1 - viewMonth.getDay());
+    const selectedKey = this.state.selectedKey || dayKey(NOW);
+    const monthDays = [];
+    let selectedDate = NOW;
+    for (let i = 0; i < 42; i++) {
+      const d = new Date(gridStart);
+      d.setDate(gridStart.getDate() + i);
+      const key = dayKey(d);
+      const inMonth = d.getMonth() === viewMonth.getMonth();
+      const isToday = sameDay(d, NOW);
+      const isSelected = key === selectedKey;
+      if (isSelected) selectedDate = d;
+      const dayEvents = sorted.filter((e) => sameDay(e.date, d));
+      monthDays.push({
+        num: d.getDate(),
+        hijriNum: hijriParts(d).day,
+        bg: isSelected ? "var(--ribaat-green-100)" : inMonth ? "var(--surface-card)" : "var(--surface-sunken)",
+        borderColor: isSelected ? "var(--border-brand)" : isToday ? "var(--border-default)" : "var(--border-subtle)",
+        numColor: isSelected || isToday ? "var(--text-brand)" : inMonth ? "var(--text-primary)" : "var(--text-muted)",
+        hijriColor: inMonth ? "var(--text-accent)" : "var(--text-muted)",
+        dots: dayEvents.slice(0, 3).map((e) => ({ color: KIND[e.kind].color })),
+        select: () => this.setState({ selectedKey: key }),
+      });
+    }
+    const lastRowEmpty = monthDays.slice(35).every((c) => c.dots.length === 0);
+
+    const selectedDayEvents = sorted
+      .filter((e) => sameDay(e.date, selectedDate))
+      .map((e) => ({ color: KIND[e.kind].color, title: e.title, meta: e.time + " · " + e.course }));
+
+    const monthStartH = hijriParts(viewMonth);
+    const monthEndH = hijriParts(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0));
+    const hijriRange = monthStartH.monthName === monthEndH.monthName
+      ? monthStartH.monthName + " " + monthEndH.year + "هـ"
+      : monthStartH.monthName + " – " + monthEndH.monthName + " " + monthEndH.year + "هـ";
+    const selH = hijriParts(selectedDate);
+    // Greeting date comes from the same Umm al-Qura helper as the calendar, so the two can't disagree.
+    const nowH = hijriParts(NOW);
+    const todayDateLine = AR_DAYS[NOW.getDay()] + " " + NOW.getDate() + " " + AR_MONTHS[NOW.getMonth()] + " " + NOW.getFullYear() + " · " + nowH.day + " " + nowH.monthName + " " + nowH.year + "هـ";
+
+    return {
+      teacherName,
+      themeAttr: colorScheme,
+      frameLabel: viewport + " / " + colorScheme,
+      logoFilter: colorScheme === "dark" ? "brightness(0) invert(1) opacity(0.9)" : "none",
+      // At 390px the full wordmark (~210px wide) starves the nav — use the square mark and drop the role badge.
+      logoSrc: "../../assets/logos/ribaat-mark-2026.png",
+      showRoleBadge: viewport !== "mobile",
+      todayLine: todayDateLine + (noOpenExams ? " — لا اختبارات مفتوحة، و9 أسئلة تنتظر الرد" : " — 3 اختبارات مفتوحة و9 أسئلة تنتظر الرد"),
+      mainPadding: cfg.mainPadding,
+      h1Size: cfg.h1Size,
+      priorityMin: cfg.priorityMin,
+      taskMin: cfg.taskMin,
+      railBasis: cfg.railBasis,
+      layoutDirection: cfg.layoutDirection,
+      layoutAlign: cfg.layoutAlign,
+      monthCellMin: cfg.monthCellMin,
+      showHeaderName: cfg.showHeaderName,
+      notifCount: 12,
+      notifications,
+      notificationsOpen: menu === "notifications",
+      accountOpen: menu === "account",
+      notifBtnBg: menu === "notifications" ? "var(--surface-sunken)" : "transparent",
+      toggleNotifications: () => this.setState({ menu: this.currentMenu() === "notifications" ? "none" : "notifications" }),
+      toggleAccount: () => this.setState({ menu: this.currentMenu() === "account" ? "none" : "account" }),
+      openExams,
+      openExamsCount: noOpenExams ? 0 : 3,
+      hasOpenExams: !noOpenExams,
+      hasNoOpenExams: noOpenExams,
+      upcomingExams,
+      upcomingExamsCount: 4,
+      questions,
+      questionsCount: 9,
+      uploadTasksCount: 3,
+      uploadCaption: "دروس مجدولة بلا مقطع",
+      transcriptTasksCount: 4,
+      transcriptCaption: "دروس بانتظار التفريغ",
+      bankQuestionsCount: 142,
+      bankCaption: "سؤالاً في 6 دورات",
+      tasksTotalLabel: "7 مهام معلّقة",
+      upcomingItems,
+      isListView: view === "list",
+      isMonthView: view === "month",
+      listTabBg: view === "list" ? "var(--surface-card)" : "transparent",
+      listTabFg: view === "list" ? "var(--text-brand)" : "var(--text-secondary)",
+      listTabShadow: view === "list" ? "var(--shadow-sm)" : "none",
+      monthTabBg: view === "month" ? "var(--surface-card)" : "transparent",
+      monthTabFg: view === "month" ? "var(--text-brand)" : "var(--text-secondary)",
+      monthTabShadow: view === "month" ? "var(--shadow-sm)" : "none",
+      showListView: () => this.setState({ view: "list" }),
+      showMonthView: () => this.setState({ view: "month" }),
+      monthTitle: AR_MONTHS[viewMonth.getMonth()] + " " + viewMonth.getFullYear(),
+      monthHijri: hijriRange,
+      weekdayNames: AR_DAYS_SHORT.map((label) => ({ label })),
+      monthDays: lastRowEmpty ? monthDays.slice(0, 35) : monthDays,
+      prevMonth: () => this.setState((s) => ({ monthOffset: s.monthOffset - 1 })),
+      nextMonth: () => this.setState((s) => ({ monthOffset: s.monthOffset + 1 })),
+      selectedDayLabel: "أنشطة " + labelFor(selectedDate) + " " + selectedDate.getDate() + " " + AR_MONTHS[selectedDate.getMonth()] + " · " + selH.day + " " + selH.monthName,
+      selectedDayEvents,
+      selectedDayEmpty: selectedDayEvents.length === 0,
+    };
+  }
+
+  componentDidMount() {
+    window.lucide && window.lucide.createIcons();
+  }
+
+  componentDidUpdate() {
+    window.lucide && window.lucide.createIcons();
+  }
+}
+
+</script>
+</body>
+</html>

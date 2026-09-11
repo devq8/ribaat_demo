@@ -1,0 +1,66 @@
+{% load static %}
+{# المشايخ — the faculty rail: the institution's only original photography and
+   the strongest credibility signal on the page, so it carries the dominant
+   register.
+
+   Two shaykhs are currently teaching, so two cards render. The rail is authored
+   to stay correct as the count grows — cards keep a fixed inline size, the track
+   scrolls whenever it overflows, and the controls hide themselves when there is
+   nothing to scroll. In production this is a
+   {% templatetag openblock %} for shaykh in faculty {% templatetag closeblock %}
+   loop over the view context.
+
+   The warm monochrome is applied in CSS so mixed sources read as one deliberate
+   set — do not pre-treat the source files. #}
+<section class="section section--faculty" id="faculty" aria-labelledby="faculty-title">
+  <div class="wrap">
+    <div class="section__grid">
+      <header class="section__head" data-reveal>
+        <span class="section__index" aria-hidden="true">٠٥</span>
+        <h2 class="section__title" id="faculty-title">المشايخ</h2>
+      </header>
+      <div class="section__body" data-reveal data-reveal-delay="1">
+        <p class="lede">يتولّى التدريس مشايخُ لهم عنايةٌ بالمذهب وروايةٌ للمتون.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail-shell" data-rail>
+    <ul class="rail" role="list" tabindex="0" data-rail-track
+        aria-label="المشايخ — قائمة قابلة للتمرير أفقيًّا">
+
+      <li class="person">
+        <img class="person__frame" src="{% static 'ribaat/img/faculty/abdulaziz-al-eidan.jpg' %}" alt="د. عبد العزيز العيدان" width="347" height="347" loading="lazy" decoding="async">
+        <div class="person__caption">
+          <span class="person__idx" aria-hidden="true">٠١</span>
+          <h3 class="person__name">د. عبد العزيز العيدان</h3>
+          <p class="person__field">العقيدة وأصول الفقه</p>
+          <p class="person__ijaza is-placeholder">تُدرج الإجازات والمتون المروية هنا</p>
+        </div>
+      </li>
+
+      <li class="person">
+        <img class="person__frame" src="{% static 'ribaat/img/faculty/anas-al-yatama.jpg' %}" alt="د. أنس اليتامى" width="364" height="364" loading="lazy" decoding="async">
+        <div class="person__caption">
+          <span class="person__idx" aria-hidden="true">٠٢</span>
+          <h3 class="person__name">د. أنس اليتامى</h3>
+          <p class="person__field">الحديث ومصطلحه</p>
+          <p class="person__ijaza is-placeholder">تُدرج الإجازات والمتون المروية هنا</p>
+        </div>
+      </li>
+
+    </ul>
+
+    <div class="wrap rail__foot">
+      <div class="rail__progress" aria-hidden="true"><span></span></div>
+      <div class="rail__nav">
+        <button class="rail__btn" type="button" data-rail-prev aria-label="السابق">
+          <span class="rail__chev rail__chev--prev"></span>
+        </button>
+        <button class="rail__btn" type="button" data-rail-next aria-label="التالي">
+          <span class="rail__chev rail__chev--next"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

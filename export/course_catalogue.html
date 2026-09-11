@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<!--
+  Ribaat Course Catalogue — static export for Django template conversion
+  =======================================================================
+  This is an EXPORT/IMPLEMENTATION pass of the already-approved catalogue
+  design (ui_kits/student/CourseCatalogue.dc.html). No visual redesign was
+  made — layout, spacing, color, component choices, and RTL decisions are
+  carried over 1:1 from that source.
+
+  Per this export's brief: NO {{ variable }} / templating placeholders
+  anywhere. Every course, name, count and duration below is hardcoded
+  mock content (the same course set as the approved design) — wire real
+  data into these same partials afterward; DOM structure/classes are
+  stable hooks for that pass. Filter chips/checkboxes/search are visually
+  complete but inert (no real search/filter logic), per the brief.
+
+  Each top-level block is wrapped in PARTIAL markers mapping 1:1 to a
+  Django template include (templates/student/partials/<name>.html).
+
+  See "OPEN QUESTIONS / ASSUMPTIONS" near the end of <body> for anything
+  that had to be flagged/assumed during export.
+-->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الدورات | رباط الحنابلة</title>
+
+<style>
+  /* ==========================================================
+     DESIGN TOKENS
+     Copied verbatim from the Ribaat Design System token files
+     (tokens/colors.css, colors-dark.css, typography.css,
+     spacing.css, effects.css). Names are unchanged — reuse these
+     var() references in the Django/static build, don't rename.
+     ========================================================== */
+  :root {
+    --ribaat-green-900: #2E3A24;
+    --ribaat-green-800: #3E4E32;
+    --ribaat-green-700: #4F6140;
+    --ribaat-green-600: #607247;
+    --ribaat-green-500: #728759;
+    --ribaat-green-400: #8FA079;
+    --ribaat-green-300: #B2C0A2;
+    --ribaat-green-200: #D4DCC9;
+    --ribaat-green-100: #EBEFE4;
+    --ribaat-green-50:  #F5F7F0;
+
+    --ribaat-brown-900: #4A3A22;
+    --ribaat-brown-800: #63492A;
+    --ribaat-brown-700: #79552F;
+    --ribaat-brown-600: #8C5F35;
+    --ribaat-brown-500: #A47846;
+    --ribaat-brown-400: #BB9868;
+    --ribaat-brown-300: #D3BC98;
+    --ribaat-brown-200: #E7DBC4;
+    --ribaat-brown-100: #F3EBDD;
+
+    --ribaat-ink-900: #211F19;
+    --ribaat-ink-800: #333026;
+    --ribaat-ink-700: #494434;
+    --ribaat-ink-600: #635C48;
+    --ribaat-ink-500: #82795F;
+    --ribaat-ink-400: #A69C81;
+    --ribaat-ink-300: #C9BFA6;
+    --ribaat-ink-200: #E2DAC5;
+    --ribaat-ink-100: #EFEADB;
+    --ribaat-paper-050: #FBF9F3;
+    --ribaat-paper-000: #FFFEFA;
+
+    --ribaat-red-600: #A6473B;
+    --ribaat-red-100: #F4E3DF;
+    --ribaat-amber-600: #A97A24;
+    --ribaat-amber-100: #F3E7CC;
+    --ribaat-blue-600: #3E6B7A;
+    --ribaat-blue-100: #DEE9EB;
+
+    --surface-page: var(--ribaat-paper-050);
+    --surface-card: var(--ribaat-paper-000);
+    --surface-sunken: var(--ribaat-ink-100);
+    --surface-brand: var(--ribaat-green-600);
+    --surface-brand-strong: var(--ribaat-green-800);
+    --surface-accent: var(--ribaat-brown-600);
+    --surface-overlay: rgba(33, 31, 25, 0.55);
+
+    --border-subtle: var(--ribaat-ink-200);
+    --border-default: var(--ribaat-ink-300);
+    --border-strong: var(--ribaat-ink-500);
+    --border-brand: var(--ribaat-green-500);
+
+    --text-primary: var(--ribaat-ink-900);
+    --text-secondary: var(--ribaat-ink-600);
+    --text-muted: var(--ribaat-ink-500);
+    --text-on-brand: var(--ribaat-paper-000);
+    --text-on-accent: var(--ribaat-paper-000);
+    --text-brand: var(--ribaat-green-700);
+    --text-accent: var(--ribaat-brown-700);
+    --text-link: var(--ribaat-green-700);
+    --text-link-hover: var(--ribaat-green-800);
+
+    --state-success-fg: #3E6B4A;
+    --state-success-bg: var(--ribaat-green-100);
+    --state-warning-fg: var(--ribaat-amber-600);
+    --state-warning-bg: var(--ribaat-amber-100);
+    --state-danger-fg: var(--ribaat-red-600);
+    --state-danger-bg: var(--ribaat-red-100);
+    --state-info-fg: var(--ribaat-blue-600);
+    --state-info-bg: var(--ribaat-blue-100);
+
+    --focus-ring: var(--ribaat-green-500);
+
+    --font-display: "Amiri", "Times New Roman", serif;
+    --font-sans: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-md: 1.125rem;
+    --text-lg: 1.375rem;
+    --text-xl: 1.75rem;
+    --text-2xl: 2.25rem;
+    --text-3xl: 3rem;
+
+    --leading-tight: 1.25;
+    --leading-normal: 1.55;
+    --leading-relaxed: 1.9;
+
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+    --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+    --container-max: 1200px;
+    --container-padding: var(--space-6);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-pill: 999px;
+
+    --shadow-sm: 0 1px 2px rgba(33, 31, 25, 0.06);
+    --shadow-md: 0 4px 14px rgba(33, 31, 25, 0.08);
+    --shadow-lg: 0 12px 32px rgba(33, 31, 25, 0.12);
+
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --duration-fast: 120ms;
+    --duration-normal: 200ms;
+    --duration-slow: 320ms;
+
+    /* ---- Breakpoints ----
+       No --bp-* tokens or @media rules exist anywhere in the design
+       system source. These two split points (1024 / 768) are inferred
+       from the approved desktop/tablet/mobile mockups (containers at
+       1240 / 834 / 390) — flagged in OPEN QUESTIONS below, not a
+       confirmed brand token. */
+    --bp-tablet: 768px;
+    --bp-desktop: 1024px;
+  }
+
+  /* ==========================================================
+     DARK THEME — from tokens/colors-dark.css (a proposed layer in
+     the design system, not yet upstreamed/confirmed against brand
+     source — see OPEN QUESTIONS). Scoped to [data-theme="dark"] on
+     the document root, matching this file's toggle mechanism.
+     ========================================================== */
+  [data-theme="dark"] {
+    --surface-page: #201E18;
+    --surface-card: #2B2820;
+    --surface-sunken: #1B1913;
+    --surface-brand: #6B8151;
+    --surface-brand-strong: #55663F;
+    --surface-accent: #96703F;
+    --surface-overlay: rgba(10, 9, 7, 0.6);
+
+    --border-subtle: #3A362C;
+    --border-default: #4A4536;
+    --border-strong: #6B6551;
+    --border-brand: #7C9161;
+
+    --text-primary: #EDE6D6;
+    --text-secondary: #C4B99F;
+    --text-muted: #93876C;
+    --text-on-brand: #F7F3E7;
+    --text-on-accent: #F7F3E7;
+    --text-brand: #A9BE8F;
+    --text-accent: #D3B583;
+    --text-link: #A9BE8F;
+    --text-link-hover: #C3D6AC;
+
+    --focus-ring: #94A87A;
+
+    --ribaat-green-100: #33402A;
+    --ribaat-green-200: #3D4A31;
+    --ribaat-green-600: #7C9161;
+    --ribaat-green-700: #94A87A;
+    --ribaat-green-800: #55663F;
+
+    --ribaat-brown-100: #3D3020;
+    --ribaat-brown-200: #493924;
+    --ribaat-brown-600: #96703F;
+    --ribaat-brown-700: #C9A876;
+
+    --state-success-bg: #2B3B27;
+    --state-success-fg: #8FBB85;
+    --state-warning-bg: #3A2F1C;
+    --state-warning-fg: #D3A85C;
+    --state-danger-bg: #3C2420;
+    --state-danger-fg: #D98A7C;
+    --state-info-bg: #1F323A;
+    --state-info-fg: #7FB6C7;
+  }
+
+  @font-face {
+    font-family: "Amiri";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("static/fonts/amiri-arabic-400.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "Amiri";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("static/fonts/amiri-arabic-700.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans Arabic";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("static/fonts/plex-arabic-400.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans Arabic";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("static/fonts/plex-arabic-500.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans Arabic";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("static/fonts/plex-arabic-600.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans Arabic";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("static/fonts/plex-arabic-700.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+
+  /* ==========================================================
+     BASE / RESET
+     ========================================================== */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--surface-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    transition: background var(--duration-normal) var(--ease-standard),
+                color var(--duration-normal) var(--ease-standard);
+  }
+  a { color: var(--text-link); text-decoration: none; }
+  a:hover { color: var(--text-link-hover); }
+  h1, p { text-wrap: pretty; }
+  button, input, select { font-family: var(--font-sans); }
+  img { max-width: 100%; display: block; }
+
+  /* ==========================================================
+     LAYOUT SHELL
+     ========================================================== */
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    background: var(--surface-card);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .site-header__brand { display: flex; align-items: center; gap: 36px; }
+  .site-header__logo { height: 30px; }
+  [data-theme="dark"] .site-header__logo { filter: brightness(0) invert(1) opacity(0.9); }
+  .site-nav { display: flex; gap: 26px; }
+  .site-nav a { font-size: var(--text-base); color: var(--text-secondary); }
+  .site-nav a.is-active { color: var(--text-brand); font-weight: var(--weight-semibold); }
+  .site-header__actions { display: flex; gap: 14px; align-items: center; }
+
+  .btn-logout {
+    background: none;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 8px 16px;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+
+  .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: var(--weight-semibold);
+    font-size: 12px;
+    flex: none;
+    background: var(--ribaat-green-100);
+    color: var(--text-brand);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .icon { width: 18px; height: 18px; stroke-width: 1.6; flex: none; }
+
+  .theme-demo-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--surface-brand-strong);
+    color: var(--text-on-brand);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+  .theme-demo-bar button {
+    background: var(--surface-card);
+    color: var(--text-primary);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 6px 16px;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  main.catalogue {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 32px var(--space-6) 72px;
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .page-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    color: var(--text-primary);
+    font-weight: var(--weight-bold);
+  }
+  .page-title-line {
+    margin: 8px 0 24px;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ==========================================================
+     COMPONENTS (plain-CSS ports of the design system's Button /
+     Badge / Input / Select primitives)
+     ========================================================== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background var(--duration-fast) var(--ease-standard),
+                color var(--duration-fast) var(--ease-standard);
+  }
+  .btn--full { width: 100%; }
+  .btn--primary { background: var(--surface-brand); color: var(--text-on-brand); border-color: var(--surface-brand); }
+  .btn--primary:hover { background: var(--ribaat-green-700); }
+  .btn--outline { background: transparent; color: var(--text-brand); border-color: var(--border-brand); }
+  .btn--outline:hover { background: var(--ribaat-green-100); color: var(--text-link-hover); }
+  .btn--outline[disabled] { opacity: .5; cursor: not-allowed; }
+  .btn--outline[disabled]:hover { background: transparent; color: var(--text-brand); }
+  .btn--icon {
+    background: var(--surface-card);
+    border: 1px solid var(--border-default);
+    color: var(--text-primary);
+    padding: 0 16px;
+    height: 42px;
+    font-size: var(--text-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .field-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .text-input, .select-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-default);
+    background: var(--surface-card);
+    color: var(--text-primary);
+  }
+  .text-input:focus, .select-input:focus {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 1px;
+  }
+  .select-input { appearance: none; }
+
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    border: 1px solid var(--border-default);
+    background: var(--surface-card);
+    color: var(--text-secondary);
+  }
+  .chip.is-selected {
+    border-color: var(--surface-brand);
+    background: var(--surface-brand);
+    color: var(--text-on-brand);
+  }
+
+  .active-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--ribaat-green-100);
+    color: var(--text-brand);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 5px 8px 5px 12px;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+  }
+  .active-chip .icon { width: 13px; height: 13px; }
+  .clear-link {
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+  .clear-link--xs { font-size: var(--text-xs); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    line-height: 1.4;
+  }
+  .badge--accent { background: var(--ribaat-brown-100); color: var(--text-accent); }
+  .badge--success { background: var(--state-success-bg); color: var(--state-success-fg); }
+
+  /* ==========================================================
+     PARTIAL: filters-sidebar (desktop persistent)
+     ========================================================== */
+  .filters-sidebar {
+    flex: none;
+    width: 264px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  /* ==========================================================
+     PARTIAL: search-toolbar (tablet/mobile only)
+     ========================================================== */
+  .search-toolbar { display: none; gap: 10px; margin-bottom: 16px; }
+  .search-toolbar .text-input-wrap { flex: 1; }
+
+  /* ==========================================================
+     PARTIAL: active-filter-chips / results-toolbar
+     ========================================================== */
+  .active-filters-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 18px; }
+  .results-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px; gap: 12px; flex-wrap: wrap;
+  }
+  .results-count { font-size: var(--text-sm); color: var(--text-muted); }
+  .sort-group { display: flex; align-items: center; gap: 8px; }
+  .sort-group .select-input { width: auto; padding: 7px 10px; font-size: var(--text-sm); }
+  .sort-label { font-size: var(--text-sm); color: var(--text-muted); }
+
+  /* ==========================================================
+     PARTIAL: results-grid
+     ========================================================== */
+  .results-column { flex: 1; min-width: 0; }
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .course-card__thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--ribaat-green-100);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ribaat-green-600);
+    flex: none;
+  }
+  .course-card__badge--start { position: absolute; top: 10px; inset-inline-start: 10px; }
+  .course-card__badge--end { position: absolute; top: 10px; inset-inline-end: 10px; }
+  .course-card__body {
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 6px;
+    flex: 1;
+  }
+  .course-card__title { margin: 0; font-weight: var(--weight-semibold); font-size: var(--text-md); color: var(--text-primary); line-height: var(--leading-tight); }
+  .course-card__instructor { margin: 0; font-size: var(--text-sm); color: var(--text-secondary); }
+  .course-card__meta { margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted); }
+  .course-card__track-note { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
+  .course-card__track-note span { font-size: var(--text-xs); color: var(--text-muted); }
+  .course-card__track-note .icon { width: 13px; height: 13px; color: var(--text-muted); }
+  .course-card__cta { margin-top: 10px; }
+
+  /* ==========================================================
+     PARTIAL: pagination-load-more
+     ========================================================== */
+  .load-more-row { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 32px; }
+  .load-more-row p { margin: 0; font-size: var(--text-xs); color: var(--text-muted); }
+
+  /* ==========================================================
+     PARTIAL: empty-state
+     ========================================================== */
+  .empty-state {
+    display: none;
+    flex-direction: column; align-items: center; text-align: center;
+    gap: 14px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 64px 24px;
+  }
+  .empty-state.is-shown { display: flex; }
+  .empty-state__icon { width: 30px; height: 30px; color: var(--text-muted); }
+  .empty-state__title { margin: 0; font-size: var(--text-md); color: var(--text-primary); font-weight: var(--weight-semibold); }
+  .empty-state__body { margin: 0; font-size: var(--text-sm); color: var(--text-muted); max-width: 380px; }
+
+  /* ==========================================================
+     PARTIAL: filters-drawer (off-canvas panel / bottom sheet —
+     tablet + mobile only, opened from the search-toolbar button)
+     ========================================================== */
+  .drawer-scrim {
+    display: none;
+    position: fixed; inset: 0;
+    background: var(--surface-overlay);
+    z-index: 40;
+  }
+  .filters-drawer {
+    display: none;
+    position: fixed;
+    z-index: 41;
+    background: var(--surface-card);
+    flex-direction: column;
+    gap: 20px;
+    padding: 22px;
+    overflow-y: auto;
+  }
+  body.filters-open .drawer-scrim,
+  body.filters-open .filters-drawer { display: flex; }
+  .drawer-head { display: flex; align-items: center; justify-content: space-between; }
+  .drawer-title { font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--text-primary); font-family: var(--font-display); }
+  .drawer-close { border: none; background: none; color: var(--text-muted); cursor: pointer; display: flex; }
+  .drawer-close .icon { width: 20px; height: 20px; }
+
+  /* ==========================================================
+     RESPONSIVE — breakpoints per --bp-tablet / --bp-desktop above
+     ========================================================== */
+
+  /* tablet: 2-col grid, top search+filter toolbar, sidebar hidden,
+     side drawer from the inline-start edge (right, in this RTL layout) */
+  @media (max-width: 1023.98px) {
+    main.catalogue { display: block; padding: 26px var(--space-5) 56px; }
+    .filters-sidebar { display: none; }
+    .search-toolbar { display: flex; }
+    .course-grid { grid-template-columns: repeat(2, 1fr); }
+    .filters-drawer {
+      top: 0; bottom: 0; inset-inline-start: 0; width: 320px;
+      box-shadow: var(--shadow-lg);
+    }
+  }
+
+  /* mobile: 1-col grid, bottom-sheet drawer */
+  @media (max-width: 767.98px) {
+    .site-header { padding: 12px 16px; }
+    .site-header__brand { gap: 18px; }
+    .site-nav { gap: 16px; }
+    .site-nav a { font-size: var(--text-sm); }
+    main.catalogue { padding: 20px 16px 48px; }
+    .page-title { font-size: var(--text-xl); }
+    .course-grid { grid-template-columns: 1fr; }
+    .filters-drawer {
+      top: auto; inset-inline: 0; bottom: 0; max-height: 85vh;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      box-shadow: var(--shadow-lg);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     Review-only controls (NOT part of the Django export). Lets a
+     reviewer flip light/dark and preview the drawer/empty state
+     without touching the markup below. Remove this whole bar and
+     its inline scripts when integrating into Django.
+     ============================================================ -->
+<div class="theme-demo-bar">
+  <span>معاينة: وضع <strong id="theme-label">فاتح</strong></span>
+  <button type="button" id="theme-toggle" onclick="
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-label').textContent = isDark ? 'فاتح' : 'داكن';
+    document.getElementById('theme-toggle').textContent = isDark ? '🌙 تفعيل الوضع الداكن' : '☀️ تفعيل الوضع الفاتح';
+  ">🌙 تفعيل الوضع الداكن</button>
+  <button type="button" id="results-toggle" onclick="
+    var grid = document.getElementById('results-grid-wrap');
+    var empty = document.getElementById('empty-state');
+    var showingEmpty = empty.classList.contains('is-shown');
+    empty.classList.toggle('is-shown', !showingEmpty);
+    grid.style.display = showingEmpty ? '' : 'none';
+    document.getElementById('results-toggle').textContent = showingEmpty ? 'عرض حالة عدم وجود نتائج' : 'عرض نتائج البحث';
+  ">عرض حالة عدم وجود نتائج</button>
+  <button type="button" onclick="document.body.classList.add('filters-open')">فتح لوحة التصفية (معاينة الجوال)</button>
+</div>
+
+<!-- PARTIAL: site-header -->
+<header class="site-header">
+  <div class="site-header__brand">
+    <img class="site-header__logo" src="static/img/ribaat-wordmark.png" alt="رباط الحنابلة">
+    <nav class="site-nav">
+      <a href="#">الرئيسية</a>
+      <a href="#" class="is-active">الدورات</a>
+      <a href="#">لوحة التحكم</a>
+      <a href="#">الاستعلام عن شهادة</a>
+    </nav>
+  </div>
+  <div class="site-header__actions">
+    <span class="avatar">م ح</span>
+    <button class="btn-logout" type="button">تسجيل الخروج</button>
+  </div>
+</header>
+<!-- END PARTIAL: site-header -->
+
+<main class="catalogue">
+
+  <!-- PARTIAL: filters-sidebar -->
+  <aside class="filters-sidebar">
+    <div>
+      <label class="field-label" for="sidebar-search">البحث</label>
+      <input class="text-input" type="text" id="sidebar-search" placeholder="ابحث عن اسم المتن أو الدورة">
+    </div>
+    <div>
+      <span class="field-label">التصنيف</span>
+      <div class="chip-row">
+        <button class="chip" type="button">تفسير</button>
+        <button class="chip" type="button">حديث</button>
+        <button class="chip" type="button">فقه</button>
+        <button class="chip is-selected" type="button">عقيدة</button>
+        <button class="chip" type="button">سيرة</button>
+        <button class="chip" type="button">أصول الفقه</button>
+        <button class="chip" type="button">أدب</button>
+      </div>
+    </div>
+    <div>
+      <label class="field-label" for="sidebar-teacher">المعلم</label>
+      <select class="select-input" id="sidebar-teacher">
+        <option value="">جميع المعلمين</option>
+        <option value="aleidan">د. عبد العزيز العيدان</option>
+        <option value="alyatama">د. أنس اليتامى</option>
+      </select>
+    </div>
+    <div>
+      <label class="field-label" for="sidebar-level">المستوى</label>
+      <select class="select-input" id="sidebar-level">
+        <option value="">كل المستويات</option>
+        <option value="level1">المستوى الأول</option>
+        <option value="level2">المستوى الثاني</option>
+      </select>
+    </div>
+    <button class="clear-link" type="button">إزالة كل عوامل التصفية</button>
+  </aside>
+  <!-- END PARTIAL: filters-sidebar -->
+
+  <!-- PARTIAL: search-toolbar (tablet/mobile) -->
+  <div class="search-toolbar">
+    <div class="text-input-wrap">
+      <input class="text-input" type="text" placeholder="ابحث عن اسم المتن أو الدورة">
+    </div>
+    <button class="btn btn--icon" type="button" onclick="document.body.classList.add('filters-open')">
+      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line><circle cx="9" cy="6" r="1.6"></circle><circle cx="15" cy="12" r="1.6"></circle><circle cx="9" cy="18" r="1.6"></circle></svg>
+      تصفية (1)
+    </button>
+  </div>
+  <!-- END PARTIAL: search-toolbar -->
+
+  <div class="results-column">
+
+    <div>
+      <h1 class="page-title">الدورات</h1>
+      <p class="page-title-line">تصفح الدورات المتاحة عبر المسارات والمواد الشرعية.</p>
+    </div>
+
+    <!-- PARTIAL: active-filter-chips -->
+    <div class="active-filters-row">
+      <button class="active-chip" type="button">
+        عقيدة
+        <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+      </button>
+      <button class="clear-link clear-link--xs" type="button">إزالة الكل</button>
+    </div>
+    <!-- END PARTIAL: active-filter-chips -->
+
+    <!-- PARTIAL: results-toolbar -->
+    <div class="results-toolbar">
+      <span class="results-count">12 دورة</span>
+      <div class="sort-group">
+        <span class="sort-label">ترتيب حسب</span>
+        <select class="select-input">
+          <option>الأحدث</option>
+          <option>الأكثر تسجيلاً</option>
+          <option>حسب المستوى</option>
+        </select>
+      </div>
+    </div>
+    <!-- END PARTIAL: results-toolbar -->
+
+    <!-- PARTIAL: results-grid -->
+    <div id="results-grid-wrap">
+      <div class="course-grid">
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">عقيدة</span></span>
+            <span class="course-card__badge--end"><span class="badge badge--success">مسجّل</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">ثلاثة الأصول</p>
+            <p class="course-card__instructor">د. عبد العزيز العيدان</p>
+            <p class="course-card__meta">4 الدروس — 02:10:00</p>
+            <div class="course-card__track-note">
+              <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 3 14 9-14 9V3z"></path></svg>
+              <span>ضمن مسار المستوى الأول — لا يتطلب شرطاً سابقاً</span>
+            </div>
+            <div class="course-card__cta"><button class="btn btn--outline btn--full" type="button">متابعة</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">عقيدة</span></span>
+            <span class="course-card__badge--end"><span class="badge badge--success">مسجّل</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">القواعد الأربع</p>
+            <p class="course-card__instructor">د. عبد العزيز العيدان</p>
+            <p class="course-card__meta">3 الدروس — 01:45:00</p>
+            <div class="course-card__track-note">
+              <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 3 14 9-14 9V3z"></path></svg>
+              <span>ضمن مسار المستوى الأول — لا يتطلب شرطاً سابقاً</span>
+            </div>
+            <div class="course-card__cta"><button class="btn btn--outline btn--full" type="button">متابعة</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">عقيدة</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">نواقض الإسلام</p>
+            <p class="course-card__instructor">د. عبد العزيز العيدان</p>
+            <p class="course-card__meta">6 الدروس — 02:54:00</p>
+            <div class="course-card__cta"><button class="btn btn--primary btn--full" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">أصول الفقه</span></span>
+            <span class="course-card__badge--end"><span class="badge badge--success">مسجّل</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">متن الورقات في أصول الفقه</p>
+            <p class="course-card__instructor">د. عبد العزيز العيدان</p>
+            <p class="course-card__meta">8 الدروس — 05:40:00</p>
+            <div class="course-card__track-note">
+              <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m6 3 14 9-14 9V3z"></path></svg>
+              <span>ضمن مسار المستوى الأول — لا يتطلب شرطاً سابقاً</span>
+            </div>
+            <div class="course-card__cta"><button class="btn btn--outline btn--full" type="button">متابعة</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">حديث</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">الأربعين النووية</p>
+            <p class="course-card__instructor">د. أنس اليتامى</p>
+            <p class="course-card__meta">11 الدروس — 06:20:00</p>
+            <div class="course-card__track-note">
+              <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+              <span>يتطلب إتمام متن الورقات في أصول الفقه</span>
+            </div>
+            <div class="course-card__cta"><button class="btn btn--outline btn--full" type="button" disabled>مقفلة</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">فقه</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">عمدة الأحكام</p>
+            <p class="course-card__instructor">د. أنس اليتامى</p>
+            <p class="course-card__meta">14 الدروس — 09:10:00</p>
+            <div class="course-card__track-note">
+              <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+              <span>يتطلب الحصول على شهادة المستوى الأول</span>
+            </div>
+            <div class="course-card__cta"><button class="btn btn--outline btn--full" type="button" disabled>مقفلة</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">سيرة</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">مقدمة في السيرة</p>
+            <p class="course-card__instructor">د. أنس اليتامى</p>
+            <p class="course-card__meta">6 الدروس — 03:15:00</p>
+            <div class="course-card__cta"><button class="btn btn--primary btn--full" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">سيرة</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">الرحيق المختوم</p>
+            <p class="course-card__instructor">د. أنس اليتامى</p>
+            <p class="course-card__meta">10 الدروس — 07:48:00</p>
+            <div class="course-card__cta"><button class="btn btn--primary btn--full" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">تفسير</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">تفسير الجلالين</p>
+            <p class="course-card__instructor">د. أنس اليتامى</p>
+            <p class="course-card__meta">16 الدروس — 12:30:00</p>
+            <div class="course-card__cta"><button class="btn btn--primary btn--full" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">فقه</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">عمدة الفقه</p>
+            <p class="course-card__instructor">د. عبد العزيز العيدان</p>
+            <p class="course-card__meta">12 الدروس — 09:12:00</p>
+            <div class="course-card__cta"><button class="btn btn--primary btn--full" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">حديث</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">بلوغ المرام</p>
+            <p class="course-card__instructor">د. أنس اليتامى</p>
+            <p class="course-card__meta">13 الدروس — 10:05:00</p>
+            <div class="course-card__track-note">
+              <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+              <span>يتطلب إتمام الأربعين النووية</span>
+            </div>
+            <div class="course-card__cta"><button class="btn btn--outline btn--full" type="button" disabled>مقفلة</button></div>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge--start"><span class="badge badge--accent">أدب</span></span>
+          </div>
+          <div class="course-card__body">
+            <p class="course-card__title">الآداب الشرعية</p>
+            <p class="course-card__instructor">د. عبد العزيز العيدان</p>
+            <p class="course-card__meta">5 الدروس — 04:30:00</p>
+            <div class="course-card__cta"><button class="btn btn--primary btn--full" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PARTIAL: pagination-load-more -->
+      <div class="load-more-row">
+        <button class="btn btn--outline" type="button">عرض المزيد</button>
+        <p>يعرض 12 من أصل 27 دورة</p>
+      </div>
+      <!-- END PARTIAL: pagination-load-more -->
+    </div>
+    <!-- END PARTIAL: results-grid -->
+
+    <!-- PARTIAL: empty-state -->
+    <div class="empty-state" id="empty-state">
+      <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="6"></circle><path d="m20 20-4.35-4.35"></path><line x1="7.5" y1="10" x2="12.5" y2="10"></line></svg>
+      <p class="empty-state__title">لا توجد دورات مطابقة لهذه التصفية</p>
+      <p class="empty-state__body">جرّب تعديل كلمة البحث أو إزالة بعض عوامل التصفية المطبّقة.</p>
+      <button class="btn btn--outline" type="button">إزالة عوامل التصفية</button>
+    </div>
+    <!-- END PARTIAL: empty-state -->
+
+  </div>
+
+</main>
+
+<!-- PARTIAL: filters-drawer (off-canvas / bottom-sheet — tablet + mobile) -->
+<div class="drawer-scrim" onclick="document.body.classList.remove('filters-open')"></div>
+<div class="filters-drawer">
+  <div class="drawer-head">
+    <span class="drawer-title">التصفية</span>
+    <button class="drawer-close" type="button" onclick="document.body.classList.remove('filters-open')">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6 6 18"></path><path d="M6 6l12 12"></path></svg>
+    </button>
+  </div>
+  <div>
+    <span class="field-label">التصنيف</span>
+    <div class="chip-row">
+      <button class="chip" type="button">تفسير</button>
+      <button class="chip" type="button">حديث</button>
+      <button class="chip" type="button">فقه</button>
+      <button class="chip is-selected" type="button">عقيدة</button>
+      <button class="chip" type="button">سيرة</button>
+      <button class="chip" type="button">أصول الفقه</button>
+      <button class="chip" type="button">أدب</button>
+    </div>
+  </div>
+  <div>
+    <label class="field-label" for="drawer-teacher">المعلم</label>
+    <select class="select-input" id="drawer-teacher">
+      <option value="">جميع المعلمين</option>
+      <option value="aleidan">د. عبد العزيز العيدان</option>
+      <option value="alyatama">د. أنس اليتامى</option>
+    </select>
+  </div>
+  <div>
+    <label class="field-label" for="drawer-level">المستوى</label>
+    <select class="select-input" id="drawer-level">
+      <option value="">كل المستويات</option>
+      <option value="level1">المستوى الأول</option>
+      <option value="level2">المستوى الثاني</option>
+    </select>
+  </div>
+  <button class="clear-link" type="button">إزالة كل عوامل التصفية</button>
+  <button class="btn btn--primary btn--full" type="button" onclick="document.body.classList.remove('filters-open')">عرض النتائج</button>
+</div>
+<!-- END PARTIAL: filters-drawer -->
+
+<!--
+  OPEN QUESTIONS / ASSUMPTIONS — flagged rather than decided silently
+
+  1. Breakpoints: no --bp-* tokens or @media rules exist in the design
+     system source (tokens/*.css). The 1024px / 768px split points used
+     here are inferred from the approved desktop/tablet/mobile container
+     widths (1240 / 834 / 390) in the catalogue design — not a confirmed
+     token. Confirm against devq8/ribaat once accessible.
+
+  2. Dark palette: tokens/colors-dark.css is this design system's own
+     proposed dark layer, explicitly flagged there as not yet upstreamed
+     against real brand source. Used verbatim here; treat as provisional.
+
+  3. Filters collapse pattern: the catalogue design showed a persistent
+     sidebar (desktop) collapsing to a search+filter-button toolbar that
+     opens a drawer (tablet: side panel from the trailing edge; mobile:
+     bottom sheet). This export carries that pattern over as-is. No
+     other collapse pattern (accordion, inline dropdown) was evaluated
+     against source and shouldn't be substituted without a design pass.
+
+  4. Pagination: the approved design used a "load more" button rather
+     than numbered pages or infinite scroll. Kept as-is; exact page size
+     (12 per load) and the "27 total" count are this export's mock
+     values, not confirmed against a real catalogue size.
+
+  5. Icons: no icon codebase/sprite could be recovered from source, so
+     this design system substitutes a Lucide-style outline icon set
+     (documented in the system guide). Rendered here as inline SVG
+     (no external icon-library script) to keep this a single
+     self-contained file with no build step.
+
+  6. Radii/shadow/spacing values (--radius-*, --shadow-*) are this
+     design system's own reasonable interpretation, not confirmed
+     pixel values from the live Ribaat codebase — flagged in the
+     system's own guide, carried through unchanged here.
+-->
+
+</body>
+</html>

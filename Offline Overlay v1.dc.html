@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors-dark.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <style>
+    body { margin: 0; background: var(--ribaat-ink-100); }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); text-decoration: underline; }
+    @keyframes ov-arc { to { transform: rotate(-360deg); } }
+    @keyframes ov-pulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+    [data-ov-frame] button:focus-visible,
+    [data-ov-ctl] button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      [data-ov-motion] { animation: none !important; transition: none !important; opacity: 1 !important; }
+      [data-ov-arc] { animation: none !important; }
+    }
+  </style>
+</helmet>
+
+<section dir="rtl" style="font-family: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif; padding: var(--space-16) var(--space-12) var(--space-20); display: flex; flex-direction: column; gap: var(--space-16); color: var(--text-primary)">
+
+  <header style="display: flex; flex-direction: column; gap: var(--space-3); max-width: 820px">
+    <div style="font-size: var(--text-xs); color: var(--text-muted)">الجولة الأولى · تطبيق الطالب</div>
+    <h1 style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-2xl); font-weight: var(--weight-bold); margin: 0; line-height: var(--leading-tight)">شاشة تعذّر الاتصال</h1>
+    <p style="margin: 0; font-size: var(--text-md); line-height: var(--leading-normal); color: var(--text-secondary); text-wrap: pretty">طبقة تُرسَم فوق التطبيق وهو قائم في المتصفح، لا صفحة ينتقل إليها. التطبيق أسفلها يبقى محمَّلًا بحالته، وما كتبه الطالب باقٍ. ثلاث حالات بثلاث صياغات: جهاز غير متصل، خادم لا يستجيب، خادم يرد بخطأ. النموذج في <a href="#1a">1a</a> حيّ ويمكن تجربته.</p>
+  </header>
+
+  <div id="1a" style="display: flex; flex-direction: column; gap: var(--space-5)">
+    <div style="display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap">
+      <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 24px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--ribaat-green-100); color: var(--text-brand); font-size: var(--text-xs); font-weight: var(--weight-semibold)">1a</span>
+      <h2 style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-xl); font-weight: var(--weight-bold); margin: 0">نموذج حيّ · سطح المكتب</h2>
+      <span style="font-size: var(--text-sm); color: var(--text-muted)">العدّاد يعمل، وإعادة المحاولة تنتقل بين الحالات فعليًا</span>
+    </div>
+
+    <div data-ov-ctl="true" style="display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; padding: var(--space-4); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface-card)">
+      <span style="font-size: var(--text-xs); color: var(--text-muted); margin-inline-end: var(--space-2)">السبب</span>
+      <button type="button" onClick="{{ setOffline }}" style="{{ btnOffline }}">الجهاز غير متصل</button>
+      <button type="button" onClick="{{ setUnreachable }}" style="{{ btnUnreachable }}">الخادم لا يستجيب</button>
+      <button type="button" onClick="{{ setError }}" style="{{ btnError }}">الخادم يرد بخطأ</button>
+      <span style="width: var(--border-width); height: 24px; background: var(--border-subtle); margin-inline: var(--space-3)"></span>
+      <button type="button" onClick="{{ simulateRecover }}" style="{{ btnRecover }}">{{ recoverLabel }}</button>
+      <span style="width: var(--border-width); height: 24px; background: var(--border-subtle); margin-inline: var(--space-3)"></span>
+      <button type="button" onClick="{{ toggleTheme }}" style="{{ btnTheme }}">{{ themeLabel }}</button>
+    </div>
+
+    <div data-theme="{{ liveTheme }}" data-ov-frame="true" style="width: 1120px; max-width: 100%; height: 700px; color: var(--text-primary); position: relative; overflow: hidden; border: var(--border-width) solid var(--border-default); border-radius: var(--radius-lg); background: var(--surface-page); box-shadow: var(--shadow-md)">
+
+      <div style="position: absolute; inset: 0; display: flex; flex-direction: column">
+        <div style="display: flex; align-items: center; gap: var(--space-5); padding: var(--space-4) var(--space-8); background: var(--surface-card); border-bottom: var(--border-width) solid var(--border-subtle)">
+          <div style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-brand)">رباط</div>
+          <div style="display: flex; gap: var(--space-6); font-size: var(--text-sm); color: var(--text-secondary)">
+            <span>المسارات</span><span>دوراتي</span><span>الشهادات</span><span>حسابي</span>
+          </div>
+        </div>
+        <div style="flex: 1; display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-8); padding: var(--space-8)">
+          <div style="display: flex; flex-direction: column; gap: var(--space-5)">
+            <div style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-xl); font-weight: var(--weight-bold)">اليوم الرابع · متن الورقات في أصول الفقه</div>
+            <div style="flex: 1; border-radius: var(--radius-lg); background: var(--surface-sunken); border: var(--border-width) solid var(--border-subtle)"></div>
+            <div style="display: flex; flex-direction: column; gap: var(--space-3)">
+              <span style="height: 12px; width: 72%; border-radius: var(--radius-pill); background: var(--surface-sunken)"></span>
+              <span style="height: 12px; width: 54%; border-radius: var(--radius-pill); background: var(--surface-sunken)"></span>
+              <span style="height: 12px; width: 63%; border-radius: var(--radius-pill); background: var(--surface-sunken)"></span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: var(--space-4)">
+            <div style="font-size: var(--text-sm); color: var(--text-secondary)">دروس الدورة</div>
+            <div style="height: 56px; border-radius: var(--radius-md); background: var(--surface-card); border: var(--border-width) solid var(--border-subtle)"></div>
+            <div style="height: 56px; border-radius: var(--radius-md); background: var(--surface-card); border: var(--border-width) solid var(--border-subtle)"></div>
+            <div style="height: 56px; border-radius: var(--radius-md); background: var(--surface-card); border: var(--border-width) solid var(--border-subtle)"></div>
+            <div style="height: 56px; border-radius: var(--radius-md); background: var(--surface-card); border: var(--border-width) solid var(--border-subtle)"></div>
+          </div>
+        </div>
+      </div>
+
+      <sc-if value="{{ showToast }}" hint-placeholder-val="{{ false }}">
+        <div data-ov-motion="true" role="status" style="position: absolute; inset-block-start: var(--space-6); inset-inline: 0; display: flex; justify-content: center; pointer-events: none">
+          <div style="display: inline-flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-5); border-radius: var(--radius-pill); background: var(--state-success-bg); color: var(--state-success-fg); border: var(--border-width) solid var(--state-success-fg); font-size: var(--text-sm); box-shadow: var(--shadow-md)">
+            <span style="width: 10px; height: 10px; background: currentColor; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%)"></span>
+            عاد الاتصال. تابع من حيث توقفت.
+          </div>
+        </div>
+      </sc-if>
+
+      <div data-ov-motion="true" style="{{ liveScrimStyle }}">
+        <div role="alertdialog" aria-modal="true" aria-labelledby="ov-live-title" aria-describedby="ov-live-body" ref="{{ liveCardRef }}" style="width: 100%; max-width: 540px; background: var(--surface-card); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-5)">
+
+          <div style="display: flex; align-items: center; gap: var(--space-4)">
+            <span data-ov-motion="true" style="{{ liveGlyphWrap }}">
+              <sc-if value="{{ isOffline }}" hint-placeholder-val="{{ false }}">
+                <svg width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="30" y="14" width="16" height="20" rx="2"></rect>
+                  <path d="M4 24h8"></path><path d="M20 24h6"></path>
+                  <path d="M14 12 L 20 36"></path>
+                </svg>
+              </sc-if>
+              <sc-if value="{{ isUnreachable }}" hint-placeholder-val="{{ false }}">
+                <svg width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="30" y="14" width="16" height="20" rx="2"></rect>
+                  <path d="M26 24 H 8" stroke-dasharray="4 4"></path>
+                  <rect x="2" y="16" width="12" height="16" rx="2" stroke-dasharray="4 4"></rect>
+                </svg>
+              </sc-if>
+              <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+                <svg width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="30" y="14" width="16" height="20" rx="2"></rect>
+                  <path d="M26 24 H 8"></path>
+                  <rect x="2" y="12" width="14" height="24" rx="2"></rect>
+                  <path d="M2 24 H 16"></path>
+                </svg>
+              </sc-if>
+            </span>
+            <div style="display: flex; flex-direction: column; gap: var(--space-1)">
+              <h3 id="ov-live-title" style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-xl); font-weight: var(--weight-bold); color: var(--text-primary); margin: 0; line-height: var(--leading-tight)">{{ liveTitle }}</h3>
+              <span style="font-size: var(--text-xs); color: var(--text-secondary)">{{ liveKicker }}</span>
+            </div>
+          </div>
+
+          <p id="ov-live-body" style="margin: 0; font-size: var(--text-base); line-height: var(--leading-normal); color: var(--text-secondary); text-wrap: pretty">{{ liveBody }}</p>
+
+          <sc-if value="{{ isOffline }}" hint-placeholder-val="{{ false }}">
+            <ul style="margin: 0; padding: var(--space-4); list-style: none; display: flex; flex-direction: column; gap: var(--space-2); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface-page); font-size: var(--text-sm); color: var(--text-secondary)">
+              <li style="display: flex; gap: var(--space-3); align-items: center"><span style="width: 6px; height: 6px; background: var(--border-strong)"></span>تحقّق من شبكة الواي فاي</li>
+              <li style="display: flex; gap: var(--space-3); align-items: center"><span style="width: 6px; height: 6px; background: var(--border-strong)"></span>تحقّق من بيانات الجوّال أو وضع الطيران</li>
+            </ul>
+          </sc-if>
+
+          <div style="display: flex; gap: var(--space-3); align-items: flex-start; padding-block: var(--space-4); border-block-start: var(--border-width) solid var(--border-subtle); border-block-end: var(--border-width) solid var(--border-subtle)">
+            <span style="width: 8px; height: 8px; margin-block-start: 6px; background: var(--text-brand); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); flex: none"></span>
+            <span style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary)">ما كتبته محفوظ على جهازك، وصفحتك باقية كما هي. لن تحتاج إلى إعادة العمل من أوله.</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: var(--space-3)">
+            <div style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap">
+              <button type="button" onClick="{{ manualRetry }}" disabled="{{ retryDisabled }}" ref="{{ liveButtonRef }}" style="{{ liveRetryBtnStyle }}">
+                <sc-if value="{{ isRetrying }}" hint-placeholder-val="{{ false }}">
+                  <span data-ov-arc="true" style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255,254,250,.35); border-block-start-color: var(--text-on-brand); animation: ov-arc 900ms linear infinite"></span>
+                </sc-if>
+                {{ liveButtonLabel }}
+              </button>
+              <span aria-live="off" style="font-size: var(--text-sm); color: var(--text-secondary)">{{ liveStatusLine }}</span>
+            </div>
+            <div style="height: 3px; border-radius: var(--radius-pill); background: var(--surface-sunken); overflow: hidden">
+              <div data-ov-motion="true" style="{{ liveProgressStyle }}"></div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); flex-wrap: wrap">
+            <span style="font-size: var(--text-xs); color: var(--text-secondary)">{{ liveAttemptLine }}</span>
+            <sc-if value="{{ showRef }}" hint-placeholder-val="{{ false }}">
+              <span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary)">{{ refCode }}</span>
+            </sc-if>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="1b" style="display: flex; flex-direction: column; gap: var(--space-5)">
+    <div style="display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap">
+      <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 24px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--ribaat-green-100); color: var(--text-brand); font-size: var(--text-xs); font-weight: var(--weight-semibold)">1b</span>
+      <h2 style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-xl); font-weight: var(--weight-bold); margin: 0">مصفوفة الحالات</h2>
+      <span style="font-size: var(--text-sm); color: var(--text-muted)">الأسباب الثلاثة، وحالتا الإعادة، ولحظة العودة — فاتح وغامق، جوّال ولوح وسطح مكتب</span>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-8); align-items: flex-start">
+      <sc-for list="{{ frames }}" as="f" hint-placeholder-count="6">
+        <div style="display: flex; flex-direction: column; gap: var(--space-3)">
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <div style="font-size: var(--text-sm); font-weight: var(--weight-semibold)">{{ f.label }}</div>
+            <div style="font-size: var(--text-xs); color: var(--text-muted)">{{ f.note }}</div>
+          </div>
+          <div data-theme="{{ f.theme }}" data-ov-frame="true" style="{{ f.frameStyle }}">
+            <div style="position: absolute; inset: 0; display: flex; flex-direction: column">
+              <div style="display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) var(--space-4); background: var(--surface-card); border-bottom: var(--border-width) solid var(--border-subtle)">
+                <span style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-base); font-weight: var(--weight-bold); color: var(--text-brand)">رباط</span>
+                <span style="height: 8px; width: 60px; border-radius: var(--radius-pill); background: var(--surface-sunken)"></span>
+                <span style="height: 8px; width: 40px; border-radius: var(--radius-pill); background: var(--surface-sunken)"></span>
+              </div>
+              <div style="flex: 1; padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-4)">
+                <div style="height: 120px; border-radius: var(--radius-md); background: var(--surface-sunken); border: var(--border-width) solid var(--border-subtle)"></div>
+                <span style="height: 10px; width: 70%; border-radius: var(--radius-pill); background: var(--surface-sunken)"></span>
+                <span style="height: 10px; width: 48%; border-radius: var(--radius-pill); background: var(--surface-sunken)"></span>
+                <span style="height: 10px; width: 60%; border-radius: var(--radius-pill); background: var(--surface-sunken)"></span>
+              </div>
+            </div>
+
+            <sc-if value="{{ f.showToast }}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; inset-block-start: var(--space-4); inset-inline: 0; display: flex; justify-content: center">
+                <div style="display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-radius: var(--radius-pill); background: var(--state-success-bg); color: var(--state-success-fg); border: var(--border-width) solid var(--state-success-fg); font-size: var(--text-xs); box-shadow: var(--shadow-md)">
+                  <span style="width: 8px; height: 8px; background: currentColor; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%)"></span>
+                  عاد الاتصال. تابع من حيث توقفت.
+                </div>
+              </div>
+            </sc-if>
+
+            <div style="{{ f.scrimStyle }}">
+              <div style="{{ f.cardStyle }}">
+                <div style="display: flex; align-items: center; gap: var(--space-3)">
+                  <span style="{{ f.glyphWrap }}">
+                    <sc-if value="{{ f.isOffline }}" hint-placeholder-val="{{ false }}">
+                      <svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                        <rect x="30" y="14" width="16" height="20" rx="2"></rect>
+                        <path d="M4 24h8"></path><path d="M20 24h6"></path>
+                        <path d="M14 12 L 20 36"></path>
+                      </svg>
+                    </sc-if>
+                    <sc-if value="{{ f.isUnreachable }}" hint-placeholder-val="{{ false }}">
+                      <svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                        <rect x="30" y="14" width="16" height="20" rx="2"></rect>
+                        <path d="M26 24 H 8" stroke-dasharray="4 4"></path>
+                        <rect x="2" y="16" width="12" height="16" rx="2" stroke-dasharray="4 4"></rect>
+                      </svg>
+                    </sc-if>
+                    <sc-if value="{{ f.isError }}" hint-placeholder-val="{{ false }}">
+                      <svg width="26" height="26" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                        <rect x="30" y="14" width="16" height="20" rx="2"></rect>
+                        <path d="M26 24 H 8"></path>
+                        <rect x="2" y="12" width="14" height="24" rx="2"></rect>
+                        <path d="M2 24 H 16"></path>
+                      </svg>
+                    </sc-if>
+                  </span>
+                  <div style="display: flex; flex-direction: column; gap: 2px">
+                    <div style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary); line-height: var(--leading-tight)">{{ f.title }}</div>
+                    <div style="font-size: var(--text-xs); color: var(--text-secondary)">{{ f.kicker }}</div>
+                  </div>
+                </div>
+
+                <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary); text-wrap: pretty">{{ f.body }}</p>
+
+                <sc-if value="{{ f.isOffline }}" hint-placeholder-val="{{ false }}">
+                  <ul style="margin: 0; padding: var(--space-3); list-style: none; display: flex; flex-direction: column; gap: var(--space-2); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--surface-page); font-size: var(--text-xs); color: var(--text-secondary)">
+                    <li style="display: flex; gap: var(--space-2); align-items: center"><span style="width: 5px; height: 5px; background: var(--border-strong)"></span>تحقّق من شبكة الواي فاي</li>
+                    <li style="display: flex; gap: var(--space-2); align-items: center"><span style="width: 5px; height: 5px; background: var(--border-strong)"></span>تحقّق من بيانات الجوّال أو وضع الطيران</li>
+                  </ul>
+                </sc-if>
+
+                <div style="display: flex; gap: var(--space-2); align-items: flex-start; padding-block: var(--space-3); border-block-start: var(--border-width) solid var(--border-subtle); border-block-end: var(--border-width) solid var(--border-subtle)">
+                  <span style="width: 7px; height: 7px; margin-block-start: 5px; background: var(--text-brand); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); flex: none"></span>
+                  <span style="font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--text-secondary)">ما كتبته محفوظ على جهازك، وصفحتك باقية كما هي.</span>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: var(--space-2)">
+                  <button type="button" style="{{ f.btnStyle }}">
+                    <sc-if value="{{ f.isRetrying }}" hint-placeholder-val="{{ false }}">
+                      <span data-ov-arc="true" style="width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,254,250,.35); border-block-start-color: var(--text-on-brand); animation: ov-arc 900ms linear infinite"></span>
+                    </sc-if>
+                    {{ f.btnLabel }}
+                  </button>
+                  <span style="font-size: var(--text-xs); color: var(--text-secondary)">{{ f.statusLine }}</span>
+                  <div style="height: 3px; border-radius: var(--radius-pill); background: var(--surface-sunken); overflow: hidden">
+                    <div style="{{ f.progressStyle }}"></div>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap">
+                  <span style="font-size: var(--text-xs); color: var(--text-secondary)">{{ f.attemptLine }}</span>
+                  <sc-if value="{{ f.showRef }}" hint-placeholder-val="{{ false }}">
+                    <span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary)">{{ f.refCode }}</span>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div id="1c" style="display: flex; flex-direction: column; gap: var(--space-5); max-width: 1120px">
+    <div style="display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap">
+      <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 24px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--ribaat-green-100); color: var(--text-brand); font-size: var(--text-xs); font-weight: var(--weight-semibold)">1c</span>
+      <h2 style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-xl); font-weight: var(--weight-bold); margin: 0">العودة إلى التطبيق</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-6)">
+      <div style="display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface-card)">
+        <div style="font-size: var(--text-xs); color: var(--text-muted)">١ · نجاح أول طلب</div>
+        <div style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-lg); font-weight: var(--weight-bold)">الطبقة تنسحب</div>
+        <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary)">تتلاشى شدّة العتمة ثم البطاقة خلال <span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs)">--duration-slow</span> بمنحنى <span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs)">--ease-standard</span>. بلا تكبير ولا ارتداد. مع <span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs)">prefers-reduced-motion</span> تُزال الطبقة فورًا بلا تدرّج.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface-card)">
+        <div style="font-size: var(--text-xs); color: var(--text-muted)">٢ · التأكيد</div>
+        <div style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-lg); font-weight: var(--weight-bold)">شريط عودة قصير</div>
+        <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary)">«عاد الاتصال. تابع من حيث توقفت.» يظهر أعلى التطبيق أربع ثوانٍ ثم يزول. يحمل <span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs)">role="status"</span> فيُقرأ بلا مقاطعة، ولا يطلب أي إجراء.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface-card)">
+        <div style="font-size: var(--text-xs); color: var(--text-muted)">٣ · التركيز</div>
+        <div style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-lg); font-weight: var(--weight-bold)">يرجع حيث كان</div>
+        <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary)">يُحفظ العنصر الذي كان يحمل التركيز قبل الظهور ويُعاد إليه بعد الانسحاب — حقل الإجابة الذي كان الطالب يكتب فيه يستأنف بمؤشّر الكتابة في موضعه.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="1d" style="display: flex; flex-direction: column; gap: var(--space-5); max-width: 1120px">
+    <div style="display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap">
+      <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 24px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--ribaat-green-100); color: var(--text-brand); font-size: var(--text-xs); font-weight: var(--weight-semibold)">1d</span>
+      <h2 style="font-family: Amiri, 'Times New Roman', serif; font-size: var(--text-xl); font-weight: var(--weight-bold); margin: 0">أسئلة معلّقة للقرار</h2>
+      <span style="font-size: var(--text-sm); color: var(--text-muted)">مرفوعة كما هي، غير محلولة في هذا التصميم</span>
+    </div>
+    <ol style="margin: 0; padding-inline-start: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); font-size: var(--text-base); line-height: var(--leading-normal); color: var(--text-secondary); max-width: 860px">
+      <li>انقطاع الاتصال أثناء اختبار: هل يتوقف المؤقّت، وهل تُحفظ الإجابات محليًا، وهل يُنبَّه الطالب قبل احتساب المحاولة؟ قرار سياسة أكاديمية لا قرار تصميم.</li>
+      <li>الأعمال غير المرسلة في غير الاختبارات: هل تُحفظ محليًا وتُرسَل تلقائيًا عند العودة، أم يُطلب من الطالب الإرسال بنفسه؟</li>
+      <li>رمز المرجع: هل يُعرض للطالب، وهل يستطيع الدعم التصرّف به فعلًا؟ عُرض هنا في حالة خطأ الخادم فقط.</li>
+      <li>رموز التصميم الناقصة: لا يوجد رمز لعتمة الطبقة في الوضع الغامق غير <span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs)">--surface-overlay</span>، ولا رمز لحدّ حالة (<span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs)">--state-*-border</span>)، ولا خطّ <span dir="ltr" style="font-family: var(--font-mono); font-size: var(--text-xs)">--font-mono</span> محمَّل محليًا لرمز المرجع.</li>
+    </ol>
+  </div>
+
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:900}}">
+const COPY = {
+  offline: {
+    title: 'لا يوجد اتصال بالإنترنت',
+    kicker: 'الجهاز غير متصل بالشبكة',
+    body: 'جهازك غير متصل بالشبكة، فتوقّف تبادل البيانات مع المنصة. تحقّق من اتصالك، وسيتابع التطبيق تلقائيًا عند عودته.',
+    fg: 'var(--state-info-fg)', bg: 'var(--state-info-bg)', showRef: false
+  },
+  unreachable: {
+    title: 'تعذّر الوصول إلى خادم المنصة',
+    kicker: 'اتصالك يعمل، والخادم لا يستجيب',
+    body: 'اتصالك بالإنترنت سليم، ولكن خادم المنصة لا يستجيب لطلبات التطبيق. الخلل عند المنصة لا عند جهازك، والمحاولة تُعاد تلقائيًا.',
+    fg: 'var(--state-warning-fg)', bg: 'var(--state-warning-bg)', showRef: false
+  },
+  error: {
+    title: 'الخادم يرد بخطأ',
+    kicker: 'وصل الطلب ولم يكتمل',
+    body: 'وصل طلب التطبيق إلى الخادم ولكنه لم يكتمل. سُجّل الخلل والفريق التقني ينظر فيه، ويمكنك إعادة المحاولة الآن أو الانتظار.',
+    fg: 'var(--state-danger-fg)', bg: 'var(--state-danger-bg)', showRef: true
+  }
+};
+
+const AR_DIGITS = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function ar(n) { return String(n).replace(/[0-9]/g, d => AR_DIGITS[+d]); }
+function clock(sec) {
+  const m = Math.floor(sec / 60), s = sec % 60;
+  return ar(String(m).padStart(2, '0')) + ':' + ar(String(s).padStart(2, '0'));
+}
+const BACKOFF = [15, 15, 30, 60, 120, 300];
+
+function scrim(pad, visible) {
+  return 'position: absolute; inset: 0; background: var(--surface-overlay); display: flex; align-items: center; justify-content: center; padding: ' + pad +
+    '; opacity: ' + (visible ? 1 : 0) + '; pointer-events: ' + (visible ? 'auto' : 'none') +
+    '; transition: opacity var(--duration-slow) var(--ease-standard);';
+}
+function glyphWrap(fg, bg, size, pulse) {
+  return 'flex: none; display: inline-flex; align-items: center; justify-content: center; width: ' + size + 'px; height: ' + size +
+    'px; border-radius: var(--radius-md); background: ' + bg + '; color: ' + fg + ';' +
+    (pulse ? ' animation: ov-pulse 2000ms ease-in-out infinite;' : '');
+}
+function btn(kind, full) {
+  const base = 'font-family: inherit; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); height: 44px; padding: 0 var(--space-5); border-radius: var(--radius-md); font-size: var(--text-base); font-weight: var(--weight-semibold); cursor: pointer; transition: background var(--duration-fast) var(--ease-standard);' + (full ? ' width: 100%;' : '');
+  if (kind === 'busy') return base + ' border: none; background: var(--surface-brand-strong); color: var(--text-on-brand); opacity: .9; cursor: default;';
+  return base + ' border: none; background: var(--surface-brand-strong); color: var(--text-on-brand);';
+}
+function progress(pct, indeterminate) {
+  if (indeterminate) return 'height: 100%; width: 100%; background: var(--ribaat-green-500); animation: ov-pulse 1400ms ease-in-out infinite;';
+  return 'height: 100%; width: ' + pct + '%; background: var(--border-default); transition: width 1000ms linear;';
+}
+function ctlBtn(active) {
+  return 'font-family: inherit; height: 34px; padding: 0 var(--space-4); border-radius: var(--radius-sm); font-size: var(--text-sm); cursor: pointer; border: var(--border-width) solid ' +
+    (active ? 'var(--ribaat-green-600)' : 'var(--border-default)') + '; background: ' +
+    (active ? 'var(--ribaat-green-100)' : 'var(--surface-card)') + '; color: ' +
+    (active ? 'var(--text-brand)' : 'var(--text-secondary)') + ';';
+}
+
+const CARD = 'width: 100%; max-width: 420px; color: var(--text-primary); background: var(--surface-card); border: var(--border-width) solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4);';
+
+function frameShell(w, h) {
+  return 'width: ' + w + 'px; height: ' + h + 'px; color: var(--text-primary); position: relative; overflow: hidden; border: var(--border-width) solid var(--border-default); border-radius: var(--radius-lg); background: var(--surface-page); box-shadow: var(--shadow-sm);';
+}
+
+class Component extends DCLogic {
+  state = { cause: 'unreachable', phase: 'waiting', attempt: 1, left: 15, theme: 'light', recovered: false, toast: false };
+
+  componentDidMount() {
+    this.timer = setInterval(() => this.tick(), 1000);
+    if (this.button) this.button.focus({ preventScroll: true });
+    this.onKey = (e) => {
+      if (e.key !== 'Tab' || !this.card || this.state.recovered) return;
+      const nodes = this.card.querySelectorAll('button:not([disabled]), a[href], input, [tabindex]:not([tabindex="-1"])');
+      if (!nodes.length) return;
+      const first = nodes[0], last = nodes[nodes.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+    document.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.t2); clearTimeout(this.t3); document.removeEventListener('keydown', this.onKey); }
+
+  tick() {
+    if (this.state.recovered || this.state.phase === 'retrying') return;
+    this.setState(s => (s.left <= 1 ? (this.runRetry(), { left: 0 }) : { left: s.left - 1 }));
+  }
+  runRetry() {
+    clearTimeout(this.t2);
+    this.setState({ phase: 'retrying' });
+    this.t2 = setTimeout(() => {
+      this.setState(s => {
+        const n = s.attempt + 1;
+        return { phase: 'failed', attempt: n, left: BACKOFF[Math.min(n - 1, BACKOFF.length - 1)] };
+      });
+    }, 1800);
+  }
+
+  renderVals() {
+    const s = this.state, c = COPY[s.cause];
+    const retrying = s.phase === 'retrying';
+    const total = BACKOFF[Math.min(s.attempt - 1, BACKOFF.length - 1)];
+    const statusLine = retrying
+      ? 'جارٍ إعادة المحاولة…'
+      : (s.phase === 'failed' ? 'تعذّرت المحاولة. المحاولة التالية بعد ' + clock(s.left) : 'المحاولة التالية بعد ' + clock(s.left));
+
+    const frames = [
+      { key: 'p-off', label: 'جوّال · الجهاز غير متصل', note: 'فاتح · ٣٩٠ × ٧٠٠', theme: 'light', cause: 'offline', phase: 'waiting', left: 15, attempt: 1, w: 390, h: 700 },
+      { key: 'p-unr', label: 'جوّال · الخادم لا يستجيب', note: 'فاتح · لا قائمة تحقّق، الخلل ليس عند الطالب', theme: 'light', cause: 'unreachable', phase: 'waiting', left: 12, attempt: 1, w: 390, h: 700 },
+      { key: 'p-err', label: 'جوّال · الخادم يرد بخطأ', note: 'فاتح · رمز المرجع يظهر هنا فقط', theme: 'light', cause: 'error', phase: 'waiting', left: 9, attempt: 1, w: 390, h: 700 },
+      { key: 'd-off', label: 'جوّال · الجهاز غير متصل', note: 'غامق', theme: 'dark', cause: 'offline', phase: 'waiting', left: 15, attempt: 1, w: 390, h: 700 },
+      { key: 'd-unr', label: 'جوّال · الخادم لا يستجيب', note: 'غامق', theme: 'dark', cause: 'unreachable', phase: 'waiting', left: 12, attempt: 1, w: 390, h: 700 },
+      { key: 'd-err', label: 'جوّال · الخادم يرد بخطأ', note: 'غامق', theme: 'dark', cause: 'error', phase: 'waiting', left: 9, attempt: 1, w: 390, h: 700 },
+      { key: 't-unr', label: 'لوح · الخادم لا يستجيب', note: 'فاتح · ٨٣٤ × ٦٢٠', theme: 'light', cause: 'unreachable', phase: 'waiting', left: 12, attempt: 1, w: 834, h: 620 },
+      { key: 't-off', label: 'لوح · الجهاز غير متصل', note: 'غامق · ٨٣٤ × ٦٢٠', theme: 'dark', cause: 'offline', phase: 'waiting', left: 15, attempt: 1, w: 834, h: 620 },
+      { key: 'r-try', label: 'جارٍ إعادة المحاولة', note: 'الزرّ معطّل، والشريط غير محدّد المدة', theme: 'light', cause: 'unreachable', phase: 'retrying', left: 0, attempt: 3, w: 390, h: 700 },
+      { key: 'r-fail', label: 'تعذّرت المحاولة مجدّدًا', note: 'المحاولة الثالثة · المهلة تتضاعف', theme: 'light', cause: 'unreachable', phase: 'failed', left: 30, attempt: 3, w: 390, h: 700 },
+      { key: 'r-fail-d', label: 'تعذّرت المحاولة مجدّدًا', note: 'غامق · المحاولة الخامسة', theme: 'dark', cause: 'error', phase: 'failed', left: 120, attempt: 5, w: 390, h: 700 },
+      { key: 'rec', label: 'لحظة العودة', note: 'الطبقة انسحبت، وشريط العودة يظهر أربع ثوانٍ', theme: 'light', cause: 'unreachable', phase: 'waiting', left: 0, attempt: 1, w: 390, h: 700, recovered: true }
+    ].map(f => {
+      const fc = COPY[f.cause], isRetry = f.phase === 'retrying';
+      const tot = BACKOFF[Math.min(f.attempt - 1, BACKOFF.length - 1)];
+      return {
+        key: f.key, label: f.label, note: f.note, theme: f.theme,
+        frameStyle: frameShell(f.w, f.h),
+        scrimStyle: scrim('var(--space-5)', !f.recovered),
+        cardStyle: CARD,
+        showToast: !!f.recovered,
+        isOffline: f.cause === 'offline', isUnreachable: f.cause === 'unreachable', isError: f.cause === 'error',
+        isRetrying: isRetry,
+        glyphWrap: glyphWrap(fc.fg, fc.bg, 44, isRetry),
+        title: fc.title, kicker: fc.kicker, body: fc.body,
+        btnStyle: btn(isRetry ? 'busy' : 'primary', true),
+        btnLabel: isRetry ? 'يُعاد الآن…' : 'إعادة المحاولة',
+        statusLine: isRetry ? 'جارٍ إعادة المحاولة…' : (f.phase === 'failed' ? 'تعذّرت المحاولة. المحاولة التالية بعد ' + clock(f.left) : 'المحاولة التالية بعد ' + clock(f.left)),
+        progressStyle: progress(isRetry ? 100 : Math.round((f.left / tot) * 100), isRetry),
+        attemptLine: 'المحاولة ' + ar(f.attempt) + ' من ' + ar(6),
+        showRef: fc.showRef, refCode: 'RB-7F2C-40'
+      };
+    });
+
+    return {
+      frames,
+      liveTheme: s.theme,
+      isOffline: s.cause === 'offline', isUnreachable: s.cause === 'unreachable', isError: s.cause === 'error',
+      isRetrying: retrying,
+      liveTitle: c.title, liveKicker: c.kicker, liveBody: c.body,
+      liveGlyphWrap: glyphWrap(c.fg, c.bg, 52, retrying),
+      liveScrimStyle: scrim('var(--space-8)', !s.recovered),
+      liveRetryBtnStyle: btn(retrying ? 'busy' : 'primary', false),
+      liveButtonLabel: retrying ? 'يُعاد الآن…' : 'إعادة المحاولة',
+      retryDisabled: retrying,
+      liveStatusLine: statusLine,
+      liveProgressStyle: progress(Math.round((s.left / total) * 100), retrying),
+      liveAttemptLine: 'المحاولة ' + ar(s.attempt) + ' من ' + ar(6),
+      showRef: c.showRef, refCode: 'RB-7F2C-40',
+      showToast: s.toast,
+      liveCardRef: (el) => { this.card = el; },
+      liveButtonRef: (el) => { this.button = el; },
+      manualRetry: () => { if (!retrying) this.runRetry(); },
+      setOffline: () => this.setState({ cause: 'offline' }),
+      setUnreachable: () => this.setState({ cause: 'unreachable' }),
+      setError: () => this.setState({ cause: 'error' }),
+      btnOffline: ctlBtn(s.cause === 'offline'),
+      btnUnreachable: ctlBtn(s.cause === 'unreachable'),
+      btnError: ctlBtn(s.cause === 'error'),
+      btnRecover: ctlBtn(s.recovered),
+      recoverLabel: s.recovered ? 'إظهار الطبقة مرة أخرى' : 'محاكاة عودة الاتصال',
+      btnTheme: ctlBtn(s.theme === 'dark'),
+      themeLabel: s.theme === 'dark' ? 'الوضع الغامق' : 'الوضع الفاتح',
+      toggleTheme: () => this.setState(st => ({ theme: st.theme === 'dark' ? 'light' : 'dark' })),
+      simulateRecover: () => {
+        clearTimeout(this.t3);
+        if (s.recovered) { this.setState({ recovered: false, toast: false, phase: 'waiting', attempt: 1, left: 15 }); return; }
+        this.setState({ recovered: true, phase: 'waiting', toast: true });
+        this.t3 = setTimeout(() => this.setState({ toast: false }), 4000);
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

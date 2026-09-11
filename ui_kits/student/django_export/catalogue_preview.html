@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!-- Static preview ONLY — mirrors catalogue.html + partials with Django tags
+     resolved to sample data, so the CSS/markup can be eyeballed in a browser.
+     Not part of the Django handoff itself; the templates/ folder is. -->
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>معاينة — الدورات</title>
+<link rel="stylesheet" href="static/catalogue/tokens/fonts.css">
+<link rel="stylesheet" href="static/catalogue/tokens/colors.css">
+<link rel="stylesheet" href="static/catalogue/tokens/colors-dark.css">
+<link rel="stylesheet" href="static/catalogue/tokens/typography.css">
+<link rel="stylesheet" href="static/catalogue/tokens/spacing.css">
+<link rel="stylesheet" href="static/catalogue/tokens/effects.css">
+<link rel="stylesheet" href="static/catalogue/catalogue.css">
+<script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+<div class="rb-page" data-theme="light">
+
+  <header class="rb-header">
+    <div class="rb-header-start">
+      <img class="rb-logo" src="static/catalogue/img/ribaat-wordmark.png" alt="رباط الحنابلة">
+      <nav class="rb-nav">
+        <a href="#">الرئيسية</a>
+        <a href="#" class="is-active">الدورات</a>
+        <a href="#">لوحة التحكم</a>
+        <a href="#">الاستعلام عن شهادة</a>
+      </nav>
+    </div>
+    <div class="rb-header-end">
+      <span class="rb-avatar rb-avatar--sm">م</span>
+      <button class="rb-logout-btn">تسجيل الخروج</button>
+    </div>
+  </header>
+
+  <main class="rb-main">
+
+    <aside class="rb-sidebar">
+      <div class="rb-filters-field" style="margin-bottom: 22px;">
+        <label class="rb-filters-label">البحث</label>
+        <input type="text" value="" placeholder="ابحث عن اسم المتن أو الدورة" class="rb-filters-input">
+      </div>
+      <div class="rb-filters">
+        <div class="rb-filters-field">
+          <span class="rb-filters-label">التصنيف</span>
+          <div class="rb-chip-group">
+            <a href="#" class="rb-chip">تفسير</a>
+            <a href="#" class="rb-chip is-active">حديث</a>
+            <a href="#" class="rb-chip">فقه</a>
+            <a href="#" class="rb-chip">عقيدة</a>
+            <a href="#" class="rb-chip">سيرة</a>
+            <a href="#" class="rb-chip">أصول الفقه</a>
+            <a href="#" class="rb-chip">أدب</a>
+          </div>
+        </div>
+        <div class="rb-filters-field">
+          <label class="rb-filters-label">المعلم</label>
+          <select class="rb-filters-select">
+            <option>جميع المعلمين</option>
+            <option>د. عبد العزيز العيدان</option>
+            <option>د. أنس اليتامى</option>
+          </select>
+        </div>
+        <div class="rb-filters-field">
+          <label class="rb-filters-label">المستوى</label>
+          <select class="rb-filters-select">
+            <option>كل المستويات</option>
+            <option>المستوى الأول</option>
+            <option>المستوى الثاني</option>
+          </select>
+        </div>
+        <a href="#" class="rb-filters-clear">إزالة كل عوامل التصفية</a>
+      </div>
+    </aside>
+
+    <div class="rb-results-col">
+
+      <div class="rb-page-head">
+        <h1 class="rb-h1">الدورات</h1>
+        <p class="rb-catalogue-lede">تصفح الدورات المتاحة عبر المسارات والمواد الشرعية.</p>
+      </div>
+
+      <div class="rb-active-filters">
+        <a href="#" class="rb-active-chip">حديث <i data-lucide="x"></i></a>
+        <a href="#" class="rb-clear-all-link">إزالة الكل</a>
+      </div>
+
+      <div class="rb-toolbar">
+        <span class="rb-result-count">٢ دورة</span>
+        <div class="rb-sort">
+          <span>ترتيب حسب</span>
+          <select>
+            <option>الأحدث</option>
+            <option>الأكثر تسجيلاً</option>
+            <option>حسب المستوى</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="rb-card-grid">
+        <div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--accent rb-badge--category">حديث</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">الأربعين النووية</span>
+            <p class="rb-card-instructor">د. أنس اليتامى</p>
+            <p class="rb-card-meta">11 الدروس — 06:20:00</p>
+            <div class="rb-card-track-note">
+              <i data-lucide="lock"></i>
+              <span>يتطلب إتمام متن الورقات في أصول الفقه</span>
+            </div>
+            <div class="rb-card-cta"><button class="rb-btn rb-btn--outline rb-btn--full" disabled>مقفلة</button></div>
+          </div>
+        </div>
+        <div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--accent rb-badge--category">حديث</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">بلوغ المرام</span>
+            <p class="rb-card-instructor">د. أنس اليتامى</p>
+            <p class="rb-card-meta">13 الدروس — 10:05:00</p>
+            <div class="rb-card-track-note">
+              <i data-lucide="lock"></i>
+              <span>يتطلب إتمام الأربعين النووية</span>
+            </div>
+            <div class="rb-card-cta"><button class="rb-btn rb-btn--outline rb-btn--full" disabled>مقفلة</button></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <a href="#" class="rb-drawer-scrim"></a>
+  <div class="rb-drawer"></div>
+
+</div>
+<script>window.lucide && window.lucide.createIcons();</script>
+</body>
+</html>

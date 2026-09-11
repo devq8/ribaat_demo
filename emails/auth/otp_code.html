@@ -1,0 +1,24 @@
+{% extends "emails/base.html" %}
+{% comment %}3. رمز التحقق — one-time code / two-factor{% endcomment %}
+{% block title %}رمز التحقق{% endblock %}
+{% block preheader %}رمز التحقق لمرة واحدة لإكمال تسجيل الدخول إلى حسابك.{% endblock %}
+{% block content %}
+<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+  <tr><td class="e-txt e-h1" style="direction:rtl;text-align:right;font-family:Amiri,'Traditional Arabic','Times New Roman',serif;font-size:28px;line-height:42px;mso-line-height-rule:exactly;font-weight:700;color:#211F19;padding:0 0 14px;">رمز التحقق</td></tr>
+  <tr><td style="padding:0 0 20px;">{% include "emails/partials/rule.html" %}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">السلام عليكم ورحمة الله وبركاته، {{ user_name }}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">استخدم الرمز التالي لإكمال العملية التي بدأتها في {{ site_name }}:</td></tr>
+  <tr><td align="center" style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;">
+      <tr><td class="e-code" align="center" bgcolor="#F7F3E8" style="background-color:#F7F3E8;border:1px solid #C9BFA6;border-radius:10px;padding:18px 32px;direction:ltr;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:34px;font-weight:700;line-height:44px;mso-line-height-rule:exactly;color:#211F19;">{{ otp_code }}</td></tr>
+    </table>
+  </td></tr>
+  <tr><td class="e-sub" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:14px;line-height:25px;mso-line-height-rule:exactly;color:#635C48;padding:0 0 14px;">الرمز صالح لمدة {{ expiry_minutes }} دقيقة، ويصلح لاستخدام واحد فقط.</td></tr>
+  <tr><td style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" class="e-warn" bgcolor="#F3E7CC" style="width:100%;background-color:#F3E7CC;border:1px solid #A97A24;border-radius:10px;">
+      <tr><td class="e-warn-t" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:14px;line-height:25px;mso-line-height-rule:exactly;color:#211F19;padding:14px 18px;">لا تُشارك هذا الرمز مع أي شخص. إدارة {{ site_name }} لا تطلب منك رمز التحقق في أي حال.</td></tr>
+    </table>
+  </td></tr>
+  <tr><td class="e-mut" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:12px;line-height:20px;mso-line-height-rule:exactly;color:#82795F;padding:0;">إن لم تكن أنت من طلب هذا الرمز، فيُرجى تغيير كلمة المرور ومراسلتنا على {{ support_email }}.</td></tr>
+</table>
+{% endblock %}

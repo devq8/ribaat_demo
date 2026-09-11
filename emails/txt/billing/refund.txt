@@ -1,0 +1,23 @@
+{% comment %}Plain-text alternative — generated from billing/refund.html. Keep in sync with the HTML body.{% endcomment %}إشعار استرداد مبلغ
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+نُعلمك باعتماد استرداد المبلغ التالي إلى وسيلة الدفع الأصلية.
+مرجع الاسترداد: {{ refund_reference }}
+البيان: {{ item_title }}
+المبلغ المسترد: {{ refund_amount_with_currency }}
+وسيلة الاسترداد: {{ refund_method }}
+رقم الإيصال الأصلي: {{ receipt_number }}
+تاريخ الاعتماد: {{ refunded_at }}
+قد تستغرق إضافة المبلغ إلى حسابك حتى {{ refund_expected_days }} أيام عمل، بحسب إجراءات المصرف أو مزوّد الدفع.
+يترتب على الاسترداد إلغاء الوصول إلى المحتوى المرتبط به.
+
+عرض تفاصيل العملية:
+{{ receipt_url }}
+
+نص سياسة الاسترداد بانتظار تأكيد الإدارة — انظر الأسئلة المفتوحة.
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

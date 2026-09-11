@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EAE6DA; }
+    a { color: #4F6140; text-decoration: none; }
+    a:hover { color: #3E4E32; }
+  </style>
+</helmet>
+
+<section style="padding: 48px; font-family: var(--font-sans, sans-serif);">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px;">
+    <span style="font-family: var(--font-display, serif); font-size: 26px; font-weight: 700; color: #211F19;">Exam taking — full flow</span>
+    <span style="font-size: 13px; color: #635C48;">Start · in-progress (three question types, timed + untimed headers) · submit confirmation · submitted. Light and dark, desktop / tablet / mobile.</span>
+  </div>
+  <span style="display: block; font-size: 12px; color: #82795F; margin-bottom: 34px; max-width: 1100px;">Every frame is the same live component (<code>ExamTaking.dc.html</code>) — the navigator, timer, flagging and answer state are interactive in place. Tweaks: question-navigator style (labelled list · chips · number grid), navigator row labels, key placement (outside the box · inside · hidden), True/False control style (compact buttons · segmented · large tiles), plus screen, theme, breakpoint, timing, flagging and results policy.</span>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start;">
+
+    <div id="5a" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">5a</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — in progress, MCQ, timed header</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1360px;">1360px. Navigator rail on the inline-end (left) side so the question keeps the RTL reading start; sticky under the header. Default navigator is a labelled question list — ✓ answered, hollow circle unanswered, flag for review — with the key as a plain caption <em>below</em> the box, not a row of button-like swatches inside it.</span>
+      <div style="width: 1360px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" screen="in-progress" viewport="desktop" color-scheme="light" start-question="5" hint-size="1360px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5b" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">5b</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — True/False (compact), untimed header variant</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1360px;">Untimed exams state «بدون وقت محدد» in the timer slot rather than leaving a gap. True/False is a pair of small buttons — much shorter than an MCQ row, so the type reads instantly. Segmented and large-tile alternatives are in Tweaks.</span>
+      <div style="width: 1360px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="in-progress" viewport="desktop" color-scheme="light" timed="{{ false }}" start-question="9" hint-size="1360px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5c" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">5c</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — short answer (paragraph)</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1360px;">Textarea sized to the expected answer; the hint states the expected length.</span>
+      <div style="width: 1360px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="in-progress" viewport="desktop" color-scheme="light" start-question="11" hint-size="1360px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5d" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">5d</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — short answer (one line), flagged</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1360px;">Unanswered + flagged for review: flag marker in the navigator row, brown-tinted flag control in the question header.</span>
+      <div style="width: 1360px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="in-progress" viewport="desktop" color-scheme="light" start-question="7" hint-size="1360px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5e" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #211F19; color: #FFFEFA; font-size: 13px; font-weight: 700;">5e</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Dark — timer in its low-time state</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1360px;">Under five minutes the timer moves to the muted amber pair (#3A2F1C / #D3A85C in dark) — legible, no flashing, no red siren. Held static at 04:38 so the state stays inspectable; the live countdown and its auto-submit run in 5a.</span>
+      <div style="width: 1360px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.16);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="in-progress" viewport="desktop" color-scheme="dark" timer-state="low" start-question="5" hint-size="1360px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5f" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">5f</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Tablet · Light — 834px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 834px;">Rail stays (narrowed to 250px) — the question list scrolls inside the sticky box at 340px max height.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="in-progress" viewport="tablet" color-scheme="light" start-question="5" hint-size="834px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5g" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">5g</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile · Light — 390px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 390px;">Progress and timer stay in the sticky header; the rail becomes a bottom bar: prev / navigator / next.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="in-progress" viewport="mobile" color-scheme="light" start-question="5" hint-size="390px,820px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5h" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">5h</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile · Light — navigator sheet open</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 390px;">Same navigator as the rail, plus the submit action.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="in-progress" viewport="mobile" color-scheme="light" start-question="5" sheet-open="{{ true }}" hint-size="390px,820px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5i" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #211F19; color: #FFFEFA; font-size: 13px; font-weight: 700;">5i</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile · Dark — True/False</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 390px;">Buttons stay side by side at 390px; 44px hit targets.</span>
+      <div style="width: 390px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.16);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="in-progress" viewport="mobile" color-scheme="dark" start-question="9" hint-size="390px,820px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5j" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">5j</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Start screen · Desktop Light — timed</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 900px;">Four-cell meta strip, instructions, single primary action.</span>
+      <div style="width: 900px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="start" viewport="desktop" color-scheme="light" hint-size="900px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5k" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #211F19; color: #FFFEFA; font-size: 13px; font-weight: 700;">5k</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Start screen · Dark — untimed</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 900px;">Untimed variant: duration cell reads «بدون وقت محدد» and the first instruction changes accordingly.</span>
+      <div style="width: 900px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.16);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="start" viewport="desktop" color-scheme="dark" timed="{{ false }}" hint-size="900px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5l" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">5l</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Submit confirmation · Desktop Light</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1100px;">Unanswered questions are listed as jump chips — the student can go straight back to 7, 12 or 18. Amber notice, not a red alert.</span>
+      <div style="width: 1100px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="confirm" viewport="desktop" color-scheme="light" start-question="5" hint-size="1100px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5m" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #211F19; color: #FFFEFA; font-size: 13px; font-weight: 700;">5m</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Submit confirmation · Dark</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1100px;">Scrim is the system's warm translucent overlay — no blur.</span>
+      <div style="width: 1100px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.16);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="confirm" viewport="desktop" color-scheme="dark" start-question="5" hint-size="1100px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5n" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">5n</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Submitted · Desktop Light — results later (default)</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 760px;">No score. Receipt rows + a plain statement that the teacher reviews and the result appears on the course page. <strong>Open question</strong> — see <a href="#5o">5o</a> for the immediate-score variant.</span>
+      <div style="width: 760px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="submitted" viewport="desktop" color-scheme="light" hint-size="760px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5o" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #211F19; color: #FFFEFA; font-size: 13px; font-weight: 700;">5o</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Submitted · Dark — immediate score variant</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 760px;">Only viable if the exam is all objective, or if a provisional score is acceptable while essay answers are still pending.</span>
+      <div style="width: 760px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.16);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="submitted" viewport="desktop" color-scheme="dark" results-policy="immediate" hint-size="760px,900px"></dc-import>
+      </div>
+    </div>
+
+
+    <div id="5p" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #A97A24; color: #FFFEFA; font-size: 13px; font-weight: 700;">5p</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Time expired · Desktop Light — auto-submitted</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 760px;">When the countdown reaches 00:00 the exam closes itself and lands here: amber clock instead of the green check, «انتهى وقت الاختبار وسُلِّم تلقائياً», and the receipt names the unanswered count outright. Saved answers are kept — nothing is discarded.</span>
+      <div style="width: 760px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="time-up" viewport="desktop" color-scheme="light" hint-size="760px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="5q" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #211F19; color: #FFFEFA; font-size: 13px; font-weight: 700;">5q</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Time expired · Mobile Dark</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 390px;">Same measured tone in dark mode — muted amber, no alarm colour.</span>
+      <div style="width: 390px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.16);">
+        <dc-import name="ExamTaking" navigator-style="{{ navigatorStyle }}" navigator-type-labels="{{ navigatorTypeLabels }}" legend-placement="{{ legendPlacement }}" true-false-style="{{ trueFalseStyle }}" live="{{ false }}" screen="time-up" viewport="mobile" color-scheme="dark" hint-size="390px,820px"></dc-import>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;navigatorStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;list&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;list&quot;,&quot;chips&quot;,&quot;grid&quot;],&quot;section&quot;:&quot;Question navigator&quot;},&quot;navigatorTypeLabels&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Question navigator&quot;},&quot;legendPlacement&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;hidden&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;outside&quot;,&quot;inside&quot;,&quot;hidden&quot;],&quot;section&quot;:&quot;Question navigator&quot;},&quot;trueFalseStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;compact&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;compact&quot;,&quot;segmented&quot;,&quot;tiles&quot;],&quot;section&quot;:&quot;Question types&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      navigatorStyle: this.props.navigatorStyle ?? "list",
+      navigatorTypeLabels: this.props.navigatorTypeLabels ?? true,
+      legendPlacement: this.props.legendPlacement ?? "outside",
+      trueFalseStyle: this.props.trueFalseStyle ?? "compact",
+    };
+  }
+}
+
+</script>
+</body>
+</html>

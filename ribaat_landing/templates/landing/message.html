@@ -1,0 +1,81 @@
+{% extends "landing/base.html" %}{% load static %}
+{# ---------------------------------------------------------------------------
+   One page for every system message the site has to show. Its primary case is
+   the page a student lands on after clicking the verification link in the email
+   (msg = the "verified" dict: tone "success", title تم تأكيد بريدك, one primary
+   action into the account) — that is what the previews open on. It also serves
+   the verification-sent notice, an expired link, an enrolment confirmation, a donation
+   receipt or a failed payment, a password reset, a request under review, and
+   the 404 / 500 pages. Same header and footer as every other inner page; no
+   hero, no prose column.
+
+   The view supplies one dict:
+
+     msg = {
+       "tone":    "success" | "pending" | "problem" | "neutral",
+       "eyebrow": "تأكيد البريد الإلكتروني",   # what this message is about
+       "title":   "أُرسل رابط التأكيد",
+       "lede":    "…",                     # one paragraph, no more
+       "facts":   [{"label": "…", "value": "…", "mono": True}, …],   # optional
+       "actions": [{"label": "…", "href": "…", "style": "primary"}, …],
+       "note":    "…",                     # optional, sits under the fold line
+     }
+
+   tone drives the mark only — a green disc, a brown disc or a hollow ring. The
+   state is always said in words too, so nothing depends on the colour.
+
+   404 and 500 render this same template from handler404 / handler500 with a
+   fixed dict; nothing else about them is special.
+   --------------------------------------------------------------------------- #}
+
+{% block title %}{{ msg.title }} — رباط الحنابلة{% endblock %}
+{% block meta_description %}{{ msg.lede }}{% endblock %}
+{% block body_class %}page-message{% endblock %}
+
+{% block head_extra %}
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="{% static 'ribaat/css/message.css' %}">
+{% endblock %}
+
+{% block header %}{% include "landing/partials/header.html" with nav_root="/" %}{% endblock %}
+{% block footer %}{% include "landing/partials/footer.html" with nav_root="/" %}{% endblock %}
+
+{% block content %}
+<article class="msg" data-tone="{{ msg.tone|default:'neutral' }}">
+
+  <div class="msg__band">
+    <div class="wrap msg__head">
+      <p class="msg__mark" aria-hidden="true"></p>
+      {% if msg.eyebrow %}<p class="msg__eyebrow">{{ msg.eyebrow }}</p>{% endif %}
+      <h1 class="msg__title">{{ msg.title }}</h1>
+      {% if msg.lede %}<p class="msg__lede">{{ msg.lede }}</p>{% endif %}
+
+      {% if msg.facts %}
+      <dl class="msg__facts">
+        {% for f in msg.facts %}
+        <div class="msg__fact">
+          <dt>{{ f.label }}</dt>
+          <dd{% if f.mono %} class="mono"{% endif %}>{{ f.value }}</dd>
+        </div>
+        {% endfor %}
+      </dl>
+      {% endif %}
+
+      {% if msg.actions %}
+      <div class="msg__actions">
+        {% for a in msg.actions %}
+        <a class="btn btn--{{ a.style|default:'ghost' }} btn--lg" href="{{ a.href }}">{{ a.label }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if msg.note %}
+  <div class="wrap msg__body">
+    <p class="msg__note">{{ msg.note }}</p>
+  </div>
+  {% endif %}
+
+</article>
+{% endblock %}

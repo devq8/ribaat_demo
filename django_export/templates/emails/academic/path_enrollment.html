@@ -1,0 +1,27 @@
+{% extends "emails/base.html" %}
+{% comment %}8. تأكيد الالتحاق بمسار — learning path enrollment{% endcomment %}
+{% block title %}تأكيد الالتحاق بمسار دراسي{% endblock %}
+{% block preheader %}تم التحاقك بالمسار الدراسي، وهذه تفاصيل مقرراته.{% endblock %}
+{% block content %}
+<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+  <tr><td class="e-txt e-h1" style="direction:rtl;text-align:right;font-family:Amiri,'Traditional Arabic','Times New Roman',serif;font-size:28px;line-height:42px;mso-line-height-rule:exactly;font-weight:700;color:#211F19;padding:0 0 14px;">تأكيد الالتحاق بمسار دراسي</td></tr>
+  <tr><td style="padding:0 0 20px;">{% include "emails/partials/rule.html" %}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">السلام عليكم ورحمة الله وبركاته، {{ student_name }}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">تم التحاقك بالمسار الدراسي التالي. يُدرَس المسار على مراحل مرتّبة، ويُشترط إتمام كل مقرر قبل إتاحة ما يليه.</td></tr>
+  <tr><td style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" class="e-sunk" bgcolor="#F7F3E8" style="width:100%;background-color:#F7F3E8;border:1px solid #E2DAC5;border-radius:10px;">
+      <tr><td style="padding:6px 20px;">
+        <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+          {% include "emails/partials/datarow.html" with label="المسار" value=path_title %}
+          {% include "emails/partials/datarow.html" with label="المستوى" value=path_level %}
+          {% include "emails/partials/datarow.html" with label="عدد المقررات" value=courses_count %}
+          {% include "emails/partials/datarow.html" with label="المقرر الأول" value=first_course_title %}
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td align="center" style="padding:6px 0 22px;">{% include "emails/partials/button.html" with url=path_url label="الانتقال إلى المسار" %}</td></tr>
+  <tr><td style="padding:0 0 16px;">{% include "emails/partials/divider.html" %}</td></tr>
+  <tr><td class="e-mut" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:12px;line-height:20px;mso-line-height-rule:exactly;color:#82795F;padding:0;">عند إتمام جميع مقررات المسار تُصدر شهادة إتمام المسار.</td></tr>
+</table>
+{% endblock %}

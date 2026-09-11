@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors-dark.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--surface-page); }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); }
+  </style>
+</helmet>
+
+<div dir="rtl" data-theme="{{ themeAttr }}" data-screen-label="التسجيل في مقرر مستقل — {{ frameLabel }}" style="background: var(--surface-page); min-height: 100vh; font-family: var(--font-sans); color: var(--text-primary); display: flex; flex-direction: column;">
+
+  <header dir="rtl" style="display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(24px, 6vw, 120px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans);">
+    <div style="display: flex; align-items: center; gap: 36px;">
+      <img src="../../assets/logos/ribaat-mark-2026.png" alt="رباط الحنابلة" style="height: 30px; filter: {{ logoFilter }}; width: 108px">
+      <nav style="display: flex; gap: 26px;">
+        <a href="StudentDashboard.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">لوحة التحكم</a>
+        <a href="CourseCatalogue.dc.html" style="font-size: var(--text-base); color: var(--text-brand); font-weight: var(--weight-semibold);">الدورات</a>
+        <a href="StudentPaths.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">البرامج الدراسية</a>
+        <a href="StudentCertificates.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الشهادات</a>
+      </nav>
+    </div>
+    <div style="position: relative;">
+      <button onClick="{{ toggleAccountMenu }}" aria-label="الحساب" style="background: none; border: none; padding: 0; cursor: pointer; border-radius: 50%; display: flex;">
+        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="ماجد" size="sm" hint-size="32px,32px"></x-import>
+      </button>
+      <sc-if value="{{ accountMenuOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: calc(100% + 10px); inset-inline-end: 0; min-width: 200px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 6px; z-index: 30;">
+          <div style="padding: 8px 12px;">
+            <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">ماجد</p>
+            <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">طالب</p>
+          </div>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M2 3h20"></path><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path><path d="m7 21 5-5 5 5"></path></svg>
+            <span>لوحة المعلم</span>
+          </button>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+            <span>لوحة الإدارة</span>
+          </button>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>الإعدادات</span>
+          </button>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <span>تواصل معنا</span>
+          </button>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button onClick="{{ signOut }}" style-hover="background: var(--state-danger-bg);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--state-danger-fg); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+            <span>تسجيل الخروج</span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+  </header>
+
+  <main style="flex: 1;">
+    <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: {{ pagePadding }};">
+
+      <div style="margin-bottom: 18px;">
+        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Breadcrumbs" items="{{ breadcrumbItems }}" hint-size="auto,20px"></x-import>
+      </div>
+
+      <div style="max-width: 520px; margin: 0 auto;">
+
+        <sc-if value="{{ notEnrolled }}" hint-placeholder-val="{{ true }}">
+          <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); overflow: hidden;">
+            <div style="padding: 22px 26px 0;">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Badge" tone="accent" hint-size="auto,22px">عقيدة</x-import>
+              <h1 style="margin: 12px 0 0; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--text-primary); line-height: var(--leading-tight);">كتاب التوحيد</h1>
+              <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px;">
+                <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="ع" size="sm" hint-size="32px,32px"></x-import>
+                <div>
+                  <span style="display: block; font-size: var(--text-sm); color: var(--text-primary);">د. عبد العزيز العيدان</span>
+                  <span style="display: block; font-size: 11px; color: var(--text-muted);">المعلم</span>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-top: 16px; padding: 10px 14px; background: var(--surface-sunken); border-radius: var(--radius-sm);">
+                <i data-lucide="graduation-cap" style="width: 15px; height: 15px; color: var(--text-secondary);"></i>
+                <span style="font-size: var(--text-sm); color: var(--text-secondary);">12 محاضرة · 8 ساعات و30 دقيقة</span>
+              </div>
+              <p style="margin: 16px 0 0; font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); text-align: justify;">شرح لمتن كتاب التوحيد في مسائل الإخلاص وأنواع الشرك وما يتصل بها من نواقض التوحيد، مع تحرير مذاهب العلماء في المسائل المشكلة.</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; padding: 20px 26px 24px; margin-top: 20px; border-top: 1px solid var(--border-subtle);">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="lg" on-click="{{ enrollCourse }}" hint-size="100%,48px">تسجيل في المقرر</x-import>
+              <span style="font-size: 11px; color: var(--text-muted); text-align: center;">مقرر مستقل لا يشترط الانتساب إلى مسار.</span>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ enrolled }}" hint-placeholder-val="{{ false }}">
+          <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); overflow: hidden;">
+            <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 32px 26px 0;">
+              <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--surface-brand); box-shadow: 0 0 0 7px var(--ribaat-green-100); display: flex; align-items: center; justify-content: center;">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+              </div>
+              <h1 style="margin: 18px 0 0; font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-bold); color: var(--text-primary);">تم تسجيلك في المقرر</h1>
+              <p style="margin: 8px 0 0; font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-normal); text-wrap: pretty;">أصبح مقرر «كتاب التوحيد» متاحاً لك في لوحتك التعليمية.</p>
+            </div>
+
+            <div style="margin: 20px 26px 0; padding: 14px 16px; background: var(--surface-sunken); border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span style="font-size: var(--text-xs); color: var(--text-muted);">المعلم</span>
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">د. عبد العزيز العيدان</span>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span style="font-size: var(--text-xs); color: var(--text-muted);">المحتوى</span>
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">12 محاضرة · 8 س 30 د</span>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                <span style="font-size: var(--text-xs); color: var(--text-muted);">أول محاضرة</span>
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">متاحة الآن</span>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; padding: 22px 26px 26px;">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="lg" on-click="{{ openLesson }}" hint-size="auto,48px">بدء المحاضرة الأولى</x-import>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </main>
+
+  <footer dir="rtl" style="background: var(--surface-card); border-top: 1px solid var(--border-subtle); font-family: var(--font-sans);">
+    <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: 32px clamp(24px, 6vw, 120px); display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 320px;">
+        <img src="../../assets/logos/ribaat-lockup-2026.png" alt="رباط الحنابلة" style="height: 65px; align-self: flex-start; filter: {{ logoFilter }}; width: 110px">
+        <p style="margin: 0; font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed);">مدرسة شرعية تأصيلية — دورات ودروس في العقيدة والفقه والحديث والسيرة، بإجازات بالسند المتصل.</p>
+      </div>
+      <div style="display: flex; gap: 56px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">روابط</span>
+          <a href="StudentDashboard.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">لوحة التحكم</a>
+          <a href="CourseCatalogue.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">الدورات</a>
+          <a href="StudentPaths.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">البرامج الدراسية</a>
+          <a href="StudentCertificates.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">الشهادات</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">الدعم والتعريف</span>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">عن المدرسة</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">الأسئلة الشائعة</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">الدعم الفني</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">تواصل معنا</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid var(--border-subtle);">
+      <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: 14px clamp(24px, 6vw, 120px);">
+        <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted);">© 1448هـ — رباط الحنابلة. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;startState&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;قبل التسجيل&quot;, &quot;options&quot;: [&quot;قبل التسجيل&quot;, &quot;بعد التسجيل&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;الحالة&quot;},
+  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;desktop&quot;, &quot;options&quot;: [&quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Breakpoint&quot;},
+  &quot;colorScheme&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;light&quot;, &quot;options&quot;: [&quot;light&quot;, &quot;dark&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Theme&quot;}
+}">
+class Component extends DCLogic {
+  state = { enrolled: false };
+  renderVals() {
+    const viewport = this.props.viewport || "desktop";
+    const colorScheme = this.props.colorScheme || "light";
+    const vp = {
+      desktop: { maxWidth: "1200px", padding: "48px clamp(24px, 6vw, 120px) 80px" },
+      tablet: { maxWidth: "834px", padding: "28px clamp(20px, 4vw, 56px) 56px" },
+      mobile: { maxWidth: "390px", padding: "20px 16px 48px" },
+    }[viewport] || {};
+    const enrolled = this.props.startState === "بعد التسجيل" ? true : this.state.enrolled;
+    return {
+      themeAttr: colorScheme,
+      frameLabel: viewport + " / " + colorScheme,
+      logoFilter: colorScheme === "dark" ? "brightness(0) invert(1) opacity(0.9)" : "none",
+      studentName: "ماجد",
+      accountMenuOpen: this.state.accountMenuOpen,
+      toggleAccountMenu: () => this.setState((st) => ({ accountMenuOpen: !st.accountMenuOpen })),
+      signOut: () => { window.location.href = "RibaatAuth.dc.html"; },
+      containerMaxWidth: vp.maxWidth,
+      pagePadding: vp.padding,
+      breadcrumbItems: [
+        { label: "لوحة التحكم", href: "StudentDashboard.dc.html" },
+        { label: "الدورات", href: "CourseCatalogue.dc.html" },
+        { label: "كتاب التوحيد" },
+      ],
+      enrolled,
+      notEnrolled: !enrolled,
+      enrollCourse: () => this.setState({ enrolled: true }),
+      openLesson: () => { window.location.href = "LessonPlayer.dc.html"; },
+    };
+  }
+  componentDidMount() { window.lucide && window.lucide.createIcons(); }
+  componentDidUpdate() { window.lucide && window.lucide.createIcons(); }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!-- Static preview ONLY — mirrors dashboard.html + partials with Django tags
+     resolved to sample data, so the CSS/markup can be eyeballed in a browser.
+     Not part of the Django handoff itself; the templates/ folder is. -->
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>معاينة — لوحة التحكم</title>
+<link rel="stylesheet" href="static/dashboard/tokens/fonts.css">
+<link rel="stylesheet" href="static/dashboard/tokens/colors.css">
+<link rel="stylesheet" href="static/dashboard/tokens/colors-dark.css">
+<link rel="stylesheet" href="static/dashboard/tokens/typography.css">
+<link rel="stylesheet" href="static/dashboard/tokens/spacing.css">
+<link rel="stylesheet" href="static/dashboard/tokens/effects.css">
+<link rel="stylesheet" href="static/dashboard/dashboard.css">
+<script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+<div class="rb-page" data-theme="light">
+
+  <header class="rb-header">
+    <div class="rb-header-start">
+      <img class="rb-logo" src="static/dashboard/img/ribaat-wordmark.png" alt="رباط الحنابلة">
+      <nav class="rb-nav">
+        <a href="#">الرئيسية</a>
+        <a href="#">الدورات</a>
+        <a href="#" class="is-active">لوحة التحكم</a>
+        <a href="#">الاستعلام عن شهادة</a>
+      </nav>
+    </div>
+    <div class="rb-header-end">
+      <span class="rb-avatar rb-avatar--sm">م</span>
+      <button class="rb-logout-btn">تسجيل الخروج</button>
+    </div>
+  </header>
+
+  <main class="rb-main">
+
+    <section class="rb-section">
+      <h1 class="rb-h1">أهلاً، ماجد</h1>
+      <p class="rb-stats-line">دورتان قيد الدراسة · دورة واحدة مكتملة · شهادة واحدة صادرة</p>
+    </section>
+
+    <section class="rb-section">
+      <h2 class="rb-h2">دوراتي</h2>
+      <div class="rb-card-grid">
+        <div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--success">مكتمل</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">ثلاثة الأصول</span>
+            <p class="rb-card-instructor">د. عبد العزيز العيدان</p>
+            <div class="rb-progress-track"><div class="rb-progress-fill" style="width:100%;"></div></div>
+            <p class="rb-card-meta">تمت مشاهدة جميع الدروس — 02:10:00</p>
+            <div class="rb-card-cta"><a href="#" class="rb-btn rb-btn--full rb-btn--outline">مراجعة</a></div>
+          </div>
+        </div>
+        <div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--brand">قيد الدراسة</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">متن الورقات في أصول الفقه</span>
+            <p class="rb-card-instructor">د. عبد العزيز العيدان</p>
+            <div class="rb-progress-track"><div class="rb-progress-fill" style="width:62%;"></div></div>
+            <p class="rb-card-meta">3 الدروس المتبقية — 05:40:00</p>
+            <div class="rb-card-cta"><a href="#" class="rb-btn rb-btn--full rb-btn--primary">متابعة</a></div>
+          </div>
+        </div>
+        <div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--brand">قيد الدراسة</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">الأربعين النووية</span>
+            <p class="rb-card-instructor">د. أنس اليتامى</p>
+            <div class="rb-progress-track"><div class="rb-progress-fill" style="width:18%;"></div></div>
+            <p class="rb-card-meta">9 الدروس المتبقية — 06:20:00</p>
+            <div class="rb-card-cta"><a href="#" class="rb-btn rb-btn--full rb-btn--primary">متابعة</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rb-section">
+      <h2 class="rb-h2" style="margin-bottom:4px;">مساري</h2>
+      <p class="rb-stepper-sub">تسلسل الدورات ضمن المسار، وما يلزم لفتح الدورة التالية.</p>
+      <div class="rb-tabs" role="tablist">
+        <a href="#" class="rb-tab is-active" role="tab">المستوى الأول</a>
+        <a href="#" class="rb-tab" role="tab">المستوى الثاني</a>
+      </div>
+      <div class="rb-stepper-panel">
+        <div class="rb-stepper-h">
+          <div class="rb-stepper-h-track"></div>
+          <div class="rb-stepper-h-fill" style="width:43%;"></div>
+          <div class="rb-stepper-h-list">
+            <div class="rb-step-h rb-step--completed">
+              <div class="rb-step-node"><i data-lucide="check"></i></div>
+              <span class="rb-step-title">ثلاثة الأصول</span>
+              <span class="rb-badge rb-badge--success">مكتمل</span>
+              <p class="rb-step-subtitle">مكتملة</p>
+            </div>
+            <div class="rb-step-h rb-step--completed">
+              <div class="rb-step-node"><i data-lucide="check"></i></div>
+              <span class="rb-step-title">القواعد الأربع</span>
+              <span class="rb-badge rb-badge--success">مكتمل</span>
+              <p class="rb-step-subtitle">مكتملة</p>
+            </div>
+            <div class="rb-step-h rb-step--current">
+              <div class="rb-step-node"><i data-lucide="circle"></i></div>
+              <span class="rb-step-title">متن الورقات في أصول الفقه</span>
+              <span class="rb-badge rb-badge--brand">قيد الدراسة</span>
+              <p class="rb-step-subtitle">قيد الدراسة — 62% مكتمل</p>
+            </div>
+            <div class="rb-step-h rb-step--available">
+              <div class="rb-step-node"><i data-lucide="play"></i></div>
+              <span class="rb-step-title">مقدمة في السيرة</span>
+              <span class="rb-badge rb-badge--neutral">متاحة دون شرط</span>
+              <p class="rb-step-subtitle">لا تتطلب دورات سابقة.</p>
+              <div class="rb-step-action"><a href="#" class="rb-btn rb-btn--sm rb-btn--outline">ابدأ الدورة</a></div>
+            </div>
+            <div class="rb-step-h rb-step--locked">
+              <div class="rb-step-node"><i data-lucide="lock"></i></div>
+              <span class="rb-step-title">الأربعين النووية</span>
+              <span class="rb-badge rb-badge--neutral">مغلقة</span>
+              <p class="rb-step-subtitle">يتطلب اجتياز الاختبار النهائي.</p>
+            </div>
+            <div class="rb-step-h rb-step--certificate-locked">
+              <div class="rb-step-node"><i data-lucide="award"></i></div>
+              <span class="rb-step-title">شهادة المستوى الأول</span>
+              <span class="rb-badge rb-badge--accent">شهادة</span>
+              <p class="rb-step-subtitle">تُصدر بعد إتمام جميع دورات المستوى.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="rb-rec-head">
+        <h2 class="rb-h2" style="margin:0;">ماذا تدرس بعد ذلك؟</h2>
+        <div class="rb-rec-nav">
+          <button class="rb-rec-nav-btn"><i data-lucide="chevron-right"></i></button>
+          <button class="rb-rec-nav-btn"><i data-lucide="chevron-left"></i></button>
+        </div>
+      </div>
+      <p class="rb-rec-sub">دورات مقترحة لم تسجل بها بعد.</p>
+      <div class="rb-carousel-track">
+        <div class="rb-carousel-card"><div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--accent">عقيدة</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">نواقض الإسلام</span>
+            <p class="rb-card-instructor">د. عبد العزيز العيدان</p>
+            <p class="rb-card-meta">02:54:00 — مستوى مبتدئ</p>
+            <div class="rb-card-cta"><a href="#" class="rb-btn rb-btn--full rb-btn--primary">سجل الآن</a></div>
+          </div>
+        </div></div>
+        <div class="rb-carousel-card"><div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--accent">فقه</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">عمدة الفقه</span>
+            <p class="rb-card-instructor">د. عبد العزيز العيدان</p>
+            <p class="rb-card-meta">09:12:00 — مستوى متوسط</p>
+            <div class="rb-card-cta"><a href="#" class="rb-btn rb-btn--full rb-btn--primary">سجل الآن</a></div>
+          </div>
+        </div></div>
+        <div class="rb-carousel-card"><div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--accent">حديث</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">بلوغ المرام</span>
+            <p class="rb-card-instructor">د. أنس اليتامى</p>
+            <p class="rb-card-meta">10:05:00 — مستوى متوسط</p>
+            <p class="rb-card-meta">يكمل ما بدأته في الأربعين النووية.</p>
+            <div class="rb-card-cta"><a href="#" class="rb-btn rb-btn--full rb-btn--primary">سجل الآن</a></div>
+          </div>
+        </div></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script>window.lucide && window.lucide.createIcons();</script>
+</body>
+</html>

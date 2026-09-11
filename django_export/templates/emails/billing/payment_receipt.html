@@ -1,0 +1,35 @@
+{% extends "emails/base.html" %}
+{% comment %}14. إيصال دفع — payment receipt{% endcomment %}
+{% block title %}إيصال دفع{% endblock %}
+{% block preheader %}إيصال بالمبلغ المدفوع عن تسجيلك في المنصة.{% endblock %}
+{% block content %}
+<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+  <tr><td class="e-txt e-h1" style="direction:rtl;text-align:right;font-family:Amiri,'Traditional Arabic','Times New Roman',serif;font-size:28px;line-height:42px;mso-line-height-rule:exactly;font-weight:700;color:#211F19;padding:0 0 14px;">إيصال دفع</td></tr>
+  <tr><td style="padding:0 0 20px;">{% include "emails/partials/rule.html" %}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">السلام عليكم ورحمة الله وبركاته، {{ student_name }}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">نُثبت استلام المبلغ التالي عن تسجيلك في {{ site_name }}. هذه الرسالة إيصال رسمي، ويمكنك الاحتفاظ بها.</td></tr>
+  <tr><td style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" class="e-sunk" bgcolor="#F7F3E8" style="width:100%;background-color:#F7F3E8;border:1px solid #E2DAC5;border-radius:10px;">
+      <tr><td style="padding:6px 20px;">
+        <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+          {% include "emails/partials/datarow.html" with label="رقم الإيصال" value=receipt_number %}
+          {% include "emails/partials/datarow.html" with label="البيان" value=item_title %}
+          {% include "emails/partials/datarow.html" with label="طريقة الدفع" value=payment_method_label %}
+          {% include "emails/partials/datarow.html" with label="تاريخ الدفع" value=paid_at %}
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" class="e-sunk" bgcolor="#EBEFE4" style="width:100%;background-color:#EBEFE4;border:1px solid #D4DCC9;border-radius:10px;">
+      <tr>
+        <td class="e-sub" width="50%" style="width:50%;direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:14px;line-height:22px;mso-line-height-rule:exactly;color:#494434;padding:16px 20px;">المبلغ المدفوع</td>
+        <td class="e-txt" width="50%" style="width:50%;direction:rtl;text-align:left;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:20px;font-weight:700;line-height:26px;mso-line-height-rule:exactly;color:#211F19;padding:16px 20px;">{{ amount }} {{ currency }}</td>
+      </tr>
+    </table>
+  </td></tr>
+  <tr><td align="center" style="padding:6px 0 22px;">{% include "emails/partials/button.html" with url=receipt_url label="عرض الإيصال" %}</td></tr>
+  <tr><td style="padding:0 0 16px;">{% include "emails/partials/divider.html" %}</td></tr>
+  <tr><td class="e-mut" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:12px;line-height:20px;mso-line-height-rule:exactly;color:#82795F;padding:0;">للاستفسار عن هذا الإيصال، راسلنا على {{ support_email }} مع ذكر رقم الإيصال.</td></tr>
+</table>
+{% endblock %}

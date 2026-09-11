@@ -1,0 +1,68 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{# --- Theme. The page follows the operating system by default; the header
+   switch overrides it and stores the choice. This runs before the stylesheets so
+   the stored choice is on <html> at first paint and there is no flash. Keep it
+   inline and keep it here — a deferred or external script paints light first. #}
+<script>
+(function () {
+  var d = document.documentElement;
+  d.classList.add('js');
+  try {
+    var t = localStorage.getItem('ribaat-theme');
+    if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t);
+  } catch (e) { /* storage blocked — fall through to the OS setting */ }
+})();
+</script>
+
+<title>{% block title %}رباط الحنابلة — مدرسة شرعية تأصيلية{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}مدرسة تعليمية شرعية في الكويت، تُعنى بتدريس العلوم الشرعية على منهج مؤصَّل، بمسارات علمية متدرّجة. الدراسة مجانية، ويبدأ الفصل الدراسي في سبتمبر ٢٠٢٦.{% endblock %}">
+<meta name="theme-color" content="#FBF9F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#201E18" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="{% block canonical %}https://www.ribaat.net/{% endblock %}">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_KW">
+<meta property="og:site_name" content="رباط الحنابلة">
+<meta property="og:title" content="{% block og_title %}رباط الحنابلة — مدرسة شرعية تأصيلية{% endblock %}">
+<meta property="og:description" content="دراسةٌ مؤصَّلةٌ في العلوم الشرعية، بمسارات علمية متدرّجة.">
+<meta property="og:url" content="https://www.ribaat.net/">
+<meta property="og:image" content="{% static 'ribaat/img/og-image.png' %}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="رباط الحنابلة — مدرسة شرعية تأصيلية">
+<meta name="twitter:description" content="دراسةٌ مؤصَّلةٌ في العلوم الشرعية، بمسارات علمية متدرّجة.">
+<meta name="twitter:image" content="{% static 'ribaat/img/og-image.png' %}">
+
+<link rel="icon" href="{% static 'ribaat/img/favicon.svg' %}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{% static 'ribaat/img/apple-touch-icon.png' %}">
+
+<link rel="preload" as="font" type="font/woff2" href="{% static 'ribaat/fonts/plex-arabic-400.woff2' %}" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="{% static 'ribaat/fonts/amiri-arabic-700.woff2' %}" crossorigin>
+
+<link rel="stylesheet" href="{% static 'ribaat/css/tokens/fonts.css' %}">
+<link rel="stylesheet" href="{% static 'ribaat/css/tokens/colors.css' %}">
+<link rel="stylesheet" href="{% static 'ribaat/css/tokens/colors-dark.css' %}">
+<link rel="stylesheet" href="{% static 'ribaat/css/tokens/typography.css' %}">
+<link rel="stylesheet" href="{% static 'ribaat/css/tokens/spacing.css' %}">
+<link rel="stylesheet" href="{% static 'ribaat/css/tokens/effects.css' %}">
+<link rel="stylesheet" href="{% static 'ribaat/css/landing.css' %}">
+
+{% block structured_data %}{% endblock %}
+{% block head_extra %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+<a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+{% block header %}{% include "landing/partials/header.html" %}{% endblock %}
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+{% block footer %}{% include "landing/partials/footer.html" %}{% endblock %}
+<script src="{% static 'ribaat/js/landing.js' %}" defer></script>
+</body>
+</html>

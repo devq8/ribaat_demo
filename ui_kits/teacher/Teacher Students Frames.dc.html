@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EAE6DA; }
+    a { color: #4F6140; text-decoration: none; }
+    a:hover { color: #3E4E32; }
+  </style>
+</helmet>
+
+<section style="padding: 48px; font-family: var(--font-sans, sans-serif);">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px;">
+    <span style="font-family: var(--font-display, serif); font-size: 26px; font-weight: 700; color: #211F19;">Teacher / assistant dashboard — Students</span>
+    <span style="font-size: 13px; color: #635C48;">List view + student detail view, both themes, desktop primary with one tablet frame.</span>
+  </div>
+  <span style="display: block; font-size: 12px; color: #82795F; margin-bottom: 34px; max-width: 1180px;">Two live components matching the two Django templates: <code>TeacherStudents.dc.html</code> (list) and <code>TeacherStudentDetail.dc.html</code> (detail). Search, all three filters (course, track, country), all four sortable columns and pagination are interactive in place; clicking a row marks that student as the one open in the detail frame below. Navigation sits in the same top bar as the Overview — wordmark + «لوحة المعلم» badge and an inline scrollable nav (Students active, parked sections muted), with notifications and the account opposite; no breadcrumbs, the detail view keeps its back link.</span>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start;">
+
+    <div id="1a" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1a</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Students list · Desktop · Light</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">1440px. Filter bar first (search by name/email, course, track/level, country, reset), then the result line with removable filter chips, then the table: student (avatar + email + a طالب/طالبة chip), age, country, enrolled courses with track, overall progress as a compact <code>ProgressBar</code> + percentage, last login (اليوم/أمس + time, else date). Five column headers sort — the arrow marks the active column and direction. The row of the student shown in the detail frame is tinted. Pagination sits inside the card, 8 rows per page.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherStudents" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="light" hint-size="1440px,860px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1b" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1b</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Students list · Desktop · Dark — filtered</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">Same screen with a course filter applied, so the chip row and the filtered result count are visible. Warm dark tokens: parchment neutrals go dark-warm, the green stays the single accent.</span>
+      <div style="width: 1440px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="TeacherStudents" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="dark" preset-course="waraqat" hint-size="1440px,860px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1c" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1c</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Student detail · Desktop · Light</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">Read-mostly oversight: header (avatar, name, level badge, e-mail, enrolment date with its Hijri equivalent, last activity), four standing figures, then tracks and courses — both using the established title + <code>Badge</code> + labelled <code>ProgressBar</code> pattern from <code>CourseCard</code> — then exam results scored against each exam's own success threshold, then issued certificates with serial and «الاستعلام عن الشهادة». No fields are editable here; account data lives in المستخدمون.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherStudentDetail" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="light" hint-size="1440px,1560px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1d" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1d</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Student detail · Desktop · Dark</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">Same detail view in dark mode. Pass/fail scores keep the muted semantic colors; the failed attempt reads «لم يجتز — إعادة متاحة» rather than a bare red badge.</span>
+      <div style="width: 1440px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="TeacherStudentDetail" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="dark" hint-size="1440px,1560px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1e" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1e</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Students list · Tablet · Light — 834px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 834px;">The table reflows to one card per student rather than scrolling sideways: the four table columns become a name row, a meta row (courses, track, enrolment) and a full-width labelled progress bar — a teacher can still scan progress down the page. The sidebar collapses to an 84px icon rail; filters and pagination are unchanged.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherStudents" teacher-name="{{ teacherName }}" viewport="tablet" color-scheme="light" hint-size="834px,1400px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1f" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1f</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Student detail · Tablet · Light — 834px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 834px;">Detail view under the same top navbar; the exam table becomes stacked rows so score, threshold and result stay readable without horizontal scrolling.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherStudentDetail" teacher-name="{{ teacherName }}" viewport="tablet" color-scheme="light" hint-size="834px,2500px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1g" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1g</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile fallback — 390px, list + empty result</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 390px;">Basic non-broken fallback: the top nav becomes a horizontally scrolling strip in the header (square mark, no badge), cards stack. Second frame shows the no-match state a search can produce.</span>
+      <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+          <dc-import name="TeacherStudents" teacher-name="{{ teacherName }}" viewport="mobile" color-scheme="light" hint-size="390px,1700px"></dc-import>
+        </div>
+        <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+          <dc-import name="TeacherStudents" teacher-name="{{ teacherName }}" viewport="mobile" color-scheme="light" preset-query="زياد" hint-size="390px,700px"></dc-import>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;teacherName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;عبد العزيز العيدان&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return { teacherName: this.props.teacherName || "عبد العزيز العيدان" };
+  }
+}
+
+</script>
+</body>
+</html>

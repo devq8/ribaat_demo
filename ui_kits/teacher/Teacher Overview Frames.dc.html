@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EAE6DA; }
+    a { color: #4F6140; text-decoration: none; }
+    a:hover { color: #3E4E32; }
+  </style>
+</helmet>
+
+<section style="padding: 48px 48px 12px; font-family: var(--font-sans, sans-serif);">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px;">
+    <span style="font-family: var(--font-display, serif); font-size: 26px; font-weight: 700; color: #211F19;">Alternative B — course-first overview</span>
+    <span style="font-size: 13px; color: #635C48;">Same purpose, organised by course instead of by task type.</span>
+  </div>
+  <span style="display: block; font-size: 12px; color: #82795F; margin-bottom: 34px; max-width: 1180px;">A separate component (<code>TeacherOverview Course-First.dc.html</code>) — the earlier task-first screen (<a href="#2a">2a</a>) is untouched below. Here every card IS a course: a square course graphic on a parchment head panel (drop your own artwork onto it — it sticks) beside the title and supervising scholar, then an inline facts line, publishing progress, the course's own exams (open with «يُغلق بعد», scheduled with «يفتح بعد») and a 2×2 block of pending work — أسئلة الطلاب، مقاطع الدروس، التفريغ النصّي، بنك أسئلة الاختبارات — each tile carrying its own action. The calendar column is unchanged.</span>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start;">
+
+    <div id="3a" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">3a</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — course-first</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">1440px. Six course cards, two per row, beside the same calendar column. The course image is a 176px square plate — matching the shape the school's own course graphics are actually made in (1:1 promo cards), so the calligraphed title, the scholar's name and the Ribaat badge all stay inside the frame uncropped — raised with a hairline and soft shadow on a parchment head panel. Beside it the head now reads top-down: category and level in brown above, with the attention count opposite, the title in Amiri at 28px on its own full width, the supervising scholar on one quiet line (avatar + «د. … · مشرف الدورة»), and the next activity as a paper callout pinned to the panel's baseline. Real artwork where the project has it (ثلاثة الأصول); the rest are drop targets over an olive plate. The body below is now typographic rather than boxed: a single inline facts line (34 طالباً · 02:10:00 من الدروس · نُشر 4 من 4 دروس), a labelled publishing bar, each exam as a framed strip carrying two dials — remaining window time (to close while open, to open while scheduled) and, beside it, participation as submissions out of enrolled students — a scheduled exam simply reads 0 من 29, with its question readiness noted alongside (olive frame while open, parchment while scheduled), and the pending work back as four small tinted tiles, two-up, each with its icon, label, value and action. The overlay tags are gone. Attention is carried by colour instead: each pending tile takes its state from its own value — متأخر / صفر أسئلة → amber tint, outline and value, «بانتظار» → info tint, complete → quiet parchment with a check and no action verb — and a course with any late item gets an amber card outline plus a «بند متأخر» count next to its title, while a course with a live exam keeps the olive outline.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherOverview Course-First" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="light" hint-size="1440px,2400px"></dc-import>
+      </div>
+    </div>
+
+    <div id="3b" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">3b</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Dark — course-first</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">Warm dark tokens; the per-item tint blocks (info / warning / success / neutral) hold their meaning on the dark ramp.</span>
+      <div style="width: 1440px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="TeacherOverview Course-First" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="dark" hint-size="1440px,2400px"></dc-import>
+      </div>
+    </div>
+
+    <div id="3c" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">3c</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Tablet · Light — 834px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 834px;">One course card per row beside the calendar column, so the first course sits at the calendar's top right.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherOverview Course-First" teacher-name="{{ teacherName }}" viewport="tablet" color-scheme="light" hint-size="834px,4600px"></dc-import>
+      </div>
+    </div>
+
+    <div id="3d" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #8C5F35; color: #FFFEFA; font-size: 13px; font-weight: 700;">3d</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile · Light — 390px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 390px;">Single column, calendar first; the pending tiles stay two-up so a course still reads at a glance.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherOverview Course-First" teacher-name="{{ teacherName }}" viewport="mobile" color-scheme="light" hint-size="390px,5400px"></dc-import>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section style="padding: 48px; font-family: var(--font-sans, sans-serif);">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px;">
+    <span style="font-family: var(--font-display, serif); font-size: 26px; font-weight: 700; color: #211F19;">Alternative A — task-first overview</span>
+    <span style="font-size: 13px; color: #635C48;">Revision 6 — adds «الدورات التي أشرف عليها»: the courses this teacher owns, with publishing pace, students, open questions and per-course actions.</span>
+  </div>
+  <span style="display: block; font-size: 12px; color: #82795F; margin-bottom: 34px; max-width: 1180px;">Every frame is the same live component (<code>TeacherOverview.dc.html</code>) — month navigation, day selection, and both header menus are interactive in place. Tweaks: teacher name, breakpoint, theme, which header menu is open, the no-open-exams state, and the long-text stress case.</span>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start;">
+
+    <div id="2a" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">2a</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — default</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">1440px. Three priority cards beside a full-height calendar column, with the teacher's own courses in a full-width section beneath: each course card shows level/category, students, lesson hours, unanswered questions, publishing progress («الدروس المنشورة — 6 من 8»), the next scheduled activity, and إدارة الدورة / الطلاب actions; a warning badge flags courses behind schedule. Creation lives in one «إضافة» dropdown at the top-left (درس، دورة، اختبار، سؤال في بنك الأسئلة، رفع مقطع، تفريغ نصّي) — the old «مهامي في الدورات» tiles are gone. Each exam has exactly ONE ring, 82px so the two label lines breathe: «يُغلق بعد» for open exams (fill = share of the window still open) and «يفتح بعد» for scheduled ones. Submission share is a labelled ProgressBar; readiness is stated as counts a backend can map directly («الأسئلة المعتمدة: 12 من 25 سؤالاً») with pills الأسئلة مكتملة / ناقصة / لم تُضف أسئلة and an outlined أضف سؤالاً per exam.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherOverview" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="light" hint-size="1440px,1440px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2b" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">2b</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — long-text case</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">Real متون titles run long. Exam titles carry the course name («الاختبار النهائي — ثلاثة الأصول») and clamp to two lines; single-line meta rows truncate with an ellipsis so the pill and the ring keep their positions. Same rule in the calendar's day list.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherOverview" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="light" long-text-demo="{{ true }}" hint-size="1440px,1440px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2c" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">2c</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Light — no open exams + notifications menu open</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">Empty state keeps the card and its action in place (count 0) and states when the next window opens. The notifications submenu hangs from the bell in the header.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherOverview" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="light" open-exams-empty="{{ true }}" open-menu="notifications" hint-size="1440px,1440px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2d" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">2d</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Desktop · Dark — «إضافة» dropdown open</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 1440px;">Warm dark tokens throughout; ring gauges, pills and the calendar use the dark ramp of the same colors. The «إضافة» menu carries every creation action a teacher needs.</span>
+      <div style="width: 1440px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="TeacherOverview" teacher-name="{{ teacherName }}" viewport="desktop" color-scheme="dark" open-menu="add" hint-size="1440px,1440px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2e" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">2e</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Tablet · Light — 834px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 834px;">The calendar holds its left column at ~372px and the three priority cards stack in one column beside it, so أسئلة الطلاب lands at the top right of the calendar and nothing is left standing next to empty space.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherOverview" teacher-name="{{ teacherName }}" viewport="tablet" color-scheme="light" hint-size="834px,2100px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2f" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">2f</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile · Light — 390px, account menu open</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 390px;">Everything single-column; the header uses the square mark and drops the inline name, so the teacher's name and role appear in the account menu when the avatar is tapped. Menu rows are 44px.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="TeacherOverview" teacher-name="{{ teacherName }}" viewport="mobile" color-scheme="light" open-menu="account" hint-size="390px,2900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="2g" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">2g</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Mobile · Dark — 390px</span>
+      </div>
+      <span style="font-size: 12px; color: #82795F; max-width: 390px;">Same fallback in dark mode.</span>
+      <div style="width: 390px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="TeacherOverview" teacher-name="{{ teacherName }}" viewport="mobile" color-scheme="dark" hint-size="390px,2900px"></dc-import>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;teacherName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;عبد العزيز العيدان&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return { teacherName: this.props.teacherName || "عبد العزيز العيدان" };
+  }
+}
+
+</script>
+</body>
+</html>

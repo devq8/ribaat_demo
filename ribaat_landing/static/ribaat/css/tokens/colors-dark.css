@@ -1,0 +1,148 @@
+/* Ribaat Design System — Dark theme layer (ADDITION, proposed for upstream merge)
+   ------------------------------------------------------------------------
+   Built while designing ui_kits/student/StudentDashboard.dc.html. Not part
+   of the original system pass — flagged here so it can be folded into the
+   canonical token set once reviewed.
+
+   Approach: a single [data-theme="dark"] attribute scope that overrides the
+   semantic aliases AND the specific base-ramp steps components consume
+   directly (badges/buttons reach into --ribaat-green-100/600/700 etc, not
+   just the aliases). Apply by setting data-theme="dark" on any ancestor
+   element (typically the page root); everything under it repaints via the
+   existing var() references in colors.css — no component changes needed.
+
+   Direction: warm, muted dark — kept in the same olive/brown family as
+   light mode, never a cold near-black SaaS dark and never pure black.
+   Semantic (success/warning/danger/info) colors are desaturated the same
+   way the light versions are; nothing here uses saturated/neon hues. */
+
+[data-theme="dark"] {
+  /* ---- Surfaces ---- */
+  --surface-page: #201E18;
+  --surface-card: #2B2820;
+  --surface-sunken: #1B1913;
+  --surface-brand: #6B8151;
+  --surface-brand-strong: #55663F;
+  --surface-accent: #96703F;
+  --surface-overlay: rgba(10, 9, 7, 0.6);
+
+  /* ---- Borders ---- */
+  --border-subtle: #3A362C;
+  --border-default: #4A4536;
+  --border-strong: #6B6551;
+  --border-brand: #7C9161;
+
+  /* ---- Text ---- */
+  --text-primary: #EDE6D6;
+  --text-secondary: #C4B99F;
+  --text-muted: #93876C;
+  --text-on-brand: #F7F3E7;
+  --text-on-accent: #F7F3E7;
+  --text-brand: #A9BE8F;
+  --text-accent: #D3B583;
+  --text-link: #A9BE8F;
+  --text-link-hover: #C3D6AC;
+
+  --focus-ring: #94A87A;
+
+  /* ---- Base ramp steps consumed directly by components ----
+     (Badge/Button/CourseCard/Avatar reach into these, not only the
+     aliases above — both layers must repaint together.) */
+  --ribaat-green-100: #33402A;
+  --ribaat-green-200: #3D4A31;
+  --ribaat-green-600: #7C9161;
+  --ribaat-green-700: #94A87A; /* lighter than 600 on purpose: dark-mode hover
+                                   should brighten, not darken toward bg */
+  --ribaat-green-800: #55663F;
+
+  --ribaat-brown-100: #3D3020;
+  --ribaat-brown-200: #493924;
+  --ribaat-brown-600: #96703F;
+  --ribaat-brown-700: #C9A876;
+
+  --ribaat-amber-100: #3A2F1C;
+  --ribaat-amber-600: #D3A85C;
+  --ribaat-red-100: #3C2420;
+  --ribaat-red-600: #D98A7C;
+  --ribaat-blue-100: #1F323A;
+  --ribaat-blue-600: #7FB6C7;
+
+  /* ---- Semantic state colors — muted/desaturated, same spirit as light ---- */
+  --state-success-bg: #2B3B27;
+  --state-success-fg: #8FBB85;
+  --state-warning-bg: #3A2F1C;
+  --state-warning-fg: #D3A85C;
+  --state-danger-bg: #3C2420;
+  --state-danger-fg: #D98A7C;
+  --state-info-bg: #1F323A;
+  --state-info-fg: #7FB6C7;
+}
+
+/* --- Landing-page addition -------------------------------------------------
+   Same token set, applied when the visitor's OS prefers dark and no explicit
+   choice has been stored. Keeps the page correct with JavaScript disabled.
+   (Plain CSS has no way to share one declaration block across two selectors
+   when one of them is inside @media, hence the duplication.) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  /* ---- Surfaces ---- */
+  --surface-page: #201E18;
+  --surface-card: #2B2820;
+  --surface-sunken: #1B1913;
+  --surface-brand: #6B8151;
+  --surface-brand-strong: #55663F;
+  --surface-accent: #96703F;
+  --surface-overlay: rgba(10, 9, 7, 0.6);
+
+  /* ---- Borders ---- */
+  --border-subtle: #3A362C;
+  --border-default: #4A4536;
+  --border-strong: #6B6551;
+  --border-brand: #7C9161;
+
+  /* ---- Text ---- */
+  --text-primary: #EDE6D6;
+  --text-secondary: #C4B99F;
+  --text-muted: #93876C;
+  --text-on-brand: #F7F3E7;
+  --text-on-accent: #F7F3E7;
+  --text-brand: #A9BE8F;
+  --text-accent: #D3B583;
+  --text-link: #A9BE8F;
+  --text-link-hover: #C3D6AC;
+
+  --focus-ring: #94A87A;
+
+  /* ---- Base ramp steps consumed directly by components ----
+     (Badge/Button/CourseCard/Avatar reach into these, not only the
+     aliases above — both layers must repaint together.) */
+  --ribaat-green-100: #33402A;
+  --ribaat-green-200: #3D4A31;
+  --ribaat-green-600: #7C9161;
+  --ribaat-green-700: #94A87A; /* lighter than 600 on purpose: dark-mode hover
+                                   should brighten, not darken toward bg */
+  --ribaat-green-800: #55663F;
+
+  --ribaat-brown-100: #3D3020;
+  --ribaat-brown-200: #493924;
+  --ribaat-brown-600: #96703F;
+  --ribaat-brown-700: #C9A876;
+
+  --ribaat-amber-100: #3A2F1C;
+  --ribaat-amber-600: #D3A85C;
+  --ribaat-red-100: #3C2420;
+  --ribaat-red-600: #D98A7C;
+  --ribaat-blue-100: #1F323A;
+  --ribaat-blue-600: #7FB6C7;
+
+  /* ---- Semantic state colors — muted/desaturated, same spirit as light ---- */
+  --state-success-bg: #2B3B27;
+  --state-success-fg: #8FBB85;
+  --state-warning-bg: #3A2F1C;
+  --state-warning-fg: #D3A85C;
+  --state-danger-bg: #3C2420;
+  --state-danger-fg: #D98A7C;
+  --state-info-bg: #1F323A;
+  --state-info-fg: #7FB6C7;
+}
+}

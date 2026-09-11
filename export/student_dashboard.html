@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<!--
+  Ribaat Student Dashboard — static export for Django template conversion
+  =======================================================================
+  This is an EXPORT/IMPLEMENTATION pass of the already-approved dashboard
+  design (ui_kits/student/StudentDashboard.dc.html). No visual redesign was
+  made here — layout, spacing, color, and component choices are carried
+  over 1:1. See the "OPEN QUESTIONS / ASSUMPTIONS" comment at the bottom of
+  <body> for anything that had to be assumed during export.
+
+  How to read this file:
+  - Each top-level section is wrapped in PARTIAL markers mapping 1:1 to a
+    Django template include (templates/student/partials/<name>.html).
+  - {{ variable }} placeholders mark dynamic values (Jinja/Django-style,
+    not wired up). They render as literal text in a plain browser — that
+    is expected for a template source file, not a live-data demo.
+  - Repeatable blocks are wrapped in {% for %} / {% endfor %} COMMENT
+    markers around a single template instance. For visual/responsive
+    review only, that instance is then duplicated a few times with the
+    same placeholder names (a real Django loop would of course vary the
+    data per iteration) — see the inline note at each loop.
+-->
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لوحة التحكم — الطالب | رباط الحنابلة</title>
+
+<style>
+  /* ==========================================================
+     DESIGN TOKENS
+     Copied verbatim from the Ribaat Design System token files
+     (tokens/colors.css, colors-dark.css, typography.css,
+     spacing.css, effects.css). Names are unchanged — reuse these
+     var() references in the Django/static build, don't rename.
+     ========================================================== */
+  :root {
+    /* ---- Base: brand ---- */
+    --ribaat-green-900: #2E3A24;
+    --ribaat-green-800: #3E4E32;
+    --ribaat-green-700: #4F6140;
+    --ribaat-green-600: #607247;
+    --ribaat-green-500: #728759;
+    --ribaat-green-400: #8FA079;
+    --ribaat-green-300: #B2C0A2;
+    --ribaat-green-200: #D4DCC9;
+    --ribaat-green-100: #EBEFE4;
+    --ribaat-green-50:  #F5F7F0;
+
+    --ribaat-brown-900: #4A3A22;
+    --ribaat-brown-800: #63492A;
+    --ribaat-brown-700: #79552F;
+    --ribaat-brown-600: #8C5F35;
+    --ribaat-brown-500: #A47846;
+    --ribaat-brown-400: #BB9868;
+    --ribaat-brown-300: #D3BC98;
+    --ribaat-brown-200: #E7DBC4;
+    --ribaat-brown-100: #F3EBDD;
+
+    --ribaat-ink-900: #211F19;
+    --ribaat-ink-800: #333026;
+    --ribaat-ink-700: #494434;
+    --ribaat-ink-600: #635C48;
+    --ribaat-ink-500: #82795F;
+    --ribaat-ink-400: #A69C81;
+    --ribaat-ink-300: #C9BFA6;
+    --ribaat-ink-200: #E2DAC5;
+    --ribaat-ink-100: #EFEADB;
+    --ribaat-paper-050: #FBF9F3;
+    --ribaat-paper-000: #FFFEFA;
+
+    --ribaat-red-600: #A6473B;
+    --ribaat-red-100: #F4E3DF;
+    --ribaat-amber-600: #A97A24;
+    --ribaat-amber-100: #F3E7CC;
+    --ribaat-blue-600: #3E6B7A;
+    --ribaat-blue-100: #DEE9EB;
+
+    --surface-page: var(--ribaat-paper-050);
+    --surface-card: var(--ribaat-paper-000);
+    --surface-sunken: var(--ribaat-ink-100);
+    --surface-brand: var(--ribaat-green-600);
+    --surface-brand-strong: var(--ribaat-green-800);
+    --surface-accent: var(--ribaat-brown-600);
+    --surface-overlay: rgba(33, 31, 25, 0.55);
+
+    --border-subtle: var(--ribaat-ink-200);
+    --border-default: var(--ribaat-ink-300);
+    --border-strong: var(--ribaat-ink-500);
+    --border-brand: var(--ribaat-green-500);
+
+    --text-primary: var(--ribaat-ink-900);
+    --text-secondary: var(--ribaat-ink-600);
+    --text-muted: var(--ribaat-ink-500);
+    --text-on-brand: var(--ribaat-paper-000);
+    --text-on-accent: var(--ribaat-paper-000);
+    --text-brand: var(--ribaat-green-700);
+    --text-accent: var(--ribaat-brown-700);
+    --text-link: var(--ribaat-green-700);
+    --text-link-hover: var(--ribaat-green-800);
+
+    --state-success-fg: #3E6B4A;
+    --state-success-bg: var(--ribaat-green-100);
+    --state-warning-fg: var(--ribaat-amber-600);
+    --state-warning-bg: var(--ribaat-amber-100);
+    --state-danger-fg: var(--ribaat-red-600);
+    --state-danger-bg: var(--ribaat-red-100);
+    --state-info-fg: var(--ribaat-blue-600);
+    --state-info-bg: var(--ribaat-blue-100);
+
+    --focus-ring: var(--ribaat-green-500);
+
+    --font-display: "Amiri", "Times New Roman", serif;
+    --font-sans: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-md: 1.125rem;
+    --text-lg: 1.375rem;
+    --text-xl: 1.75rem;
+    --text-2xl: 2.25rem;
+    --text-3xl: 3rem;
+
+    --leading-tight: 1.25;
+    --leading-normal: 1.55;
+    --leading-relaxed: 1.9;
+
+    --weight-regular: 400;
+    --weight-medium: 500;
+    --weight-semibold: 600;
+    --weight-bold: 700;
+
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+    --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+    --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+    --container-max: 1200px;
+    --container-padding: var(--space-6);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-pill: 999px;
+
+    --shadow-sm: 0 1px 2px rgba(33, 31, 25, 0.06);
+    --shadow-md: 0 4px 14px rgba(33, 31, 25, 0.08);
+    --shadow-lg: 0 12px 32px rgba(33, 31, 25, 0.12);
+
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --duration-fast: 120ms;
+    --duration-normal: 200ms;
+    --duration-slow: 320ms;
+
+    /* ---- Breakpoints ----
+       NOT present as tokens anywhere in the design system (no breakpoint
+       vars in tokens/, no @media in styles.css). These three values are
+       carried over from the container widths already used in the approved
+       dashboard design (desktop 1200 / tablet 834 / mobile 390 container
+       mockups) translated into the two split points below. FLAGGED as an
+       assumption — confirm against real breakpoints if the codebase
+       defines any before wiring this into Django/static. */
+    --bp-tablet: 768px;
+    --bp-desktop: 1024px;
+  }
+
+  /* ==========================================================
+     DARK THEME — from tokens/colors-dark.css (proposed layer,
+     not yet upstreamed in the source design system — see that
+     file's own header note). Scoped to [data-theme="dark"] on
+     the document root, matching this file's toggle mechanism.
+     ========================================================== */
+  [data-theme="dark"] {
+    --surface-page: #201E18;
+    --surface-card: #2B2820;
+    --surface-sunken: #1B1913;
+    --surface-brand: #6B8151;
+    --surface-brand-strong: #55663F;
+    --surface-accent: #96703F;
+    --surface-overlay: rgba(10, 9, 7, 0.6);
+
+    --border-subtle: #3A362C;
+    --border-default: #4A4536;
+    --border-strong: #6B6551;
+    --border-brand: #7C9161;
+
+    --text-primary: #EDE6D6;
+    --text-secondary: #C4B99F;
+    --text-muted: #93876C;
+    --text-on-brand: #F7F3E7;
+    --text-on-accent: #F7F3E7;
+    --text-brand: #A9BE8F;
+    --text-accent: #D3B583;
+    --text-link: #A9BE8F;
+    --text-link-hover: #C3D6AC;
+
+    --focus-ring: #94A87A;
+
+    --ribaat-green-100: #33402A;
+    --ribaat-green-200: #3D4A31;
+    --ribaat-green-600: #7C9161;
+    --ribaat-green-700: #94A87A;
+    --ribaat-green-800: #55663F;
+
+    --ribaat-brown-100: #3D3020;
+    --ribaat-brown-200: #493924;
+    --ribaat-brown-600: #96703F;
+    --ribaat-brown-700: #C9A876;
+
+    --state-success-bg: #2B3B27;
+    --state-success-fg: #8FBB85;
+    --state-warning-bg: #3A2F1C;
+    --state-warning-fg: #D3A85C;
+    --state-danger-bg: #3C2420;
+    --state-danger-fg: #D98A7C;
+    --state-info-bg: #1F323A;
+    --state-info-fg: #7FB6C7;
+  }
+
+  @font-face {
+    font-family: "Amiri";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("static/fonts/amiri-arabic-400.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "Amiri";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("static/fonts/amiri-arabic-700.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans Arabic";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("static/fonts/plex-arabic-400.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans Arabic";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url("static/fonts/plex-arabic-500.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans Arabic";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("static/fonts/plex-arabic-600.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+  @font-face {
+    font-family: "IBM Plex Sans Arabic";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("static/fonts/plex-arabic-700.woff2") format("woff2");
+    unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FEFC;
+  }
+
+  /* ==========================================================
+     BASE / RESET
+     ========================================================== */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--surface-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    transition: background var(--duration-normal) var(--ease-standard),
+                color var(--duration-normal) var(--ease-standard);
+  }
+  a { color: var(--text-link); text-decoration: none; }
+  a:hover { color: var(--text-link-hover); }
+  h1, h2, p { text-wrap: pretty; }
+  button { font-family: var(--font-sans); }
+  img { max-width: 100%; display: block; }
+
+  /* ==========================================================
+     LAYOUT SHELL
+     ========================================================== */
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    background: var(--surface-card);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .site-header__brand { display: flex; align-items: center; gap: 36px; }
+  .site-header__logo { height: 30px; }
+  [data-theme="dark"] .site-header__logo { filter: brightness(0) invert(1) opacity(0.9); }
+  .site-nav { display: flex; gap: 26px; }
+  .site-nav a { font-size: var(--text-base); color: var(--text-secondary); }
+  .site-nav a.is-active { color: var(--text-brand); font-weight: var(--weight-semibold); }
+  .site-header__actions { display: flex; gap: 14px; align-items: center; }
+
+  .btn-logout {
+    background: none;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    padding: 8px 16px;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+
+  .theme-demo-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--surface-brand-strong);
+    color: var(--text-on-brand);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+  .theme-demo-bar button {
+    background: var(--surface-card);
+    color: var(--text-primary);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 6px 16px;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  main.dashboard {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 36px var(--space-6) 72px;
+  }
+
+  .section { margin-bottom: 48px; }
+  .section-title {
+    font-size: var(--text-xl);
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    margin: 0 0 16px;
+  }
+  .section-subtitle {
+    margin: 0 0 18px;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  .page-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    color: var(--text-primary);
+    font-weight: var(--weight-bold);
+  }
+  .page-title-line {
+    margin: 8px 0 0;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  /* ==========================================================
+     COMPONENTS (plain-CSS ports of the design system's Button /
+     Badge / ProgressBar / Avatar / Tabs primitives)
+     ========================================================== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 18px;
+    font-size: var(--text-base);
+    font-weight: var(--weight-semibold);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background var(--duration-fast) var(--ease-standard),
+                color var(--duration-fast) var(--ease-standard);
+  }
+  .btn--sm { width: auto; padding: 8px 14px; font-size: var(--text-sm); }
+  .btn--primary { background: var(--surface-brand); color: var(--text-on-brand); border-color: var(--surface-brand); }
+  .btn--primary:hover { background: var(--ribaat-green-700); }
+  .btn--outline { background: transparent; color: var(--text-brand); border-color: var(--border-brand); }
+  .btn--outline:hover { background: var(--ribaat-green-100); color: var(--text-link-hover); }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    line-height: 1.4;
+  }
+  .badge--brand { background: var(--ribaat-green-100); color: var(--text-brand); }
+  .badge--accent { background: var(--ribaat-brown-100); color: var(--text-accent); }
+  .badge--success { background: var(--state-success-bg); color: var(--state-success-fg); }
+  .badge--neutral { background: var(--surface-sunken); color: var(--text-secondary); }
+
+  .progress-track {
+    background: var(--surface-sunken);
+    border-radius: var(--radius-pill);
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--surface-brand);
+    border-radius: var(--radius-pill);
+    transition: width var(--duration-slow) var(--ease-standard);
+  }
+
+  .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: var(--weight-semibold);
+    font-size: 12px;
+    flex: none;
+    background: var(--ribaat-green-100);
+    color: var(--text-brand);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .icon { width: 18px; height: 18px; stroke-width: 1.6; }
+
+  /* ==========================================================
+     PARTIAL: enrolled-courses-grid
+     ========================================================== */
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .course-card__thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--ribaat-green-100);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ribaat-green-600);
+    flex: none;
+  }
+  .course-card__badge { position: absolute; top: 10px; inset-inline-start: 10px; }
+  .course-card__body {
+    padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    flex: 1;
+  }
+  .course-card__title { font-weight: var(--weight-semibold); font-size: var(--text-md); color: var(--text-primary); }
+  .course-card__instructor { margin: 0; font-size: var(--text-sm); color: var(--text-secondary); }
+  .course-card__meta { margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted); }
+  .course-card__cta { margin-top: 10px; }
+
+  /* empty state */
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 14px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 56px 24px;
+  }
+  .empty-state__icon { width: 32px; height: 32px; color: var(--text-muted); }
+  .empty-state__title { margin: 0; font-size: var(--text-md); color: var(--text-primary); font-weight: var(--weight-semibold); }
+  .empty-state__body { margin: 0; font-size: var(--text-sm); color: var(--text-muted); max-width: 380px; }
+  .empty-state__cta { width: auto; padding: 12px 28px; }
+
+  /* ==========================================================
+     PARTIAL: track-stepper
+     ========================================================== */
+  .tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-subtle); }
+  .tabs button {
+    background: none; border: none; cursor: pointer;
+    padding: 10px 2px; font-size: var(--text-base);
+    color: var(--text-secondary);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tabs button.is-active { color: var(--text-brand); font-weight: var(--weight-semibold); border-bottom-color: var(--surface-brand); }
+
+  .stepper-panel {
+    margin-top: 24px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+  }
+
+  /* horizontal stepper — desktop / tablet */
+  .stepper-h { position: relative; display: none; }
+  .stepper-h__rail { position: absolute; top: 20px; inset-inline: 20px; height: 2px; background: var(--border-subtle); }
+  .stepper-h__rail-fill { position: absolute; top: 20px; inset-inline-start: 20px; height: 2px; background: var(--ribaat-green-600); }
+  .stepper-h__row { position: relative; display: flex; z-index: 1; }
+  .stepper-h__step {
+    flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 8px; padding: 0 8px; min-width: 0;
+  }
+  .step-node {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex: none;
+  }
+  .step-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
+  .step-subtitle { margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted); line-height: var(--leading-normal); }
+  .step-action { margin-top: 4px; }
+
+  /* vertical stepper — mobile */
+  .stepper-v { display: flex; flex-direction: column; }
+  .stepper-v__item { display: flex; gap: 16px; }
+  .stepper-v__rail { display: flex; flex-direction: column; align-items: center; flex: none; }
+  .stepper-v__connector { width: 2px; flex: 1; min-height: 26px; background: var(--border-default); }
+  .stepper-v__body { flex: 1; padding-bottom: 24px; min-width: 0; }
+  .stepper-v__head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+
+  /* status color variants shared by both stepper layouts */
+  .step--completed .step-node { background: var(--ribaat-green-600); color: var(--text-on-brand); }
+  .step--completed .step-title { color: var(--text-primary); }
+  .step--current .step-node { background: var(--surface-card); border: 2px solid var(--ribaat-green-600); color: var(--ribaat-green-600); }
+  .step--current .step-title { color: var(--text-primary); }
+  .step--available .step-node { background: var(--surface-card); border: 2px solid var(--border-brand); color: var(--text-brand); }
+  .step--available .step-title { color: var(--text-primary); }
+  .step--locked .step-node { background: var(--surface-sunken); color: var(--text-muted); }
+  .step--locked .step-title { color: var(--text-muted); }
+  .step--certificate .step-node { background: var(--ribaat-brown-100); border: 1px solid var(--border-subtle); color: var(--text-accent); }
+  .step--certificate .step-title { color: var(--text-secondary); }
+
+  /* ==========================================================
+     PARTIAL: recommended-courses-carousel
+     ========================================================== */
+  .carousel-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 4px; gap: 12px; flex-wrap: wrap;
+  }
+  .carousel-arrows { display: flex; gap: 8px; }
+  .carousel-arrow {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--border-default);
+    background: var(--surface-card);
+    color: var(--text-secondary);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .carousel-track {
+    display: flex; gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-card {
+    flex: 0 0 calc(25% - 15px);
+    scroll-snap-align: start;
+    display: flex; flex-direction: column;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .carousel-card .course-card__body { padding: 16px 18px; gap: 6px; }
+
+  /* ==========================================================
+     RESPONSIVE — breakpoints per --bp-tablet / --bp-desktop above
+     (see the flagged assumption in :root)
+     ========================================================== */
+
+  /* >= desktop: show horizontal stepper */
+  @media (min-width: 1024px) {
+    .stepper-h { display: block; }
+    .stepper-v { display: none; }
+  }
+
+  /* tablet: 2-col grid, 2-up carousel, horizontal stepper still shown */
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    main.dashboard { padding: 28px var(--space-5) 56px; }
+    .page-title { font-size: var(--text-2xl); }
+    .course-grid { grid-template-columns: repeat(2, 1fr); }
+    .carousel-card { flex-basis: calc(45% - 10px); }
+    .stepper-h { display: block; }
+    .stepper-v { display: none; }
+    .stepper-panel { padding: 24px; }
+  }
+
+  /* mobile: 1-col grid, single-card carousel peek, vertical stepper */
+  @media (max-width: 767.98px) {
+    .site-header { padding: 12px 16px; }
+    .site-header__brand { gap: 18px; }
+    .site-nav { gap: 16px; }
+    .site-nav a { font-size: var(--text-sm); }
+    main.dashboard { padding: 20px 16px 48px; }
+    .section { margin-bottom: 32px; }
+    .page-title { font-size: var(--text-xl); }
+    .course-grid { grid-template-columns: 1fr; }
+    .carousel-card { flex-basis: 82%; }
+    .stepper-h { display: none; }
+    .stepper-v { display: flex; }
+    .stepper-panel { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     Review-only controls (NOT part of the Django export). Shows
+     which mode is on and lets you flip light/dark for review.
+     ============================================================ -->
+<div class="theme-demo-bar">
+  <span>معاينة: وضع <strong id="theme-label">فاتح</strong> — سطح المكتب</span>
+  <button type="button" id="theme-toggle" onclick="
+    var root = document.documentElement;
+    var isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-label').textContent = isDark ? 'فاتح' : 'داكن';
+    document.getElementById('theme-toggle').textContent = isDark ? '🌙 تفعيل الوضع الداكن' : '☀️ تفعيل الوضع الفاتح';
+  ">🌙 تفعيل الوضع الداكن</button>
+</div>
+
+<!-- <html data-theme="{{ request.user.theme_preference|default:'light' }}"> in Django: replace
+     the hardcoded data-theme="light" on <html> above with the real user preference, and remove
+     the review bar + inline toggle script — they exist for this export demo only. -->
+
+<div dir="rtl">
+
+  <!-- PARTIAL: site-header -->
+  <header class="site-header">
+    <div class="site-header__brand">
+      <img class="site-header__logo" src="static/img/ribaat-wordmark.png" alt="رباط الحنابلة">
+      <nav class="site-nav">
+        <a href="#">الرئيسية</a>
+        <a href="#">الدورات</a>
+        <a href="#" class="is-active">لوحة التحكم</a>
+        <a href="#">الاستعلام عن شهادة</a>
+      </nav>
+    </div>
+    <div class="site-header__actions">
+      <span class="avatar">{{ student.initials }}</span>
+      <button class="btn-logout" type="button">تسجيل الخروج</button>
+    </div>
+  </header>
+  <!-- END PARTIAL: site-header -->
+
+  <main class="dashboard">
+
+    <!-- PARTIAL: welcome-section -->
+    <section class="section">
+      <h1 class="page-title">أهلاً، {{ student.first_name }}</h1>
+      <p class="page-title-line">{{ student.in_progress_count }} دورات قيد الدراسة · {{ student.completed_count }} دورة مكتملة · {{ student.certificate_count }} شهادة صادرة</p>
+    </section>
+    <!-- END PARTIAL: welcome-section -->
+
+    <!-- PARTIAL: enrolled-courses-grid -->
+    <section class="section">
+      <h2 class="section-title">دوراتي</h2>
+
+      <!-- {% if enrolled_courses %} -->
+      <div class="course-grid">
+
+        <!-- {% for course in enrolled_courses %} -->
+        <!-- Below: one template instance. It is duplicated a few times, unchanged,
+             purely so the grid/reflow can be reviewed at each breakpoint — a real
+             Django render would show this same markup once per item with real data. -->
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge">
+              <span class="badge badge--brand">{{ course.status_label }}</span>
+            </span>
+          </div>
+          <div class="course-card__body">
+            <span class="course-card__title">{{ course.title }}</span>
+            <p class="course-card__instructor">د. {{ course.instructor }}</p>
+            <div>
+              <div class="progress-track"><div class="progress-fill" style="width: {{ course.progress_pct }}%;"></div></div>
+            </div>
+            <p class="course-card__meta">{{ course.remaining_lessons }} الدروس المتبقية — {{ course.duration }}</p>
+            <div class="course-card__cta">
+              <button class="btn btn--primary" type="button">{{ course.cta_label }}</button>
+            </div>
+          </div>
+        </div>
+        <!-- {% endfor %} -->
+
+        <!-- demo-only duplicate 2 of 4 (grid/reflow review) -->
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge">
+              <span class="badge badge--brand">{{ course.status_label }}</span>
+            </span>
+          </div>
+          <div class="course-card__body">
+            <span class="course-card__title">{{ course.title }}</span>
+            <p class="course-card__instructor">د. {{ course.instructor }}</p>
+            <div>
+              <div class="progress-track"><div class="progress-fill" style="width: {{ course.progress_pct }}%;"></div></div>
+            </div>
+            <p class="course-card__meta">{{ course.remaining_lessons }} الدروس المتبقية — {{ course.duration }}</p>
+            <div class="course-card__cta">
+              <button class="btn btn--primary" type="button">{{ course.cta_label }}</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- demo-only duplicate 3 of 4: completed-course state -->
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge">
+              <span class="badge badge--success">{{ course.status_label }}</span>
+            </span>
+          </div>
+          <div class="course-card__body">
+            <span class="course-card__title">{{ course.title }}</span>
+            <p class="course-card__instructor">د. {{ course.instructor }}</p>
+            <div>
+              <div class="progress-track"><div class="progress-fill" style="width: 100%;"></div></div>
+            </div>
+            <p class="course-card__meta">تمت مشاهدة جميع الدروس — {{ course.duration }}</p>
+            <div class="course-card__cta">
+              <button class="btn btn--outline" type="button">مراجعة</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- demo-only duplicate 4 of 4 -->
+        <div class="course-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge">
+              <span class="badge badge--brand">{{ course.status_label }}</span>
+            </span>
+          </div>
+          <div class="course-card__body">
+            <span class="course-card__title">{{ course.title }}</span>
+            <p class="course-card__instructor">د. {{ course.instructor }}</p>
+            <div>
+              <div class="progress-track"><div class="progress-fill" style="width: {{ course.progress_pct }}%;"></div></div>
+            </div>
+            <p class="course-card__meta">{{ course.remaining_lessons }} الدروس المتبقية — {{ course.duration }}</p>
+            <div class="course-card__cta">
+              <button class="btn btn--primary" type="button">{{ course.cta_label }}</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- {% endif %} -->
+
+      <!-- PARTIAL: empty-state (shown instead of .course-grid when {{ enrolled_courses }} is empty) -->
+      <!-- {% if not enrolled_courses %} -->
+      <div class="empty-state" style="display: none;" data-note="static demo hides this — student has enrollments in this example; toggle display:none to review">
+        <svg class="empty-state__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <p class="empty-state__title">لم تسجل في أي دورة بعد</p>
+        <p class="empty-state__body">يمكنك تصفح الدورات المتاحة والبدء بأحد المسارات الدراسية عند رغبتك.</p>
+        <button class="btn btn--primary empty-state__cta" type="button">تصفح الدورات</button>
+      </div>
+      <!-- {% endif %} -->
+      <!-- END PARTIAL: empty-state -->
+
+    </section>
+    <!-- END PARTIAL: enrolled-courses-grid -->
+
+    <!-- PARTIAL: track-stepper -->
+    <!-- {% if enrolled_courses %} -->
+    <section class="section">
+      <h2 class="section-title">مساري</h2>
+      <p class="section-subtitle">تسلسل الدورات ضمن المسار، وما يلزم لفتح الدورة التالية.</p>
+
+      <!-- Track tabs: switching level1/level2 changes which set of steps renders
+           below. No client JS is wired here — in Django this is either a normal
+           link (?track=level2) that re-renders the partial server-side, or a
+           small fetch call; flagged as an open question, see bottom of file. -->
+      <div class="tabs">
+        <button type="button" class="is-active">{{ track.level_1_label }}</button>
+        <button type="button">{{ track.level_2_label }}</button>
+      </div>
+
+      <div class="stepper-panel">
+
+        <!-- horizontal layout: desktop / tablet -->
+        <div class="stepper-h">
+          <div class="stepper-h__rail"></div>
+          <div class="stepper-h__rail-fill" style="width: {{ track.progress_pct }}%;"></div>
+          <div class="stepper-h__row">
+
+            <!-- {% for step in track.steps %} -->
+            <div class="stepper-h__step step--completed">
+              <div class="step-node"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"></path></svg></div>
+              <span class="step-title">{{ step.title }}</span>
+              <span class="badge badge--success">{{ step.badge_label }}</span>
+              <p class="step-subtitle">{{ step.subtitle }}</p>
+            </div>
+            <!-- {% endfor %} -->
+
+            <div class="stepper-h__step step--completed">
+              <div class="step-node"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"></path></svg></div>
+              <span class="step-title">القواعد الأربع</span>
+              <span class="badge badge--success">مكتمل</span>
+              <p class="step-subtitle">مكتملة</p>
+            </div>
+
+            <div class="stepper-h__step step--current">
+              <div class="step-node"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8"></circle></svg></div>
+              <span class="step-title">متن الورقات في أصول الفقه</span>
+              <span class="badge badge--brand">قيد الدراسة</span>
+              <p class="step-subtitle">قيد الدراسة — {{ step.progress_pct }}% مكتمل</p>
+              <div class="step-action"><button class="btn btn--outline btn--sm" type="button">متابعة الدراسة</button></div>
+            </div>
+
+            <div class="stepper-h__step step--available">
+              <div class="step-node"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 3 14 9-14 9V3z"></path></svg></div>
+              <span class="step-title">مقدمة في السيرة</span>
+              <span class="badge badge--neutral">متاحة دون شرط</span>
+              <p class="step-subtitle">لا تتطلب دورات سابقة — يمكنك البدء بها في أي وقت.</p>
+              <div class="step-action"><button class="btn btn--outline btn--sm" type="button">ابدأ الدورة</button></div>
+            </div>
+
+            <div class="stepper-h__step step--locked">
+              <div class="step-node"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+              <span class="step-title">الأربعين النووية</span>
+              <span class="badge badge--neutral">مغلقة</span>
+              <p class="step-subtitle">يتطلب اجتياز الاختبار النهائي لدورة متن الورقات في أصول الفقه.</p>
+            </div>
+
+            <div class="stepper-h__step step--certificate">
+              <div class="step-node"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="6"></circle><path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"></path></svg></div>
+              <span class="step-title">شهادة المستوى الأول</span>
+              <span class="badge badge--accent">شهادة</span>
+              <p class="step-subtitle">تُصدر بعد إتمام جميع دورات المستوى — إجازة بالسند المتصل.</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- vertical layout: mobile (same step data as .stepper-h — CSS shows only one per breakpoint) -->
+        <div class="stepper-v">
+
+          <!-- {% for step in track.steps %} -->
+          <div class="stepper-v__item step--completed">
+            <div class="stepper-v__rail">
+              <div class="step-node" style="width:36px;height:36px;"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"></path></svg></div>
+              <div class="stepper-v__connector"></div>
+            </div>
+            <div class="stepper-v__body">
+              <div class="stepper-v__head">
+                <span class="step-title">{{ step.title }}</span>
+                <span class="badge badge--success">{{ step.badge_label }}</span>
+              </div>
+              <p class="step-subtitle">{{ step.subtitle }}</p>
+            </div>
+          </div>
+          <!-- {% endfor %} -->
+
+          <div class="stepper-v__item step--current">
+            <div class="stepper-v__rail">
+              <div class="step-node" style="width:36px;height:36px;"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8"></circle></svg></div>
+              <div class="stepper-v__connector"></div>
+            </div>
+            <div class="stepper-v__body">
+              <div class="stepper-v__head">
+                <span class="step-title">متن الورقات في أصول الفقه</span>
+                <span class="badge badge--brand">قيد الدراسة</span>
+              </div>
+              <p class="step-subtitle">قيد الدراسة — 62% مكتمل</p>
+              <div class="step-action" style="margin-top:8px;"><button class="btn btn--outline btn--sm" type="button">متابعة الدراسة</button></div>
+            </div>
+          </div>
+
+          <div class="stepper-v__item step--locked">
+            <div class="stepper-v__rail">
+              <div class="step-node" style="width:36px;height:36px;"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></div>
+            </div>
+            <div class="stepper-v__body">
+              <div class="stepper-v__head">
+                <span class="step-title">الأربعين النووية</span>
+                <span class="badge badge--neutral">مغلقة</span>
+              </div>
+              <p class="step-subtitle">يتطلب اجتياز الاختبار النهائي لدورة متن الورقات في أصول الفقه.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    <!-- {% endif %} -->
+    <!-- END PARTIAL: track-stepper -->
+
+    <!-- PARTIAL: recommended-courses-carousel -->
+    <section>
+      <div class="carousel-head">
+        <h2 class="section-title" style="margin:0;">ماذا تدرس بعد ذلك؟</h2>
+        <div class="carousel-arrows">
+          <!-- RTL: "السابق" (prev) points right, "التالي" (next) points left — do not mirror these for LTR. -->
+          <button class="carousel-arrow" type="button" aria-label="السابق" onclick="document.getElementById('rec-track').scrollBy({left: 320, behavior: 'smooth'})">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 18 6-6-6-6"></path></svg>
+          </button>
+          <button class="carousel-arrow" type="button" aria-label="التالي" onclick="document.getElementById('rec-track').scrollBy({left: -320, behavior: 'smooth'})">
+            <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m15 18-6-6 6-6"></path></svg>
+          </button>
+        </div>
+      </div>
+      <p class="section-subtitle">دورات مقترحة لم تسجل بها بعد.</p>
+
+      <div class="carousel-track" id="rec-track">
+
+        <!-- {% for course in recommended_courses %} -->
+        <div class="carousel-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge"><span class="badge badge--accent">{{ course.category }}</span></span>
+          </div>
+          <div class="course-card__body">
+            <span class="course-card__title">{{ course.title }}</span>
+            <p class="course-card__instructor">د. {{ course.instructor }}</p>
+            <p class="course-card__meta">{{ course.duration }} — {{ course.level_label }}</p>
+            <div class="course-card__cta"><button class="btn btn--primary" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+        <!-- {% endfor %} -->
+
+        <!-- demo-only duplicates 2–4 of 6 (carousel review at each breakpoint) -->
+        <div class="carousel-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge"><span class="badge badge--accent">فقه</span></span>
+          </div>
+          <div class="course-card__body">
+            <span class="course-card__title">عمدة الفقه</span>
+            <p class="course-card__instructor">د. عبد العزيز العيدان</p>
+            <p class="course-card__meta">09:12:00 — مستوى متوسط</p>
+            <div class="course-card__cta"><button class="btn btn--primary" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+        <div class="carousel-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge"><span class="badge badge--accent">حديث</span></span>
+          </div>
+          <div class="course-card__body">
+            <span class="course-card__title">بلوغ المرام</span>
+            <p class="course-card__instructor">د. أنس اليتامى</p>
+            <p class="course-card__meta">10:05:00 — مستوى متوسط</p>
+            <p style="margin: 4px 0 0; font-size: var(--text-xs); color: var(--text-muted);">يكمل ما بدأته في الأربعين النووية.</p>
+            <div class="course-card__cta"><button class="btn btn--primary" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+        <div class="carousel-card">
+          <div class="course-card__thumb">
+            <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="course-card__badge"><span class="badge badge--accent">تفسير</span></span>
+          </div>
+          <div class="course-card__body">
+            <span class="course-card__title">تفسير الجلالين</span>
+            <p class="course-card__instructor">د. أنس اليتامى</p>
+            <p class="course-card__meta">12:30:00 — مستوى متقدم</p>
+            <div class="course-card__cta"><button class="btn btn--primary" type="button">سجل الآن</button></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- END PARTIAL: recommended-courses-carousel -->
+
+  </main>
+</div>
+
+<!-- ============================================================
+     OPEN QUESTIONS / ASSUMPTIONS made during this export
+     (per the request: flagging rather than deciding silently)
+     ============================================================
+1. BREAKPOINTS: the design system defines no --bp-* tokens and no
+   @media rules anywhere in tokens/ or styles.css. The 768px / 1024px
+   split used here is inferred from the dashboard mockup's own
+   desktop(1200)/tablet(834)/mobile(390) container widths, not a
+   confirmed system value. Confirm real breakpoints before reuse
+   elsewhere.
+
+2. DARK THEME: colors-dark.css in the design system is explicitly
+   marked as a proposed addition "not part of the original system
+   pass" / "flagged here so it can be folded into the canonical
+   token set once reviewed" — i.e. dark mode for this screen has not
+   been through the same sign-off as the light palette. Used as-is
+   here since it's the only dark palette that exists; treat it as
+   provisional pending design review, not a locked spec.
+
+3. TRACK TAB SWITCHING (مساري / level1 vs level2): the original
+   component used client-side React state to swap step data with no
+   page reload. This export has no JS framework, so switching tracks
+   needs either (a) a plain link that re-requests the page with a
+   ?track= param and re-renders this partial server-side, or (b) a
+   small fetch/htmx-style call. Not decided here — flagging rather
+   than picking one, since it's a behavior decision, not styling.
+
+4. EMPTY STATE TOGGLE: shown as {% if not enrolled_courses %} vs
+   {% if enrolled_courses %} around the two sibling blocks — this
+   assumes a single boolean-ish emptiness check on the enrollment
+   queryset, which should hold, but the exact context variable names
+   (enrolled_courses, track, student, recommended_courses) are this
+   export's own naming — adjust to match whatever the Django view
+   actually passes in.
+
+5. LOGO FILE: static/img/ribaat-wordmark.png here is a PNG lockup
+   used as-is; no dark-mode-specific logo asset exists, so the header
+   logo is inverted via CSS filter in dark mode (same approach as the
+   approved dashboard design) rather than swapping to a second file.
+============================================================ -->
+
+</body>
+</html>

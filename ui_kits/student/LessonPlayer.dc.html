@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#F7F3EA">
+  <svg viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="100" height="70" fill="#F7F3EA"/>
+    <rect x="30" y="10" width="70" height="40" rx="4" fill="#2B2A25"/>
+    <circle cx="65" cy="30" r="7" fill="#F7F3EA" opacity="0.8"/>
+    <rect x="6" y="10" width="20" height="50" rx="3" fill="#EDE7D8" stroke="#607247" stroke-width="1.2"/>
+    <rect x="30" y="56" width="70" height="6" rx="2" fill="#607247"/>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors-dark.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); }
+    textarea { font-family: var(--font-sans); }
+    button, input, select, textarea { font-family: inherit; }
+  </style>
+</helmet>
+
+<div dir="rtl" data-theme="{{ themeAttr }}" style="background: var(--surface-page); min-height: 100vh; font-family: var(--font-sans); transition: background var(--duration-normal) var(--ease-standard);" data-screen-label="Lesson Player — {{ frameLabel }}">
+
+  <header dir="rtl" style="display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(24px, 6vw, 120px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans);">
+    <div style="display: flex; align-items: center; gap: 36px;">
+      <img src="../../assets/logos/ribaat-mark-2026.png" alt="رباط الحنابلة" style="height: 30px; filter: {{ logoFilter }}; width: 108px">
+      <nav style="display: flex; gap: 26px;">
+        <a href="StudentDashboard.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">لوحة التحكم</a>
+        <a href="CourseCatalogue.dc.html" style="font-size: var(--text-base); color: var(--text-brand); font-weight: var(--weight-semibold);">الدورات</a>
+        <a href="StudentPaths.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">البرامج الدراسية</a>
+        <a href="StudentCertificates.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الشهادات</a>
+      </nav>
+    </div>
+    <div style="position: relative;">
+      <button onClick="{{ toggleAccountMenu }}" aria-label="الحساب" style="background: none; border: none; padding: 0; cursor: pointer; border-radius: 50%; display: flex;">
+        <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="{{ studentName }}" size="sm" hint-size="32px,32px"></x-import>
+      </button>
+      <sc-if value="{{ accountMenuOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: calc(100% + 10px); inset-inline-end: 0; min-width: 200px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 6px; z-index: 30;">
+          <div style="padding: 8px 12px;">
+            <p style="margin: 0; font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ studentName }}</p>
+            <p style="margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);">طالب</p>
+          </div>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M2 3h20"></path><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path><path d="m7 21 5-5 5 5"></path></svg>
+            <span>لوحة المعلم</span>
+          </button>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+            <span>لوحة الإدارة</span>
+          </button>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            <span>الإعدادات</span>
+          </button>
+          <button style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-secondary); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+            <span>تواصل معنا</span>
+          </button>
+          <div style="height: 1px; background: var(--border-subtle); margin: 4px 6px;"></div>
+          <button onClick="{{ signOut }}" style-hover="background: var(--state-danger-bg);" style="display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 0 12px; background: none; border: none; border-radius: var(--radius-sm); font-family: var(--font-sans); font-size: var(--text-sm); color: var(--state-danger-fg); cursor: pointer; text-align: start;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; width: 16px; height: 16px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+            <span>تسجيل الخروج</span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+  </header>
+
+  <main style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: {{ mainPadding }};">
+
+    <div style="margin-bottom: 14px;">
+      <x-import component-from-global-scope="RibaatDesignSystem_790e93.Breadcrumbs" items="{{ breadcrumbItems }}" hint-size="auto,20px"></x-import>
+    </div>
+
+    <!-- Player + curriculum row: reflows between side-by-side, mobile-stacked and theater-stacked -->
+    <div style="display: flex; gap: {{ colGap }}; align-items: flex-start; flex-direction: {{ rowDirection }};">
+
+      <!-- Player column: video + (theater-mode course content) + lecture meta + tabs -->
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: {{ sectionGap }};">
+
+      <div style="{{ videoOuterStyle }}">
+        <div style="{{ videoInnerStyle }}">
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(23,21,15,0.15), rgba(23,21,15,0.55));">
+            <button aria-label="تشغيل" style="width: 64px; height: 64px; border-radius: 50%; background: rgba(247,243,231,0.14); border: 1.5px solid rgba(247,243,231,0.5); display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(2px);">
+              <i data-lucide="play" style="width: 26px; height: 26px; color: #F7F3E7; fill: #F7F3E7;"></i>
+            </button>
+          </div>
+          <div style="position: absolute; bottom: 0; inset-inline: 0; padding: 20px 22px; background: linear-gradient(0deg, rgba(15,13,9,0.75), transparent);">
+            <p style="margin: 0; color: #EDE6D6; font-size: var(--text-md); font-weight: var(--weight-semibold);">{{ currentLecture.title }}</p>
+          </div>
+          <button aria-label="الدرس السابق" onClick="{{ goPrev }}" disabled="{{ !hasPrev }}" style="position: absolute; top: 50%; inset-inline-end: 14px; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(23,21,15,0.55); border: 1px solid rgba(247,243,231,0.3); color: #F7F3E7; display: flex; align-items: center; justify-content: center; cursor: {{ prevCursor }}; opacity: {{ prevOpacity }};">
+            <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
+          </button>
+          <button aria-label="الدرس التالي" onClick="{{ goNext }}" disabled="{{ !hasNext }}" style="position: absolute; top: 50%; inset-inline-start: 14px; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; background: rgba(23,21,15,0.55); border: 1px solid rgba(247,243,231,0.3); color: #F7F3E7; display: flex; align-items: center; justify-content: center; cursor: {{ nextCursor }}; opacity: {{ nextOpacity }};">
+            <i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i>
+          </button>
+
+          <sc-if value="{{ showInlineToggle }}" hint-placeholder-val="{{ false }}">
+            <button aria-label="إظهار/إخفاء محتوى الدورة" onClick="{{ toggleSidebar }}" style="position: absolute; top: 14px; inset-inline-start: 14px; width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(23,21,15,0.55); border: 1px solid rgba(247,243,231,0.3); color: #F7F3E7; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+              <i data-lucide="columns-2" style="width: 17px; height: 17px;"></i>
+            </button>
+          </sc-if>
+
+        </div>
+      </div>
+
+      <!-- Curriculum / course content — inline, right after the video, only in theater mode -->
+      <sc-if value="{{ showInlineSidebar }}" hint-placeholder-val="{{ false }}">
+        <div style="width: 100%; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid var(--border-subtle);">
+            <div>
+              <p style="margin: 0; font-size: var(--text-md); font-weight: var(--weight-semibold); color: var(--text-primary); font-family: var(--font-display);">محتوى الدورة</p>
+              <p style="margin: 4px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ courseProgressLine }}</p>
+            </div>
+          </div>
+          <div>
+            <sc-for list="{{ days }}" as="day" hint-placeholder-count="3">
+              <div style="border-bottom: 1px solid var(--border-subtle);">
+                <button onClick="{{ day.toggleOpen }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 18px; background: none; border: none; cursor: pointer; text-align: start; font-family: var(--font-sans);">
+                  <span style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                    <i data-lucide="{{ day.chevronIcon }}" style="width: 16px; height: 16px; color: var(--text-muted); flex: none;"></i>
+                    <span style="width: 16px; height: 16px; border-radius: 50%; border: 1px solid {{ day.checkBorder }}; background: {{ day.checkBg }}; display: flex; align-items: center; justify-content: center; flex: none;">
+                      <sc-if value="{{ day.allDone }}" hint-placeholder-val="{{ false }}">
+                        <i data-lucide="check" style="width: 10px; height: 10px; color: var(--text-on-brand);"></i>
+                      </sc-if>
+                    </span>
+                    <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ day.label }}</span>
+                  </span>
+                  <span style="font-size: var(--text-xs); color: var(--text-muted); flex: none; white-space: nowrap;">{{ day.summaryLine }}</span>
+                </button>
+                <sc-if value="{{ day.open }}" hint-placeholder-val="{{ true }}">
+                  <div style="padding-bottom: 6px;">
+                    <sc-for list="{{ day.lectures }}" as="lec" hint-placeholder-count="4">
+                      <button onClick="{{ lec.select }}" disabled="{{ lec.locked }}" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 18px; background: {{ lec.rowBg }}; border: none; border-inline-start: {{ lec.rowBorder }}; cursor: {{ lec.cursor }}; text-align: start; font-family: var(--font-sans);">
+                        <sc-if value="{{ lec.locked }}" hint-placeholder-val="{{ false }}">
+                          <i data-lucide="lock" style="width: 15px; height: 15px; color: var(--text-muted); flex: none;"></i>
+                        </sc-if>
+                        <sc-if value="{{ lec.showCheckbox }}" hint-placeholder-val="{{ true }}">
+                          <span onClick="{{ lec.toggleDone }}" style="width: 17px; height: 17px; border-radius: var(--radius-sm); border: 1px solid {{ lec.checkBorder }}; background: {{ lec.checkBg }}; display: flex; align-items: center; justify-content: center; flex: none;">
+                            <sc-if value="{{ lec.done }}" hint-placeholder-val="{{ false }}">
+                              <i data-lucide="check" style="width: 11px; height: 11px; color: var(--text-on-brand);"></i>
+                            </sc-if>
+                          </span>
+                        </sc-if>
+                        <span style="flex: 1; min-width: 0; font-size: var(--text-sm); color: {{ lec.titleColor }}; font-weight: {{ lec.titleWeight }}; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ lec.title }}</span>
+                        <span style="font-size: var(--text-xs); color: var(--text-muted); flex: none;">{{ lec.durationLabel }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--border-subtle);">
+            <button onClick="{{ goPrev }}" disabled="{{ !hasPrev }}" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: {{ prevCursor }}; opacity: {{ prevOpacity }}; background: transparent; color: var(--text-secondary); border: 1px solid var(--border-default);">
+              <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+              الدرس السابق
+            </button>
+            <button onClick="{{ goNext }}" disabled="{{ !hasNext }}" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: {{ nextCursor }}; opacity: {{ nextOpacity }}; background: var(--surface-brand); color: var(--text-on-brand); border: 1px solid var(--surface-brand);">
+              {{ nextLabel }}
+              <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
+            </button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- Lecture meta + tabs + tab content -->
+      <div style="display: flex; flex-direction: column; gap: {{ sectionGap }};">
+
+        <div>
+          <p style="margin: 0 0 6px; font-size: var(--text-sm); color: var(--text-muted);">
+            <a href="#" style="color: var(--text-link);">{{ courseTitle }}</a>
+          </p>
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+            <h1 style="margin: 0; font-family: var(--font-display); font-size: {{ h1Size }}; color: var(--text-primary); font-weight: var(--weight-bold);">{{ currentLecture.title }}</h1>
+          </div>
+          <div style="display: flex; align-items: center; gap: 18px; margin-top: 10px; flex-wrap: wrap;">
+            <span style="display: flex; align-items: center; gap: 8px; font-size: var(--text-sm); color: var(--text-secondary);">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Avatar" name="{{ instructorName }}" size="sm" hint-size="28px,28px"></x-import>
+              د. {{ instructorName }}
+            </span>
+            <span style="display: flex; align-items: center; gap: 6px; font-size: var(--text-sm); color: var(--text-muted);">
+              <i data-lucide="clock" style="width: 15px; height: 15px;"></i>
+              {{ currentLecture.durationLabel }}
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <x-import component-from-global-scope="RibaatDesignSystem_790e93.Tabs" tabs="{{ tabItems }}" active="{{ activeTab }}" on-change="{{ setActiveTab }}" hint-size="100%,44px"></x-import>
+
+          <div style="margin-top: 22px;">
+
+            <!-- Overview -->
+            <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 16px; max-width: 720px;">
+                <p style="margin: 0; font-size: var(--text-base); color: var(--text-primary); line-height: var(--leading-relaxed);">{{ currentLecture.description }}</p>
+                <sc-if value="{{ currentLecture.hasHadith }}" hint-placeholder-val="{{ false }}">
+                  <x-import component-from-global-scope="RibaatDesignSystem_790e93.HadithCitation" text="{{ currentLecture.hadithText }}" source="{{ currentLecture.hadithSource }}" hint-size="auto,auto"></x-import>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <!-- Q&A -->
+            <sc-if value="{{ isQa }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 18px; max-width: 720px;">
+                <sc-if value="{{ hasQuestions }}" hint-placeholder-val="{{ true }}">
+                  <sc-for list="{{ questions }}" as="q" hint-placeholder-count="2">
+                    <div style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+                      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+                        <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ q.asker }}</span>
+                        <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ q.timestamp }}</span>
+                      </div>
+                      <p style="margin: 0 0 10px; font-size: var(--text-base); color: var(--text-primary);">{{ q.text }}</p>
+                      <sc-if value="{{ q.hasAnswer }}" hint-placeholder-val="{{ false }}">
+                        <div style="display: flex; gap: 10px; background: var(--surface-sunken); border-radius: var(--radius-md); padding: 12px 14px;">
+                          <div style="flex: 1; min-width: 0;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                              <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ q.answer.name }}</span>
+                              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Badge" tone="brand" hint-size="auto,18px">مُعلّم</x-import>
+                            </div>
+                            <p style="margin: 0; font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-normal);">{{ q.answer.text }}</p>
+                          </div>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </sc-for>
+                </sc-if>
+                <sc-if value="{{ hasNoQuestions }}" hint-placeholder-val="{{ false }}">
+                  <div style="text-align: center; padding: 32px 0; color: var(--text-muted);">
+                    <p style="margin: 0; font-size: var(--text-base);">لا توجد أسئلة على هذا الدرس بعد — كن أول من يسأل.</p>
+                  </div>
+                </sc-if>
+
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;">
+                  <label style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">اطرح سؤالاً على هذا الدرس</label>
+                  <textarea placeholder="اكتب سؤالك هنا…" style="min-height: 84px; resize: vertical; border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 12px 14px; font-size: var(--text-base); color: var(--text-primary); background: var(--surface-card);"></textarea>
+                  <div>
+                    <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" hint-size="auto,42px">إرسال السؤال</x-import>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- Documents -->
+            <sc-if value="{{ isDocuments }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; max-width: 720px;">
+                <sc-for list="{{ documents }}" as="doc" hint-placeholder-count="3">
+                  <div style="display: flex; align-items: center; gap: 14px; padding: 14px 4px; border-bottom: 1px solid var(--border-subtle);">
+                    <i data-lucide="{{ doc.icon }}" style="width: 19px; height: 19px; color: var(--text-muted); flex: none;"></i>
+                    <span style="flex: 1; min-width: 0; font-size: var(--text-base); color: var(--text-primary);">{{ doc.name }}</span>
+                    <span style="font-size: var(--text-xs); color: var(--text-muted); flex: none;">{{ doc.size }}</span>
+                    <button aria-label="تنزيل" style="background: none; border: none; color: var(--text-brand); cursor: pointer; display: flex; align-items: center; flex: none; padding: 4px;">
+                      <i data-lucide="download" style="width: 18px; height: 18px;"></i>
+                    </button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+          </div>
+        </div>
+
+      </div>
+
+      </div>
+
+      <!-- Curriculum / course content — normal position (beside video, or below on mobile) -->
+      <sc-if value="{{ showSideSidebar }}" hint-placeholder-val="{{ true }}">
+        <div style="flex: {{ sidebarFlex }}; min-width: {{ sidebarMinWidth }}; max-width: {{ sidebarMaxWidth }}; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; {{ sidebarStickyStyle }}">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid var(--border-subtle);">
+            <div>
+              <p style="margin: 0; font-size: var(--text-md); font-weight: var(--weight-semibold); color: var(--text-primary); font-family: var(--font-display);">محتوى الدورة</p>
+              <p style="margin: 4px 0 0; font-size: var(--text-xs); color: var(--text-muted);">{{ courseProgressLine }}</p>
+            </div>
+            <sc-if value="{{ showPanelClose }}" hint-placeholder-val="{{ false }}">
+              <button aria-label="إخفاء" onClick="{{ toggleSidebar }}" style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; padding: 4px;">
+                <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+              </button>
+            </sc-if>
+          </div>
+
+          <div style="max-height: {{ sidebarMaxHeight }}; overflow-y: {{ sidebarOverflow }};">
+            <sc-for list="{{ days }}" as="day" hint-placeholder-count="3">
+              <div style="border-bottom: 1px solid var(--border-subtle);">
+                <button onClick="{{ day.toggleOpen }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 18px; background: none; border: none; cursor: pointer; text-align: start; font-family: var(--font-sans);">
+                  <span style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                    <i data-lucide="{{ day.chevronIcon }}" style="width: 16px; height: 16px; color: var(--text-muted); flex: none;"></i>
+                    <span style="width: 16px; height: 16px; border-radius: 50%; border: 1px solid {{ day.checkBorder }}; background: {{ day.checkBg }}; display: flex; align-items: center; justify-content: center; flex: none;">
+                      <sc-if value="{{ day.allDone }}" hint-placeholder-val="{{ false }}">
+                        <i data-lucide="check" style="width: 10px; height: 10px; color: var(--text-on-brand);"></i>
+                      </sc-if>
+                    </span>
+                    <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ day.label }}</span>
+                  </span>
+                  <span style="font-size: var(--text-xs); color: var(--text-muted); flex: none; white-space: nowrap;">{{ day.summaryLine }}</span>
+                </button>
+                <sc-if value="{{ day.open }}" hint-placeholder-val="{{ true }}">
+                  <div style="padding-bottom: 6px;">
+                    <sc-for list="{{ day.lectures }}" as="lec" hint-placeholder-count="4">
+                      <button onClick="{{ lec.select }}" disabled="{{ lec.locked }}" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 18px; background: {{ lec.rowBg }}; border: none; border-inline-start: {{ lec.rowBorder }}; cursor: {{ lec.cursor }}; text-align: start; font-family: var(--font-sans);">
+                        <sc-if value="{{ lec.locked }}" hint-placeholder-val="{{ false }}">
+                          <i data-lucide="lock" style="width: 15px; height: 15px; color: var(--text-muted); flex: none;"></i>
+                        </sc-if>
+                        <sc-if value="{{ lec.showCheckbox }}" hint-placeholder-val="{{ true }}">
+                          <span onClick="{{ lec.toggleDone }}" style="width: 17px; height: 17px; border-radius: var(--radius-sm); border: 1px solid {{ lec.checkBorder }}; background: {{ lec.checkBg }}; display: flex; align-items: center; justify-content: center; flex: none;">
+                            <sc-if value="{{ lec.done }}" hint-placeholder-val="{{ false }}">
+                              <i data-lucide="check" style="width: 11px; height: 11px; color: var(--text-on-brand);"></i>
+                            </sc-if>
+                          </span>
+                        </sc-if>
+                        <span style="flex: 1; min-width: 0; font-size: var(--text-sm); color: {{ lec.titleColor }}; font-weight: {{ lec.titleWeight }}; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ lec.title }}</span>
+                        <span style="font-size: var(--text-xs); color: var(--text-muted); flex: none;">{{ lec.durationLabel }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display: flex; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--border-subtle);">
+            <button onClick="{{ goPrev }}" disabled="{{ !hasPrev }}" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: {{ prevCursor }}; opacity: {{ prevOpacity }}; background: transparent; color: var(--text-secondary); border: 1px solid var(--border-default);">
+              <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
+              الدرس السابق
+            </button>
+            <button onClick="{{ goNext }}" disabled="{{ !hasNext }}" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius-md); font-family: var(--font-sans); font-size: var(--text-sm); font-weight: var(--weight-semibold); cursor: {{ nextCursor }}; opacity: {{ nextOpacity }}; background: var(--surface-brand); color: var(--text-on-brand); border: 1px solid var(--surface-brand);">
+              {{ nextLabel }}
+              <i data-lucide="chevron-left" style="width: 16px; height: 16px;"></i>
+            </button>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+
+  </main>
+
+  <footer dir="rtl" style="background: var(--surface-card); border-top: 1px solid var(--border-subtle); font-family: var(--font-sans);">
+    <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: 32px clamp(24px, 6vw, 120px); display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap;">
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 320px;">
+        <img src="../../assets/logos/ribaat-lockup-2026.png" alt="رباط الحنابلة" style="height: 65px; align-self: flex-start; filter: {{ logoFilter }}; width: 110px">
+        <p style="margin: 0; font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed);">مدرسة شرعية تأصيلية — دورات ودروس في العقيدة والفقه والحديث والسيرة، بإجازات بالسند المتصل.</p>
+      </div>
+      <div style="display: flex; gap: 56px; flex-wrap: wrap;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">روابط</span>
+          <a href="StudentDashboard.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">لوحة التحكم</a>
+          <a href="CourseCatalogue.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">الدورات</a>
+          <a href="StudentPaths.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">البرامج الدراسية</a>
+          <a href="StudentCertificates.dc.html" style="font-size: var(--text-sm); color: var(--text-secondary);">الشهادات</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">الدعم والتعريف</span>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">عن المدرسة</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">الأسئلة الشائعة</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">الدعم الفني</a>
+          <a href="#" style="font-size: var(--text-sm); color: var(--text-secondary);">تواصل معنا</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid var(--border-subtle);">
+      <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: 14px clamp(24px, 6vw, 120px);">
+        <p style="margin: 0; font-size: var(--text-xs); color: var(--text-muted);">© 1448هـ — رباط الحنابلة. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+</helmet>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: 1280, &quot;height&quot;: 1000},
+  &quot;colorScheme&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;light&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;light&quot;, &quot;dark&quot;], &quot;section&quot;: &quot;Theme&quot;},
+  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;desktop&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;section&quot;: &quot;Breakpoint&quot;}
+}">
+const RAW_DAYS = [
+  {
+    id: "day1",
+    label: "اليوم الأول",
+    lectures: [
+      { id: "l1", title: "الحديث الأول: إنما الأعمال بالنيات", duration: "00:24:00", state: "completed" },
+      { id: "l2", title: "الحديث الثاني: حديث جبريل في الإسلام والإيمان والإحسان", duration: "00:41:00", state: "completed" },
+      { id: "l3", title: "الحديث الثالث: بُنِيَ الإسلام على خمس", duration: "00:33:00", state: "available",
+        description: "شرح لحديث ابن عمر رضي الله عنه في أركان الإسلام الخمسة، وبيان منزلتها من الدين وترتيب العمل بها.",
+        hasHadith: true,
+        hadithText: "بُنِيَ الإسلامُ على خمسٍ: شهادةِ أن لا إله إلا الله وأنَّ محمدًا رسولُ الله، وإقامِ الصلاةِ، وإيتاءِ الزكاةِ، والحجِّ، وصومِ رمضان",
+        hadithSource: "رواه البخاري ومسلم" },
+      { id: "l4", title: "الحديث الرابع: القدر وكتابة العبد قبل خلقه", duration: "00:27:00", state: "available" },
+    ],
+  },
+  {
+    id: "day2",
+    label: "اليوم الثاني",
+    lectures: [
+      { id: "l5", title: "الحديث الخامس: النهي عن المحدثات في الدين", duration: "00:29:00", state: "available" },
+      { id: "l6", title: "الحديث السادس: الحلال بيّن والحرام بيّن", duration: "00:34:00", state: "available" },
+      { id: "l7", title: "الحديث السابع: الدين النصيحة", duration: "00:22:00", state: "available" },
+      { id: "l8", title: "الحديث الثامن: حرمة دم المسلم وماله وعرضه", duration: "00:45:00", state: "available" },
+    ],
+  },
+  {
+    id: "day3",
+    label: "اليوم الثالث",
+    lectures: [
+      { id: "l9", title: "الحديث التاسع: من حسن إسلام المرء تركه ما لا يعنيه", duration: "00:31:00", state: "available" },
+      { id: "l10", title: "الحديث العاشر: لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه", duration: "00:38:00", state: "locked" },
+      { id: "l11", title: "الحديث الحادي عشر: دع ما يريبك إلى ما لا يريبك", duration: "00:26:00", state: "locked" },
+    ],
+  },
+];
+
+function parseHMS(s) {
+  const [h, m, sec] = s.split(":").map(Number);
+  return h * 3600 + m * 60 + sec;
+}
+// "01:15:00" -> "ساعة و 15 دقيقة" / "00:24:00" -> "24 دقيقة" — always spells out hours and minutes explicitly.
+function formatDuration(hms) {
+  const [h, m] = hms.split(":").map(Number);
+  const parts = [];
+  if (h > 0) parts.push(h + (h === 1 ? " ساعة" : " ساعات"));
+  if (m > 0 || h === 0) parts.push(m + " دقيقة");
+  return parts.join(" و ");
+}
+
+class Component extends DCLogic {
+  state = {
+    completedIds: new Set(["l1", "l2"]),
+    currentId: "l3",
+    openDays: { day1: true, day2: false, day3: false },
+    sidebarOpen: true,
+    activeTab: "overview",
+    theaterMode: false,
+    accountMenuOpen: false,
+  };
+
+  flat() {
+    const out = [];
+    RAW_DAYS.forEach((d) => d.lectures.forEach((l) => out.push(l)));
+    return out;
+  }
+
+  selectLecture(id) {
+    const lec = this.flat().find((l) => l.id === id);
+    if (!lec || lec.state === "locked") return;
+    this.setState({ currentId: id, activeTab: "overview" });
+  }
+
+  toggleDone(id) {
+    this.setState((s) => {
+      const next = new Set(s.completedIds);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return { completedIds: next };
+    });
+  }
+
+  step(dir) {
+    const flat = this.flat();
+    const idx = flat.findIndex((l) => l.id === this.state.currentId);
+    let next = idx;
+    do { next += dir; } while (flat[next] && flat[next].state === "locked");
+    if (flat[next]) this.setState({ currentId: flat[next].id, activeTab: "overview" });
+  }
+
+  renderVals() {
+    const viewport = this.props.viewport || "desktop";
+    const colorScheme = this.props.colorScheme || "light";
+    const isDesktop = viewport === "desktop";
+    const isTablet = viewport === "tablet";
+    const theaterMode = this.state.theaterMode;
+    const isRowLayout = (isDesktop || isTablet) && !theaterMode;
+
+    const vpConfig = {
+      desktop: { maxWidth: "1200px", padding: "48px clamp(24px, 6vw, 120px) 80px", h1: "var(--text-2xl)", sectionGap: "22px", colGap: "24px", sidebarCol: "340px" },
+      tablet: { maxWidth: "834px", padding: "28px clamp(20px, 4vw, 56px) 56px", h1: "var(--text-xl)", sectionGap: "20px", colGap: "18px", sidebarCol: "300px" },
+      mobile: { maxWidth: "390px", padding: "20px 16px 48px", h1: "var(--text-lg)", sectionGap: "18px", colGap: "16px", sidebarCol: "1fr" },
+    };
+    const cfg = vpConfig[viewport] || vpConfig.desktop;
+
+    const flat = this.flat();
+    const currentIdx = flat.findIndex((l) => l.id === this.state.currentId);
+    const currentRaw = flat[currentIdx] || flat[0];
+    const completedIds = this.state.completedIds;
+
+    const days = RAW_DAYS.map((d) => {
+      const total = d.lectures.length;
+      const done = d.lectures.filter((l) => completedIds.has(l.id)).length;
+      const allDone = done === total;
+      const totalSec = d.lectures.reduce((sum, l) => sum + parseHMS(l.duration), 0);
+      const open = !!this.state.openDays[d.id];
+      return {
+        id: d.id,
+        label: d.label,
+        open,
+        allDone,
+        checkBorder: allDone ? "var(--surface-brand)" : "var(--border-default)",
+        checkBg: allDone ? "var(--surface-brand)" : "transparent",
+        chevronIcon: open ? "chevron-down" : "chevron-left",
+        summaryLine: done + " / " + total + " \u00b7 " + formatDuration(
+          [Math.floor(totalSec / 3600), Math.floor((totalSec % 3600) / 60), totalSec % 60]
+            .map((n) => String(n).padStart(2, "0")).join(":")
+        ),
+        toggleOpen: () => this.setState((s) => ({ openDays: { ...s.openDays, [d.id]: !s.openDays[d.id] } })),
+        lectures: d.lectures.map((l) => {
+          const done = completedIds.has(l.id);
+          const isCurrent = l.id === this.state.currentId;
+          const locked = l.state === "locked";
+          return {
+            id: l.id,
+            title: l.title,
+            durationLabel: formatDuration(l.duration),
+            done,
+            locked,
+            showCheckbox: !locked,
+            select: () => this.selectLecture(l.id),
+            toggleDone: (e) => { e.stopPropagation(); this.toggleDone(l.id); },
+            cursor: locked ? "not-allowed" : "pointer",
+            rowBg: isCurrent ? "var(--ribaat-green-100)" : "transparent",
+            rowBorder: isCurrent ? "3px solid var(--ribaat-green-600)" : "3px solid transparent",
+            titleColor: locked ? "var(--text-muted)" : isCurrent ? "var(--text-brand)" : "var(--text-primary)",
+            titleWeight: isCurrent ? "var(--weight-semibold)" : "var(--weight-regular)",
+            checkBorder: done ? "var(--surface-brand)" : "var(--border-default)",
+            checkBg: done ? "var(--surface-brand)" : "var(--surface-card)",
+          };
+        }),
+      };
+    });
+
+    const totalLectures = flat.length;
+    const totalDone = flat.filter((l) => completedIds.has(l.id)).length;
+
+    const currentLecture = {
+      title: currentRaw.title,
+      durationLabel: formatDuration(currentRaw.duration),
+      description: currentRaw.description || "شرح مفصّل لهذا الحديث مع بيان معانيه وفوائده الفقهية والعقدية، ومناسبته لما قبله وما بعده من أحاديث الأربعين.",
+      hasHadith: !!currentRaw.hasHadith,
+      hadithText: currentRaw.hadithText,
+      hadithSource: currentRaw.hadithSource,
+    };
+
+    const hasPrev = currentIdx > 0;
+    const hasNextRaw = currentIdx < flat.length - 1;
+    const nextLocked = hasNextRaw && flat[currentIdx + 1].state === "locked";
+    const hasNext = hasNextRaw && !nextLocked;
+
+    const questions = [
+      { asker: "سالم العتيبي", timestamp: "منذ يومين", text: "هل يشترط استحضار النية عند كل عمل، أم تكفي النية العامة في أول العبادة؟", hasAnswer: true,
+        answer: { name: "د. أنس اليتامى", text: "تكفي النية العامة في أول العبادة ولا يشترط تكرارها في كل جزء منها، وهذا هو مقصود الحديث." } },
+      { asker: "هند الرشيدي", timestamp: "منذ 5 أيام", text: "ما الفرق بين الهجرة إلى الله والهجرة إلى الدنيا المذكورة في شرح الحديث؟", hasAnswer: true,
+        answer: { name: "د. أنس اليتامى", text: "الهجرة إلى الله تكون بالنية الصادقة في طلب رضاه، وهجرة الدنيا ما كانت النية فيها لغرض مادي أو دنيوي كالزواج أو المال." } },
+    ];
+
+    const documents = [
+      { name: "الأربعون النووية - النص الكامل.pdf", icon: "file-text", size: "1.2 MB" },
+      { name: "ملخص شرح اليوم الأول.pdf", icon: "file-text", size: "640 KB" },
+      { name: "شرائح العرض - اليوم الأول.pdf", icon: "presentation", size: "2.1 MB" },
+    ];
+
+    const courseTitle = "الأربعون النووية";
+
+    // Theater mode stacks everything in one column with course content right under the video;
+    // side-by-side keeps the classic two-column layout; plain mobile keeps content above the curriculum list.
+    const showInlineSidebar = theaterMode;
+    const showSideSidebar = !theaterMode && (isRowLayout ? this.state.sidebarOpen : true);
+
+    const videoOuterStyle = theaterMode
+      ? "position: relative; height: calc(100vw * 9 / 16);"
+      : "position: relative; aspect-ratio: 16/9;";
+    const videoInnerStyle = theaterMode
+      ? "position: fixed; top: 0; left: 0; width: 100vw; height: calc(100vw * 9 / 16); background: #17150F; overflow: hidden; z-index: 40;"
+      : "position: absolute; inset: 0; background: #17150F; border-radius: var(--radius-lg); overflow: hidden;";
+
+    return {
+      studentName: "ماجد",
+      themeAttr: colorScheme,
+      logoFilter: colorScheme === "dark" ? "brightness(0) invert(1) opacity(0.9)" : "none",
+      signOut: () => { window.location.href = "RibaatAuth.dc.html"; },
+      frameLabel: viewport + " / " + colorScheme,
+      containerMaxWidth: cfg.maxWidth,
+      mainPadding: cfg.padding,
+      h1Size: cfg.h1,
+      sectionGap: cfg.sectionGap,
+      colGap: cfg.colGap,
+      rowDirection: isRowLayout ? "row" : "column",
+      videoOuterStyle,
+      videoInnerStyle,
+      breadcrumbItems: [
+        { label: "لوحة التحكم", href: "StudentDashboard.dc.html" },
+        { label: courseTitle, href: "CourseDetails.dc.html" },
+        { label: currentLecture.title },
+      ],
+      courseTitle,
+      instructorName: "أنس اليتامى",
+      currentLecture,
+      hasPrev,
+      hasNext,
+      prevCursor: hasPrev ? "pointer" : "not-allowed",
+      nextCursor: hasNext ? "pointer" : "not-allowed",
+      prevOpacity: hasPrev ? 1 : 0.35,
+      nextOpacity: hasNext ? 1 : 0.35,
+      goPrev: () => this.step(-1),
+      goNext: () => this.step(1),
+      nextLabel: hasNext ? "الدرس التالي" : "لا يوجد درس تالٍ",
+      theaterMode,
+      theaterIcon: theaterMode ? "minimize-2" : "maximize",
+      theaterButtonLabel: theaterMode ? "تصغير الفيديو" : "توسيع الفيديو لملء الشاشة",
+      toggleTheater: () => this.setState((s) => ({ theaterMode: !s.theaterMode })),
+      showInlineToggle: isRowLayout,
+      toggleSidebar: () => this.setState((s) => ({ sidebarOpen: !s.sidebarOpen })),
+      showInlineSidebar,
+      showSideSidebar,
+      sidebarFlex: isDesktop ? "0 0 340px" : isTablet ? "0 0 300px" : "1 1 auto",
+      sidebarMinWidth: isRowLayout ? "280px" : "0",
+      sidebarMaxWidth: isRowLayout ? "360px" : "none",
+      sidebarStickyStyle: isRowLayout ? "position: sticky; top: 12px;" : "",
+      showPanelClose: isRowLayout,
+      sidebarMaxHeight: isRowLayout ? "560px" : "none",
+      sidebarOverflow: isRowLayout ? "auto" : "visible",
+      courseProgressLine: totalDone + " / " + totalLectures + " دروس مكتملة",
+      days,
+      tabItems: [
+        { value: "overview", label: "نظرة عامة" },
+        { value: "qa", label: "أسئلة وأجوبة" },
+        { value: "documents", label: "الملفات" },
+      ],
+      activeTab: this.state.activeTab,
+      setActiveTab: (v) => this.setState({ activeTab: v }),
+      isOverview: this.state.activeTab === "overview",
+      isQa: this.state.activeTab === "qa",
+      isDocuments: this.state.activeTab === "documents",
+      questions,
+      hasQuestions: questions.length > 0,
+      hasNoQuestions: questions.length === 0,
+      documents,
+      accountMenuOpen: this.state.accountMenuOpen,
+      toggleAccountMenu: () => this.setState((s) => ({ accountMenuOpen: !s.accountMenuOpen })),
+    };
+  }
+
+  componentDidMount() {
+    const tryIcons = () => { if (window.lucide) window.lucide.createIcons(); else setTimeout(tryIcons, 50); };
+    tryIcons();
+  }
+  componentDidUpdate() {
+    window.lucide && window.lucide.createIcons();
+  }
+}
+
+</script>
+</body>
+</html>

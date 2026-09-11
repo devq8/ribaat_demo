@@ -1,0 +1,71 @@
+{# templates/dashboard/_track_stepper.html
+   "مساري" — tab strip switching between the student's tracks/levels
+   (المستوى الأول / الثاني), each showing a stepper of that track's courses.
+   Two markups are shipped for the SAME data: `.rb-stepper-h` (horizontal,
+   shown ≥601px) and `.rb-stepper-v-only` (vertical, shown ≤600px) —
+   dashboard.css toggles which is visible per breakpoint, so no server-side
+   branching on viewport is needed. Tab switching needs a small JS
+   progressive enhancement (see note at bottom) or a query-param reload. #}
+<section class="rb-section">
+  <h2 class="rb-h2" style="margin-bottom:4px;">مساري</h2>
+  <p class="rb-stepper-sub">تسلسل الدورات ضمن المسار، وما يلزم لفتح الدورة التالية.</p>
+
+  <div class="rb-tabs" role="tablist">
+    {% for track in tracks %}
+      <a href="?track={{ track.value }}" class="rb-tab{% if track.is_active %} is-active{% endif %}" role="tab">{{ track.label }}</a>
+    {% endfor %}
+  </div>
+
+  {% for track in tracks %}
+    {% if track.is_active %}
+      <div class="rb-stepper-panel">
+
+        {# Horizontal (desktop / tablet) #}
+        <div class="rb-stepper-h">
+          <div class="rb-stepper-h-track"></div>
+          <div class="rb-stepper-h-fill" style="width: {{ track.progress_pct }}%;"></div>
+          <div class="rb-stepper-h-list">
+            {% for step in track.steps %}
+              <div class="rb-step-h rb-step--{{ step.status }}">
+                <div class="rb-step-node"><i data-lucide="{{ step.icon }}"></i></div>
+                <span class="rb-step-title">{{ step.title }}</span>
+                <span class="rb-badge rb-badge--{{ step.badge_tone }}">{{ step.badge_label }}</span>
+                <p class="rb-step-subtitle">{{ step.subtitle }}</p>
+                {% if step.show_action %}
+                  <div class="rb-step-action"><a href="{{ step.action_url }}" class="rb-btn rb-btn--sm rb-btn--outline">{{ step.action_label }}</a></div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        {# Vertical (mobile) — same steps, list layout #}
+        <div class="rb-stepper-v rb-stepper-v-only">
+          {% for step in track.steps %}
+            <div class="rb-step-v rb-step--{{ step.status }}">
+              <div class="rb-step-v-rail">
+                <div class="rb-step-node"><i data-lucide="{{ step.icon }}"></i></div>
+                {% if not step.is_last %}<div class="rb-step-v-connector"></div>{% endif %}
+              </div>
+              <div class="rb-step-v-body">
+                <div class="rb-step-v-head">
+                  <span class="rb-step-title">{{ step.title }}</span>
+                  <span class="rb-badge rb-badge--{{ step.badge_tone }}">{{ step.badge_label }}</span>
+                </div>
+                <p class="rb-step-subtitle">{{ step.subtitle }}</p>
+                {% if step.show_action %}
+                  <div class="rb-step-action"><a href="{{ step.action_url }}" class="rb-btn rb-btn--sm rb-btn--outline">{{ step.action_label }}</a></div>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    {% endif %}
+  {% endfor %}
+</section>
+{# Note: the tab links above reload the page with ?track=level2. If you'd
+   rather switch tracks without a reload, render both track panels, hide the
+   inactive one with `hidden`, and toggle it with a few lines of vanilla JS
+   on tab click — the markup for each panel is unchanged either way. #}

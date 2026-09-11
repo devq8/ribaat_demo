@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="297mm" height="210mm" viewBox="0 0 297 210" preserveAspectRatio="none">
+  <title>زخرفة الشهادة — A4 أفقي</title>
+  <defs>
+    <pattern id="band" width="7" height="9.333" patternUnits="userSpaceOnUse">
+      <path d="M1.458 -0.292 V2.042 H5.542 V6.708 H1.458 V9.625" fill="none" stroke="#8FA079" stroke-width="1.458"></path>
+    </pattern>
+    <pattern id="wm" width="84" height="112" patternUnits="userSpaceOnUse">
+      <path d="M17.5 -3.5 V24.5 H66.5 V80.5 H17.5 V115.5" fill="none" stroke="#607247" stroke-width="17.5"></path>
+    </pattern>
+  </defs>
+  <rect width="297" height="210" fill="#FBF9F3"></rect>
+  <rect x="150" y="0" width="147" height="210" fill="url(#wm)" opacity="0.045"></rect>
+  <rect x="0" y="0" width="7" height="203" fill="url(#band)"></rect>
+  <rect x="0" y="203" width="7" height="7" fill="#8C5F35"></rect>
+  <rect x="13" y="9" width="271" height="192" fill="none" stroke="#D3BC98" stroke-width="0.3"></rect>
+  <rect x="13" y="205" width="24" height="2" fill="#8C5F35"></rect>
+  <rect x="39" y="205" width="58" height="2" fill="#607247"></rect>
+</svg>

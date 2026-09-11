@@ -1,0 +1,128 @@
+{% load static %}
+{# Hero — a stack of slides, one visible at a time.
+
+   Every slide is independent and editor-configurable: it declares its own
+   background (footage / still / none), whether it carries copy at all, whether
+   it shows the enrolment state slot, and its own actions. Nothing about a slide
+   is inferred from its neighbours, so an editor can mix a footage slide, a
+   stills slide and a type-only slide without any of them breaking.
+
+   Context: `hero_slides` — a list of dicts. See README §38 for the full schema
+   and the DEFAULT_HERO_SLIDES constant the view should ship.
+
+     media          'video' | 'image' | 'none'
+     video          static path, only read when media == 'video'
+     image          static path — the still, and the video's poster frame
+     alt            required whenever `image` is set
+     focus          object-position, e.g. '46% 30%'
+     show_text      False renders a media-only slide (credit line still shows)
+     label          short nav label (Arabic), required when there is >1 slide
+     eyebrow/title/lede
+     show_enrolment shows the term-state slot; normally only on the first slide
+     actions        [{label, href, style: 'primary'|'onink', preload}]
+     credit         provenance line for the media
+
+   Only ONE slide may hold the <h1>: the first. The rest are <h2>, so the
+   document keeps one top-level heading however many slides an editor adds.
+
+   The first slide carries .is-current in the markup, so with JS disabled the
+   hero degrades to exactly that slide and every link in it still works. #}
+<section class="hero" id="hero" aria-labelledby="hero-title"
+         data-hero-carousel data-interval="{{ hero_interval|default:'8000' }}">
+
+  {% for s in hero_slides %}
+  <article class="hero__slide{% if forloop.first %} is-current{% endif %}"
+           id="hero-slide-{{ forloop.counter }}"
+           data-media="{{ s.media|default:'none' }}"
+           data-text="{% if s.show_text %}on{% else %}off{% endif %}"
+           aria-roledescription="شريحة"
+           aria-label="{{ s.label }}"{% if not forloop.first %} aria-hidden="true" inert{% endif %}>
+
+    {# The still is always in the markup, even on a video slide: it is the poster
+       frame, it paints first, and it is what stands if the footage is refused,
+       throttled or unwelcome. data-media decides what is shown. #}
+    {% if s.image %}
+    <figure class="hero__media">
+      {% with img=s.image %}
+      <img src="{% static img %}" alt="{{ s.alt }}" width="854" height="480" decoding="async"
+           {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+           {% if s.focus %}style="object-position: {{ s.focus }}"{% endif %}>
+      {% endwith %}
+      {% if s.video %}
+      <video class="hero__video" data-hero-video data-src="{% static s.video %}"
+             muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"
+             {% if s.focus %}style="object-position: {{ s.focus }}"{% endif %}></video>
+      {% endif %}
+    </figure>
+    {% endif %}
+
+    <div class="hero__scrim" aria-hidden="true"></div>
+
+    <div class="hero__copy">
+      {% if s.show_text %}
+        {% if s.eyebrow %}
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__rule" aria-hidden="true"></span>
+          {{ s.eyebrow }}
+        </p>
+        {% endif %}
+
+        {% if forloop.first %}
+        <h1 class="hero__title" id="hero-title" data-reveal data-reveal-delay="1">{{ s.title }}</h1>
+        {% else %}
+        <h2 class="hero__title hero__title--sub" data-reveal data-reveal-delay="1">{{ s.title }}</h2>
+        {% endif %}
+
+        {% if s.lede %}
+        <p class="hero__lede" data-reveal data-reveal-delay="2">{{ s.lede }}</p>
+        {% endif %}
+
+        {# The slot and the action row share one column so their edges line up:
+           the column is sized to the buttons' own width, and the card fills it.
+           No number is written down, so it stays true if a label changes. #}
+        {% if s.show_enrolment or s.actions %}
+        <div class="hero__act">
+          {% if s.show_enrolment %}{% include "landing/partials/enrolment.html" %}{% endif %}
+          {% if s.actions %}
+          <div class="hero__actions" data-reveal data-reveal-delay="1">
+            {% for a in s.actions %}
+            <a class="btn btn--{{ a.style|default:'onink' }} btn--lg" href="{{ a.href }}"
+               {% if a.preload %}data-preload-app="{{ a.preload }}"{% endif %}>{{ a.label }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      {% endif %}
+
+      {% if s.credit %}<p class="hero__credit">{{ s.credit }}</p>{% endif %}
+    </div>
+  </article>
+  {% endfor %}
+
+  {% if hero_slides|length > 1 %}
+  <div class="hero__nav" role="group" aria-label="شرائح الواجهة">
+    {% for s in hero_slides %}
+    <button type="button" class="hero__step" data-hero-step="{{ forloop.counter0 }}"
+            aria-controls="hero-slide-{{ forloop.counter }}"
+            aria-current="{% if forloop.first %}true{% else %}false{% endif %}">
+      {# Arabic-Indic digits, per the page's numeral rule. cycle rather than
+         forloop.counter because forloop.counter renders Western digits. #}
+      <span class="hero__step-num" aria-hidden="true">{% cycle '١' '٢' '٣' '٤' '٥' '٦' '٧' '٨' %}</span>
+      <span class="hero__step-label">{{ s.label }}</span>
+    </button>
+    {% endfor %}
+
+  </div>
+
+    <div class="hero__arrows">
+      <button type="button" class="hero__arrow" data-hero-prev aria-label="الشريحة السابقة">
+        <span class="rail__chev rail__chev--prev"></span>
+      </button>
+      <button type="button" class="hero__arrow" data-hero-next aria-label="الشريحة التالية">
+        <span class="rail__chev rail__chev--next"></span>
+      </button>
+    </div>
+  {% endif %}
+
+</section>

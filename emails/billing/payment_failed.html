@@ -1,0 +1,33 @@
+{% extends "emails/base.html" %}
+{% comment %}16. تعذّر إتمام عملية الدفع — payment failure{% endcomment %}
+{% block title %}تعذّر إتمام عملية الدفع{% endblock %}
+{% block preheader %}لم تُكتمل عملية الدفع، ولم يُخصم من حسابك أي مبلغ.{% endblock %}
+{% block content %}
+<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+  <tr><td class="e-txt e-h1" style="direction:rtl;text-align:right;font-family:Amiri,'Traditional Arabic','Times New Roman',serif;font-size:28px;line-height:42px;mso-line-height-rule:exactly;font-weight:700;color:#211F19;padding:0 0 14px;">تعذّر إتمام عملية الدفع</td></tr>
+  <tr><td style="padding:0 0 20px;">{% include "emails/partials/rule.html" %}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">السلام عليكم ورحمة الله وبركاته، {{ student_name }}</td></tr>
+  <tr><td class="e-txt" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;line-height:30px;mso-line-height-rule:exactly;color:#211F19;padding:0 0 16px;">لم تُكتمل عملية الدفع المتعلقة بـ {{ item_title }}، ولم يُسجَّل خصم من وسيلة الدفع.</td></tr>
+  <tr><td style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" class="e-sunk" bgcolor="#F7F3E8" style="width:100%;background-color:#F7F3E8;border:1px solid #E2DAC5;border-radius:10px;">
+      <tr><td style="padding:6px 20px;">
+        <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+          {% include "emails/partials/datarow.html" with label="البيان" value=item_title %}
+          {% include "emails/partials/datarow.html" with label="المبلغ" value=amount_with_currency %}
+          {% include "emails/partials/datarow.html" with label="وسيلة الدفع" value=payment_method_label %}
+          {% include "emails/partials/datarow.html" with label="وقت المحاولة" value=attempted_at %}
+          {% include "emails/partials/datarow.html" with label="سبب التعذّر" value=failure_reason %}
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+  <tr><td style="padding:0 0 20px;">
+    <table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" width="100%" class="e-warn" bgcolor="#F3E7CC" style="width:100%;background-color:#F3E7CC;border:1px solid #A97A24;border-radius:10px;">
+      <tr><td class="e-warn-t" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:14px;line-height:25px;mso-line-height-rule:exactly;color:#211F19;padding:14px 18px;">لم يُفعَّل التسجيل بعد. ويبقى المقعد محفوظًا حتى {{ hold_until }}، ثم يُلغى الطلب تلقائيًا.</td></tr>
+    </table>
+  </td></tr>
+  <tr><td align="center" style="padding:6px 0 22px;">{% include "emails/partials/button.html" with url=retry_url label="إعادة محاولة الدفع" %}</td></tr>
+  <tr><td style="padding:0 0 16px;">{% include "emails/partials/divider.html" %}</td></tr>
+  <tr><td class="e-mut" style="direction:rtl;text-align:right;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:12px;line-height:20px;mso-line-height-rule:exactly;color:#82795F;padding:0;">نص سياسة تعذّر الدفع ومدة حفظ الطلب بانتظار تأكيد الإدارة — انظر الأسئلة المفتوحة.</td></tr>
+</table>
+{% endblock %}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #EAE6DA; }
+    a { color: #4F6140; text-decoration: none; }
+    a:hover { color: #3E4E32; }
+    code { font-family: ui-monospace, monospace; font-size: 0.92em; background: #E2DAC5; padding: 1px 4px; border-radius: 4px; }
+  </style>
+</helmet>
+
+<section style="padding: 48px; font-family: var(--font-sans, sans-serif);">
+  <div style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px;">
+    <span style="font-family: var(--font-display, serif); font-size: 26px; font-weight: 700; color: #211F19;">Authentication — Login, Signup, Forgot &amp; Reset password</span>
+    <span style="font-size: 13px; color: #635C48;">One shared shell, four screens, three breakpoints, both themes.</span>
+  </div>
+  <span style="display: block; font-size: 12px; line-height: 1.7; color: #635C48; margin-bottom: 14px; max-width: 1180px;">Every frame below is the same live component — <code>RibaatAuth.dc.html</code> — driven by props (<code>screen</code>, <code>signupPath</code>, <code>signupStep</code>, <code>viewport</code>, <code>colorScheme</code>, <code>demoState</code>). The frames are interactive: type in the fields, submit to see per-field validation and the loading spinner, move through the signup stepper, follow «نسيت كلمة المرور؟» into the reset flow. For the React build, the prop split maps to components: <code>AuthLayout</code> (the shell) → <code>LoginForm</code> / <code>SignupStepper</code> / <code>ForgotPasswordForm</code> / <code>ResetPasswordForm</code>, with <code>SignupStepper</code> holding all step values in one client-side state object and rendering <code>StepAccount</code>, <code>StepPersonal</code>, <code>StepContact</code>, <code>StepReview</code>.</span>
+  <span style="display: block; font-size: 12px; line-height: 1.7; color: #635C48; margin-bottom: 34px; max-width: 1180px;"><b>Shared shell:</b> at ≥1024px a split grid — olive brand panel on the right (RTL start) with mark, wordmark and one restrained line about the school, form column on the left, form itself capped at 420px so fields never stretch. Below 1024px the panel drops away and the mark + wordmark stack above the form in a single centered column (44px minimum tap targets throughout). Footer strip is the same on every screen: certificate lookup, support, school name. <b>Error treatment:</b> the offending field gets a <code>--state-danger-fg</code> hairline border and a <code>--state-danger-bg</code> fill, plus a small alert icon and one plain-language sentence directly under it — no top-of-form banner, no exclamation marks, nothing red beyond those two hairline-weight cues. <b>Loading:</b> the primary button keeps its size, swaps its label for a spinner and disables.</span>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start;">
+
+    <div id="1a" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1a</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Login · Desktop · Light</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">1440×900. Social first as three stacked full-width rows — provider glyphs stay recognizable but the buttons themselves are Ribaat's own paper surface + hairline border, so nothing shouts; only Google keeps its four-color mark (it is unreadable in monochrome), Apple and Facebook are drawn in ink. Then the «أو» rule, then the email/username + password pair with the show/hide eye inside the field and «نسيت كلمة المرور؟» on the label row where the eye can't collide with it.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="login" viewport="desktop" color-scheme="light" hint-size="1440px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1b" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1b</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Login · Tablet · Light</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 834px;">834×1100 (portrait). Panel drops, mark + wordmark stack above the form, form widens only to 440px and stays centered. A landscape tablet ≥1024px gets the split layout of 1a instead.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="login" viewport="tablet" color-scheme="light" hint-size="834px,1100px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1c" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1c</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Login · Mobile · Light</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 390px;">390×880. Same order, tighter padding (20px), heading drops one step to 28px. Buttons and fields are 46px tall.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="login" viewport="mobile" color-scheme="light" hint-size="390px,880px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1d" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1d</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Login · Desktop · Error — wrong credentials</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">A credentials failure is one fact, not two, so it is written once — under the password field, the last thing the student touched — while the field itself carries the tinted state. Wording states what happened and what to do, and never blames: «البريد الإلكتروني أو كلمة المرور غير صحيحة. تحقق من البيانات وحاول مرة أخرى.»</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="login" viewport="desktop" color-scheme="light" demo-state="error" hint-size="1440px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1e" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1e</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Login · Desktop · Submitting</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">The shared loading state: label out, spinner in, button disabled at 50% opacity and the same height, so nothing below it moves. Identical on every submit in the set (next step, send reset link, save password, final signup).</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="login" viewport="desktop" color-scheme="light" demo-state="loading" hint-size="1440px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1f" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1f</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Step 1 of 4 · Desktop · Light</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Step indicator is a title + counter row over four hairline segments — enough to show progress without a heavy numbered rail. Grouping now matches the confirmed backend field list: <b>1 بيانات الحساب</b> (<code>name</code>, <code>email</code>, <code>password1</code>, <code>password2</code>) · <b>2 البيانات الشخصية</b> (<code>gender</code>, <code>date_of_birth</code>, <code>nationality</code>) · <b>3 التواصل والإقامة</b> (<code>phone_country_code</code> + <code>phone</code> on one row, <code>country</code>, <code>city</code>) · <b>4 المراجعة والإقرار</b>. Eleven fields is well past what one screen holds calmly, which is what the stepper is for — three short screens of two to four fields each, then a review. Step 1 also carries the social buttons, since choosing a provider here replaces this step rather than adding to it. Password strength is a three-segment hairline, not a score. Counter uses Western digits («الخطوة 1 من 4») to match counts elsewhere in the product — say the word and it becomes ١ من ٤.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" viewport="desktop" color-scheme="light" hint-size="1440px,1060px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1g" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1g</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Step 1 · Tablet</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 834px;">834×1240. Nothing reflows except the shell — the stepper, fields and actions are the same column.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" viewport="tablet" color-scheme="light" hint-size="834px,1240px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1h" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1h</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Step 1 · Mobile</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 390px;">390 wide, shown at full page height (1180) — on an 844-tall phone this is the one screen in the set that scrolls, which is the argument for the stepper: four short screens instead of one long one.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" viewport="mobile" color-scheme="light" hint-size="390px,1180px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1i" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1i</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Step 1 · Two fields in error</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Per-step validation runs on «التالي», never mid-typing; an error clears the moment that field is edited. Two fields fail here — a taken email and a mismatched confirmation — and both are marked independently, so the student can see at a glance that the name, password and everything else is fine. The taken-email message offers the exit: «يمكنك تسجيل الدخول بدلاً من ذلك».</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" viewport="desktop" color-scheme="light" demo-state="error" hint-size="1440px,1060px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1j" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1j</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Step 2 · Personal data</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Back/Next appear from step 2 on; «السابق» is the outline variant so the primary action stays the only filled button. <b>Open question for implementation:</b> where the partial state lives — <code>localStorage</code> only (survives a refresh, not a device change, no server record of an incomplete person) or a server-side draft keyed by the verified email (survives everything, but stores personal data before the terms are accepted). Recommendation: <code>localStorage</code> for v1, expiring after 7 days.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" signup-step="{{ one }}" viewport="desktop" color-scheme="light" prefill="{{ yes }}" hint-size="1440px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1j2" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1j2</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Step 3 · Contact &amp; residence</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;"><code>phone_country_code</code> and <code>phone</code> are one combined control laid out LTR — country selector on the left, national number on the right — drawn to match <code>react-international-phone</code>'s <code>PhoneInput</code>, which is what the React build should mount here (<code>defaultCountry="kw"</code>, <code>onChange</code> giving the dial code and the national number, stored in the two backend fields). Its per-country mask is reproduced (Kuwait groups 4+4, Saudi/UAE 2+3+4), and the dial-code menu opens under the selector. Country flags sit in the selector and against every row of the menu, as the package renders them (drawn here from <code>flagcdn.com</code>; the package's own <code>FlagImage</code> sprite replaces them one-for-one in the build). They are the one image in the whole auth set — functional country identifiers, not decoration. <code>city</code> arrives pre-filled from GeoIP on web with the same «تم تحديدها تلقائيًا» note used for provider-supplied fields, and stays fully editable; on mobile it renders empty with no note (<code>geoCity=false</code>). <code>nationality</code> sits in step 2 with the personal data and uses nationality wording («كويتي»), while <code>country</code> here uses country wording («الكويت») — same underlying list, different labels, so the two are never confused on the review card.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" signup-step="{{ two }}" viewport="desktop" color-scheme="light" prefill="{{ yes }}" geo-city="{{ yes }}" hint-size="1440px,940px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1k" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1k</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Step 4 · Review &amp; acknowledgment</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Read-only summary in three cards mirroring the three data steps, each with «تعديل» jumping back to that step with everything preserved. The password is never echoed. Terms acknowledgment sits last, directly above «تسجيل»; leaving it unchecked marks the box itself and writes the reason beneath it — same treatment as any other field.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" signup-step="{{ three }}" viewport="desktop" color-scheme="light" prefill="{{ yes }}" hint-size="1440px,1120px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1k2" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1k2</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Confirmation after «تسجيل» · Desktop · Light</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">The terminal state of the signup flow: stepper, form and social block all drop out, so nothing suggests there is anything left to fill in. The order is deliberate — success mark, then the address the message went to (with «تغيير البريد» back to step 1 in case of a typo), then the one thing the user must understand: the account is <b>not active yet</b>. That notice uses the warning tint rather than success, because it is a pending condition, not a completed one. «ما تبقّى من الخطوات» spells out the three remaining actions. Primary action is «تسجيل الدخول» (available, but will bounce until confirmed), with resend as the outline secondary on a 60-second cooldown so the button can't be hammered.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" signup-step="{{ three }}" viewport="desktop" color-scheme="light" prefill="{{ yes }}" demo-state="success" hint-size="1440px,980px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1k3" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1k3</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Confirmation · Mobile</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 390px;">390 wide. Same single column, no reflow — the cards stack in the same order and the two actions stay full width, stacked primary over secondary.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" signup-step="{{ three }}" viewport="mobile" color-scheme="light" prefill="{{ yes }}" demo-state="success" hint-size="390px,1000px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1k4" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1k4</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Confirmation · Dark</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">In dark the success mark and the warning notice keep their hue but sit on the dark state tints, so the pending notice still reads as the loudest element on the page.</span>
+      <div style="width: 1440px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" signup-step="{{ three }}" viewport="desktop" color-scheme="dark" prefill="{{ yes }}" demo-state="success" hint-size="1440px,980px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1l" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1l</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Social path · Step 1 «تأكيد بياناتك» · Desktop</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Choosing a provider replaces step 1 rather than skipping it, so the counter still reads «الخطوة 1 من 4» and never jumps. A confirmation chip states that identity was verified and no password is needed; name and email arrive filled with «تم الحصول عليه من Google» under each — and stay editable, because providers routinely hand over a nickname, and this name is printed on the certificate. Steps 2–4 are identical to the email path; the review card notes Google as the sign-in method instead of a password row.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="social" provider="Google" viewport="desktop" color-scheme="light" prefill="{{ yes }}" hint-size="1440px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1m" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1m</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Social path · Step 1 · Mobile</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 390px;">390×880 — the social path is two fields shorter than the email path, so it fits a phone screen without scrolling.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="social" provider="Google" viewport="mobile" color-scheme="light" prefill="{{ yes }}" hint-size="390px,880px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1n" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1n</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Forgot password · Desktop</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">One field, one sentence of explanation in the subheading rather than a separate paragraph, one button. «تذكرت كلمة المرور؟ العودة إلى تسجيل الدخول» closes the loop.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="forgot" viewport="desktop" color-scheme="light" hint-size="1440px,820px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1o" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1o</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Forgot password · Tablet · Unknown email</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 834px;">834×900, showing the field-level error: «لا يوجد حساب مسجل بهذا البريد الإلكتروني.» — worth deciding with the backend whether to disclose this at all, or always show the sent confirmation to avoid confirming which addresses exist. Both states are built.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="forgot" viewport="tablet" color-scheme="light" demo-state="error" hint-size="834px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1p" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1p</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Forgot password · Mobile</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 390px;">390×780.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="forgot" viewport="mobile" color-scheme="light" hint-size="390px,780px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1q" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1q</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Forgot password · Sent confirmation</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Same URL, same shell — the form is replaced in place by the confirmation card, so the address they typed stays on screen and the browser back button still means "back to login". States the 60-minute validity and where to look if nothing arrives; «إعادة إرسال الرابط» is the outline variant, since the student's real next action is in their inbox, not here.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="forgot" viewport="desktop" color-scheme="light" demo-state="sent" prefill="{{ yes }}" hint-size="1440px,820px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1r" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1r</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Reset password · Desktop</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Reached from the emailed link with the token already validated server-side. The subheading names the account being changed so the student can tell they opened the right link. New password carries the strength hairline and the requirement as a hint before it is ever an error.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="reset" viewport="desktop" color-scheme="light" hint-size="1440px,860px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1s" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1s</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Reset password · Tablet · Mismatch</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 834px;">834×900. Only the confirmation field is marked — the first password is not wrong, it just wasn't repeated correctly, and marking both would send the student back to re-type something that was fine.</span>
+      <div style="width: 834px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="reset" viewport="tablet" color-scheme="light" demo-state="error" hint-size="834px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1t" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1t</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Reset password · Mobile</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 390px;">390×820.</span>
+      <div style="width: 390px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="reset" viewport="mobile" color-scheme="light" hint-size="390px,820px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1u" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1u</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Reset password · Expired token</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Not an error state on a field but a replaced form, in warning amber rather than danger red — nothing went wrong, time simply passed. It explains the 60-minute rule so the expiry makes sense, and «طلب رابط جديد» goes straight back to Forgot password with the flow intact.</span>
+      <div style="width: 1440px; border: 1px solid #C9BFA6; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.10);">
+        <dc-import name="RibaatAuth" screen="reset" viewport="desktop" color-scheme="light" demo-state="expired" hint-size="1440px,820px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1v" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1v</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Login · Desktop · Dark</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">The same warm dark tokens the dashboard uses — parchment neutrals go dark-warm, olive stays the single accent, nothing near black. Provider glyphs invert with the text except Google's, which is fixed by its brand rules.</span>
+      <div style="width: 1440px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="RibaatAuth" screen="login" viewport="desktop" color-scheme="dark" hint-size="1440px,900px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1w" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1w</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Signup · Review · Dark</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 1440px;">Review cards and the acknowledgment in dark: cards lift off the page on <code>--surface-card</code> with the same hairline, and «تعديل» links use the lighter dark-mode link token.</span>
+      <div style="width: 1440px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="RibaatAuth" screen="signup" signup-path="email" signup-step="{{ three }}" viewport="desktop" color-scheme="dark" prefill="{{ yes }}" hint-size="1440px,1120px"></dc-import>
+      </div>
+    </div>
+
+    <div id="1x" style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 30px; height: 26px; padding: 0 9px; border-radius: 13px; background: #607247; color: #FFFEFA; font-size: 13px; font-weight: 700;">1x</span>
+        <span style="font-size: 15px; font-weight: 600; color: #211F19;">Reset password · Mobile · Dark · Error</span>
+      </div>
+      <span style="font-size: 12px; line-height: 1.7; color: #82795F; max-width: 390px;">The error treatment checked in the hardest combination: phone width, dark surface. The danger fill is a desaturated warm maroon, not a glow, and the message still clears the 4.5:1 bar against it.</span>
+      <div style="width: 390px; border: 1px solid #4A4536; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(33,31,25,0.28);">
+        <dc-import name="RibaatAuth" screen="reset" viewport="mobile" color-scheme="dark" demo-state="error" hint-size="390px,820px"></dc-import>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    return { one: 1, two: 2, three: 3, yes: true };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% comment %}Plain-text alternative — generated from billing/payment_failed.html. Keep in sync with the HTML body.{% endcomment %}تعذّر إتمام عملية الدفع
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+لم تُكتمل عملية الدفع المتعلقة بـ {{ item_title }}، ولم يُسجَّل خصم من وسيلة الدفع.
+البيان: {{ item_title }}
+المبلغ: {{ amount_with_currency }}
+وسيلة الدفع: {{ payment_method_label }}
+وقت المحاولة: {{ attempted_at }}
+سبب التعذّر: {{ failure_reason }}
+لم يُفعَّل التسجيل بعد. ويبقى المقعد محفوظًا حتى {{ hold_until }}، ثم يُلغى الطلب تلقائيًا.
+
+إعادة محاولة الدفع:
+{{ retry_url }}
+
+نص سياسة تعذّر الدفع ومدة حفظ الطلب بانتظار تأكيد الإدارة — انظر الأسئلة المفتوحة.
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

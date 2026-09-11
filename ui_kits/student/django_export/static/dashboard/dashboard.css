@@ -1,0 +1,226 @@
+/* Ribaat — Student Dashboard component styles
+   Pairs with tokens/colors.css, colors-dark.css, typography.css, spacing.css,
+   effects.css, fonts.css (linked separately, see dashboard.html <head>).
+   Everything below is plain CSS translated from the design system's React
+   components (Button, Badge, Avatar, ProgressBar, Tabs) so the screen can be
+   built as flat Django templates with no client-side component runtime. */
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: var(--text-link); text-decoration: none; }
+a:hover { color: var(--text-link-hover); }
+
+.rb-page {
+  background: var(--surface-page);
+  min-height: 100vh;
+  font-family: var(--font-sans);
+}
+
+/* ---------- Header ---------- */
+.rb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.rb-header-start { display: flex; align-items: center; gap: 36px; }
+.rb-logo { height: 30px; }
+[data-theme="dark"] .rb-logo { filter: brightness(0) invert(1) opacity(0.9); }
+.rb-nav { display: flex; gap: 26px; }
+.rb-nav a { font-size: var(--text-base); color: var(--text-secondary); }
+.rb-nav a.is-active { color: var(--text-brand); font-weight: var(--weight-semibold); }
+.rb-header-end { display: flex; gap: 14px; align-items: center; }
+.rb-logout-btn {
+  background: none;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+/* ---------- Layout ---------- */
+.rb-main { max-width: 1200px; margin: 0 auto; padding: 36px 24px 72px; }
+.rb-section { margin-bottom: 48px; }
+.rb-h1 { margin: 0; font-family: var(--font-display); font-size: var(--text-2xl); color: var(--text-primary); font-weight: var(--weight-bold); }
+.rb-h2 { font-size: var(--text-xl); color: var(--text-primary); font-family: var(--font-display); margin: 0 0 16px; }
+.rb-stats-line { margin: 8px 0 0; color: var(--text-muted); font-size: var(--text-sm); }
+
+/* ---------- Avatar ---------- */
+.rb-avatar {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; overflow: hidden; flex: none;
+  background: var(--ribaat-green-100); color: var(--text-brand);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-sans); font-weight: var(--weight-semibold);
+}
+.rb-avatar--sm { width: 32px; height: 32px; font-size: 12px; }
+.rb-avatar--md { width: 44px; height: 44px; font-size: 16px; }
+.rb-avatar--lg { width: 64px; height: 64px; font-size: 23px; }
+.rb-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Badge ---------- */
+.rb-badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-sans); font-size: var(--text-xs); font-weight: var(--weight-semibold);
+  padding: 4px 10px; border-radius: var(--radius-pill); line-height: 1.4;
+}
+.rb-badge--brand   { background: var(--ribaat-green-100); color: var(--text-brand); }
+.rb-badge--accent  { background: var(--ribaat-brown-100); color: var(--text-accent); }
+.rb-badge--success { background: var(--state-success-bg); color: var(--state-success-fg); }
+.rb-badge--warning { background: var(--state-warning-bg); color: var(--state-warning-fg); }
+.rb-badge--danger  { background: var(--state-danger-bg); color: var(--state-danger-fg); }
+.rb-badge--neutral { background: var(--surface-sunken); color: var(--text-secondary); }
+
+/* ---------- Button ---------- */
+.rb-btn {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  font-family: var(--font-sans); font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md); cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+  padding: 10px 18px; font-size: var(--text-base); /* size: md (default) */
+}
+.rb-btn--sm { padding: 8px 14px; font-size: var(--text-sm); }
+.rb-btn--lg { padding: 13px 24px; font-size: var(--text-md); }
+.rb-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+.rb-btn--primary   { background: var(--surface-brand); color: var(--text-on-brand); border: 1px solid var(--surface-brand); }
+.rb-btn--primary:hover:not(:disabled)   { background: var(--ribaat-green-700); }
+.rb-btn--secondary { background: var(--surface-accent); color: var(--text-on-accent); border: 1px solid var(--surface-accent); }
+.rb-btn--secondary:hover:not(:disabled) { background: var(--ribaat-brown-700); }
+.rb-btn--outline   { background: transparent; color: var(--text-brand); border: 1px solid var(--border-brand); }
+.rb-btn--outline:hover:not(:disabled)   { background: var(--ribaat-green-100); color: var(--text-link-hover); }
+.rb-btn--ghost     { background: transparent; color: var(--text-brand); border: 1px solid transparent; }
+.rb-btn--ghost:hover:not(:disabled)     { background: var(--ribaat-green-100); color: var(--text-link-hover); }
+.rb-btn--full { width: 100%; }
+
+/* ---------- ProgressBar ---------- */
+.rb-progress-track { background: var(--surface-sunken); border-radius: var(--radius-pill); height: 8px; overflow: hidden; }
+.rb-progress-fill { height: 100%; background: var(--surface-brand); border-radius: var(--radius-pill); transition: width var(--duration-slow) var(--ease-standard); }
+
+/* ---------- Tabs ---------- */
+.rb-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans); }
+.rb-tab {
+  background: none; border: none; cursor: pointer; padding: 10px 2px;
+  font-size: var(--text-base); font-weight: var(--weight-regular); color: var(--text-secondary);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: color var(--duration-fast) var(--ease-standard);
+  font-family: var(--font-sans);
+}
+.rb-tab.is-active { font-weight: var(--weight-semibold); color: var(--text-brand); border-bottom-color: var(--surface-brand); }
+
+/* ---------- Course card ---------- */
+.rb-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.rb-card {
+  display: flex; flex-direction: column; background: var(--surface-card);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); overflow: hidden;
+}
+.rb-card-thumb {
+  position: relative; aspect-ratio: 16/9; background: var(--ribaat-green-100);
+  display: flex; align-items: center; justify-content: center; color: var(--ribaat-green-600); flex: none;
+}
+.rb-card-thumb .rb-badge { position: absolute; top: 10px; inset-inline-start: 10px; }
+.rb-card-body { padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.rb-card-title { font-weight: var(--weight-semibold); font-size: var(--text-md); color: var(--text-primary); }
+.rb-card-instructor { margin: 0; font-size: var(--text-sm); color: var(--text-secondary); }
+.rb-card-meta { margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted); }
+.rb-card-cta { margin-top: 10px; }
+
+/* Empty state */
+.rb-empty {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;
+  background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 56px 24px;
+}
+.rb-empty p { margin: 0; }
+.rb-empty-title { font-size: var(--text-md); color: var(--text-primary); font-weight: var(--weight-semibold); }
+.rb-empty-body { font-size: var(--text-sm); color: var(--text-muted); max-width: 380px; }
+
+/* ---------- Track stepper ---------- */
+.rb-stepper-panel { margin-top: 24px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 28px 32px; }
+.rb-stepper-sub { margin: 0 0 18px; font-size: var(--text-sm); color: var(--text-muted); }
+
+.rb-stepper-h { position: relative; }
+.rb-stepper-h-track { position: absolute; top: 20px; inset-inline: 20px; height: 2px; background: var(--border-subtle); }
+.rb-stepper-h-fill { position: absolute; top: 20px; inset-inline-start: 20px; height: 2px; background: var(--ribaat-green-600); }
+.rb-stepper-h-list { position: relative; display: flex; z-index: 1; }
+.rb-step-h { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 0 8px; min-width: 0; }
+.rb-step-node { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex: none; }
+.rb-step-node svg, .rb-step-node img { width: 18px; height: 18px; }
+.rb-step-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
+.rb-step-subtitle { margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted); line-height: var(--leading-normal); }
+.rb-step-action { margin-top: 4px; }
+
+.rb-stepper-v { display: flex; flex-direction: column; }
+.rb-step-v { display: flex; gap: 16px; }
+.rb-step-v-rail { display: flex; flex-direction: column; align-items: center; flex: none; }
+.rb-step-v-rail .rb-step-node { width: 36px; height: 36px; }
+.rb-step-v-rail .rb-step-node svg { width: 16px; height: 16px; }
+.rb-step-v-connector { width: 2px; flex: 1; min-height: 26px; }
+.rb-step-v-body { flex: 1; padding-bottom: 24px; min-width: 0; }
+.rb-step-v-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+
+/* Status colour pairings (bg/border/icon-color/title-color/connector) — applied via modifier class */
+.rb-step--completed .rb-step-node { background: var(--ribaat-green-600); border: none; }
+.rb-step--completed .rb-step-node svg { color: var(--text-on-brand); }
+.rb-step--completed .rb-step-title { color: var(--text-primary); }
+.rb-step--completed .rb-step-v-connector { background: var(--ribaat-green-300); }
+
+.rb-step--current .rb-step-node { background: var(--surface-card); border: 2px solid var(--ribaat-green-600); }
+.rb-step--current .rb-step-node svg { color: var(--ribaat-green-600); }
+.rb-step--current .rb-step-title { color: var(--text-primary); }
+.rb-step--current .rb-step-v-connector { background: var(--border-default); }
+
+.rb-step--available .rb-step-node { background: var(--surface-card); border: 2px solid var(--border-brand); }
+.rb-step--available .rb-step-node svg { color: var(--text-brand); }
+.rb-step--available .rb-step-title { color: var(--text-primary); }
+.rb-step--available .rb-step-v-connector { background: var(--border-default); }
+
+.rb-step--locked .rb-step-node { background: var(--surface-sunken); border: none; }
+.rb-step--locked .rb-step-node svg { color: var(--text-muted); }
+.rb-step--locked .rb-step-title { color: var(--text-muted); }
+.rb-step--locked .rb-step-v-connector { background: var(--border-subtle); }
+
+.rb-step--certificate-locked .rb-step-node { background: var(--ribaat-brown-100); border: 1px solid var(--border-subtle); }
+.rb-step--certificate-locked .rb-step-node svg { color: var(--text-accent); }
+.rb-step--certificate-locked .rb-step-title { color: var(--text-secondary); }
+.rb-step--certificate-locked .rb-step-v-connector { background: transparent; }
+
+/* ---------- Recommended carousel ---------- */
+.rb-rec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px; gap: 12px; flex-wrap: wrap; }
+.rb-rec-nav { display: flex; gap: 8px; }
+.rb-rec-nav-btn {
+  width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-default);
+  background: var(--surface-card); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.rb-rec-sub { margin: 0 0 20px; font-size: var(--text-sm); color: var(--text-muted); }
+.rb-carousel-track {
+  display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px;
+}
+.rb-carousel-track::-webkit-scrollbar { display: none; }
+.rb-carousel-card { flex: 0 0 calc(25% - 15px); scroll-snap-align: start; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .rb-main { max-width: 834px; padding: 28px 20px 56px; }
+  .rb-card-grid { grid-template-columns: repeat(2, 1fr); }
+  .rb-carousel-card { flex: 0 0 calc(45% - 10px); }
+  .rb-stepper-panel { padding: 24px 24px; }
+}
+@media (max-width: 600px) {
+  .rb-main { max-width: 100%; padding: 20px 16px 48px; }
+  .rb-h1 { font-size: var(--text-xl); }
+  .rb-section { margin-bottom: 32px; }
+  .rb-card-grid { grid-template-columns: 1fr; }
+  .rb-carousel-card { flex: 0 0 82%; }
+  .rb-stepper-panel { padding: 20px 16px; }
+  /* Swap to the vertical stepper markup at this breakpoint (see dashboard.html) */
+  .rb-stepper-h { display: none; }
+  .rb-stepper-v-only { display: flex !important; }
+}
+@media (min-width: 601px) {
+  .rb-stepper-v-only { display: none; }
+}

@@ -1,0 +1,19 @@
+{# Enrolment state slot — one component, three states, one footprint.
+   The view supplies a single dict so the term status is never baked into hero
+   copy:
+
+     enrolment = {
+       "state":  "open" | "running" | "upcoming",
+       "label":  "التسجيل مفتوح" | "الفصل الدراسي جارٍ" | "الفصل القادم",
+       "detail": "يبدأ الفصل الدراسي في سبتمبر ٢٠٢٦"
+                 | "يُعلَن عن التسجيل للفصل القادم في حينه"
+                 | "يبدأ التسجيل للفصل القادم في {التاريخ}",
+     }
+
+   Appearance is driven entirely by [data-state] in CSS. The three copy strings
+   are collected in README §Arabic copy. #}
+<div class="enrol" data-state="{{ enrolment.state }}" data-reveal>
+  <span class="enrol__mark" aria-hidden="true"></span>
+  <p class="enrol__label">{{ enrolment.label }}</p>
+  <p class="enrol__detail">{{ enrolment.detail }}</p>
+</div>

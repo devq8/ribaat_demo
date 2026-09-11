@@ -1,0 +1,41 @@
+{# templates/catalogue/_filters.html
+   Shared filter fields — included once inside the persistent desktop sidebar
+   and once inside the tablet/mobile drawer (see catalogue.html). Categories
+   render as plain GET links (view precomputes each toggle_url so no JS is
+   required); teacher/level/sort live inside the single #rb-filter-form so
+   selecting one re-submits the whole query string. #}
+<div class="rb-filters">
+
+  <div class="rb-filters-field">
+    <span class="rb-filters-label">التصنيف</span>
+    <div class="rb-chip-group">
+      {% for cat in category_choices %}
+        <a href="{{ cat.toggle_url }}" class="rb-chip{% if cat.active %} is-active{% endif %}">{{ cat.label }}</a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="rb-filters-field">
+    <label class="rb-filters-label" for="id_teacher_{{ panel_id }}">المعلم</label>
+    <select name="teacher" id="id_teacher_{{ panel_id }}" form="rb-filter-form" class="rb-filters-select" onchange="document.getElementById('rb-filter-form').submit();">
+      <option value="">جميع المعلمين</option>
+      {% for t in teacher_choices %}
+        <option value="{{ t.value }}"{% if t.active %} selected{% endif %}>{{ t.label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="rb-filters-field">
+    <label class="rb-filters-label" for="id_level_{{ panel_id }}">المستوى</label>
+    <select name="level" id="id_level_{{ panel_id }}" form="rb-filter-form" class="rb-filters-select" onchange="document.getElementById('rb-filter-form').submit();">
+      <option value="">كل المستويات</option>
+      {% for l in level_choices %}
+        <option value="{{ l.value }}"{% if l.active %} selected{% endif %}>{{ l.label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  {% if has_active_filters %}
+    <a href="{{ clear_all_url }}" class="rb-filters-clear">إزالة كل عوامل التصفية</a>
+  {% endif %}
+</div>

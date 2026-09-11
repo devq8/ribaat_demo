@@ -1,0 +1,85 @@
+/* Ribaat Design System — Color tokens
+   Base palette extracted from the brand mark (uploads/Artboard 46.pdf):
+     olive green  rgb(96,114,71)  = #607247
+     brown/tan    rgb(140,95,53) = #8C5F35
+   Neutrals and semantic colors are derived in oklch to stay harmonious
+   with that pair — a warm, paper-like, academic register (no cool grays). */
+:root {
+  /* ---- Base: brand ---- */
+  --ribaat-green-900: #2E3A24;
+  --ribaat-green-800: #3E4E32;
+  --ribaat-green-700: #4F6140;
+  --ribaat-green-600: #607247; /* brand primary — exact PDF value */
+  --ribaat-green-500: #728759;
+  --ribaat-green-400: #8FA079;
+  --ribaat-green-300: #B2C0A2;
+  --ribaat-green-200: #D4DCC9;
+  --ribaat-green-100: #EBEFE4;
+  --ribaat-green-50:  #F5F7F0;
+
+  --ribaat-brown-900: #4A3A22;
+  --ribaat-brown-800: #63492A;
+  --ribaat-brown-700: #79552F;
+  --ribaat-brown-600: #8C5F35; /* brand accent — exact PDF value */
+  --ribaat-brown-500: #A47846;
+  --ribaat-brown-400: #BB9868;
+  --ribaat-brown-300: #D3BC98;
+  --ribaat-brown-200: #E7DBC4;
+  --ribaat-brown-100: #F3EBDD;
+
+  /* ---- Base: neutrals (warm parchment, not cool gray) ---- */
+  --ribaat-ink-900: #211F19;
+  --ribaat-ink-800: #333026;
+  --ribaat-ink-700: #494434;
+  --ribaat-ink-600: #635C48;
+  --ribaat-ink-500: #82795F;
+  --ribaat-ink-400: #A69C81;
+  --ribaat-ink-300: #C9BFA6;
+  --ribaat-ink-200: #E2DAC5;
+  --ribaat-ink-100: #EFEADB;
+  --ribaat-paper-050: #FBF9F3;
+  --ribaat-paper-000: #FFFEFA;
+
+  /* ---- Base: semantic hues (muted, never neon) ---- */
+  --ribaat-red-600: #A6473B;
+  --ribaat-red-100: #F4E3DF;
+  --ribaat-amber-600: #A97A24;
+  --ribaat-amber-100: #F3E7CC;
+  --ribaat-blue-600: #3E6B7A;
+  --ribaat-blue-100: #DEE9EB;
+
+  /* ---- Semantic aliases ---- */
+  --surface-page: var(--ribaat-paper-050);
+  --surface-card: var(--ribaat-paper-000);
+  --surface-sunken: var(--ribaat-ink-100);
+  --surface-brand: var(--ribaat-green-600);
+  --surface-brand-strong: var(--ribaat-green-800);
+  --surface-accent: var(--ribaat-brown-600);
+  --surface-overlay: rgba(33, 31, 25, 0.55);
+
+  --border-subtle: var(--ribaat-ink-200);
+  --border-default: var(--ribaat-ink-300);
+  --border-strong: var(--ribaat-ink-500);
+  --border-brand: var(--ribaat-green-500);
+
+  --text-primary: var(--ribaat-ink-900);
+  --text-secondary: var(--ribaat-ink-600);
+  --text-muted: var(--ribaat-ink-500);
+  --text-on-brand: var(--ribaat-paper-000);
+  --text-on-accent: var(--ribaat-paper-000);
+  --text-brand: var(--ribaat-green-700);
+  --text-accent: var(--ribaat-brown-700);
+  --text-link: var(--ribaat-green-700);
+  --text-link-hover: var(--ribaat-green-800);
+
+  --state-success-fg: #3E6B4A;
+  --state-success-bg: var(--ribaat-green-100);
+  --state-warning-fg: var(--ribaat-amber-600);
+  --state-warning-bg: var(--ribaat-amber-100);
+  --state-danger-fg: var(--ribaat-red-600);
+  --state-danger-bg: var(--ribaat-red-100);
+  --state-info-fg: var(--ribaat-blue-600);
+  --state-info-bg: var(--ribaat-blue-100);
+
+  --focus-ring: var(--ribaat-green-500);
+}

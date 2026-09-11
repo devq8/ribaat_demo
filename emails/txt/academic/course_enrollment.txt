@@ -1,0 +1,20 @@
+{% comment %}Plain-text alternative — generated from academic/course_enrollment.html. Keep in sync with the HTML body.{% endcomment %}تأكيد التسجيل في مقرر
+السلام عليكم ورحمة الله وبركاته، {{ student_name }}
+تم تسجيلك في المقرر التالي، وصار بإمكانك الوصول إلى دروسه من حسابك.
+المقرر: {{ course_title }}
+المدرّس: {{ teacher_name }}
+عدد الدروس: {{ lessons_count }}
+مدة المقرر: {{ course_duration }}
+رمز المقرر: {{ course_code }}
+
+الانتقال إلى المقرر:
+{{ course_url }}
+
+تُتاح الدروس بحسب خطة المقرر، ويُشعرك النظام عند نشر كل محاضرة جديدة.
+
+—
+{{ site_name }}
+دولة الكويت
+
+رسالة إجرائية مرتبطة بحسابك في {{ site_name }}، وليست رسالة دعائية.
+للاستفسار: {{ support_email }}

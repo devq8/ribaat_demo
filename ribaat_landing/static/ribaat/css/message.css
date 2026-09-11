@@ -1,0 +1,176 @@
+/* ==========================================================================
+   Ribaat — system message page (verification, receipts, expired links, 404/500)
+   Loaded in addition to landing.css, which carries the shell: header, footer,
+   .btn, .wrap, .mono, tokens, resets. Same rules as the rest of this project:
+   tokens only, logical properties only, no colour transitions (README §12), no
+   spacing value outside the DS scale — there is no --space-7 (README §13).
+
+   One layout: the message is a framed plate centred in the viewport, in the
+   vocabulary of the certificate — right-angled double hairline, the inner rule
+   in the accent's lightest step. The band layout and the four other box
+   treatments that were reviewed alongside it are deleted, not commented out.
+   ========================================================================== */
+
+.page-message { scroll-padding-block-start: 6rem; }
+
+/* This page opens on paper, so the bar takes the page surface at rest and gains
+   its hairline once scrolled. Written out rather than in :where() so it outranks
+   the shell's ink-field rules (README §20). */
+.page-message .site-header { background: var(--surface-page); }
+.page-message .site-header.is-scrolled,
+html:not(.js) .page-message .site-header {
+  background: var(--surface-page);
+  border-block-end-color: var(--border-subtle);
+}
+
+/* --- The plate -----------------------------------------------------------
+   Centred in what is left of the viewport under the header. The frame is two
+   hairlines at right angles — the certificate's border, at a document's scale
+   rather than a card's. No shadow: the frame is the elevation. */
+.msg__band {
+  display: grid;
+  place-items: center;
+  min-block-size: min(74svh, 720px);
+  padding-block: clamp(48px, 7vw, 96px);
+}
+.msg__head {
+  position: relative;
+  inline-size: 100%;
+  max-inline-size: 36rem;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: var(--space-5);
+  padding: clamp(40px, 6vw, 64px) clamp(32px, 5vw, 56px);
+  background: var(--surface-card);
+  border: 1px solid var(--ribaat-ink-300);
+  border-radius: var(--radius-sm);
+}
+/* Out of flow, so it never becomes a grid item. */
+.msg__head::before {
+  content: "";
+  position: absolute;
+  inset: var(--space-2);
+  border: 1px solid var(--ribaat-brown-300);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* --- The mark --------------------------------------------------------------
+   The enrolment slot's vocabulary (README §19): a filled disc for something
+   that has happened, brown for something in progress, a hollow ring for
+   something that has not. Set inside the hairline square construction the page
+   uses elsewhere. Decorative — every state is also said in words. */
+.msg__mark {
+  position: relative;
+  inline-size: 44px;
+  block-size: 44px;
+  display: grid;
+  place-items: center;
+}
+.msg__mark::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: var(--hairline);
+  border-color: var(--border-default);
+  transform: rotate(45deg);
+}
+.msg__mark::after {
+  content: "";
+  inline-size: 14px;
+  block-size: 14px;
+  border-radius: var(--radius-pill);
+  background: var(--msg-mark, var(--border-strong));
+}
+.msg[data-tone="success"] { --msg-mark: var(--surface-brand); }
+.msg[data-tone="pending"] { --msg-mark: var(--surface-accent); }
+.msg[data-tone="problem"] .msg__mark::after {
+  background: transparent;
+  border: 2px solid var(--state-danger-fg);
+}
+.msg[data-tone="neutral"] .msg__mark::after {
+  background: transparent;
+  border: 2px solid var(--border-strong);
+}
+
+/* --- Type ----------------------------------------------------------------- */
+.msg__eyebrow {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-accent);
+  margin-block-end: calc(var(--space-3) * -1);
+}
+.msg__title {
+  font-family: var(--font-display);
+  font-size: var(--display-2);
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+}
+.msg__lede {
+  max-inline-size: 46ch;
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+
+/* --- Facts ---------------------------------------------------------------
+   A receipt is a list of pairs and nothing more: hairline rows, label on the
+   inline-start, value on the inline-end. Reference codes take .mono. */
+.msg__facts {
+  display: grid;
+  inline-size: 100%;
+  text-align: start;
+  margin-block-start: var(--space-1);
+}
+.msg__fact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-6);
+  padding-block: var(--space-3);
+  border-block-start: var(--hairline);
+  font-size: var(--text-sm);
+}
+.msg__fact:last-child { border-block-end: var(--hairline); }
+.msg__fact dt { color: var(--text-secondary); }
+.msg__fact dd { color: var(--text-primary); font-weight: var(--weight-medium); }
+
+/* --- Actions -------------------------------------------------------------- */
+.msg__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-block-start: var(--space-1);
+}
+
+/* --- Under the plate ------------------------------------------------------ */
+.msg__body {
+  display: grid;
+  justify-items: center;
+  padding-block: 0 clamp(56px, 8vw, 96px);
+}
+.msg__note {
+  max-inline-size: 56ch;
+  text-align: center;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+}
+
+/* --- Phone ---------------------------------------------------------------- */
+@media (max-width: 559px) {
+  .msg__band { min-block-size: 0; padding-block: var(--space-8); }
+  .msg__actions { inline-size: 100%; }
+  .msg__actions .btn { flex: 1 1 100%; }
+}
+
+/* --- Print ----------------------------------------------------------------
+   A receipt gets printed. Drop the furniture, keep the pairs and the frame. */
+@media print {
+  .site-header, .site-footer, .skip-link, .msg__actions { display: none !important; }
+  .msg__band { min-block-size: 0; padding-block: 0; }
+}

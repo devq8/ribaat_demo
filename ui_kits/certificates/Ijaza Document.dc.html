@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <script src="./doc-page.js"></script>
+  <script src="./image-slot.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    doc-page:not(:defined) { visibility: hidden; }
+    p, h1 { margin: 0; }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); }
+  </style>
+</helmet>
+
+<doc-page size="a4">
+
+  <!-- ================= ١ · إجازة — صيغة المؤنث، إسناد قياسي (ثلاث سلاسل) ================= -->
+  <section class="page" lang="ar" dir="rtl" data-screen-label="إجازة · مؤنث · إسناد قياسي" style="--ijz-title-top: 38mm; --ijz-pad-bs: 12mm; --ijz-pad-be: 10mm; --ijz-pad-is: 17mm; --ijz-pad-ie: 26mm; --ijz-measure: 156mm; --ijz-logo: 17mm; --ijz-basmala: 12pt; --ijz-title: 38pt; --ijz-fi: 12pt; --ijz-book: 24pt; --ijz-title-block: 40mm; --ijz-lead: 11pt; --ijz-name: 21pt; --ijz-isnad: 10.5pt; --ijz-isnad-leading: 1.85; --ijz-sig-label: 10pt; --ijz-sig-name: 12.5pt; --ijz-sig-line: 46mm; --ijz-meta: 8.5pt; --ijz-code: 10pt; --ijz-qr: 16mm; --ijz-seal: 25mm; position: relative; overflow: hidden; display: flex; background: var(--surface-card); font-family: var(--font-sans); color: var(--text-primary);">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0;">
+      <sc-if value="{{ ornamentAsset }}" hint-placeholder-val="{{ true }}">
+        <img src="./ornament-ijaza-a4-portrait.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+      </sc-if>
+      <sc-if value="{{ ornamentSlot }}" hint-placeholder-val="{{ false }}">
+        <image-slot id="ijz-ornament-1" shape="rect" fit="cover" style="position: absolute; inset: 0; width: 100%; height: 100%;" placeholder="زخرفة الإجازة — A4 عمودي، ٢٤٨٠×٣٥٠٨ بكسل، ٣٠٠ نقطة/بوصة"></image-slot>
+      </sc-if>
+      <span style="position: absolute; inset-block-start: var(--ijz-title-top); inset-inline: 0; text-align: center; font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--ijz-title); line-height: 1; color: var(--ribaat-brown-600);">إجازة</span>
+    </div>
+
+    <div style="position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; padding-block-start: var(--ijz-pad-bs); padding-block-end: var(--ijz-pad-be); padding-inline-start: var(--ijz-pad-is); padding-inline-end: var(--ijz-pad-ie);">
+
+      <header style="flex: none; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; column-gap: var(--space-4);">
+        <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-logo-full.png" alt="رباط الحنابلة — مدرسة شرعية تأصيلية" style="justify-self: start; height: var(--ijz-logo); width: auto;">
+        <p style="font-family: var(--font-display); font-size: var(--ijz-basmala); color: var(--text-secondary); line-height: var(--leading-tight); padding-block-start: var(--space-2);">بسم الله الرحمن الرحيم</p>
+        <span aria-hidden="true"></span>
+      </header>
+
+      <div style="flex: none; height: var(--ijz-title-block); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; margin-block-start: var(--space-4);">
+        <h1 style="display: flex; flex-direction: column; align-items: center; gap: var(--space-1); font-family: var(--font-display); font-weight: var(--weight-bold); line-height: 1.05; text-align: center;">
+          <span style="position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;">إجازة</span>
+          <span style="font-size: var(--ijz-fi); font-weight: var(--weight-regular); color: var(--text-secondary);">في</span>
+          <span style="font-size: var(--ijz-book); color: var(--text-brand);">نواقض الإسلام</span>
+        </h1>
+      </div>
+
+      <div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); margin-block-start: var(--space-5); text-align: center;">
+        <p style="max-width: var(--ijz-measure); font-size: var(--ijz-lead); line-height: var(--leading-normal); color: var(--text-primary);">الحمد لله والصلاة والسلام على رسول الله <span style="font-family: var(--font-display);">ﷺ</span>، وعلى آله وصحبه ومن استن بسنته إلى يوم الدين، أما بعد:</p>
+        <p style="font-size: var(--ijz-lead); line-height: var(--leading-normal); color: var(--text-secondary);">فقد درست عندي الأخت الفاضلة:</p>
+        <p style="font-family: var(--font-display); font-size: var(--ijz-name); font-weight: var(--weight-bold); color: var(--text-brand); line-height: var(--leading-tight);">مجيدة عبد الحليم السويد</p>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; inline-size: var(--ijz-measure); margin-inline: auto; display: flex; flex-direction: column; justify-content: center; gap: var(--space-4); margin-block-start: var(--space-5);">
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);">دورة في شرح كتاب «نواقض الإسلام» للإمام المجدد المصلح محمد بن عبد الوهاب رحمه الله (١٢٠٦هـ)، والذي أرويه إجازة عن الشيخ عبد الله بن حمود التويجري، عن والده الشيخ حمود بن عبد الله التويجري، عن القاضي عبد الله بن عبد العزيز العنقري، عن الشيخ محمد بن إبراهيم بن محمود النجدي، عن الشيخ عبد الله أبي بُطين، عن الشيخ حمد بن معمَّر، عن شيخ الإسلام محمد بن عبد الوهاب.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> ويرويه الشيخ عبد الله العنقري، عن الشيخ سعد بن حمد بن عتيق، عن الشيخ أحمد بن إبراهيم بن عيسى، عن الشيخ عبد الرحمن بن حسن، عن شيخ الإسلام محمد بن عبد الوهاب.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> وأرويه عن شيخي الشيخ عبد الله بن عبد العزيز بن عقيل الحنبلي رحمه الله إجازة، عن الشيخ محمد بن سعيد النجدي ثم المكي، عن الشيخ سعد بن عتيق، عن الشيخ أحمد بن إبراهيم بن عيسى، عن الشيخ عبد الرحمن بن حسن، عن شيخ الإسلام محمد بن عبد الوهاب.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);">وقد أجزت المذكورة بالكتاب إجازة خاصة بالشرط المعتبر عند أهل العلم، وأوصيها بتقوى الله تعالى، والاستزادة من العلم والعمل، والله ولي التوفيق.</p>
+      </div>
+
+      <footer style="flex: none; display: flex; flex-direction: column; gap: var(--space-5); margin-block-start: var(--space-6);">
+
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; column-gap: var(--space-6);">
+          <div style="text-align: center;">
+            <span style="display: block; font-size: var(--ijz-sig-label); color: var(--text-secondary);">المشرف العام</span>
+            <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--ijz-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. أنس بن عادل اليتامى</span>
+            <span aria-hidden="true" style="display: block; width: min(var(--ijz-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+          </div>
+
+          <div style="width: var(--ijz-seal); height: var(--ijz-seal); border: 1px solid var(--ribaat-green-400); border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center; padding: var(--space-3);" data-asset-slot="official-seal">
+            <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-mark.png" alt="خاتم مدرسة رباط الحنابلة" style="width: 76%; height: auto;">
+          </div>
+
+          <div style="text-align: center;">
+            <span style="display: block; font-size: var(--ijz-sig-label); color: var(--text-secondary);">المُجيز</span>
+            <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--ijz-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. عبد العزيز بن عدنان العيدان</span>
+            <span aria-hidden="true" style="display: block; width: min(var(--ijz-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+          </div>
+        </div>
+
+        <p style="text-align: center; font-size: var(--ijz-meta); color: var(--text-secondary); line-height: var(--leading-normal);">حرر في ٢٦ ذو القعدة ١٤٤٧هـ، الموافق ١٣ مايو ٢٠٢٦م</p>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); padding-block-start: var(--space-3); border-block-start: 1px solid var(--border-subtle);">
+          <div style="display: flex; align-items: center; gap: var(--space-3);">
+            <sc-if value="{{ showQr }}" hint-placeholder-val="{{ true }}">
+              <span role="img" aria-label="رمز استجابة سريعة للتحقق من الإجازة، رمز التحقق ٤٨٢١ ٩٣٧٥ ٦١٤٠" style="flex: none; width: var(--ijz-qr); height: var(--ijz-qr); color: var(--text-primary);">{{ qr }}</span>
+            </sc-if>
+            <span style="display: block;">
+              <span style="display: block; font-size: var(--ijz-meta); color: var(--text-muted);">رمز التحقق</span>
+              <span style="display: block; margin-block-start: var(--space-1); font-size: var(--ijz-code); font-weight: var(--weight-semibold); color: var(--text-primary); word-spacing: 0.25em;">٤٨٢١ ٩٣٧٥ ٦١٤٠</span>
+            </span>
+          </div>
+          <p style="max-width: 74mm; text-align: end; font-size: var(--ijz-meta); color: var(--text-muted); line-height: var(--leading-normal);">للتحقق من صحة هذه الإجازة يُدخل الرمز في صفحة التحقق ribaat.net/verify</p>
+        </div>
+      </footer>
+    </div>
+
+  </section>
+
+  <!-- ================= ٢ · إجازة — صيغة المذكر، أقصر إسناد (سلسلة واحدة) ================= -->
+  <section class="page" lang="ar" dir="rtl" data-screen-label="إجازة · مذكر · أقصر إسناد" style="--ijz-title-top: 38mm; --ijz-pad-bs: 12mm; --ijz-pad-be: 10mm; --ijz-pad-is: 17mm; --ijz-pad-ie: 26mm; --ijz-measure: 156mm; --ijz-logo: 17mm; --ijz-basmala: 12pt; --ijz-title: 38pt; --ijz-fi: 12pt; --ijz-book: 24pt; --ijz-title-block: 40mm; --ijz-lead: 11pt; --ijz-name: 21pt; --ijz-isnad: 10.5pt; --ijz-isnad-leading: 1.85; --ijz-sig-label: 10pt; --ijz-sig-name: 12.5pt; --ijz-sig-line: 46mm; --ijz-meta: 8.5pt; --ijz-code: 10pt; --ijz-qr: 16mm; --ijz-seal: 25mm; position: relative; overflow: hidden; display: flex; background: var(--surface-card); font-family: var(--font-sans); color: var(--text-primary);">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0;">
+      <sc-if value="{{ ornamentAsset }}" hint-placeholder-val="{{ true }}">
+        <img src="./ornament-ijaza-a4-portrait.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+      </sc-if>
+      <sc-if value="{{ ornamentSlot }}" hint-placeholder-val="{{ false }}">
+        <image-slot id="ijz-ornament-2" shape="rect" fit="cover" style="position: absolute; inset: 0; width: 100%; height: 100%;" placeholder="زخرفة الإجازة — A4 عمودي، ٢٤٨٠×٣٥٠٨ بكسل، ٣٠٠ نقطة/بوصة"></image-slot>
+      </sc-if>
+      <span style="position: absolute; inset-block-start: var(--ijz-title-top); inset-inline: 0; text-align: center; font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--ijz-title); line-height: 1; color: var(--ribaat-brown-600);">إجازة</span>
+    </div>
+
+    <div style="position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; padding-block-start: var(--ijz-pad-bs); padding-block-end: var(--ijz-pad-be); padding-inline-start: var(--ijz-pad-is); padding-inline-end: var(--ijz-pad-ie);">
+
+      <header style="flex: none; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; column-gap: var(--space-4);">
+        <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-logo-full.png" alt="رباط الحنابلة — مدرسة شرعية تأصيلية" style="justify-self: start; height: var(--ijz-logo); width: auto;">
+        <p style="font-family: var(--font-display); font-size: var(--ijz-basmala); color: var(--text-secondary); line-height: var(--leading-tight); padding-block-start: var(--space-2);">بسم الله الرحمن الرحيم</p>
+        <span aria-hidden="true"></span>
+      </header>
+
+      <div style="flex: none; height: var(--ijz-title-block); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; margin-block-start: var(--space-4);">
+        <h1 style="display: flex; flex-direction: column; align-items: center; gap: var(--space-1); font-family: var(--font-display); font-weight: var(--weight-bold); line-height: 1.05; text-align: center;">
+          <span style="position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;">إجازة</span>
+          <span style="font-size: var(--ijz-fi); font-weight: var(--weight-regular); color: var(--text-secondary);">في</span>
+          <span style="font-size: var(--ijz-book); color: var(--text-brand);">القواعد الأربع</span>
+        </h1>
+      </div>
+
+      <div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); margin-block-start: var(--space-5); text-align: center;">
+        <p style="max-width: var(--ijz-measure); font-size: var(--ijz-lead); line-height: var(--leading-normal); color: var(--text-primary);">الحمد لله والصلاة والسلام على رسول الله <span style="font-family: var(--font-display);">ﷺ</span>، وعلى آله وصحبه ومن استن بسنته إلى يوم الدين، أما بعد:</p>
+        <p style="font-size: var(--ijz-lead); line-height: var(--leading-normal); color: var(--text-secondary);">فقد درس عندي الأخ الفاضل:</p>
+        <p style="font-family: var(--font-display); font-size: var(--ijz-name); font-weight: var(--weight-bold); color: var(--text-brand); line-height: var(--leading-tight);">عبد الرحمن بن محمد الفهد</p>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; inline-size: var(--ijz-measure); margin-inline: auto; display: flex; flex-direction: column; justify-content: center; gap: var(--space-4); margin-block-start: var(--space-5);">
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);">دورة في شرح كتاب «القواعد الأربع» للإمام المجدد المصلح محمد بن عبد الوهاب رحمه الله (١٢٠٦هـ)، والذي أرويه إجازة عن شيخي الشيخ عبد الله بن عبد العزيز بن عقيل الحنبلي رحمه الله، عن الشيخ محمد بن سعيد النجدي ثم المكي، عن الشيخ سعد بن حمد بن عتيق، عن الشيخ عبد الرحمن بن حسن، عن شيخ الإسلام محمد بن عبد الوهاب.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);">وقد أجزت المذكور بالكتاب إجازة خاصة بالشرط المعتبر عند أهل العلم، وأوصيه بتقوى الله تعالى، والاستزادة من العلم والعمل، والله ولي التوفيق.</p>
+      </div>
+
+      <footer style="flex: none; display: flex; flex-direction: column; gap: var(--space-5); margin-block-start: var(--space-6);">
+
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; column-gap: var(--space-6);">
+          <div style="text-align: center;">
+            <span style="display: block; font-size: var(--ijz-sig-label); color: var(--text-secondary);">المشرف العام</span>
+            <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--ijz-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. أنس بن عادل اليتامى</span>
+            <span aria-hidden="true" style="display: block; width: min(var(--ijz-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+          </div>
+
+          <div style="width: var(--ijz-seal); height: var(--ijz-seal); border: 1px solid var(--ribaat-green-400); border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center; padding: var(--space-3);" data-asset-slot="official-seal">
+            <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-mark.png" alt="خاتم مدرسة رباط الحنابلة" style="width: 76%; height: auto;">
+          </div>
+
+          <div style="text-align: center;">
+            <span style="display: block; font-size: var(--ijz-sig-label); color: var(--text-secondary);">المُجيز</span>
+            <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--ijz-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. عبد الله بن حمود التويجري</span>
+            <span aria-hidden="true" style="display: block; width: min(var(--ijz-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+          </div>
+        </div>
+
+        <p style="text-align: center; font-size: var(--ijz-meta); color: var(--text-secondary); line-height: var(--leading-normal);">حرر في ١٤ ربيع الأول ١٤٤٧هـ، الموافق ٦ سبتمبر ٢٠٢٥م</p>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); padding-block-start: var(--space-3); border-block-start: 1px solid var(--border-subtle);">
+          <div style="display: flex; align-items: center; gap: var(--space-3);">
+            <sc-if value="{{ showQr }}" hint-placeholder-val="{{ true }}">
+              <span role="img" aria-label="رمز استجابة سريعة للتحقق من الإجازة، رمز التحقق ٧١٠٤ ٢٦٨٩ ٥٣٣٢" style="flex: none; width: var(--ijz-qr); height: var(--ijz-qr); color: var(--text-primary);">{{ qr }}</span>
+            </sc-if>
+            <span style="display: block;">
+              <span style="display: block; font-size: var(--ijz-meta); color: var(--text-muted);">رمز التحقق</span>
+              <span style="display: block; margin-block-start: var(--space-1); font-size: var(--ijz-code); font-weight: var(--weight-semibold); color: var(--text-primary); word-spacing: 0.25em;">٧١٠٤ ٢٦٨٩ ٥٣٣٢</span>
+            </span>
+          </div>
+          <p style="max-width: 74mm; text-align: end; font-size: var(--ijz-meta); color: var(--text-muted); line-height: var(--leading-normal);">للتحقق من صحة هذه الإجازة يُدخل الرمز في صفحة التحقق ribaat.net/verify</p>
+        </div>
+      </footer>
+    </div>
+
+  </section>
+
+  <!-- ================= ٣ · إجازة — إسناد طويل، الورقة الأولى من ورقتين ================= -->
+  <section class="page" lang="ar" dir="rtl" data-screen-label="إجازة · إسناد طويل · ١ من ٢" style="--ijz-title-top: 38mm; --ijz-pad-bs: 12mm; --ijz-pad-be: 10mm; --ijz-pad-is: 17mm; --ijz-pad-ie: 26mm; --ijz-measure: 156mm; --ijz-logo: 17mm; --ijz-basmala: 12pt; --ijz-title: 38pt; --ijz-fi: 12pt; --ijz-book: 24pt; --ijz-title-block: 40mm; --ijz-lead: 11pt; --ijz-name: 21pt; --ijz-isnad: 10.5pt; --ijz-isnad-leading: 1.85; --ijz-meta: 8.5pt; position: relative; overflow: hidden; display: flex; background: var(--surface-card); font-family: var(--font-sans); color: var(--text-primary);">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0;">
+      <sc-if value="{{ ornamentAsset }}" hint-placeholder-val="{{ true }}">
+        <img src="./ornament-ijaza-a4-portrait.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+      </sc-if>
+      <sc-if value="{{ ornamentSlot }}" hint-placeholder-val="{{ false }}">
+        <image-slot id="ijz-ornament-3" shape="rect" fit="cover" style="position: absolute; inset: 0; width: 100%; height: 100%;" placeholder="زخرفة الإجازة — A4 عمودي، ٢٤٨٠×٣٥٠٨ بكسل، ٣٠٠ نقطة/بوصة"></image-slot>
+      </sc-if>
+      <span style="position: absolute; inset-block-start: var(--ijz-title-top); inset-inline: 0; text-align: center; font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--ijz-title); line-height: 1; color: var(--ribaat-brown-600);">إجازة</span>
+    </div>
+
+    <div style="position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; padding-block-start: var(--ijz-pad-bs); padding-block-end: var(--ijz-pad-be); padding-inline-start: var(--ijz-pad-is); padding-inline-end: var(--ijz-pad-ie);">
+
+      <header style="flex: none; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; column-gap: var(--space-4);">
+        <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-logo-full.png" alt="رباط الحنابلة — مدرسة شرعية تأصيلية" style="justify-self: start; height: var(--ijz-logo); width: auto;">
+        <p style="font-family: var(--font-display); font-size: var(--ijz-basmala); color: var(--text-secondary); line-height: var(--leading-tight); padding-block-start: var(--space-2);">بسم الله الرحمن الرحيم</p>
+        <span aria-hidden="true"></span>
+      </header>
+
+      <div style="flex: none; height: var(--ijz-title-block); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; margin-block-start: var(--space-4);">
+        <h1 style="display: flex; flex-direction: column; align-items: center; gap: var(--space-1); font-family: var(--font-display); font-weight: var(--weight-bold); line-height: 1.05; text-align: center;">
+          <span style="position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;">إجازة</span>
+          <span style="font-size: var(--ijz-fi); font-weight: var(--weight-regular); color: var(--text-secondary);">في</span>
+          <span style="font-size: var(--ijz-book); color: var(--text-brand);">الأربعين النووية</span>
+        </h1>
+      </div>
+
+      <div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-3); margin-block-start: var(--space-5); text-align: center;">
+        <p style="max-width: var(--ijz-measure); font-size: var(--ijz-lead); line-height: var(--leading-normal); color: var(--text-primary);">الحمد لله والصلاة والسلام على رسول الله <span style="font-family: var(--font-display);">ﷺ</span>، وعلى آله وصحبه ومن استن بسنته إلى يوم الدين، أما بعد:</p>
+        <p style="font-size: var(--ijz-lead); line-height: var(--leading-normal); color: var(--text-secondary);">فقد درست عندي الأخت الفاضلة:</p>
+        <p style="font-family: var(--font-display); font-size: var(--ijz-name); font-weight: var(--weight-bold); color: var(--text-brand); line-height: var(--leading-tight);">مجيدة عبد الحليم السويد</p>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; inline-size: var(--ijz-measure); margin-inline: auto; display: flex; flex-direction: column; justify-content: flex-start; gap: var(--space-4); margin-block-start: var(--space-5);">
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);">دورة في شرح كتاب «الأربعين النووية» للإمام محيي الدين يحيى بن شرف النووي رحمه الله (٦٧٦هـ)، والذي أرويه إجازة عن الشيخ عبد الله بن حمود التويجري، عن والده الشيخ حمود بن عبد الله التويجري، عن القاضي عبد الله بن عبد العزيز العنقري، عن الشيخ محمد بن إبراهيم بن محمود النجدي، عن الشيخ عبد الله أبي بُطين، عن الشيخ حمد بن معمَّر، بسنده المتصل إلى المصنف رحمه الله.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> ويرويه الشيخ عبد الله العنقري، عن الشيخ سعد بن حمد بن عتيق، عن الشيخ أحمد بن إبراهيم بن عيسى، عن الشيخ عبد الرحمن بن حسن، بسنده المتصل إلى المصنف رحمه الله.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> وأرويه عن شيخي الشيخ عبد الله بن عبد العزيز بن عقيل الحنبلي رحمه الله إجازة، عن الشيخ محمد بن سعيد النجدي ثم المكي، عن الشيخ سعد بن عتيق، عن الشيخ أحمد بن إبراهيم بن عيسى، عن الشيخ عبد الرحمن بن حسن، بسنده المتصل إلى المصنف رحمه الله.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> وأرويه عن الشيخ عبد العزيز بن عدنان العيدان، عن الشيخ عبد الله بن عبد العزيز بن عقيل، عن الشيخ عبد الله بن محمد بن حميد، عن الشيخ سعد بن حمد بن عتيق، بسنده المتصل إلى المصنف رحمه الله.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> وأرويه عن الشيخ عبد الله بن محمد بن حميد، عن الشيخ محمد بن عبد اللطيف آل الشيخ، عن الشيخ عبد الرحمن بن حسن، عن الشيخ عبد الله أبي بُطين، بسنده المتصل إلى المصنف رحمه الله.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> وأرويه عن الشيخ عبد الرحمن بن ناصر البراك، عن الشيخ عبد العزيز بن عبد الله بن باز رحمه الله، عن الشيخ محمد بن إبراهيم آل الشيخ، عن الشيخ سعد بن حمد بن عتيق، بسنده المتصل إلى المصنف رحمه الله.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> وأرويه عن الشيخ عبد الله بن عبد الرحمن بن جبرين رحمه الله، عن الشيخ عبد العزيز بن عبد الله بن باز، عن الشيخ محمد بن عبد اللطيف آل الشيخ، بسنده المتصل إلى المصنف رحمه الله.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> وأرويه عن الشيخ حمود بن عبد الله التويجري، عن الشيخ عبد الله بن محمد بن حميد، عن الشيخ عبد الرحمن بن حسن، بسنده المتصل إلى المصنف رحمه الله.</p>
+      </div>
+
+      <div style="flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); margin-block-start: var(--space-5); padding-block-start: var(--space-3); border-block-start: 1px solid var(--border-subtle); font-size: var(--ijz-meta); color: var(--text-muted);">
+        <span>رمز التحقق ٩٥٦٣ ١٤٠٨ ٧٢٢١</span>
+        <span style="display: flex; align-items: center; gap: var(--space-3);">
+          <span style="color: var(--text-secondary);">يتبع</span>
+          <span>الورقة ١ من ٢</span>
+        </span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================= ٤ · إجازة — إسناد طويل، الورقة الثانية: بقية الأسانيد وموضع التواقيع ================= -->
+  <section class="page" lang="ar" dir="rtl" data-screen-label="إجازة · إسناد طويل · ٢ من ٢" style="--ijz-title-top: 38mm; --ijz-pad-bs: 12mm; --ijz-pad-be: 10mm; --ijz-pad-is: 17mm; --ijz-pad-ie: 26mm; --ijz-measure: 156mm; --ijz-logo: 11mm; --ijz-isnad: 10.5pt; --ijz-isnad-leading: 1.85; --ijz-sig-label: 10pt; --ijz-sig-name: 12.5pt; --ijz-sig-line: 46mm; --ijz-meta: 8.5pt; --ijz-code: 10pt; --ijz-qr: 16mm; --ijz-seal: 25mm; position: relative; overflow: hidden; display: flex; background: var(--surface-card); font-family: var(--font-sans); color: var(--text-primary);">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0;">
+      <sc-if value="{{ ornamentAsset }}" hint-placeholder-val="{{ true }}">
+        <img src="./ornament-ijaza-a4-portrait.svg" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+      </sc-if>
+      <sc-if value="{{ ornamentSlot }}" hint-placeholder-val="{{ false }}">
+        <image-slot id="ijz-ornament-4" shape="rect" fit="cover" style="position: absolute; inset: 0; width: 100%; height: 100%;" placeholder="زخرفة الإجازة — A4 عمودي، ٢٤٨٠×٣٥٠٨ بكسل، ٣٠٠ نقطة/بوصة"></image-slot>
+      </sc-if>
+    </div>
+
+    <div style="position: relative; flex: 1; min-width: 0; display: flex; flex-direction: column; padding-block-start: var(--ijz-pad-bs); padding-block-end: var(--ijz-pad-be); padding-inline-start: var(--ijz-pad-is); padding-inline-end: var(--ijz-pad-ie);">
+
+      <div style="flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); padding-block-end: var(--space-3); border-block-end: 1px solid var(--border-subtle);">
+        <span style="display: flex; align-items: center; gap: var(--space-4);">
+          <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-logo-full.png" alt="رباط الحنابلة" style="height: var(--ijz-logo); width: auto;">
+          <span style="font-size: var(--ijz-meta); color: var(--text-secondary); line-height: var(--leading-normal);">تكملة إجازة في <span style="font-family: var(--font-display); font-weight: var(--weight-bold); color: var(--text-primary);">الأربعين النووية</span> — <span style="font-family: var(--font-display); font-weight: var(--weight-bold); color: var(--text-primary);">مجيدة عبد الحليم السويد</span></span>
+        </span>
+        <span style="font-size: var(--ijz-meta); color: var(--text-muted);">الورقة ٢ من ٢</span>
+      </div>
+
+      <div style="flex: 1 1 auto; min-height: 0; overflow: hidden; inline-size: var(--ijz-measure); margin-inline: auto; display: flex; flex-direction: column; justify-content: center; gap: var(--space-4); margin-block-start: var(--space-6);">
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);"><span style="color: var(--text-accent); font-weight: var(--weight-semibold);">(ح)</span> وأرويه عن الشيخ أنس بن عادل اليتامى، عن الشيخ عبد الله بن عبد العزيز بن عقيل، عن الشيخ محمد بن سعيد النجدي ثم المكي، عن الشيخ سعد بن حمد بن عتيق، بسنده المتصل إلى المصنف رحمه الله.</p>
+        <p style="font-size: var(--ijz-isnad); line-height: var(--ijz-isnad-leading); text-align: justify; hyphens: none; font-weight: var(--weight-medium);">وقد أجزت المذكورة بالكتاب إجازة خاصة بالشرط المعتبر عند أهل العلم، وأوصيها بتقوى الله تعالى، والاستزادة من العلم والعمل، والله ولي التوفيق.</p>
+      </div>
+
+      <footer style="flex: none; display: flex; flex-direction: column; gap: var(--space-5); margin-block-start: var(--space-6);">
+
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; column-gap: var(--space-6);">
+          <div style="text-align: center;">
+            <span style="display: block; font-size: var(--ijz-sig-label); color: var(--text-secondary);">المشرف العام</span>
+            <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--ijz-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. أنس بن عادل اليتامى</span>
+            <span aria-hidden="true" style="display: block; width: min(var(--ijz-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+          </div>
+
+          <div style="width: var(--ijz-seal); height: var(--ijz-seal); border: 1px solid var(--ribaat-green-400); border-radius: var(--radius-pill); display: flex; align-items: center; justify-content: center; padding: var(--space-3);" data-asset-slot="official-seal">
+            <img src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/assets/logos/ribaat-mark.png" alt="خاتم مدرسة رباط الحنابلة" style="width: 76%; height: auto;">
+          </div>
+
+          <div style="text-align: center;">
+            <span style="display: block; font-size: var(--ijz-sig-label); color: var(--text-secondary);">المُجيز</span>
+            <span style="display: block; margin-block-start: var(--space-2); font-family: var(--font-display); font-size: var(--ijz-sig-name); font-weight: var(--weight-bold); color: var(--text-primary);">د. عبد العزيز بن عدنان العيدان</span>
+            <span aria-hidden="true" style="display: block; width: min(var(--ijz-sig-line), 100%); margin-inline: auto; margin-block-start: var(--space-8); border-block-start: 1px solid var(--border-default);"></span>
+          </div>
+        </div>
+
+        <p style="text-align: center; font-size: var(--ijz-meta); color: var(--text-secondary); line-height: var(--leading-normal);">حرر في ٢٦ ذو القعدة ١٤٤٧هـ، الموافق ١٣ مايو ٢٠٢٦م</p>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-6); padding-block-start: var(--space-3); border-block-start: 1px solid var(--border-subtle);">
+          <div style="display: flex; align-items: center; gap: var(--space-3);">
+            <sc-if value="{{ showQr }}" hint-placeholder-val="{{ true }}">
+              <span role="img" aria-label="رمز استجابة سريعة للتحقق من الإجازة، رمز التحقق ٩٥٦٣ ١٤٠٨ ٧٢٢١" style="flex: none; width: var(--ijz-qr); height: var(--ijz-qr); color: var(--text-primary);">{{ qr }}</span>
+            </sc-if>
+            <span style="display: block;">
+              <span style="display: block; font-size: var(--ijz-meta); color: var(--text-muted);">رمز التحقق</span>
+              <span style="display: block; margin-block-start: var(--space-1); font-size: var(--ijz-code); font-weight: var(--weight-semibold); color: var(--text-primary); word-spacing: 0.25em;">٩٥٦٣ ١٤٠٨ ٧٢٢١</span>
+            </span>
+          </div>
+          <p style="max-width: 74mm; text-align: end; font-size: var(--ijz-meta); color: var(--text-muted); line-height: var(--leading-normal);">للتحقق من صحة هذه الإجازة يُدخل الرمز في صفحة التحقق ribaat.net/verify</p>
+        </div>
+      </footer>
+    </div>
+
+  </section>
+
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;ornament&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;الزخرفة المرفقة&quot;,&quot;مساحة لصورة الزخرفة&quot;,&quot;بدون زخرفة&quot;],&quot;default&quot;:&quot;الزخرفة المرفقة&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;الزخرفة&quot;},&quot;verification&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;رمز و QR&quot;,&quot;رمز فقط&quot;],&quot;default&quot;:&quot;رمز و QR&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;التحقق&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() { this.syncPageBox(); }
+  componentDidUpdate() { this.syncPageBox(); }
+
+  // <doc-page> switches to fixed page boxes only when it sees .page children.
+  // React streams those children in after the element upgrades, and the
+  // component's own observer can miss that, so re-measure a few times.
+  syncPageBox() {
+    customElements.whenDefined("doc-page").then(() => {
+      [0, 60, 250, 700, 1500].forEach((t) => setTimeout(() => {
+        document.querySelectorAll("doc-page").forEach((dp) => {
+          if (typeof dp._measure === "function") dp._measure();
+        });
+      }, t));
+    });
+  }
+
+  renderVals() {
+    const ornament = this.props.ornament ?? "الزخرفة المرفقة";
+    return {
+      ornamentAsset: ornament === "الزخرفة المرفقة",
+      ornamentSlot: ornament === "مساحة لصورة الزخرفة",
+      showQr: (this.props.verification ?? "رمز و QR") === "رمز و QR",
+      qr: this.qrPlaceholder()
+    };
+  }
+
+  // Visual stand-in for the real QR, which is generated server-side from the
+  // verification URL. Not layout — a single decorative glyph.
+  qrPlaceholder() {
+    const n = 25;
+    const g = Array.from({ length: n }, () => Array(n).fill(0));
+    let s = 40503;
+    const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) g[y][x] = rnd() > 0.52 ? 1 : 0;
+    const finder = (ox, oy) => {
+      for (let y = -1; y < 8; y++) for (let x = -1; x < 8; x++) {
+        const px = ox + x, py = oy + y;
+        if (px < 0 || py < 0 || px >= n || py >= n) continue;
+        const inBox = x >= 0 && x <= 6 && y >= 0 && y <= 6;
+        const edge = x === 0 || x === 6 || y === 0 || y === 6;
+        const core = x >= 2 && x <= 4 && y >= 2 && y <= 4;
+        g[py][px] = inBox && (edge || core) ? 1 : 0;
+      }
+    };
+    finder(0, 0); finder(n - 7, 0); finder(0, n - 7);
+    for (let i = 8; i < n - 8; i++) { g[6][i] = i % 2 === 0 ? 1 : 0; g[i][6] = i % 2 === 0 ? 1 : 0; }
+    const a = n - 9;
+    for (let y = 0; y < 5; y++) for (let x = 0; x < 5; x++) {
+      const edge = x === 0 || x === 4 || y === 0 || y === 4;
+      g[a + y][a + x] = edge || (x === 2 && y === 2) ? 1 : 0;
+    }
+    const rects = [];
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (g[y][x]) {
+      rects.push(React.createElement("rect", { key: y + "-" + x, x: x, y: y, width: 1, height: 1 }));
+    }
+    return React.createElement("svg", {
+      viewBox: "-2 -2 " + (n + 4) + " " + (n + 4),
+      width: "100%", height: "100%", fill: "currentColor",
+      shapeRendering: "crispEdges", focusable: "false", "aria-hidden": "true"
+    }, rects);
+  }
+}
+</script>
+</body>
+</html>

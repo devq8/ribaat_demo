@@ -1,0 +1,135 @@
+{% load static %}
+{# المسارات — a numbered editorial index, set like a book's table of contents.
+   Deliberately not a card grid: no prices, no enrolment counts, no ratings, no
+   "popular" badges. Ribaat is not a marketplace and must not borrow marketplace
+   grammar.
+
+   Each row is a <details> accordion: closed it is numeral + track name, open it
+   shows the متون and the link to the Prospectus. Native <details>, so it works
+   with JS off; landing.js only adds one-open-at-a-time. The heading stays an <h3>
+   and is the summary's single child, which is the one arrangement that keeps both
+   the document outline and a valid summary content model — and the link sits
+   inside the panel rather than in the summary, so there is no interactive element
+   nested inside another.
+
+   The five tracks and the متون listed under them are ILLUSTRATIVE and must be
+   replaced with the real curriculum — the school teaches three المراحل, not five
+   مسارات. See README §16 and §27. #}
+<section class="section section--tracks" id="tracks" aria-labelledby="tracks-title">
+  <div class="wrap">
+    <div class="section__grid">
+      <header class="section__head" data-reveal>
+        <span class="section__index" aria-hidden="true">٠٢</span>
+        <h2 class="section__title" id="tracks-title">المسارات الدراسية</h2>
+      </header>
+      <div class="section__body" data-reveal data-reveal-delay="1">
+        <p class="lede">لكلِّ مسارٍ مقرراتُه ومتونُه وشروطُ الالتحاق به.</p>
+      </div>
+    </div>
+
+    <ol class="index" data-accordion data-reveal>
+      <li class="index__row">
+        <details class="index__item">
+          <summary class="index__head">
+            <h3 class="index__title">
+              <span class="index__num" aria-hidden="true">٠١</span>
+              <span class="index__name">مسار العقيدة</span>
+              <span class="index__sign" aria-hidden="true"></span>
+            </h3>
+          </summary>
+          <div class="index__panel">
+            <p class="index__label">من متون المسار</p>
+            <ul class="index__matn is-placeholder">
+              <li>لمعة الاعتقاد</li>
+              <li>نواقض الإسلام</li>
+              <li>كشف الشبهات</li>
+            </ul>
+            <p><a class="link-arrow" href="/tracks/aqidah/">المقرر التفصيلي <span class="arrow" aria-hidden="true"></span></a></p>
+          </div>
+        </details>
+      </li>
+
+      <li class="index__row">
+        <details class="index__item">
+          <summary class="index__head">
+            <h3 class="index__title">
+              <span class="index__num" aria-hidden="true">٠٢</span>
+              <span class="index__name">مسار الفقه الحنبلي</span>
+              <span class="index__sign" aria-hidden="true"></span>
+            </h3>
+          </summary>
+          <div class="index__panel">
+            <p class="index__label">من متون المسار</p>
+            <ul class="index__matn is-placeholder">
+              <li>أخصر المختصرات</li>
+              <li>زاد المستقنع</li>
+              <li>الروض المربع</li>
+            </ul>
+            <p><a class="link-arrow" href="/tracks/fiqh-hanbali/">المقرر التفصيلي <span class="arrow" aria-hidden="true"></span></a></p>
+          </div>
+        </details>
+      </li>
+
+      <li class="index__row">
+        <details class="index__item">
+          <summary class="index__head">
+            <h3 class="index__title">
+              <span class="index__num" aria-hidden="true">٠٣</span>
+              <span class="index__name">مسار الحديث وعلومه</span>
+              <span class="index__sign" aria-hidden="true"></span>
+            </h3>
+          </summary>
+          <div class="index__panel">
+            <p class="index__label">من متون المسار</p>
+            <ul class="index__matn is-placeholder">
+              <li>البيقونية</li>
+              <li>نخبة الفكر</li>
+              <li>عمدة الأحكام</li>
+            </ul>
+            <p><a class="link-arrow" href="/tracks/hadith/">المقرر التفصيلي <span class="arrow" aria-hidden="true"></span></a></p>
+          </div>
+        </details>
+      </li>
+
+      <li class="index__row">
+        <details class="index__item">
+          <summary class="index__head">
+            <h3 class="index__title">
+              <span class="index__num" aria-hidden="true">٠٤</span>
+              <span class="index__name">مسار أصول الفقه</span>
+              <span class="index__sign" aria-hidden="true"></span>
+            </h3>
+          </summary>
+          <div class="index__panel">
+            <p class="index__label">من متون المسار</p>
+            <ul class="index__matn is-placeholder">
+              <li>متن الورقات في أصول الفقه</li>
+              <li>مختصر التحرير</li>
+            </ul>
+            <p><a class="link-arrow" href="/tracks/usul/">المقرر التفصيلي <span class="arrow" aria-hidden="true"></span></a></p>
+          </div>
+        </details>
+      </li>
+
+      <li class="index__row">
+        <details class="index__item">
+          <summary class="index__head">
+            <h3 class="index__title">
+              <span class="index__num" aria-hidden="true">٠٥</span>
+              <span class="index__name">مسار اللغة العربية</span>
+              <span class="index__sign" aria-hidden="true"></span>
+            </h3>
+          </summary>
+          <div class="index__panel">
+            <p class="index__label">من متون المسار</p>
+            <ul class="index__matn is-placeholder">
+              <li>الآجُرُّومية</li>
+              <li>قطر الندى</li>
+            </ul>
+            <p><a class="link-arrow" href="/tracks/arabiyyah/">المقرر التفصيلي <span class="arrow" aria-hidden="true"></span></a></p>
+          </div>
+        </details>
+      </li>
+    </ol>
+  </div>
+</section>

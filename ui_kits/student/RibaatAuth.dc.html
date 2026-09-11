@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/fonts.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/colors-dark.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/typography.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/spacing.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/tokens/effects.css">
+  <link rel="stylesheet" href="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/styles.css">
+  <script src="../../_ds/ribaat-design-system-790e93d5-7bd6-442c-b481-e7b96973db45/_ds_bundle.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    a { color: var(--text-link); text-decoration: none; }
+    a:hover { color: var(--text-link-hover); text-decoration: underline; text-underline-offset: 3px; }
+    input, select, button { font-family: var(--font-sans); }
+    input:focus-visible, select:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 1px; }
+    @keyframes rb-spin { to { transform: rotate(360deg); } }
+    .rb-scroll::-webkit-scrollbar { width: 0; height: 0; }
+  </style>
+</helmet>
+
+<div dir="rtl" data-theme="{{ themeAttr }}" data-screen-label="{{ screenLabel }}" style="min-height: 100vh; width: 100%; overflow: hidden; background: var(--surface-page); color: var(--text-primary); font-family: var(--font-sans); display: grid; grid-template-columns: {{ gridCols }};">
+
+  <sc-if value="{{ isSplit }}" hint-placeholder-val="{{ true }}">
+    <aside style="height: 100%; overflow: hidden; background: var(--surface-brand-strong); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 64px 56px; text-align: center;">
+      <img src="../../assets/logos/ribaat-lockup-2026.png" alt="رباط الحنابلة — مدرسة شرعية تأصيلية" style="height: 140px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.95; width: 237px">
+      <div style="width: 44px; height: 1px; background: rgba(255,255,255,0.32);"></div>
+      <p style="margin: 0; max-width: 330px; font-family: var(--font-display); font-size: var(--text-xl); line-height: var(--leading-relaxed); color: rgba(255,255,255,0.92);">مدرسة شرعية تأصيلية لدراسة المتون العلمية</p>
+      <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: rgba(255,255,255,0.58);">عقيدة · فقه · حديث · سيرة · أصول</p>
+    </aside>
+  </sc-if>
+
+  <div class="rb-scroll" style="height: 100%; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; padding: {{ formPadding }};">
+    <div style="margin: auto; width: 100%; max-width: {{ formMaxWidth }}; display: flex; flex-direction: column; gap: 22px;">
+
+      <sc-if value="{{ notSplit }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+          <img src="../../assets/logos/ribaat-lockup-2026.png" alt="رباط الحنابلة — مدرسة شرعية تأصيلية" style="height: 86px; object-fit: contain; filter: {{ markFilter }};">
+        </div>
+      </sc-if>
+
+      <div style="display: flex; flex-direction: column; gap: 8px; text-align: center;">
+        <h1 style="margin: 0; font-family: var(--font-display); font-size: {{ headingSize }}; font-weight: var(--weight-bold); line-height: var(--leading-tight); color: var(--text-primary);">{{ heading }}</h1>
+        <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary); text-wrap: pretty;">{{ subheading }}</p>
+      </div>
+
+      <sc-if value="{{ showStepper }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+            <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ stepTitle }}</span>
+            <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ stepCounter }}</span>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <sc-for list="{{ stepSegments }}" as="seg" hint-placeholder-count="4">
+              <div style="flex: 1; height: 3px; border-radius: 2px; background: {{ seg.bg }};"></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showSocial }}" hint-placeholder-val="{{ true }}">
+        <p style="margin: 0; text-align: center; font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--text-muted);">{{ socialNote }}</p>
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 14px;">
+          <button type="button" aria-label="Google" title="Google" onClick="{{ onSocial }}" data-provider="google" style-hover="background: var(--surface-sunken); border-color: var(--border-strong);" style="width: 48px; height: 48px; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--border-default); border-radius: 50%; background: var(--surface-card); color: var(--text-primary); cursor: pointer; transition: background 120ms var(--ease-standard), border-color 120ms var(--ease-standard);">
+            <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47c-.28 1.5-1.13 2.77-2.42 3.62v3.01h3.9c2.28-2.1 3.57-5.2 3.57-8.82z"></path><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.94-2.9l-3.9-3.02c-1.08.73-2.47 1.16-4.04 1.16-3.1 0-5.73-2.1-6.67-4.93H1.24v3.1C3.22 21.3 7.28 24 12 24z"></path><path fill="#FBBC05" d="M5.33 14.31A7.15 7.15 0 0 1 4.96 12c0-.8.14-1.58.37-2.31V6.6H1.24A11.98 11.98 0 0 0 0 12c0 1.94.46 3.77 1.24 5.4l4.09-3.09z"></path><path fill="#EA4335" d="M12 4.76c1.76 0 3.34.6 4.58 1.79l3.46-3.46C17.94 1.19 15.24 0 12 0 7.28 0 3.22 2.7 1.24 6.6l4.09 3.09C6.27 6.86 8.9 4.76 12 4.76z"></path></svg>
+          </button>
+          <button type="button" aria-label="Apple" title="Apple" onClick="{{ onSocial }}" data-provider="apple" style-hover="background: var(--surface-sunken); border-color: var(--border-strong);" style="width: 48px; height: 48px; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--border-default); border-radius: 50%; background: var(--surface-card); color: var(--text-primary); cursor: pointer; transition: background 120ms var(--ease-standard), border-color 120ms var(--ease-standard);">
+            <svg width="23" height="23" viewBox="3.6 2.6 16.8 18.8" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.06 1.68-3.06 1.75-3.11-.96-1.4-2.45-1.6-2.98-1.62-1.35-.14-2.63.79-3.31.79-.7 0-1.77-.77-2.9-.75-1.5.02-2.88.87-3.64 2.21-1.56 2.7-.4 6.69 1.11 8.88.74 1.07 1.62 2.27 2.78 2.23 1.11-.04 1.53-.72 2.87-.72 1.34 0 1.72.72 2.9.7 1.2-.02 1.96-1.09 2.7-2.16.85-1.24 1.2-2.44 1.22-2.51-.03-.01-2.34-.9-2.5-3.34zM14.75 5.86c.62-.75 1.03-1.79.92-2.83-.89.04-1.97.6-2.61 1.34-.57.65-1.06 1.71-.93 2.72.98.08 1.99-.5 2.62-1.23z"></path></svg>
+          </button>
+          <button type="button" aria-label="Facebook" title="Facebook" onClick="{{ onSocial }}" data-provider="facebook" style-hover="background: var(--surface-sunken); border-color: var(--border-strong);" style="width: 48px; height: 48px; flex: none; display: flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--border-default); border-radius: 50%; background: var(--surface-card); color: var(--text-primary); cursor: pointer; transition: background 120ms var(--ease-standard), border-color 120ms var(--ease-standard);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.02 4.39 11.01 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.7 4.53-4.7 1.31 0 2.68.24 2.68.24v2.95h-1.51c-1.49 0-1.95.93-1.95 1.89v2.28h3.32l-.53 3.49h-2.79v8.44C19.61 23.08 24 18.09 24 12.07z"></path></svg>
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+          <span style="font-size: var(--text-xs); color: var(--text-muted);">أو</span>
+          <div style="flex: 1; height: 1px; background: var(--border-subtle);"></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showProviderChip }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface-sunken);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="flex: none; color: var(--state-success-fg);" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+          <span style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary);">{{ providerChipText }}</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showPanel }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 28px 22px; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--surface-card); box-shadow: var(--shadow-sm);">
+          <div style="width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: {{ panelIconBg }}; color: {{ panelIconFg }};">{{ panelIcon }}</div>
+          <span style="font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">{{ panelTitle }}</span>
+          <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary); text-wrap: pretty;">{{ panelText }}</p>
+          <sc-if value="{{ panelSubText }}" hint-placeholder-val="{{ false }}">
+            <p style="margin: 0; font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--text-muted);">{{ panelSubText }}</p>
+          </sc-if>
+          <div style="display: grid; width: 100%; max-width: 260px; margin-top: 4px;">
+            <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="{{ panelActionVariant }}" on-click="{{ onPanelAction }}" hint-size="100%,44px">{{ panelActionLabel }}</x-import>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showConfirm }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+
+          <div style="display: flex; justify-content: center;">
+            <div style="width: 78px; height: 78px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--state-success-bg); color: var(--state-success-fg); border: 1px solid var(--border-subtle);">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px 18px; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--surface-sunken); text-align: center;">
+            <span style="font-size: var(--text-xs); color: var(--text-muted);">أُرسلت رسالة التأكيد إلى</span>
+            <span dir="ltr" style="font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--text-primary); word-break: break-all;">{{ confirmEmail }}</span>
+          </div>
+
+          <div style="display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--state-warning-bg);">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex: none; margin-top: 2px; color: var(--state-warning-fg);" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16.5v.01"></path></svg>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">حسابك غير مُفعَّل بعد</span>
+              <p style="margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary); text-wrap: pretty;">يُفعَّل الحساب بعد الضغط على رابط التأكيد في الرسالة، والرابط صالح لمدة 24 ساعة من وقت إرساله.</p>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px 18px; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--surface-card);">
+            <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--text-muted);">ما تبقّى من الخطوات</span>
+            <sc-for list="{{ confirmSteps }}" as="c" hint-placeholder-count="3">
+              <div style="display: flex; align-items: flex-start; gap: 10px;">
+                <span style="flex: none; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--surface-sunken); border: 1px solid var(--border-subtle); font-size: var(--text-xs); color: var(--text-secondary);">{{ c.n }}</span>
+                <span style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary); text-wrap: pretty;">{{ c.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 2px;">
+            <div style="display: grid;">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="lg" on-click="{{ onConfirmLogin }}" hint-size="100%,48px">إبدأ الدراسة الآن</x-import>
+            </div>
+            <button type="button" disabled="{{ resendDisabled }}" onClick="{{ onResend }}" style-hover="background: var(--ribaat-green-100);" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 18px; border: 1px solid var(--border-brand); border-radius: var(--radius-md); background: transparent; font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--text-brand); cursor: {{ resendCursor }}; opacity: {{ resendOpacity }}; transition: background 120ms var(--ease-standard);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M4 6h16v12H4z"></path><path d="M4 7l8 6 8-6"></path></svg>
+              {{ resendLabel }}
+            </button>
+          </div>
+
+          <sc-if value="{{ resentNote }}" hint-placeholder-val="{{ false }}">
+            <span style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: var(--text-xs); color: var(--state-success-fg);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="flex: none;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+              {{ resentNote }}
+            </span>
+          </sc-if>
+
+          <p style="margin: 0; text-align: center; font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--text-muted); text-wrap: pretty;">لم تصلك الرسالة؟ تحقق من مجلد الرسائل غير المرغوب فيها، أو راسل <a href="#" style="font-size: var(--text-xs);">الدعم الفني</a>.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+
+          <div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px;">
+          <sc-for list="{{ fields }}" as="f" hint-placeholder-count="2">
+            <div style="display: flex; flex-direction: column; flex: {{ f.flex }}; min-width: 0;">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px;">
+                <span style="font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--text-primary);">{{ f.label }}</span>
+                <sc-if value="{{ f.linkLabel }}" hint-placeholder-val="{{ false }}">
+                  <a href="#" onClick="{{ f.onLink }}" style="font-size: var(--text-xs);">{{ f.linkLabel }}</a>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ f.isSelect }}" hint-placeholder-val="{{ false }}">
+                <div style="position: relative; display: flex; width: 100%;">
+                  <select value="{{ f.value }}" onChange="{{ f.onChange }}" dir="{{ f.dir }}" style="width: 100%; min-height: 44px; font-size: var(--text-base); padding: 10px 14px; padding-inline-end: 38px; border-radius: var(--radius-md); border: 1px solid {{ f.borderColor }}; background: {{ f.background }}; color: var(--text-primary); cursor: pointer; appearance: none;">
+                    {{ f.optionEls }}
+                  </select>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="position: absolute; inset-inline-end: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-muted);"><path d="M6 9l6 6 6-6"></path></svg>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ f.isPhone }}" hint-placeholder-val="{{ false }}">
+                <div dir="ltr" style="position: relative; display: flex; direction: ltr; align-items: stretch; min-height: 44px; border-radius: var(--radius-md); border: 1px solid {{ f.borderColor }}; background: {{ f.background }};">
+                  <button type="button" aria-label="رمز الدولة" onClick="{{ f.onToggleMenu }}" style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 6px; padding: 0 10px; border: none; border-right: 1px solid var(--border-subtle); border-radius: var(--radius-md) 0 0 var(--radius-md); background: transparent; cursor: pointer; color: var(--text-primary); font-size: var(--text-base); font-weight: var(--weight-regular);">
+                    <img src="https://flagcdn.com/w40/{{ f.isoLower }}.png" alt="{{ f.iso }}" width="24" height="16" style="width: 24px; height: 16px; flex: none; object-fit: fill; border-radius: 2px; box-shadow: 0 0 0 1px var(--border-subtle);">
+                    <span dir="ltr" style="font-variant-numeric: tabular-nums;">{{ f.dial }}</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex: none; margin: 0 4px; color: var(--text-muted);" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+                  </button>
+                  <input type="tel" dir="ltr" value="{{ f.display }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" style="flex: 1; min-width: 0; border: none; background: transparent; padding: 10px 12px; font-size: var(--text-base); font-weight: var(--weight-regular); font-variant-numeric: tabular-nums; color: var(--text-primary); outline: none;">
+                  <sc-if value="{{ f.menuOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="position: absolute; top: calc(100% + 6px); left: 0; z-index: 30; width: 268px; max-height: 232px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; padding: 4px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+                      <sc-for list="{{ f.countryItems }}" as="c" hint-placeholder-count="4">
+                        <button type="button" onClick="{{ c.onPick }}" style-hover="background: var(--surface-sunken);" style="display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; border: none; border-radius: var(--radius-sm); background: {{ c.bg }}; cursor: pointer; font-size: var(--text-sm); color: var(--text-primary);">
+                          <img src="https://flagcdn.com/w40/{{ c.isoLower }}.png" alt="{{ c.iso }}" width="24" height="16" style="width: 24px; height: 16px; flex: none; object-fit: fill; border-radius: 2px; box-shadow: 0 0 0 1px var(--border-subtle);">
+                          <span dir="rtl" style="flex: 1; text-align: right;">{{ c.name }}</span>
+                          <span dir="ltr" style="color: var(--text-muted); font-variant-numeric: tabular-nums;">{{ c.dial }}</span>
+                        </button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ f.isDate }}" hint-placeholder-val="{{ false }}">
+                <div dir="rtl" style="display: flex; direction: rtl; gap: 8px;">
+                  <sc-for list="{{ f.dateParts }}" as="d" hint-placeholder-count="3">
+                    <div style="position: relative; display: flex; flex: {{ d.flex }}; min-width: 0;">
+                      <select value="{{ d.value }}" onChange="{{ d.onChange }}" aria-label="{{ d.aria }}" style="width: 100%; min-width: 0; min-height: 44px; font-size: var(--text-base); padding: 10px 12px; padding-inline-end: 34px; border-radius: var(--radius-md); border: 1px solid {{ f.borderColor }}; background: {{ f.background }}; color: var(--text-primary); cursor: pointer; appearance: none;">{{ d.optionEls }}</select>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="position: absolute; inset-inline-end: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-muted);"><path d="M6 9l6 6 6-6"></path></svg>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ f.isToggle }}" hint-placeholder-val="{{ false }}">
+                <div dir="rtl" style="display: flex; direction: rtl; gap: 8px;">
+                  <sc-for list="{{ f.toggleOptions }}" as="t" hint-placeholder-count="2">
+                    <button type="button" aria-pressed="{{ t.selected }}" onClick="{{ t.onPick }}" style="flex: 1; min-height: 44px; padding: 0 12px; border-radius: var(--radius-md); border: 1px solid {{ t.border }}; background: {{ t.bg }}; color: {{ t.fg }}; font-size: var(--text-base); font-weight: var(--weight-medium); cursor: pointer; transition: background 120ms var(--ease-standard), color 120ms var(--ease-standard);">{{ t.label }}</button>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ f.isInput }}" hint-placeholder-val="{{ true }}">
+                <div style="position: relative; display: flex;">
+                  <input type="{{ f.inputType }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.placeholder }}" dir="{{ f.dir }}" lang="{{ f.lang }}" style="width: 100%; min-height: 44px; font-size: var(--text-base); padding: {{ f.padding }}; border-radius: var(--radius-md); border: 1px solid {{ f.borderColor }}; background: {{ f.background }}; color: var(--text-primary); outline: none;">
+                  <sc-if value="{{ f.hasToggle }}" hint-placeholder-val="{{ false }}">
+                    <button type="button" aria-label="إظهار كلمة المرور" onClick="{{ f.onToggle }}" style-hover="color: var(--text-primary);" style="position: absolute; inset-inline-start: 2px; top: 2px; height: 40px; width: 40px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: var(--radius-sm); color: var(--text-muted); cursor: pointer;">
+                      <sc-if value="{{ f.isVisible }}" hint-placeholder-val="{{ false }}">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path><path d="M6.61 6.61C4.42 8.03 2.86 10.13 2 12c0 0 3 7 10 7a9.9 9.9 0 0 0 4.19-.92"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg>
+                      </sc-if>
+                      <sc-if value="{{ f.isHidden }}" hint-placeholder-val="{{ true }}">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                      </sc-if>
+                    </button>
+                  </sc-if>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ f.error }}" hint-placeholder-val="{{ false }}">
+                <span style="display: flex; align-items: flex-start; gap: 6px; margin-top: 6px; font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--state-danger-fg);">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex: none; margin-top: 2px;" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="7" x2="12" y2="13"></line><line x1="12" y1="16.5" x2="12.01" y2="16.5"></line></svg>
+                  {{ f.error }}
+                </span>
+              </sc-if>
+
+              <sc-if value="{{ f.note }}" hint-placeholder-val="{{ false }}">
+                <span style="display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: var(--text-xs); color: var(--text-muted);">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex: none;" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+                  {{ f.note }}
+                </span>
+              </sc-if>
+
+              <sc-if value="{{ f.hint }}" hint-placeholder-val="{{ false }}">
+                <span style="display: block; margin-top: 6px; font-size: var(--text-xs); line-height: var(--leading-normal); color: var(--text-muted);">{{ f.hint }}</span>
+              </sc-if>
+
+              <sc-if value="{{ f.showStrength }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+                  <div style="display: flex; gap: 4px; flex: 1;">
+                    <sc-for list="{{ f.strengthSegments }}" as="s" hint-placeholder-count="3">
+                      <div style="flex: 1; height: 3px; border-radius: 2px; background: {{ s.bg }};"></div>
+                    </sc-for>
+                  </div>
+                  <span style="font-size: var(--text-xs); color: var(--text-muted);">{{ f.strengthLabel }}</span>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+          </div>
+
+          <sc-if value="{{ showReview }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <sc-for list="{{ reviewGroups }}" as="g" hint-placeholder-count="3">
+                <div style="border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface-card); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+                    <span style="font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--text-primary);">{{ g.title }}</span>
+                    <a href="#" onClick="{{ g.onEdit }}" style="font-size: var(--text-xs);">تعديل</a>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 7px;">
+                    <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="2">
+                      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px;">
+                        <span style="font-size: var(--text-xs); color: var(--text-muted); flex: none;">{{ r.label }}</span>
+                        <span dir="{{ r.dir }}" style="font-size: var(--text-sm); color: var(--text-primary); text-align: left;">{{ r.value }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showTerms }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; align-items: flex-start; gap: 9px;">
+                <button type="button" role="checkbox" aria-checked="{{ termsChecked }}" onClick="{{ onTermsToggle }}" style="width: 18px; height: 18px; flex: none; margin-top: 2px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-sm); border: 1px solid {{ termsBorder }}; background: {{ termsBg }}; cursor: pointer;">
+                  <sc-if value="{{ termsChecked }}" hint-placeholder-val="{{ false }}">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--text-on-brand)" stroke-width="3" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg>
+                  </sc-if>
+                </button>
+                <span style="font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--text-secondary);">أقر بأنني اطلعت على <a href="#">شروط الاستخدام</a> و<a href="#">سياسة الخصوصية</a> وأوافق عليهما.</span>
+              </div>
+              <sc-if value="{{ termsError }}" hint-placeholder-val="{{ false }}">
+                <span style="display: flex; align-items: flex-start; gap: 6px; margin-inline-start: 27px; font-size: var(--text-xs); color: var(--state-danger-fg);">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex: none; margin-top: 2px;" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="7" x2="12" y2="13"></line><line x1="12" y1="16.5" x2="12.01" y2="16.5"></line></svg>
+                  {{ termsError }}
+                </span>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 2px;">
+            <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ onBack }}" style-hover="background: var(--ribaat-green-100);" style="display: inline-flex; align-items: center; gap: 6px; min-height: 46px; padding: 0 18px; border: 1px solid var(--border-brand); border-radius: var(--radius-md); background: transparent; font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--text-brand); cursor: pointer; transition: background 120ms var(--ease-standard);">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg>
+                السابق
+              </button>
+            </sc-if>
+            <div style="display: grid; flex: 1;">
+              <x-import component-from-global-scope="RibaatDesignSystem_790e93.Button" variant="primary" size="lg" disabled="{{ isBusy }}" on-click="{{ onPrimary }}" icon="{{ primaryIcon }}" hint-size="100%,48px">{{ primaryLabel }}</x-import>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ altText }}" hint-placeholder-val="{{ true }}">
+        <p style="margin: 0; text-align: center; font-size: var(--text-sm); color: var(--text-secondary);">{{ altText }} <a href="#" onClick="{{ onAlt }}" style="font-weight: var(--weight-medium);">{{ altLinkLabel }}</a></p>
+      </sc-if>
+
+      <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 6px; padding-top: 18px; border-top: 1px solid var(--border-subtle);">
+        <span style="font-size: var(--text-xs); color: var(--text-muted);">الاستعلام عن شهادة</span>
+        <span style="width: 3px; height: 3px; border-radius: 50%; background: var(--border-default);"></span>
+        <span style="font-size: var(--text-xs); color: var(--text-muted);">الدعم الفني</span>
+        <span style="width: 3px; height: 3px; border-radius: 50%; background: var(--border-default);"></span>
+        <span style="font-size: var(--text-xs); color: var(--text-muted);">رباط الحنابلة</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;login&quot;,&quot;options&quot;:[&quot;login&quot;,&quot;signup&quot;,&quot;forgot&quot;,&quot;reset&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Screen&quot;},&quot;signupPath&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;email&quot;,&quot;options&quot;:[&quot;email&quot;,&quot;social&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Screen&quot;},&quot;signupStep&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:3,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Screen&quot;},&quot;viewport&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;desktop&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;mobile&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;colorScheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;demoState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;idle&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;error&quot;,&quot;loading&quot;,&quot;sent&quot;,&quot;expired&quot;,&quot;success&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;State&quot;},&quot;prefill&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;State&quot;},&quot;geoCity&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;State&quot;},&quot;showResume&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;State&quot;},&quot;resumeStep&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1,&quot;min&quot;:1,&quot;max&quot;:3,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;State&quot;},&quot;provider&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Google&quot;,&quot;options&quot;:[&quot;Google&quot;,&quot;Apple&quot;,&quot;Facebook&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Screen&quot;},&quot;accountEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;khaled@ribaat.net&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Screen&quot;}}">
+const VIEWPORTS = {
+  desktop: { split: true, gridCols: "minmax(0,0.92fr) minmax(0,1.08fr)", padding: "56px 64px", maxWidth: "420px", heading: "var(--text-2xl)" },
+  tablet: { split: false, gridCols: "1fr", padding: "56px 44px", maxWidth: "440px", heading: "var(--text-2xl)" },
+  mobile: { split: false, gridCols: "1fr", padding: "30px 20px 24px", maxWidth: "100%", heading: "var(--text-xl)" },
+};
+
+const COUNTRIES = [
+  { value: "kw", label: "الكويت" }, { value: "sa", label: "السعودية" }, { value: "ae", label: "الإمارات" },
+  { value: "qa", label: "قطر" }, { value: "bh", label: "البحرين" }, { value: "om", label: "عُمان" },
+  { value: "eg", label: "مصر" }, { value: "jo", label: "الأردن" }, { value: "ma", label: "المغرب" },
+  { value: "other", label: "دولة أخرى" },
+];
+const GENDERS = [{ value: "m", label: "ذكر" }, { value: "f", label: "أنثى" }];
+const NATIONALITIES = [
+  { value: "kw", label: "كويتي" }, { value: "sa", label: "سعودي" }, { value: "ae", label: "إماراتي" },
+  { value: "qa", label: "قطري" }, { value: "bh", label: "بحريني" }, { value: "om", label: "عُماني" },
+  { value: "eg", label: "مصري" }, { value: "jo", label: "أردني" }, { value: "sy", label: "سوري" },
+  { value: "ma", label: "مغربي" }, { value: "other", label: "جنسية أخرى" },
+];
+const PHONE_CODES = [
+  { value: "+965", label: "+965" }, { value: "+966", label: "+966" }, { value: "+971", label: "+971" },
+  { value: "+974", label: "+974" }, { value: "+973", label: "+973" }, { value: "+968", label: "+968" },
+  { value: "+20", label: "+20" }, { value: "+962", label: "+962" }, { value: "+212", label: "+212" },
+  { value: "+44", label: "+44" }, { value: "+1", label: "+1" },
+];
+
+const PHONE_COUNTRIES = [
+  { iso: "KW", name: "الكويت", dial: "+965", mask: [4, 4] },
+  { iso: "SA", name: "السعودية", dial: "+966", mask: [2, 3, 4] },
+  { iso: "AE", name: "الإمارات", dial: "+971", mask: [2, 3, 4] },
+  { iso: "QA", name: "قطر", dial: "+974", mask: [4, 4] },
+  { iso: "BH", name: "البحرين", dial: "+973", mask: [4, 4] },
+  { iso: "OM", name: "عُمان", dial: "+968", mask: [4, 4] },
+  { iso: "EG", name: "مصر", dial: "+20", mask: [3, 3, 4] },
+  { iso: "JO", name: "الأردن", dial: "+962", mask: [1, 4, 4] },
+  { iso: "MA", name: "المغرب", dial: "+212", mask: [3, 3, 3] },
+  { iso: "GB", name: "المملكة المتحدة", dial: "+44", mask: [4, 6] },
+  { iso: "US", name: "الولايات المتحدة", dial: "+1", mask: [3, 3, 4] },
+];
+
+const MONTHS = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+
+const STEP_TITLES = ["بيانات الحساب", "البيانات الشخصية", "التواصل والإقامة", "المراجعة والإقرار"];
+const SOCIAL_STEP_TITLES = ["تأكيد بياناتك", "البيانات الشخصية", "التواصل والإقامة", "المراجعة والإقرار"];
+
+const DEMO_VALUES = {
+  name: "سارة عبد الله العتيبي", email: "sara.alotaibi@example.com", password1: "ribaat2026",
+  password2: "ribaat2026", gender: "f", date_of_birth: "1996-04-12", nationality: "kw",
+  phone_country_code: "+965", phone: "55123456", country: "kw", city: "حولي",
+};
+
+const ERROR_DEMOS = {
+  login: { password1: "البريد الإلكتروني أو كلمة المرور غير صحيحة. تحقق من البيانات وحاول مرة أخرى." },
+  signup0: { email: "هذا البريد الإلكتروني مسجل بالفعل. يمكنك تسجيل الدخول بدلاً من ذلك.", password2: "كلمتا المرور غير متطابقتين." },
+  signup2: { phone: "أدخل رقم الهاتف المحلي بدون رمز الدولة (8 أرقام على الأقل)." },
+  signup3: { terms: "يلزم الإقرار بالشروط وسياسة الخصوصية قبل إتمام التسجيل." },
+  forgot: { email: "لا يوجد حساب مسجل بهذا البريد الإلكتروني." },
+  reset: { password2: "كلمتا المرور غير متطابقتين." },
+};
+
+class Component extends DCLogic {
+  state = {
+    screen: null, path: null, step: null,
+    values: {}, errors: {}, terms: null,
+    visible: {}, dirty: false, submitting: false,
+    panel: null, resumeDismissed: false,
+    resendLeft: 0, resent: false,
+  };
+
+  componentWillUnmount() { clearInterval(this._resendTimer); }
+
+  startResend() {
+    if (this.state.resendLeft > 0) return;
+    clearInterval(this._resendTimer);
+    this.setState({ resendLeft: 60, resent: true, panel: "signup-done" });
+    this._resendTimer = setInterval(() => {
+      this.setState((st) => {
+        const n = (st.resendLeft || 0) - 1;
+        if (n <= 0) clearInterval(this._resendTimer);
+        return { resendLeft: Math.max(0, n) };
+      });
+    }, 1000);
+  }
+
+  get screen() { return this.state.screen || this.props.screen || "login"; }
+  get path() { return this.state.path || this.props.signupPath || "email"; }
+  get propStep() { return Number(this.props.signupStep) || 0; }
+  get step() { return this.state.step === null ? this.propStep : this.state.step; }
+  get demo() { return this.state.dirty ? "idle" : (this.props.demoState || "idle"); }
+
+  val(key) {
+    if (key in this.state.values) return this.state.values[key];
+    if (!this.state.dirty && (this.demo === "error" || this.demo === "loading" || this.props.prefill)) return DEMO_VALUES[key] || "";
+    return "";
+  }
+
+  err(key) {
+    if (this.state.errors[key] !== undefined) return this.state.errors[key];
+    if (this.demo !== "error") return null;
+    const s = this.screen;
+    const bag = s === "signup" ? ERROR_DEMOS["signup" + this.step] : ERROR_DEMOS[s];
+    return (bag && bag[key]) || null;
+  }
+
+  set(key, v) {
+    this.setState((st) => ({ dirty: true, values: Object.assign({}, st.values, { [key]: v }), errors: Object.assign({}, st.errors, { [key]: undefined }) }));
+  }
+
+  go(screen, extra) {
+    this.setState(Object.assign({ screen: screen, errors: {}, dirty: true, panel: null, submitting: false }, extra || {}));
+  }
+
+  field(key, label, opts) {
+    const o = opts || {};
+    const error = this.err(key);
+    const isPassword = o.type === "password";
+    const isToggle = o.type === "toggle";
+    const isDate = o.type === "date";
+    const isPhone = o.type === "phone";
+    const visible = !!this.state.visible[key];
+    const value = this.val(key) || o.fallback || "";
+    return {
+      key: key, label: label,
+      flex: o.flex || "1 1 100%",
+      dir: o.dir || "rtl",
+      lang: o.lang || "ar",
+      isSelect: o.type === "select",
+      isToggle: isToggle,
+      isDate: isDate,
+      isPhone: isPhone,
+      isInput: o.type !== "select" && !isToggle && !isDate && !isPhone,
+      dateParts: isDate ? this.dateParts(key, value) : [],
+      iso: isPhone ? this.phoneCountry().iso : "",
+      isoLower: isPhone ? this.phoneCountry().iso.toLowerCase() : "",
+      dial: isPhone ? this.phoneCountry().dial : "",
+      display: isPhone ? this.formatPhone(value) : value,
+      menuOpen: isPhone && !!this.state.phoneMenu,
+      onToggleMenu: () => this.setState((st) => ({ phoneMenu: !st.phoneMenu })),
+      countryItems: isPhone ? PHONE_COUNTRIES.map((c) => ({
+        iso: c.iso, isoLower: c.iso.toLowerCase(), name: c.name, dial: c.dial,
+        bg: c.dial === this.phoneCountry().dial ? "var(--surface-sunken)" : "transparent",
+        onPick: () => { this.set("phone_country_code", c.dial); this.setState({ phoneMenu: false }); },
+      })) : [],
+      toggleOptions: isToggle ? (o.options || []).map((op) => ({
+        label: op.label,
+        selected: value === op.value,
+        onPick: () => this.set(key, op.value),
+        bg: value === op.value ? "var(--surface-brand)" : (error ? "var(--state-danger-bg)" : "var(--surface-card)"),
+        fg: value === op.value ? "var(--text-on-brand)" : "var(--text-secondary)",
+        border: value === op.value ? "var(--surface-brand)" : (error ? "var(--state-danger-fg)" : "var(--border-default)"),
+      })) : [],
+      inputType: isPassword ? (visible ? "text" : "password") : (o.type || "text"),
+      placeholder: o.placeholder || "",
+      options: o.options || [],
+      optionEls: [{ value: "", label: o.placeholder || "اختر" }].concat(o.options || []).map((op) =>
+        React.createElement("option", { key: op.value, value: op.value }, op.label)),
+      value: value,
+      onChange: isPhone
+        ? (e) => this.set(key, String(e.target.value).replace(/\D/g, "").slice(0, 12))
+        : (e) => this.set(key, e.target.value),
+      error: error,
+      hint: error ? null : (o.hint || null),
+      note: o.note || null,
+      linkLabel: o.linkLabel || null,
+      onLink: o.onLink || null,
+      hasToggle: isPassword,
+      isVisible: isPassword && visible,
+      isHidden: isPassword && !visible,
+      onToggle: () => this.setState((st) => ({ visible: Object.assign({}, st.visible, { [key]: !st.visible[key] }) })),
+      padding: isPassword ? "10px 46px 10px 14px" : "10px 14px",
+      borderColor: error ? "var(--state-danger-fg)" : "var(--border-default)",
+      background: error ? "var(--state-danger-bg)" : "var(--surface-card)",
+      showStrength: !!o.strength && !error,
+      strengthSegments: this.strength(value).segments,
+      strengthLabel: this.strength(value).label,
+    };
+  }
+
+  phoneCountry() {
+    const dial = (this.state.values.phone_country_code !== undefined ? this.state.values.phone_country_code : this.val("phone_country_code")) || "+965";
+    return PHONE_COUNTRIES.find((c) => c.dial === dial) || PHONE_COUNTRIES[0];
+  }
+
+  formatPhone(v) {
+    const digits = String(v || "").replace(/\D/g, "");
+    const mask = this.phoneCountry().mask;
+    const out = [];
+    let i = 0;
+    for (let g = 0; g < mask.length && i < digits.length; g++) {
+      out.push(digits.slice(i, i + mask[g]));
+      i += mask[g];
+    }
+    if (i < digits.length) out.push(digits.slice(i));
+    return out.join(" ");
+  }
+
+  dateParts(key, value) {
+    const parts = String(value || "").split("-");
+    const y = parts[0] || "", m = parts[1] || "", d = parts[2] || "";
+    const pad = (n) => (n < 10 ? "0" + n : String(n));
+    const setPart = (which) => (e) => {
+      const v = e.target.value;
+      const next = { y: y, m: m, d: d };
+      next[which] = v;
+      this.set(key, next.y || next.m || next.d ? (next.y || "____") + "-" + (next.m || "__") + "-" + (next.d || "__") : "");
+    };
+    const opts = (list, placeholder) => [React.createElement("option", { key: "_", value: "" }, placeholder)]
+      .concat(list.map((op) => React.createElement("option", { key: op.value, value: op.value }, op.label)));
+    const days = [];
+    for (let i = 1; i <= 31; i++) days.push({ value: pad(i), label: String(i) });
+    const months = MONTHS.map((label, i) => ({ value: pad(i + 1), label: label }));
+    const years = [];
+    const thisYear = new Date().getFullYear();
+    for (let i = thisYear - 10; i >= thisYear - 90; i--) years.push({ value: String(i), label: String(i) });
+    return [
+      { key: "d", value: d, aria: "اليوم", flex: "0 0 84px", onChange: setPart("d"), optionEls: opts(days, "اليوم") },
+      { key: "m", value: m, aria: "الشهر", flex: "1 1 auto", onChange: setPart("m"), optionEls: opts(months, "الشهر") },
+      { key: "y", value: y, aria: "السنة", flex: "0 0 104px", onChange: setPart("y"), optionEls: opts(years, "السنة") },
+    ];
+  }
+
+  strength(v) {
+    const s = String(v || "");
+    let score = 0;
+    if (s.length >= 8) score++;
+    if (/[A-Za-z]/.test(s) && /[0-9]/.test(s)) score++;
+    if (s.length >= 12 || /[^A-Za-z0-9]/.test(s)) score++;
+    const labels = ["", "ضعيفة", "متوسطة", "قوية"];
+    const colors = ["var(--state-danger-fg)", "var(--state-warning-fg)", "var(--state-success-fg)"];
+    return {
+      label: labels[score] || "—",
+      segments: [0, 1, 2].map((i) => ({ bg: i < score ? colors[score - 1] : "var(--border-subtle)" })),
+    };
+  }
+
+  submit(next) {
+    if (this.state.submitting) return;
+    this.setState({ submitting: true, dirty: true });
+    setTimeout(() => { this.setState({ submitting: false }); if (next) next(); }, 1100);
+  }
+
+  validateStep() {
+    const e = {};
+    const step = this.step, social = this.path === "social";
+    if (step === 0) {
+      if (!this.val("name").trim()) e.name = "أدخل الاسم الكامل كما تريده في الشهادة.";
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(this.val("email"))) e.email = "أدخل بريدًا إلكترونيًا صحيحًا.";
+      if (!social) {
+        if (this.val("password1").length < 8) e.password1 = "يجب ألا تقل كلمة المرور عن 8 أحرف.";
+        else if (this.val("password2") !== this.val("password1")) e.password2 = "كلمتا المرور غير متطابقتين.";
+      }
+    } else if (step === 1) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(this.val("date_of_birth"))) e.date_of_birth = "اختر اليوم والشهر والسنة.";
+      if (!this.val("nationality")) e.nationality = "اختر الجنسية.";
+    } else if (step === 2) {
+      if (String(this.val("phone")).replace(/\D/g, "").length < 8) e.phone = "أدخل رقم الهاتف المحلي بدون رمز الدولة (8 أرقام على الأقل).";
+      if (!this.val("country")) e.country = "اختر دولة الإقامة.";
+      if (!this.val("city").trim()) e.city = "أدخل اسم المدينة.";
+    } else if (step === 3) {
+      if (!this.termsChecked()) e.terms = "يلزم الإقرار بالشروط وسياسة الخصوصية قبل إتمام التسجيل.";
+    }
+    const keys = Object.keys(e);
+    this.setState({ errors: e, dirty: true });
+    return keys.length === 0;
+  }
+
+  termsChecked() {
+    if (this.state.terms !== null) return this.state.terms;
+    return false;
+  }
+
+  currentFields() {
+    const s = this.screen, step = this.step, social = this.path === "social";
+    if (s === "login") {
+      return [
+        this.field("email", "البريد الإلكتروني أو اسم المستخدم", { type: "email", placeholder: "name@example.com" }),
+        this.field("password1", "كلمة المرور", { type: "password", placeholder: "••••••••", linkLabel: "نسيت كلمة المرور؟", onLink: (e) => { e.preventDefault(); this.go("forgot"); } }),
+      ];
+    }
+    if (s === "forgot") {
+      return [this.field("email", "البريد الإلكتروني المسجل", { type: "email", placeholder: "name@example.com" })];
+    }
+    if (s === "reset") {
+      return [
+        this.field("password1", "كلمة المرور الجديدة", { type: "password", placeholder: "8 أحرف على الأقل", strength: true, hint: "استخدم 8 أحرف على الأقل، ويفضّل مزج الحروف والأرقام." }),
+        this.field("password2", "تأكيد كلمة المرور الجديدة", { type: "password", placeholder: "أعد إدخال كلمة المرور" }),
+      ];
+    }
+    if (step === 0) {
+      const provider = this.props.provider || "Google";
+      if (social) {
+        return [
+          this.field("name", "الاسم الكامل", { placeholder: "الاسم كما سيظهر في الشهادة", note: "تم الحصول عليه من " + provider + " — يمكنك تعديله" }),
+          this.field("email", "البريد الإلكتروني", { type: "email", note: "تم الحصول عليه من " + provider }),
+        ];
+      }
+      return [
+        this.field("name", "الاسم الكامل", { placeholder: "الاسم كما سيظهر في الشهادة" }),
+        this.field("email", "البريد الإلكتروني", { type: "email", placeholder: "name@example.com" }),
+        this.field("password1", "كلمة المرور", { type: "password", placeholder: "8 أحرف على الأقل", strength: true }),
+        this.field("password2", "تأكيد كلمة المرور", { type: "password", placeholder: "أعد إدخال كلمة المرور" }),
+      ];
+    }
+    if (step === 1) {
+      return [
+        this.field("gender", "الجنس", { type: "toggle", options: GENDERS, fallback: "m", hint: "تُنظَّم بعض الحلقات والاختبارات على هذا الأساس." }),
+        this.field("date_of_birth", "تاريخ الميلاد", { type: "date" }),
+        this.field("nationality", "الجنسية", { type: "select", placeholder: "اختر الجنسية", options: NATIONALITIES }),
+      ];
+    }
+    if (step === 2) {
+      return [
+        this.field("phone", "رقم الهاتف", { type: "phone", placeholder: "5512 3456" }),
+        this.field("country", "دولة الإقامة", { type: "select", placeholder: "اختر الدولة", options: COUNTRIES }),
+        this.field("city", "المدينة", { placeholder: "اسم المدينة", note: this.props.geoCity ? "تم تحديدها تلقائيًا حسب موقعك — يمكنك تعديلها" : null }),
+      ];
+    }
+    return [];
+  }
+
+  formatDate(v) {
+    const p = String(v || "").split("-");
+    if (p.length !== 3 || p[0].indexOf("_") >= 0 || p[1].indexOf("_") >= 0 || p[2].indexOf("_") >= 0) return "—";
+    return Number(p[2]) + " " + (MONTHS[Number(p[1]) - 1] || "") + " " + p[0];
+  }
+
+  reviewGroups() {
+    const label = (list, v) => { const f = list.find((o) => o.value === v); return f ? f.label : "—"; };
+    const jump = (n) => (e) => { e.preventDefault(); this.setState({ step: n, dirty: true, errors: {} }); };
+    const social = this.path === "social";
+    const acct = [
+      { label: "الاسم", value: this.val("name") || "—" },
+      { label: "البريد الإلكتروني", value: this.val("email") || "—" },
+    ];
+    acct.push(social
+      ? { label: "طريقة الدخول", value: (this.props.provider || "Google") }
+      : { label: "كلمة المرور", value: "••••••••" });
+    return [
+      { title: social ? "بيانات الحساب (من " + (this.props.provider || "Google") + ")" : "بيانات الحساب", rows: acct, onEdit: jump(0) },
+      { title: "البيانات الشخصية", rows: [
+        { label: "الجنس", value: label(GENDERS, this.val("gender") || "m") },
+        { label: "تاريخ الميلاد", value: this.formatDate(this.val("date_of_birth")) },
+        { label: "الجنسية", value: label(NATIONALITIES, this.val("nationality")) },
+      ], onEdit: jump(1) },
+      { title: "التواصل والإقامة", rows: [
+        { label: "رقم الهاتف", dir: "ltr", value: this.val("phone") ? this.phoneCountry().dial + " " + this.formatPhone(this.val("phone")) : "—" },
+        { label: "دولة الإقامة", value: label(COUNTRIES, this.val("country")) },
+        { label: "المدينة", value: this.val("city") || "—" },
+      ], onEdit: jump(2) },
+    ];
+  }
+
+  spinner() {
+    return React.createElement("svg", { width: 18, height: 18, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2.2, style: { animation: "rb-spin 0.8s linear infinite" } },
+      React.createElement("path", { d: "M21 12a9 9 0 1 1-9-9", strokeLinecap: "round" }));
+  }
+
+  icon(paths) {
+    return React.createElement("svg", { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round" },
+      paths.map((d, i) => React.createElement("path", { key: i, d: d })));
+  }
+
+  renderVals() {
+    /* أي تغيير في لوحة التعديل يُلغي ما تركه التفاعل السابق من حالة، وإلا بقيت الشاشة على آخر ما نقر عليه المستخدم */
+    const seed = [this.props.screen, this.props.signupPath, this.props.signupStep, this.props.demoState, this.props.prefill, this.props.provider, this.props.accountEmail].join("|");
+    if (this._seed !== undefined && this._seed !== seed) {
+      this.state.screen = null;
+      this.state.path = null;
+      this.state.step = null;
+      this.state.panel = null;
+      this.state.dirty = false;
+      this.state.errors = {};
+      this.state.values = {};
+    }
+    this._seed = seed;
+
+    const vp = VIEWPORTS[this.props.viewport] || VIEWPORTS.desktop;
+    const scheme = this.props.colorScheme === "dark" ? "dark" : "light";
+    const s = this.screen, step = this.step, social = this.path === "social";
+    const demo = this.demo;
+    const isBusy = this.state.submitting || demo === "loading";
+
+    const panel = this.state.panel || (demo === "sent" && s === "forgot" ? "sent" : null) || (demo === "expired" && s === "reset" ? "expired" : null) || (demo === "success" ? (s === "reset" ? "reset-done" : "signup-done") : null);
+
+    const isSignup = s === "signup";
+    const lastStep = step === 3;
+
+    let heading = "تسجيل الدخول", sub = "أهلاً بعودتك إلى رباط الحنابلة";
+    if (isSignup) { heading = "إنشاء حساب جديد"; sub = social ? "أكمل بياناتك للانضمام إلى الدراسة" : "خطوات قصيرة تفصلك عن بدء الدراسة"; }
+    if (s === "forgot") { heading = "نسيت كلمة المرور"; sub = "أدخل بريدك الإلكتروني المسجل وسنرسل إليك رابطًا لتعيين كلمة مرور جديدة."; }
+    if (s === "reset") { heading = "تعيين كلمة مرور جديدة"; sub = "اختر كلمة مرور جديدة لحسابك " + (this.props.accountEmail || "sara.alotaibi@example.com"); }
+    if (panel) { sub = ""; }
+    const isConfirm = panel === "signup-done";
+    if (isConfirm) {
+      heading = "تم إنشاء حسابك";
+      sub = "بقيت خطوة واحدة: تأكيد بريدك الإلكتروني لتفعيل الحساب.";
+    }
+
+    const panels = {
+      "sent": {
+        title: "تحقق من بريدك الإلكتروني",
+        text: "أرسلنا رابط تعيين كلمة المرور إلى " + (this.val("email") || "sara.alotaibi@example.com") + ".",
+        subText: "الرابط صالح لمدة 60 دقيقة. إن لم يصلك خلال دقائق فتحقق من مجلد الرسائل غير المرغوب فيها.",
+        action: "إعادة إرسال الرابط", variant: "outline", iconBg: "var(--state-success-bg)", iconFg: "var(--state-success-fg)",
+        icon: this.icon(["M4 6h16v12H4z", "M4 7l8 6 8-6"]),
+        onAction: () => this.setState({ panel: null, dirty: true }),
+      },
+      "expired": {
+        title: "انتهت صلاحية الرابط",
+        text: "رابط تعيين كلمة المرور صالح لمدة 60 دقيقة من وقت إرساله، وقد انتهت صلاحيته.",
+        subText: "يمكنك طلب رابط جديد، وسيصلك على البريد نفسه.",
+        action: "طلب رابط جديد", variant: "primary", iconBg: "var(--state-warning-bg)", iconFg: "var(--state-warning-fg)",
+        icon: this.icon(["M12 8v5", "M12 16.5v.01", "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"]),
+        onAction: () => this.go("forgot"),
+      },
+      "reset-done": {
+        title: "تم تحديث كلمة المرور",
+        text: "يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.",
+        subText: "", action: "تسجيل الدخول", variant: "primary", iconBg: "var(--state-success-bg)", iconFg: "var(--state-success-fg)",
+        icon: this.icon(["M20 6L9 17l-5-5"]),
+        onAction: () => this.go("login"),
+      },
+      "signup-done": {
+        title: "تم إنشاء حسابك",
+        text: "أرسلنا رسالة تأكيد إلى " + (this.val("email") || "sara.alotaibi@example.com") + " لتفعيل الحساب.",
+        subText: "بعد التفعيل يمكنك التسجيل في الدورات المتاحة لمستواك.",
+        action: "الانتقال إلى الدورات", variant: "primary", iconBg: "var(--state-success-bg)", iconFg: "var(--state-success-fg)",
+        icon: this.icon(["M20 6L9 17l-5-5"]),
+        onAction: () => {},
+      },
+    };
+    const p = panel ? panels[panel] : null;
+
+    let primaryLabel = "تسجيل الدخول";
+    /* الدخول الناجح ينقل الطالب إلى لوحة التحكم */
+    let onPrimary = () => this.submit(() => { window.location.href = "StudentDashboard.dc.html"; });
+    if (isSignup) {
+      primaryLabel = lastStep ? "تسجيل" : "التالي";
+      onPrimary = () => {
+        if (!this.validateStep()) return;
+        if (lastStep) this.submit(() => this.setState({ panel: "signup-done" }));
+        else this.setState((st) => ({ step: (st.step === null ? this.propStep : st.step) + 1, errors: {}, dirty: true }));
+      };
+    } else if (s === "forgot") {
+      primaryLabel = "إرسال رابط إعادة التعيين";
+      onPrimary = () => { if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(this.val("email"))) { this.setState({ errors: { email: "أدخل بريدًا إلكترونيًا صحيحًا." }, dirty: true }); return; } this.submit(() => this.setState({ panel: "sent" })); };
+    } else if (s === "reset") {
+      primaryLabel = "حفظ كلمة المرور";
+      onPrimary = () => {
+        const e = {};
+        if (this.val("password1").length < 8) e.password1 = "يجب ألا تقل كلمة المرور عن 8 أحرف.";
+        else if (this.val("password2") !== this.val("password1")) e.password2 = "كلمتا المرور غير متطابقتين.";
+        if (Object.keys(e).length) { this.setState({ errors: e, dirty: true }); return; }
+        this.submit(() => this.setState({ panel: "reset-done" }));
+      };
+    }
+
+    const stepTitles = social ? SOCIAL_STEP_TITLES : STEP_TITLES;
+    const showResume = !!this.props.showResume && isSignup && !this.state.resumeDismissed;
+
+    return {
+      themeAttr: scheme,
+      screenLabel: (isConfirm ? "Signup confirmation" : (isSignup ? "Signup " + (social ? "social" : "email") + " step " + (step + 1) : s)) + " · " + (this.props.viewport || "desktop") + " · " + scheme,
+      isSplit: vp.split, notSplit: !vp.split,
+      gridCols: vp.gridCols, formPadding: vp.padding, formMaxWidth: vp.maxWidth, headingSize: vp.heading,
+      markFilter: scheme === "dark" ? "brightness(0) invert(0.92)" : "none",
+
+      heading: heading, subheading: sub,
+
+      showResume: showResume,
+      resumeStep: stepTitles[Math.min(Number(this.props.resumeStep) || 1, 3)],
+      onResume: (e) => { e.preventDefault(); this.setState({ step: Number(this.props.resumeStep) || 1, resumeDismissed: true, dirty: false }); },
+      onRestart: (e) => { e.preventDefault(); this.setState({ step: 0, values: {}, errors: {}, resumeDismissed: true, dirty: true }); },
+
+      showStepper: isSignup && !panel,
+      stepTitle: stepTitles[step],
+      stepCounter: "الخطوة " + (step + 1) + " من 4",
+      stepSegments: [0, 1, 2, 3].map((i) => ({ bg: i <= step ? "var(--surface-brand)" : "var(--border-subtle)" })),
+
+      showSocial: !panel && (s === "login" || (isSignup && step === 0 && !social)),
+      socialVerb: s === "login" ? "تسجيل الدخول" : "المتابعة",
+      socialNote: s === "login" ? "سجّل الدخول بحسابك في أحد هذه المنصات" : "أنشئ حسابك عبر أحد هذه المنصات، ونكمل باقي البيانات معًا",
+      onSocial: (e) => {
+        const provider = e.currentTarget.getAttribute("data-provider");
+        if (s === "login") { this.submit(null); return; }
+        this.setState({ path: "social", step: 0, dirty: true, errors: {}, values: Object.assign({}, this.state.values, { name: DEMO_VALUES.name, email: DEMO_VALUES.email }), providerName: provider });
+      },
+
+      showProviderChip: isSignup && social && step === 0 && !panel,
+      providerChipText: "تم التحقق من هويتك عبر " + (this.props.provider || "Google") + "، فلا حاجة إلى كلمة مرور.",
+
+      showConfirm: isConfirm,
+      confirmEmail: this.val("email") || this.props.accountEmail || "sara.alotaibi@example.com",
+      onEditEmail: (e) => { e.preventDefault(); this.setState({ panel: null, screen: "signup", step: 0, path: "email", errors: {}, dirty: true }); },
+      confirmSteps: [
+        { n: "1", text: "افتح صندوق بريدك الإلكتروني على الجهاز نفسه." },
+        { n: "2", text: "اضغط على رابط «تأكيد البريد الإلكتروني» في الرسالة الواردة من رباط الحنابلة." },
+        { n: "3", text: "عُد إلى لوحتك لتبدأ التسجيل في الدورات المتاحة لمستواك." },
+      ],
+      resendLeft: this.state.resendLeft,
+      resendDisabled: this.state.resendLeft > 0,
+      resendCursor: this.state.resendLeft > 0 ? "default" : "pointer",
+      resendOpacity: this.state.resendLeft > 0 ? 0.55 : 1,
+      resendLabel: this.state.resendLeft > 0 ? "إعادة الإرسال بعد " + this.state.resendLeft + " ثانية" : "إعادة إرسال رسالة التأكيد",
+      resentNote: this.state.resent ? "أُعيد إرسال رسالة التأكيد إلى بريدك." : null,
+      onResend: () => this.startResend(),
+      onConfirmLogin: () => { window.location.href = "StudentDashboard.dc.html"; },
+
+      showPanel: !!p && !isConfirm,
+      panelTitle: p ? p.title : "",
+      panelText: p ? p.text : "",
+      panelSubText: p ? p.subText : "",
+      panelIcon: p ? p.icon : null,
+      panelIconBg: p ? p.iconBg : "transparent",
+      panelIconFg: p ? p.iconFg : "inherit",
+      panelActionLabel: p ? p.action : "",
+      panelActionVariant: p ? p.variant : "primary",
+      onPanelAction: p ? p.onAction : null,
+
+      showForm: !panel,
+      fields: panel ? [] : this.currentFields(),
+
+      showReview: isSignup && lastStep && !panel,
+      reviewGroups: isSignup && lastStep ? this.reviewGroups() : [],
+
+      showTerms: isSignup && lastStep && !panel,
+      termsChecked: this.termsChecked(),
+      termsBorder: this.termsChecked() ? "var(--surface-brand)" : (this.err("terms") ? "var(--state-danger-fg)" : "var(--border-default)"),
+      termsBg: this.termsChecked() ? "var(--surface-brand)" : (this.err("terms") ? "var(--state-danger-bg)" : "var(--surface-card)"),
+      termsError: this.err("terms"),
+      onTermsToggle: () => this.setState((st) => ({ terms: !this.termsChecked(), dirty: true, errors: Object.assign({}, st.errors, { terms: undefined }) })),
+
+      showBack: isSignup && step > 0 && !panel,
+      onBack: () => this.setState((st) => ({ step: Math.max(0, (st.step === null ? this.propStep : st.step) - 1), errors: {}, dirty: true })),
+
+      isBusy: isBusy,
+      primaryLabel: isBusy ? "\u200B" : primaryLabel,
+      primaryIcon: isBusy ? this.spinner() : null,
+      onPrimary: onPrimary,
+
+      altText: panel && panel !== "sent" ? null : (s === "login" ? "ليس لديك حساب؟" : (isSignup ? "لديك حساب بالفعل؟" : "تذكرت كلمة المرور؟")),
+      altLinkLabel: s === "login" ? "سجل الآن" : (isSignup ? "تسجيل الدخول" : "العودة إلى تسجيل الدخول"),
+      onAlt: (e) => { e.preventDefault(); this.go(s === "login" ? "signup" : "login", s === "login" ? { path: "email", step: 0 } : {}); },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

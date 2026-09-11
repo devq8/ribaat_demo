@@ -1,0 +1,15 @@
+{% comment %}Bulletproof CTA. Params: url, label. --surface-brand #607247, --radius-md 10px{% endcomment %}<table role="presentation" dir="rtl" cellpadding="0" cellspacing="0" border="0" align="center" style="border-collapse:separate;margin:0 auto;">
+  <tr>
+    <td class="e-btn" align="center" bgcolor="#607247" style="background-color:#607247;border-radius:10px;">
+      <!--[if mso]>
+      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ url }}" style="height:50px;v-text-anchor:middle;width:290px;" arcsize="20%" stroke="f" fillcolor="#607247">
+        <w:anchorlock/>
+        <center style="color:#FFFEFA;font-family:Tahoma,Arial,sans-serif;font-size:16px;font-weight:bold;">{{ label }}</center>
+      </v:roundrect>
+      <![endif]-->
+      <!--[if !mso]><!-- -->
+      <a href="{{ url }}" style="display:block;min-width:216px;padding:15px 34px;direction:rtl;text-align:center;font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;font-size:16px;font-weight:600;line-height:20px;mso-line-height-rule:exactly;color:#FFFEFA;text-decoration:none;border-radius:10px;">{{ label }}</a>
+      <!--<![endif]-->
+    </td>
+  </tr>
+</table>

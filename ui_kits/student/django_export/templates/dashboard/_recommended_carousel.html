@@ -1,0 +1,45 @@
+{# templates/dashboard/_recommended_carousel.html
+   "ماذا تدرس بعد ذلك؟" — horizontally-scrolling row of courses the student
+   hasn't enrolled in. Prev/next buttons are progressive enhancement (scroll
+   the track by one card width); the row is natively swipeable/scrollable
+   without JS on touch devices. #}
+<section>
+  <div class="rb-rec-head">
+    <h2 class="rb-h2" style="margin:0;">ماذا تدرس بعد ذلك؟</h2>
+    <div class="rb-rec-nav">
+      <button type="button" class="rb-rec-nav-btn" id="rb-rec-prev" aria-label="السابق"><i data-lucide="chevron-right"></i></button>
+      <button type="button" class="rb-rec-nav-btn" id="rb-rec-next" aria-label="التالي"><i data-lucide="chevron-left"></i></button>
+    </div>
+  </div>
+  <p class="rb-rec-sub">دورات مقترحة لم تسجل بها بعد.</p>
+
+  <div class="rb-carousel-track" id="rb-rec-track">
+    {% for course in recommended_courses %}
+      <div class="rb-carousel-card">
+        <div class="rb-card">
+          <div class="rb-card-thumb">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            <span class="rb-badge rb-badge--accent">{{ course.category }}</span>
+          </div>
+          <div class="rb-card-body">
+            <span class="rb-card-title">{{ course.title }}</span>
+            <p class="rb-card-instructor">د. {{ course.instructor }}</p>
+            <p class="rb-card-meta">{{ course.meta_line }}</p>
+            {% if course.hint %}<p class="rb-card-meta">{{ course.hint }}</p>{% endif %}
+            <div class="rb-card-cta">
+              <a href="{% url 'course_detail' course.slug %}" class="rb-btn rb-btn--full rb-btn--primary">سجل الآن</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+  (function () {
+    var track = document.getElementById('rb-rec-track');
+    document.getElementById('rb-rec-prev').addEventListener('click', function () { track.scrollBy({ left: 320, behavior: 'smooth' }); });
+    document.getElementById('rb-rec-next').addEventListener('click', function () { track.scrollBy({ left: -320, behavior: 'smooth' }); });
+  })();
+</script>
