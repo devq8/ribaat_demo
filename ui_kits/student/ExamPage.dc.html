@@ -569,7 +569,7 @@
   
   &quot;screen&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;start&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;start&quot;, &quot;in-progress&quot;, &quot;confirm&quot;, &quot;submitted&quot;, &quot;time-up&quot;], &quot;section&quot;: &quot;Screen&quot;},
   &quot;colorScheme&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;light&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;light&quot;, &quot;dark&quot;], &quot;section&quot;: &quot;Theme&quot;},
-  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;desktop&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;section&quot;: &quot;Breakpoint&quot;},
+  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;auto&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;auto&quot;, &quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;section&quot;: &quot;Breakpoint&quot;},
   &quot;navigatorStyle&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;list&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;list&quot;, &quot;chips&quot;, &quot;grid&quot;], &quot;section&quot;: &quot;Question navigator&quot;},
   &quot;navigatorTypeLabels&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Question navigator&quot;},
   &quot;legendPlacement&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;hidden&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;outside&quot;, &quot;inside&quot;, &quot;hidden&quot;], &quot;section&quot;: &quot;Question navigator&quot;},
@@ -709,8 +709,34 @@ class Component extends DCLogic {
     return base + look + (disabled ? " opacity: 0.4; cursor: not-allowed;" : " cursor: pointer;");
   }
 
+  _calcVp() {
+    const w = typeof window !== "undefined" ? window.innerWidth : 1280;
+    return w < 600 ? "mobile" : w < 1024 ? "tablet" : "desktop";
+  }
+
+  _liveVp() {
+    if (!this._vpBound && typeof window !== "undefined") {
+      this._vpBound = true;
+      this._onVpResize = () => {
+        const n = this._calcVp();
+        if (n !== this.state.liveViewport) this.setState({ liveViewport: n });
+      };
+      window.addEventListener("resize", this._onVpResize);
+    }
+    return this.state.liveViewport || this._calcVp();
+  }
+
+  /* "auto" (the default) follows the real browser width, so the exported HTML
+     reflows on phones and tablets. An explicit desktop/tablet/mobile value
+     still pins the layout for design frames. */
+  _resolveVp() {
+    const explicit = this.props.viewport || "auto";
+    this._vpIsAuto = explicit === "auto";
+    return this._vpIsAuto ? this._liveVp() : explicit;
+  }
+
   renderVals() {
-    const viewport = this.props.viewport || "desktop";
+    const viewport = this._resolveVp();
     const colorScheme = this.props.colorScheme || "light";
     const timed = this.props.timed !== false;
     const allowFlagging = this.props.allowFlagging !== false;

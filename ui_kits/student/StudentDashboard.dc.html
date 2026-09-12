@@ -51,13 +51,20 @@
 
   <header dir="rtl" style="display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(24px, 6vw, 120px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans);">
     <div style="display: flex; align-items: center; gap: 36px;">
+        <sc-if value="{{ showHamburger }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ toggleMobileNav }}" aria-label="القائمة" style="border: none; background: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin-inline-start: -12px;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width: 22px; height: 22px;"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path></svg>
+          </button>
+        </sc-if>
       <img src="../../assets/logos/ribaat-mark-2026.png" alt="رباط الحنابلة" style="height: 30px; filter: {{ logoFilter }}; width: 108px">
-      <nav style="display: flex; gap: 26px;">
+      <sc-if value="{{ showDesktopNav }}" hint-placeholder-val="{{ true }}">
+        <nav style="display: flex; gap: 26px;">
         <a href="StudentDashboard.dc.html" style="font-size: var(--text-base); color: var(--text-brand); font-weight: var(--weight-semibold);">لوحة التحكم</a>
         <a href="CourseCatalogue.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الدورات</a>
         <a href="StudentPaths.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">البرامج الدراسية</a>
         <a href="StudentCertificates.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الشهادات</a>
       </nav>
+        </sc-if>
     </div>
     <div style="position: relative;">
       <button onClick="{{ toggleAccountMenu }}" aria-label="الحساب" style="background: none; border: none; padding: 0; cursor: pointer; border-radius: 50%; display: flex;">
@@ -97,6 +104,20 @@
     </div>
   </header>
 
+  <sc-if value="{{ mobileNavOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMobileNav }}" style="position: fixed; inset: 0; background: var(--surface-overlay); z-index: 39;"></div>
+    <nav dir="rtl" style="position: fixed; top: 0; bottom: 0; inset-inline-start: 0; width: 260px; max-width: 80vw; background: var(--surface-card); z-index: 40; padding: 20px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow-lg); font-family: var(--font-sans);">
+      <div style="display: flex; align-items: center; justify-content: flex-end; margin-bottom: 10px;">
+        <button onClick="{{ closeMobileNav }}" aria-label="إغلاق" style="border: none; background: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px;"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width: 20px; height: 20px;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+      </div>
+      <a href="StudentDashboard.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-brand); font-weight: var(--weight-semibold); background: var(--ribaat-green-100);">لوحة التحكم</a>
+      <a href="CourseCatalogue.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">الدورات</a>
+      <a href="StudentPaths.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">البرامج الدراسية</a>
+      <a href="StudentCertificates.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">الشهادات</a>
+    </nav>
+  </sc-if>
+
+
   <main style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: {{ mainPadding }}; transition: max-width var(--duration-normal) var(--ease-standard);">
 
     <!-- 1. Welcome header -->
@@ -124,8 +145,8 @@
         </button>
         <div style="display: flex; flex-direction: column; gap: 14px;">
           <sc-for list="{{ announcements }}" as="item" hint-placeholder-count="2">
-            <div style="display: flex; align-items: baseline; gap: 8px;">
-              <div style="display: flex; align-items: baseline; gap: 6px; flex: none; width: 108px;">
+            <div style="display: flex; align-items: {{ annAlign }}; gap: {{ annGap }}; flex-direction: {{ annDirection }};">
+              <div style="display: flex; align-items: baseline; gap: 6px; flex: none; min-width: {{ annDateMin }};">
                 <span style="font-size: var(--text-xs); font-weight: var(--weight-semibold); color: var(--state-warning-fg); white-space: nowrap;">{{ item.day }}</span>
                 <span style="font-size: var(--text-xs); color: var(--state-warning-fg); white-space: nowrap; direction: rtl;">{{ item.date }}</span>
               </div>
@@ -628,7 +649,7 @@
   &quot;hasUpcomingCourses&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Content state&quot;},
   &quot;pathState&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;قيد التقدم&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;بلا مسار&quot;, &quot;قيد التقدم&quot;, &quot;مكتمل&quot;], &quot;section&quot;: &quot;Content state&quot;},
   &quot;colorScheme&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;light&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;light&quot;, &quot;dark&quot;], &quot;section&quot;: &quot;Theme&quot;},
-  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;desktop&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;section&quot;: &quot;Breakpoint&quot;}
+  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;auto&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;auto&quot;, &quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;section&quot;: &quot;Breakpoint&quot;}
 }">
 /* All courses of a level are studied simultaneously — none waits on another, so
    none is ever "locked". Each row carries its own progress and they advance in
@@ -703,10 +724,36 @@ class Component extends DCLogic {
     el.scrollBy({ left: dir * -320, behavior: "smooth" });
   }
 
+  _calcVp() {
+    const w = typeof window !== "undefined" ? window.innerWidth : 1280;
+    return w < 600 ? "mobile" : w < 1024 ? "tablet" : "desktop";
+  }
+
+  _liveVp() {
+    if (!this._vpBound && typeof window !== "undefined") {
+      this._vpBound = true;
+      this._onVpResize = () => {
+        const n = this._calcVp();
+        if (n !== this.state.liveViewport) this.setState({ liveViewport: n });
+      };
+      window.addEventListener("resize", this._onVpResize);
+    }
+    return this.state.liveViewport || this._calcVp();
+  }
+
+  /* "auto" (the default) follows the real browser width, so the exported HTML
+     reflows on phones and tablets. An explicit desktop/tablet/mobile value
+     still pins the layout for design frames. */
+  _resolveVp() {
+    const explicit = this.props.viewport || "auto";
+    this._vpIsAuto = explicit === "auto";
+    return this._vpIsAuto ? this._liveVp() : explicit;
+  }
+
   renderVals() {
     const hasEnrollments = this.props.hasEnrollments ?? true;
     const studentName = this.props.studentName || "ماجد";
-    const viewport = this.props.viewport || "desktop";
+    const viewport = this._resolveVp();
     const colorScheme = this.props.colorScheme || "light";
     const hasAnnouncements = this.props.hasAnnouncements ?? true;
     const pathStateProp = this.props.pathState || "قيد التقدم";
@@ -900,6 +947,12 @@ const examState = this.props.examState ?? ((this.props.hasOpenExam ?? true) ? "�
       termBadgeLabel: termOpen ? "التسجيل مفتوح" : termUpcoming ? "التسجيل لم يُفتح بعد" : "التسجيل مغلق",
       termBorderColor: termOpen ? "var(--border-brand)" : termUpcoming ? "var(--ribaat-brown-300)" : "var(--border-subtle)",
       bannerDirection: isMobile ? "column" : "row",
+      /* The date pair is nowrap; a fixed track squeezed the day name into the
+         date, so it sizes to content and only keeps a min track for alignment. */
+      annDirection: isMobile ? "column" : "row",
+      annAlign: isMobile ? "flex-start" : "baseline",
+      annGap: isMobile ? "2px" : "8px",
+      annDateMin: isMobile ? "0" : "120px",
       bannerAlign: isMobile ? "stretch" : "center",
       bannerGap: isMobile ? "14px" : "20px",
       bannerInfoMin: isMobile ? "0" : viewport === "tablet" ? "200px" : "240px",
@@ -924,6 +977,11 @@ const examState = this.props.examState ?? ((this.props.hasOpenExam ?? true) ? "�
         : "يمكنك تصفح الدورات المتاحة والبدء بأحد المسارات الدراسية عند رغبتك.",
       statsLine,
       themeAttr: colorScheme,
+      showDesktopNav: viewport === "desktop",
+      showHamburger: viewport !== "desktop",
+      mobileNavOpen: !!this.state.mobileNavOpen,
+      toggleMobileNav: () => this.setState((s) => ({ mobileNavOpen: !s.mobileNavOpen })),
+      closeMobileNav: () => this.setState({ mobileNavOpen: false }),
       logoFilter: colorScheme === "dark" ? "brightness(0) invert(1) opacity(0.9)" : "none",
       studentName: "ماجد",
       signOut: () => { window.location.href = "RibaatAuth.dc.html"; },
@@ -931,7 +989,7 @@ const examState = this.props.examState ?? ((this.props.hasOpenExam ?? true) ? "�
       goExam: () => { window.location.href = "ExamPage.dc.html"; },
       goCourseEnrollment: () => { window.location.href = "CourseEnrollment.dc.html"; },
       frameLabel: viewport + " / " + colorScheme,
-      containerMaxWidth: cfg.maxWidth,
+      containerMaxWidth: this._vpIsAuto && viewport !== "desktop" ? "100%" : cfg.maxWidth,
       mainPadding: cfg.padding,
       h1Size: cfg.h1,
       sectionGap: cfg.sectionGap,

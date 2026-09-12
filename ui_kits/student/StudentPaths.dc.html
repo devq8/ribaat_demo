@@ -30,13 +30,20 @@
 
   <header dir="rtl" style="display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(24px, 6vw, 120px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans);">
     <div style="display: flex; align-items: center; gap: 36px;">
+        <sc-if value="{{ showHamburger }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ toggleMobileNav }}" aria-label="القائمة" style="border: none; background: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin-inline-start: -12px;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width: 22px; height: 22px;"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path></svg>
+          </button>
+        </sc-if>
       <img src="../../assets/logos/ribaat-mark-2026.png" alt="رباط الحنابلة" style="height: 30px; filter: {{ logoFilter }}; width: 108px">
-      <nav style="display: flex; gap: 26px;">
+      <sc-if value="{{ showDesktopNav }}" hint-placeholder-val="{{ true }}">
+        <nav style="display: flex; gap: 26px;">
         <a href="StudentDashboard.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">لوحة التحكم</a>
         <a href="CourseCatalogue.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الدورات</a>
         <a href="StudentPaths.dc.html" style="font-size: var(--text-base); color: var(--text-brand); font-weight: var(--weight-semibold);">البرامج الدراسية</a>
         <a href="StudentCertificates.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الشهادات</a>
       </nav>
+        </sc-if>
     </div>
     <div style="position: relative;">
       <button onClick="{{ toggleAccountMenu }}" aria-label="الحساب" style="background: none; border: none; padding: 0; cursor: pointer; border-radius: 50%; display: flex;">
@@ -75,6 +82,20 @@
       </sc-if>
     </div>
   </header>
+
+  <sc-if value="{{ mobileNavOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMobileNav }}" style="position: fixed; inset: 0; background: var(--surface-overlay); z-index: 39;"></div>
+    <nav dir="rtl" style="position: fixed; top: 0; bottom: 0; inset-inline-start: 0; width: 260px; max-width: 80vw; background: var(--surface-card); z-index: 40; padding: 20px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow-lg); font-family: var(--font-sans);">
+      <div style="display: flex; align-items: center; justify-content: flex-end; margin-bottom: 10px;">
+        <button onClick="{{ closeMobileNav }}" aria-label="إغلاق" style="border: none; background: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px;"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width: 20px; height: 20px;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+      </div>
+      <a href="StudentDashboard.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">لوحة التحكم</a>
+      <a href="CourseCatalogue.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">الدورات</a>
+      <a href="StudentPaths.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-brand); font-weight: var(--weight-semibold); background: var(--ribaat-green-100);">البرامج الدراسية</a>
+      <a href="StudentCertificates.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">الشهادات</a>
+    </nav>
+  </sc-if>
+
 
 <div style="max-width: {{ containerMaxWidth }}; margin: 0 auto; padding: {{ regionPadding }};">
 
@@ -427,7 +448,7 @@
   &quot;studentName&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;ماجد&quot;, &quot;tsType&quot;: &quot;string&quot;},
   &quot;registrationWindow&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;مفتوحة&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;مفتوحة&quot;, &quot;مغلقة&quot;], &quot;section&quot;: &quot;Content state&quot;},
   &quot;colorScheme&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;light&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;light&quot;, &quot;dark&quot;], &quot;section&quot;: &quot;Theme&quot;},
-  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;desktop&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;section&quot;: &quot;Breakpoint&quot;}
+  &quot;viewport&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;auto&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;auto&quot;, &quot;desktop&quot;, &quot;tablet&quot;, &quot;mobile&quot;], &quot;section&quot;: &quot;Breakpoint&quot;}
 }">
 const T1 = [
   { name: "ثلاثة الأصول", teacher: "د. عبد العزيز العيدان", state: "done", duration: "٠٢:١٠:٠٠" },
@@ -490,8 +511,34 @@ class Component extends DCLogic {
     });
   }
 
+  _calcVp() {
+    const w = typeof window !== "undefined" ? window.innerWidth : 1280;
+    return w < 600 ? "mobile" : w < 1024 ? "tablet" : "desktop";
+  }
+
+  _liveVp() {
+    if (!this._vpBound && typeof window !== "undefined") {
+      this._vpBound = true;
+      this._onVpResize = () => {
+        const n = this._calcVp();
+        if (n !== this.state.liveViewport) this.setState({ liveViewport: n });
+      };
+      window.addEventListener("resize", this._onVpResize);
+    }
+    return this.state.liveViewport || this._calcVp();
+  }
+
+  /* "auto" (the default) follows the real browser width, so the exported HTML
+     reflows on phones and tablets. An explicit desktop/tablet/mobile value
+     still pins the layout for design frames. */
+  _resolveVp() {
+    const explicit = this.props.viewport || "auto";
+    this._vpIsAuto = explicit === "auto";
+    return this._vpIsAuto ? this._liveVp() : explicit;
+  }
+
   renderVals() {
-    const viewport = this.props.viewport || "desktop";
+    const viewport = this._resolveVp();
     const colorScheme = this.props.colorScheme || "light";
     const isMobile = viewport === "mobile";
     const cfg = {
@@ -506,13 +553,18 @@ class Component extends DCLogic {
 
     return {
       themeAttr: colorScheme,
+      showDesktopNav: viewport === "desktop",
+      showHamburger: viewport !== "desktop",
+      mobileNavOpen: !!this.state.mobileNavOpen,
+      toggleMobileNav: () => this.setState((s) => ({ mobileNavOpen: !s.mobileNavOpen })),
+      closeMobileNav: () => this.setState({ mobileNavOpen: false }),
       frameLabel: viewport + " / " + colorScheme,
       studentName: this.props.studentName || "ماجد",
       logoFilter: colorScheme === "dark" ? "brightness(0) invert(1) opacity(0.9)" : "none",
       signOut: () => { window.location.href = "RibaatAuth.dc.html"; },
       accountMenuOpen: this.state.accountMenuOpen,
       toggleAccountMenu: () => this.setState((s) => ({ accountMenuOpen: !s.accountMenuOpen })),
-      containerMaxWidth: cfg.maxWidth,
+      containerMaxWidth: this._vpIsAuto && viewport !== "desktop" ? "100%" : cfg.maxWidth,
       regionPadding: cfg.padding,
       h1Size: cfg.h1,
       programTitleSize: cfg.programTitle,

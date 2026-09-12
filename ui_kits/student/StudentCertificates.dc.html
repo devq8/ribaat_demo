@@ -32,13 +32,20 @@
 
   <header dir="rtl" style="display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(24px, 6vw, 120px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans);">
     <div style="display: flex; align-items: center; gap: 36px;">
+        <sc-if value="{{ showHamburger }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ toggleMobileNav }}" aria-label="القائمة" style="border: none; background: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin-inline-start: -12px;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width: 22px; height: 22px;"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path></svg>
+          </button>
+        </sc-if>
       <img src="../../assets/logos/ribaat-mark-2026.png" alt="رباط الحنابلة" style="height: 30px; filter: {{ logoFilter }}; width: 108px">
-      <nav style="display: flex; gap: 26px;">
+      <sc-if value="{{ showDesktopNav }}" hint-placeholder-val="{{ true }}">
+        <nav style="display: flex; gap: 26px;">
         <a href="StudentDashboard.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">لوحة التحكم</a>
         <a href="CourseCatalogue.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الدورات</a>
         <a href="StudentPaths.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">البرامج الدراسية</a>
         <a href="StudentCertificates.dc.html" style="font-size: var(--text-base); color: var(--text-brand); font-weight: var(--weight-semibold);">الشهادات</a>
       </nav>
+        </sc-if>
     </div>
     <div style="position: relative;">
       <button onClick="{{ toggleAccountMenu }}" aria-label="الحساب" style="background: none; border: none; padding: 0; cursor: pointer; border-radius: 50%; display: flex;">
@@ -77,6 +84,20 @@
       </sc-if>
     </div>
   </header>
+
+  <sc-if value="{{ mobileNavOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeMobileNav }}" style="position: fixed; inset: 0; background: var(--surface-overlay); z-index: 39;"></div>
+    <nav dir="rtl" style="position: fixed; top: 0; bottom: 0; inset-inline-start: 0; width: 260px; max-width: 80vw; background: var(--surface-card); z-index: 40; padding: 20px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow-lg); font-family: var(--font-sans);">
+      <div style="display: flex; align-items: center; justify-content: flex-end; margin-bottom: 10px;">
+        <button onClick="{{ closeMobileNav }}" aria-label="إغلاق" style="border: none; background: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px;"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width: 20px; height: 20px;"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
+      </div>
+      <a href="StudentDashboard.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">لوحة التحكم</a>
+      <a href="CourseCatalogue.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">الدورات</a>
+      <a href="StudentPaths.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-secondary);">البرامج الدراسية</a>
+      <a href="StudentCertificates.dc.html" style="padding: 12px 10px; border-radius: var(--radius-md); font-size: var(--text-base); min-height: 44px; display: flex; align-items: center; color: var(--text-brand); font-weight: var(--weight-semibold); background: var(--ribaat-green-100);">الشهادات</a>
+    </nav>
+  </sc-if>
+
 
   <main>
   <div style="max-width: {{ containerMaxWidth }}; margin-inline: auto; padding: {{ pagePadding }}; display: flex; flex-direction: column; gap: {{ sectionGap }};">
@@ -387,7 +408,7 @@
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1400},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;empty&quot;,&quot;single&quot;,&quot;full&quot;,&quot;loading&quot;,&quot;error&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;'empty'|'single'|'full'|'loading'|'error'&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;ijazaCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:9,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;completedLevels&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;تلقائي&quot;,&quot;٠&quot;,&quot;١&quot;,&quot;٢&quot;,&quot;٣&quot;,&quot;٤&quot;,&quot;٥&quot;],&quot;default&quot;:&quot;تلقائي&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;medalArt&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;وسام بشريطة&quot;,&quot;ميدالية بإكليل&quot;,&quot;خاتم نجمي&quot;,&quot;بلا صورة&quot;],&quot;default&quot;:&quot;وسام بشريطة&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;viewport&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;desktop&quot;,&quot;tablet&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;desktop&quot;,&quot;tsType&quot;:&quot;'desktop'|'tablet'|'phone'&quot;,&quot;section&quot;:&quot;العرض&quot;},&quot;colorScheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;,&quot;section&quot;:&quot;العرض&quot;},&quot;showProgress&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;showVerification&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;المحتوى&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1400},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;empty&quot;,&quot;single&quot;,&quot;full&quot;,&quot;loading&quot;,&quot;error&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;'empty'|'single'|'full'|'loading'|'error'&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;ijazaCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:9,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;completedLevels&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;تلقائي&quot;,&quot;٠&quot;,&quot;١&quot;,&quot;٢&quot;,&quot;٣&quot;,&quot;٤&quot;,&quot;٥&quot;],&quot;default&quot;:&quot;تلقائي&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;medalArt&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;وسام بشريطة&quot;,&quot;ميدالية بإكليل&quot;,&quot;خاتم نجمي&quot;,&quot;بلا صورة&quot;],&quot;default&quot;:&quot;وسام بشريطة&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;viewport&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;, &quot;desktop&quot;,&quot;tablet&quot;,&quot;phone&quot;],&quot;default&quot;: &quot;auto&quot;,&quot;tsType&quot;: &quot;string&quot;,&quot;section&quot;:&quot;العرض&quot;},&quot;colorScheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;,&quot;section&quot;:&quot;العرض&quot;},&quot;showProgress&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;المحتوى&quot;},&quot;showVerification&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;المحتوى&quot;}}">
 const AR = "٠١٢٣٤٥٦٧٨٩";
 const ar = n => String(n).replace(/[0-9]/g, d => AR[+d]);
 
@@ -495,9 +516,35 @@ class Component extends DCLogic {
     this.setState(s => ({ open: Object.assign({}, s.open, { [id]: !isOpen }) }));
   }
 
+  _calcVp() {
+    const w = typeof window !== "undefined" ? window.innerWidth : 1280;
+    return w < 600 ? "phone" : w < 1024 ? "tablet" : "desktop";
+  }
+
+  _liveVp() {
+    if (!this._vpBound && typeof window !== "undefined") {
+      this._vpBound = true;
+      this._onVpResize = () => {
+        const n = this._calcVp();
+        if (n !== this.state.liveViewport) this.setState({ liveViewport: n });
+      };
+      window.addEventListener("resize", this._onVpResize);
+    }
+    return this.state.liveViewport || this._calcVp();
+  }
+
+  /* "auto" (the default) follows the real browser width, so the exported HTML
+     reflows on phones and tablets. An explicit desktop/tablet/phone value
+     still pins the layout for design frames. */
+  _resolveVp() {
+    const explicit = this.props.viewport || "auto";
+    this._vpIsAuto = explicit === "auto";
+    return this._vpIsAuto ? this._liveVp() : explicit;
+  }
+
   renderVals() {
     const st = this.props.state ?? "empty";
-    const vp = this.props.viewport ?? "desktop";
+    const vp = this._resolveVp();
     const scheme = this.props.colorScheme ?? "light";
     const prog = this.props.showProgress ?? true;
     const ver = this.props.showVerification ?? true;
@@ -760,6 +807,11 @@ class Component extends DCLogic {
 
     return {
       themeAttr: scheme === "dark" ? "dark" : "light",
+      showDesktopNav: vp === "desktop",
+      showHamburger: vp !== "desktop",
+      mobileNavOpen: !!this.state.mobileNavOpen,
+      toggleMobileNav: () => this.setState((s) => ({ mobileNavOpen: !s.mobileNavOpen })),
+      closeMobileNav: () => this.setState({ mobileNavOpen: false }),
       screenLabel: "الإجازات والشهادات — " + st + " · " + vp + " · " + scheme,
       isLoading: st === "loading",
       isError: st === "error",

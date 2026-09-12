@@ -29,13 +29,20 @@
 
   <header dir="rtl" style="display: flex; align-items: center; justify-content: space-between; padding: 14px clamp(24px, 6vw, 120px); background: var(--surface-card); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-sans);">
     <div style="display: flex; align-items: center; gap: 36px;">
+        <sc-if value="{{ showHamburger }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ toggleMobileNav }}" aria-label="القائمة" style="border: none; background: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; margin-inline-start: -12px;">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width: 22px; height: 22px;"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path></svg>
+          </button>
+        </sc-if>
       <img src="../../assets/logos/ribaat-mark-2026.png" alt="رباط الحنابلة" style="height: 30px; filter: {{ logoFilter }}; width: 108px">
-      <nav style="display: flex; gap: 26px;">
+      <sc-if value="{{ showDesktopNav }}" hint-placeholder-val="{{ true }}">
+        <nav style="display: flex; gap: 26px;">
         <a href="StudentDashboard.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">لوحة التحكم</a>
         <a href="CourseCatalogue.dc.html" style="font-size: var(--text-base); color: var(--text-brand); font-weight: var(--weight-semibold);">الدورات</a>
         <a href="StudentPaths.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">البرامج الدراسية</a>
         <a href="StudentCertificates.dc.html" style="font-size: var(--text-base); color: var(--text-secondary);">الشهادات</a>
       </nav>
+        </sc-if>
     </div>
     <div style="position: relative;">
       <button onClick="{{ toggleAccountMenu }}" aria-label="الحساب" style="background: none; border: none; padding: 0; cursor: pointer; border-radius: 50%; display: flex;">
@@ -531,7 +538,7 @@ class Component extends DCLogic {
 
   computeLiveViewport() {
     const w = window.innerWidth;
-    return w < 640 ? "mobile" : w < 1100 ? "tablet" : "desktop";
+    return w < 600 ? "mobile" : w < 1024 ? "tablet" : "desktop";
   }
 
   handleResize() {
@@ -547,6 +554,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const explicitViewport = this.props.viewport || "auto";
+    this._vpIsAuto = explicitViewport === "auto";
     const viewport = explicitViewport !== "auto" ? explicitViewport : this.state.liveViewport;
     const colorScheme = this.props.colorScheme || "light";
     const st = STATES[this.props.demoState] || STATES["prerequisites met"];
@@ -591,7 +599,7 @@ class Component extends DCLogic {
       heroTintBg: hero.bg,
       heroDarkBg: hero.bg,
 
-      containerMaxWidth: cfg.maxWidth,
+      containerMaxWidth: this._vpIsAuto && viewport !== "desktop" ? "100%" : cfg.maxWidth,
       sidePadding: cfg.side,
       mainPadding: cfg.main,
       h1Size: cfg.h1,
